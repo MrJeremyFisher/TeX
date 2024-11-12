@@ -1,0 +1,20 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{clear\PYGZus{}vars}\PYG{p}{()}
+\PYG{k+kn}{from} \PYG{n+nn}{IPython.core.interactiveshell} \PYG{k+kn}{import} \PYG{n}{InteractiveShell}
+\PYG{k+kn}{from} \PYG{n+nn}{sage.symbolic.integration.integral} \PYG{k+kn}{import} \PYG{n}{definite\PYGZus{}integral}
+
+\PYG{n}{InteractiveShell}\PYG{o}{.}\PYG{n}{ast\PYGZus{}node\PYGZus{}interactivity} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}all\PYGZdq{}}
+
+\PYG{n}{nums} \PYG{o}{=} \PYG{p}{\PYGZob{}}\PYG{l+m+mi}{1}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{:} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{:} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{3}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{:} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{5}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{:} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{3}\PYG{p}{:} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{7}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{:} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{4}\PYG{p}{:} \PYG{l+m+mi}{0}\PYG{p}{\PYGZcb{}}
+
+\PYG{n}{x} \PYG{o}{=} \PYG{n}{var}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}x\PYGZsq{}}\PYG{p}{)}
+\PYG{n}{t} \PYG{o}{=} \PYG{n}{var}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}t\PYGZsq{}}\PYG{p}{)}
+
+\PYG{n}{assume}\PYG{p}{(}\PYG{n}{x}\PYG{o}{\PYGZgt{}}\PYG{l+m+mi}{0}\PYG{p}{)}
+
+\PYG{n}{gamma}\PYG{p}{(}\PYG{n}{x}\PYG{p}{)} \PYG{o}{=} \PYG{n}{definite\PYGZus{}integral}\PYG{p}{((}\PYG{n}{t}\PYG{o}{\PYGZca{}}\PYG{p}{(}\PYG{n}{x}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{o}{*}\PYG{n}{e}\PYG{o}{\PYGZca{}}\PYG{p}{(}\PYG{o}{\PYGZhy{}}\PYG{n}{t}\PYG{p}{)),} \PYG{n}{t}\PYG{p}{,} \PYG{l+m+mi}{0} \PYG{p}{,} \PYG{n}{oo}\PYG{p}{)}
+
+\PYG{k}{for} \PYG{n}{num} \PYG{o+ow}{in} \PYG{n}{nums}\PYG{p}{:}
+    \PYG{n}{nums}\PYG{p}{[}\PYG{n}{num}\PYG{p}{]} \PYG{o}{=} \PYG{n}{gamma}\PYG{p}{(}\PYG{n}{num}\PYG{p}{)}
+\PYG{n}{nums}
+\end{Verbatim}

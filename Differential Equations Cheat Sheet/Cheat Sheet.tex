@@ -1,0 +1,69 @@
+\documentclass[10pt,landscape,letterpaper]{cheatsheet}
+
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{graphicx,lipsum}
+\usepackage{enumitem}
+\newcommand{\PRLsep}{\noindent\makebox[\linewidth]{\resizebox{0.3333\linewidth}{1pt}{$\bullet$}}\bigskip}
+\newcommand\longdiv[2]{%
+$\strut#1$\kern.25em\smash{\raise.3ex\hbox{$\big)$}}$\mkern-8mu
+        \overline{\enspace\strut#2}$}
+\usepackage{mdframed}
+\usepackage{cancel}
+\title{ODE Cheat Sheet}
+\author{Jeremy Favro}
+\date{\today\\Revision 1}
+
+\begin{document}
+
+\maketitle
+
+\section*{Fundamentals}
+\subsection*{Classification}
+$\frac{d^ny}{dx^n}=f(x,y)$ denotes an ODE of order $n$. Note that $(\frac{dy}{dx})^n\neq\frac{d^ny}{dx^n}$. ODEs of order $n$ will have $n$ constants in their general form solutions.\\
+A linear ODE is one which can be written in the form $a_n(x)\frac{d^ny}{d^nx}+a_{n-1}\frac{d^{n-1}y}{d^{n-1}x}+\dots+a_1(x)\frac{dy}{dx}+a_0(x)y=g(x)$.\\
+\subsection*{Solutions}
+Given some IVP $\frac{dy}{dx}=f(x,y), \, y(x_0)=y_0$ if $f$ and $\frac{\partial f}{\partial y}$ are continuous in the rectangle $(x_0,y_0)\in \{(x,y):a<x<b,c<y<d\}$ then the
+IVP has a unique solution $\phi(x)$ in some interval $(x_0-h,x_0+h), \, h\geq 0$
+
+
+\section*{Solution Techniques $n=1$}
+\subsection*{Direct Integration}
+Directly integrate \dots
+\subsection*{Seperable}
+For some ODE $\frac{dy}{dx}=f(x,y)=g(x)p(y)$ the differential can be split $s.t.$ $\frac{1}{p(y)}dy=g(x)dx$ which can be solved by direct integration.
+Note that when dividing by some function we assume that the function is nonzero. If there is a case (e.g. in an IVP) where the function is zero, the solution
+is lost.
+\subsection*{Linear}
+For some linear ODE of the form $\frac{dy}{dx}+P(x)y=Q(x)$ we can multiply both sides of the ODE by $\mu(x)=\exp\left(\int P(x)\, dx\right)$
+to obtain $\mu\frac{dy}{dx}+\mu P(x)y= \mu Q(x)$ which is equivalent to $\mu y=\mu Q(x)$ which can be solved by direct integration.
+\subsection*{Exact}
+Exact equations are ODEs of the form $Mdx+Ndy=0$ where $\frac{\partial M}{\partial y}=\frac{\partial N}{\partial x}$. Then, $f(x,y)=\int M\,dx+h(y)=C$ or $f(x,y)=\int N\,dy+g(x)=C$
+and $\frac{d}{dy}\left(\int M\,dx+h(y)\right)=N$ or $\frac{d}{dx}\left(\int N\,dy+g(x)\right)=M$
+\subsection*{Non-Exact}
+In cases where something looks exact but $\frac{\partial M}{\partial y}\neq\frac{\partial N}{\partial x}$ you can find an integrating factor 
+\begin{align*}
+         & \mu(x)=\exp\left(\int \frac{\frac{\partial M}{\partial y}-\frac{\partial N}{\partial x}}{N}\,dx\right) \\
+         & \mu(y)=\exp\left(\int \frac{\frac{\partial N}{\partial x}-\frac{\partial M}{\partial y}}{M}\,dy\right)
+\end{align*}
+\subsection*{Homogeneous}
+If each term of the ODE is of equal order (e.g. the right hand side can be expressed as a function of only $\frac{y}{x}$) we can substitute 
+$y=ux\implies dy=udx+xdu$. This should result in a seperable equation.
+\subsection*{Bernoulli}
+If we have an equation of the form $\frac{dy}{dx}+P(x)y=Q(x)y^n$ we divide by $y^n$ and substitute $u=y^1-n\implies \frac{dy}{dx}=\frac{dy}{du}\frac{du}{dx}$. This should result in a linear equation.
+\subsection*{Linear Substituion}
+An ODE of the form $\frac{dy}{dx}=f(Ax+By+C), \, B\neq 0$ can be solved by
+\begin{align*}
+        &u = Ax+By+C \\
+        &\Rightarrow \frac{du}{dx}=A+B\frac{dy}{dx}\\
+        &\Rightarrow \frac{dy}{dx}=(\frac{du}{dx}-A)\frac{1}{B}\\
+\end{align*}
+
+\section*{Applications}
+\subsection*{Newton's Cooling}
+$$\frac{dT}{dt}=k(T-T_m)\implies T(t)=T_m+Ce^{kt}$$ where $T$ is the temperature of an object, $T_m$ the temperature of the medium in which the object sits, and $k$ some cooling constant determined by initial/boundary conditions.
+$C$ comes about as a result of solving the ODE and can also be determined using initial conditions.
+\subsection*{Circuit Theory}
+$$V_{Resistor}=RI=R\frac{dQ}{dt}$$
+$$V_{Inductor}=L\frac{dI}{dt}=L\frac{d^2Q}{dt^2}$$
+$$V_{Capacitor}=\frac{Q}{C}=L\frac{d^2Q}{dt^2}$$
+\end{document}

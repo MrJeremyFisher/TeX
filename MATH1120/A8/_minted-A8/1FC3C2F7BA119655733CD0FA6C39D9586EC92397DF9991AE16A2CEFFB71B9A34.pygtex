@@ -1,0 +1,7 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{clear\PYGZus{}vars}\PYG{p}{()}
+
+\PYG{n}{n} \PYG{o}{=} \PYG{n}{var}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}n\PYGZsq{}}\PYG{p}{)}
+
+\PYG{n+nb}{sum}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{o}{/}\PYG{p}{((}\PYG{l+m+mi}{4}\PYG{o}{*}\PYG{n}{n}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{o}{*}\PYG{p}{(}\PYG{l+m+mi}{4}\PYG{o}{*}\PYG{n}{n}\PYG{o}{+}\PYG{l+m+mi}{3}\PYG{p}{)),} \PYG{n}{n}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{oo}\PYG{p}{)}
+\end{Verbatim}

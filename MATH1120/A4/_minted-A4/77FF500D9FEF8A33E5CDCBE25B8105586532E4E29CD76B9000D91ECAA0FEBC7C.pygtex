@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{clear\PYGZus{}vars}\PYG{p}{()}
+\PYG{k+kn}{from} \PYG{n+nn}{sage.symbolic.integration.integral} \PYG{k+kn}{import} \PYG{n}{definite\PYGZus{}integral}
+
+\PYG{n}{x} \PYG{o}{=} \PYG{n}{var}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}x\PYGZsq{}}\PYG{p}{)}
+\PYG{n}{n} \PYG{o}{=} \PYG{n}{var}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}n\PYGZsq{}}\PYG{p}{)}
+
+\PYG{n}{f} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{o}{/}\PYG{n}{x}
+
+\PYG{n+nb}{sum}\PYG{p}{(}\PYG{n}{f}\PYG{p}{,} \PYG{n}{x}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{oo}\PYG{p}{)}
+\end{Verbatim}

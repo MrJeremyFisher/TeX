@@ -1,0 +1,240 @@
+\documentclass[10pt,landscape,letterpaper]{cheatsheet}
+
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{graphicx,lipsum}
+\usepackage{enumitem}
+\newcommand{\PRLsep}{\noindent\makebox[\linewidth]{\resizebox{0.3333\linewidth}{1pt}{$\bullet$}}\bigskip}
+\newcommand\longdiv[2]{%
+$\strut#1$\kern.25em\smash{\raise.3ex\hbox{$\big)$}}$\mkern-8mu
+        \overline{\enspace\strut#2}$}
+\usepackage{mdframed}
+\usepackage{cancel}
+\title{Calculus Cheat Sheet}
+\author{Jeremy Favro}
+\date{\today\\Revision 3}
+
+\begin{document}
+
+\maketitle
+
+\section*{Limits}
+\subsection*{Existence}
+$\lim\limits_{x\to a}f(x)=L $ exists if $\forall \epsilon > 0 \exists \delta > 0 \text{ s.t. } \left\lvert x-a \right\rvert < \delta \Rightarrow \left\lvert f(x) - L \right\rvert < \epsilon $.
+\subsection*{Properties}
+$ \lim\limits_{x\to a}[cf(x)]=c\lim\limits_{x\to a}[f(x)] $
+$ \lim\limits_{x\to a}[f(x) \pm g(x)]=\lim\limits_{x\to a}[f(x)] \pm \lim\limits_{x\to a}[g(x)] $
+$ \lim\limits_{x\to a}[f(x)g(x)]=\lim\limits_{x\to a}[f(x)]\lim\limits_{x\to a}[g(x)] $
+$ \lim\limits_{x\to a}\left[\frac{f(x)}{g(x)}\right]=\frac{\lim\limits_{x\to a}[f(x)]}{\lim\limits_{x\to a}[g(x)]}, \lim\limits_{x\to a}[g(x)] \neq 0 $
+\subsection*{Squeeze Theorem}
+The squeeze theorem is a method for solving complex limits, such as $\lim\limits_{x\to 0}{x^4}\sin {\frac{1}{x}}$. You are essentially trying to find two bounding functions,
+such that if $f(x)$ is the function you are trying to find the limit for, $h(x) \leq f(x)$ and $f(x) \leq g(x)$ ($h(x) \leq f(x) \leq g(x)$).
+If you find these two bounding functions, $h(x)$ \& $g(x)$ and their limits at some number $a$ agree, then the limit of $f(x)$ at $a$ will be equal to the limits of $h(x)$ \& $g(x)$ at $a$.
+Formally, for some limit $\lim\limits_{x\to a}f(x)$, if you find two functions such that $h(x) \leq f(x) \leq g(x)$, and $\lim\limits_{x\to a}h(x)=\lim\limits_{x\to a}g(x)$, then $\lim\limits_{x\to a}h(x)=\lim\limits_{x\to a}g(x)=\lim\limits_{x\to a}f(x)$.
+\subsection*{Evaluation Techniques}
+
+\subsubsection*{Basics}
+$ \lim\limits_{x\to a}\left[f(x)\right]=f(a) \text{ if f exists at a } $
+
+\subsubsection*{L'H\^opital's Rule}
+$ \text{If } \lim\limits_{x\to a}\left[\frac{f(x)}{g(x)}\right]=\frac{0}{0} \text { \textbf{or} } \frac{\pm \infty}{\pm \infty}$
+$ \text{ then } $
+$ \lim\limits_{x\to a}\left[\frac{f(x)}{g(x)}\right]=\lim\limits_{x\to a}\left[\frac{f^{\prime}(x)}{g^{\prime}(x)}\right] $
+
+\subsubsection*{Factoring at Infinity}
+If $p(x)$ and $q(x)$ are polynomials, to evaluate $\lim\limits_{x\to \pm \infty}\left[\frac{p(x)}{q(x)}\right]$ factor the greatest power of $x$ in $q(x)$ (the denominator) out of poth $p(x)$ and $q(x)$ then compute the limit, e.g.
+$ \lim\limits_{x\to -\infty}\left[\frac{3x^2-4}{5x-2x^2}\right]=\lim\limits_{x\to -\infty}\left[\frac{\cancel{x^2}(3-\frac{4}{x^2})}{\cancel{x^2}(\frac{5}{x}-2)}\right]$
+$ \frac{3-0}{0-2} = -\frac{3}{2} $
+\section*{Derivatives}
+\subsection*{Definition}
+$$ \frac{d}{dx}f(x) = f^{\prime}(x) = \lim\limits_{h\to 0}\frac{f(x+h)-f(x)}{h}$$.
+\subsection*{Techniques}
+
+\subsubsection*{Sum Rule}
+$$ \frac{d}{dx}(f(x) \pm g(x))=f^{\prime}(x) \pm g^{\prime}(x) $$
+
+\subsubsection*{Product Rule}
+$$ \frac{d}{dx}(f(x)g(x))=f^{\prime}(x)g(x)+f(x)g^{\prime}(x) $$
+
+\subsubsection*{Quotient Rule}
+$$ \frac{d}{dx}\left(\frac{f(x)}{g(x)}\right)=\frac{f^{\prime}(x)g(x)-f(x)g^{\prime}(x)}{[g(x)]^2} $$
+
+\subsubsection*{Power Rule}
+$$ \frac{d}{dx}(x^n)=nx^{n-1} $$
+
+\subsubsection*{Chain Rule}
+$$ \frac{d}{dx}(f(g(x)))=f^{\prime}(g(x))g^{\prime}(x) $$
+
+\subsection*{Common Derivatives}
+$ \frac{d}{dx}(x)=1                                                                                      $
+% Normal trig
+$ \frac{d}{dx}(\sin {x})=\cos {x}                                                                        $
+$ \frac{d}{dx}(\cos {x})=-\sin {x}                                                                       $
+$ \frac{d}{dx}(\tan {x})=\sec ^{2} {x}                                                                   $
+% Reciprocal
+$ \frac{d}{dx}(\sec {x})=\sec {x} \tan {x}                                                               $
+$ \frac{d}{dx}(\csc {x})=-\csc {x} \cot {x}                                                              $
+$ \frac{d}{dx}(\cot {x})=-\csc ^2 {x}                                                                    $
+% Inverse
+$ \frac{d}{dx}(\sin ^{-1} {x})=\frac{1}{\sqrt{1-x^2}} \sin^{-1} {x} \neq \frac{1}{\sin {x}} $
+$ \frac{d}{dx}(\cos ^{-1} {x})=-\frac{1}{\sqrt{1-x^2}}                                                   $
+$ \frac{d}{dx}(\tan ^{-1} {x})=\frac{1}{1+x^2}                                                           $
+% Exponentials and Logarithms
+$ \frac{d}{dx}(a ^ {x})=a^{x} \ln {a}                                                                    $
+$ \frac{d}{dx}(e ^ {x})=e^{x}                                                                            $
+$ \frac{d}{dx}(\ln {x})=\frac{1}{x}, x > 0                                                               $
+$ \frac{d}{dx}(\ln {|x|})=\frac{1}{x}, x \neq 0                                                          $
+$ \frac{d}{dx}(\log {_a}{x})=\frac{1}{x \ln {a}}                                                         $
+
+\subsection*{Common Chain Rule Derivatives}
+$ \frac{d}{dx}([f(x)]^n)=n[f(x)]^{n-1}f^{\prime}(x) $
+$ \frac{d}{dx}(e^{f(x)})=e^{f(x)}f^{\prime}(x)      $
+$ \frac{d}{dx}(\ln [{f(x)}])=\frac{f^{\prime}(x)}{f(x)}      $
+$ \frac{d}{dx}(\sin [{f(x)}])=f^{\prime}(x)\cos[{f(x)}]    $
+$ \frac{d}{dx}(\cos [{f(x)}])=-f^{\prime}(x)\sin[{f(x)}]    $
+$ \frac{d}{dx}(\tan [{f(x)}])=f^{\prime}(x)\sec ^{2}[{f(x)}]    $
+$ \text{Trig derivatives, same old same old}$
+$ \frac{d}{dx}(f(x)^{g(x)})=\frac{g(x)f^{\prime}(x)}{f(x)}+\ln{[f(x)]}g^{\prime}(x)   $
+
+\subsection*{Implicit Derivation}
+Remember $y = y(x)$ here, so products/quotients of $x$ and $y$ will use
+the product/quotient rule and derivatives of $y$ will use the chain rule. The “trick” is to differentiate as normal
+and every time you differentiate a y you tack on a $y^{\prime}$ (from the chain rule). Then solve for $y^{\prime}$, probably by factoring.
+
+\section*{Integrals}
+
+\subsection*{Definition}
+The integral of some function $f(x)$ is a function $f^{\star}(x)$ s.t. $f^{\star\prime}(x)=f(x)$. \textbf{Don't forget your constant!}
+$$ \int_{a}^{b} f(x) \,dx = \int_{a}^{c} f(x) \,dx + \int_{c}^{b} f(x) \,dx $$
+$$ \int_{a}^{b} cf(x) \,dx = c\int_{a}^{b} f(x) \,dx $$
+The integral can be done using the Right Riemann Sum:
+$\int_{a}^{b} f(x) \,dx = \lim\limits_{n\to \infty}\sum_{i=1}^{n}\left[\frac{b-a}{n}\cdot f(a+i\cdot\frac{b-a}{n})\right]$
+
+\subsection*{U-Substitution}
+$ \displaystyle \int_{a}^{b} f(g(x)) \cdot g^{\prime} \,dx = \int_{g(a)}^{g(b)} f(u) \,dx $. Using U-Substitution, $u=g(x)$ and $du=g^{\prime}(x)dx$ ($dx=\frac{du}{g^{\prime}}$). The limits, $a$ and $b$ are just dropped when using indefinite integrals.
+
+\subsection*{Integration By Parts}
+$ \displaystyle \int u(x)v^{\prime}(x) \,dx = u(x)v(x) - \int u^{\prime}(x)v(x) \,dx $ and $ \displaystyle \int_{a}^{b} u(x)v^{\prime}(x) \,dx = uv\vert_{a}^{b} - \int_{a}^{b} u^{\prime}(x)v(x) \,dx$.
+
+\subsection*{Common Integrals}
+$ \int x^n \,dx = \frac{1}{n+1}x^{n+1} + C $ \\
+$ \int \frac{1}{x} \,dx = \ln{\left\lvert x \right\rvert} + C $ \\
+$ \int \frac{1}{ax+b} \,dx = \frac{1}{a} \ln{\left\lvert ax+b \right\rvert } + C $ \\
+$ \int \ln{x} \,dx = x\ln{x} - x + C $ \\
+$ \int e^x \,dx = e^x + C $ \\
+$ \int a^x \,dx = \frac{a^x}{\ln{a}} + C $ \\
+$ \int \sin{x} \,dx = -\cos{x} + C $ \\
+$ \int \cos{x} \,dx = \sin{x} + C $ \\
+$ \int \tan{x} \,dx = \ln{\left\lvert \sec{x} \right\rvert} + C $ \\
+$ \int \sec^2{x} \,dx = \tan{x} + C $ \\
+$ \int \sec{x}\tan{x} \,dx = \sec{x} + C $ \\
+$ \int \csc{x}\cot{x} \,dx = -\csc{x} + C $ \\
+$ \int \csc^2{x} \,dx = -\cot{x} + C $ \\
+$ \int \sec{x} \,dx = \ln{\left\lvert \sec{x} + \tan{x} \right\rvert} + C $ \\
+$ \int \frac{1}{a^2+u^2} \,dx = \frac{1}{a}\tan^{-1}\left({\frac{x}{a}}\right) + C $ \\
+$ \int \frac{1}{\sqrt{a^2+u^2}} \,dx = \sin^{-1}\left({\frac{x}{a}}\right) + C $ \\
+
+\subsection*{Trig Reduction Formulae} (For $n \geq 2$) \\
+$\int \sin^n(x) \,dx = -\frac{1}{n}\sin^{n-1}(x)\cos(x)+\frac{n-1}{n}\int \sin^{n-2}(x) \,dx$\\
+$\int \cos^n(x) \,dx = \frac{1}{n}\cos^{n-1}(x)\sin(x)+\frac{n-1}{n}\int \cos^{n-2}(x) \,dx$\\
+$\int \tan^n(x) \,dx = \frac{1}{n-1}\tan^{n-1}(x)+\frac{n-1}{n}\int \tan^{n-2}(x) \,dx$\\
+$\int \sec^n(x) \,dx = \frac{1}{n-1}\sec^{n-2}(x)\tan(x)+\frac{n-2}{n-1}\int \sec^{n-2}(x) \,dx$\\
+
+\subsection*{Trig Identities}
+$\sin^2(x)+\cos^2(x)=1$
+$1+\tan^2(x)=\sec^2(x)$
+$\sin(2x)=2\sin(x)\cos(x)$
+$\cos(2x)=\cos^2(x)-\sin^2(x)$\\
+~~~~~~~~~~~~~~$=2\cos^2(x)-1$\\
+~~~~~~~~~~~~~~$=1-2\sin^2(x)$
+
+\subsection*{Trig Substitutions}
+$\sqrt{a^2-x^2} \rightsquigarrow x=a\sin(\theta)$
+$\sqrt{a^2+x^2} \rightsquigarrow x=a\tan(\theta)$
+$\sqrt{x^2-a^2} \rightsquigarrow x=a\sec(\theta)$
+
+\subsection*{Partial Fractions \& Polynomial Division}
+If the degree of the numerator is greater than that of a the denominator, use polynomial division to
+divide the denominator into the numerator (\longdiv{denom}{numer}), then integrate the result. If the degree of the denominator is greater than
+that of the numerator, use partial fractions to decompose the integral as follows:
+
+If the denominator contains different linear terms, break it down to $\frac{A}{ax+b}$ \\
+If it contains a repeated linear term ($(ax+b)^2$), break it down to $\frac{A}{ax+b}+\frac{B}{(ax+b)^2}$ \\
+If it contains an irreducible quadratic ($x^2+bx+c$), break it down to $\frac{A}{dx+o}+\frac{Bx+C}{x^2+bx+c}$ \\
+
+Then, set up equations for the coefficients of the powers of $x$ in the numerator and solve them to determine $A,\,B,\,C$ and so on.
+\subsection*{Applications}
+\subsubsection*{Centroids}
+$C = (\hat{x}, \hat{y})$,
+$\hat{x} = \frac{\int xf(x) \,dx}{\int f(x) \,dx}$ \&
+$\hat{y} = \frac{\int yf(y) \,dy}{\int f(y) \,dy}$
+\subsubsection*{Arc Length}
+$L = \int_{a}^{b} \sqrt{1+[f^{\prime}(x)]^2} \,dx$
+\subsubsection*{Volume} Use the variable parallel to the axis of revolution.
+$V = \int_{a}^{b} A(x) \,dx$ where $A(x)$ is a function which gives the area
+of one ``slice'' of the solid. Slices are generally circular and may have holes in them, area
+of a circle is $\pi r^2$, and the area of a washer is $\pi (r_{outer}^2-r_{inner}^2)$
+
+\section*{Sequences and Series}
+\subsection*{Series With Nice Formulae}
+The geometric series $\sum_{n=0}^{\infty}ar^n=\frac{a}{1-r}$ provided that $|r|<1$
+The telescoping series where the ``inbetween'' terms cancel. Take the limit as $k\to\infty$
+\subsection{Basic Divergence Test}
+If for some series $\sum_{n=0}^{\infty}a_n$ the limit $\lim_{n \to \infty} a_n \neq 0$ the series diverges.
+However, if the limit is 0, no information can be determined from this test.
+\subsection*{Integral Test}
+If some function $f(n)=a_n$ is decreasing on $[c,\infty)$ then the
+series $\sum_{n=c}^{\infty}a_n$ converges exactly as $\int_{c}^{\infty}f(x)dx$ does / does not. This works because
+$\int_{c}^{\infty}f(x)dx\leq\sum_{n=c}^{\infty}a_n\leq f(c)+\int_{c}^{\infty}f(x)dx$
+\subsection*{P-Test}
+Generally, $\sum_{n=c}^{\infty}\frac{an^k+\dots+a_0}{bn^l+\dots+b_0}$ converges if $p=l-k<1$ and diverges if $p\geq 1$
+\subsection*{Basic Comparsion Test}
+If two sequences $\{a_n\}$ and $\{b_n\}$ exist, are comprised of positive terms, and satisfy $0<a_n\leq b_n$
+past some point then
+\begin{enumerate}[label=(\alph*)]
+        \item if $\sum_{n=0}^{\infty}b_n$ converges, so does $\sum_{n=0}^{\infty}a_n$
+        \item if $\sum_{n=0}^{\infty}a_n$ diverges, so does $\sum_{n=0}^{\infty}b_n$
+\end{enumerate}
+\subsection*{Limit Comparison Test}
+If two sequences $\{a_n\}$ and $\{b_n\}$ exist and are comprised of positive terms past some point then
+$\lim_{n \to \infty} \frac{a_n}{b_n} =c$
+\begin{enumerate}[label=(\alph*)]
+        \item if $c>0$ both series either converge or diverge (one converging means the other does and vice versa)
+        \item if $c=0$ then $a_n$ diverges so does $b_n$ and if $b_n$ converges so does $a_n$
+        \item if $c=\infty$ then $a_n$ converges so does $b_n$ and if $b_n$ diverges so does $a_n$
+\end{enumerate}
+\subsection*{Alternating Series Test}
+If each $a_n$ in the series $\sum_{n=0}^{\infty}a_n$ and
+\begin{enumerate}[label=(\arabic*)]
+        \item $|a_{n+1}|<|a_n|$ (The series is decreasing)
+        \item $a_{n+1}<0$ \& $a_n>0$ (The series is alternating)
+        \item $\lim_{n \to \infty} |a_n|=0$
+\end{enumerate}
+then the series converges
+\subsection*{Ratio Test}
+If past some point $a_n\neq 0$ then for the series $\sum_{n=0}^{\infty}a_n$
+if the limit $\lim_{n \to \infty} \left|\frac{a_{n+1}}{a_n}\right|=L$ then
+\begin{enumerate}[label=(\alph*)]
+        \item if $L<1$ the series converges absolutely
+        \item if $L=1$ no information can be obtained through this test
+        \item if $L>1$ the series diverges
+\end{enumerate}
+\subsection*{Root Test}
+For the series $\sum_{n=0}^{\infty}a_n$ if $\lim_{n \to \infty}\sqrt[n]{|a_n|}=L$ then
+\begin{enumerate}[label=(\alph*)]
+        \item if $L<1$ the series converges absolutely
+        \item if $L=1$ no information can be obtained through this test
+        \item if $L>1$ the series diverges
+\end{enumerate}
+\subsection*{Taylor Series}
+Taylor's formula states that if some function $f(x)$ can be expanded as a power series around $x=a$
+its representation is given by $$\sum_{n=0}^{\infty}\frac{\frac{d^n}{dx^n}f(a)}{n!}(x-a)^n$$
+\subsubsection*{Remainder Terms}
+If there exists some function $f(x)$ whose Taylor Series is defined as $T_n(x)$ then the remainder term is
+defined as $R_n(x)=f(x)-T_n(x)$, which is how ``far off'' the Taylor Series $T_n(x)$ is from the function $f(x)$
+for some $n$.
+\subsubsection*{Manipulating Taylor Series}
+If we do something (integrating, differentiating, muliplying, etc\dots) to a function, then doing the same to its
+Taylor Series results in the Taylor Series for the new function. Ex, $f(x)\to f_k(x)$ by integrating, then
+$\int T_n(x) \,dx= T_{nk}(x)$ where $T_n(x)$ is the Taylor Series for $f(x)$ and $T_{nk}(x)$ is the Taylor Series for 
+our new function, created by integrating $f(x)$, $f_k(x)$
+\end{document}

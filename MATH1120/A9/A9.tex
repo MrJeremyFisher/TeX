@@ -1,0 +1,201 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{changepage}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{physics}
+\usepackage{minted}
+\usepackage{hyperref}
+\usepackage[breakable]{tcolorbox}
+\usepackage[inline]{enumitem}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{soln}{Solution}
+
+\pgfplotsset{compat=newest}
+\usetikzlibrary{lindenmayersystems}
+
+\definecolor{incolor}{HTML}{303F9F}
+\definecolor{outcolor}{HTML}{D84315}
+\definecolor{cellborder}{HTML}{CFCFCF}
+\definecolor{cellbackground}{HTML}{F7F7F7}
+
+\tikzset
+{%
+  axes/.style={thick,-latex},
+  cylinder/.style={right color=blue!80,left color=white,fill opacity=0.7},
+  paraboloid back/.style={left color=magenta!80,fill opacity=0.4},
+  paraboloid front/.style={left color=white, right color=magenta!80,fill opacity=0.4},
+}
+
+\makeatletter
+\newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+\makeatother
+\newcommand{\prompt}[4]{
+    \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+}
+
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+    }
+
+\NewDocumentCommand{\evalat}{sO{\big}mm}{%
+  \IfBooleanTF{#1}
+   {\mleft. #3 \mright|_{#4}}
+   {#3#2|_{#4}}%
+}
+
+\tikzset{koch snowflake/.style={insert path={%
+   l-system [l-system={rule set={F -> F-F++F-F}, axiom=F++F++F,
+    step=3cm/3^#1, angle=60, order=#1,anchor=center}] -- cycle}}}
+
+\title{Calculus II: Assignment 9}
+\author{Jeremy Favro}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+% PROBLEM 1
+\begin{problem} ~\\
+For each of the following series, determine whether it converges or diverges. If it converges, find or approximate the sum as best you can. (Series in solution)
+\end{problem}
+\begin{soln} ~\\
+     \begin{enumerate}[label=(\alph*)]
+          \item $\displaystyle \sum_{n = 0}^{\infty} \frac{3^n}{n!}$ Converges by the ratio test to $e^3$
+                \begin{align*}
+                      & = \lim_{n \to \infty} \abs{\frac{3^{n+1}}{(n+1)!}\frac{n!}{3^n}} \\
+                      & = \lim_{n \to \infty} \abs{-\frac{3}{n+1}}                       \\
+                      & = 0<1                                                            \\
+                \end{align*}
+          \item $\displaystyle \sum_{n = 0}^{\infty} \frac{(-1)^n3^n}{n!}$ Converges by the ratio test to $\frac{1}{e^3}$
+                \begin{align*}
+                      & = \lim_{n \to \infty} \abs{\frac{(-1)^{n+1}3^{n+1}}{(n+1)!}\frac{n!}{3^n(-1)^n}} \\
+                      & = \lim_{n \to \infty} \abs{\frac{3}{n+1}}                                        \\
+                      & = 0<1                                                                            \\
+                \end{align*}
+          \item $\displaystyle \sum_{n = 0}^{\infty} \frac{n^n}{n!}$ Diverges by the ratio test
+                \begin{align*}
+                      & = \lim_{n \to \infty} \abs{\frac{(n+1)^{n+1}}{(n+1)!}\frac{n!}{n^n}} \\
+                      & = \lim_{n \to \infty} \abs{\frac{(n+1)(n+1)^n}{(n+1)}\frac{1}{n^n}}  \\
+                      & = \lim_{n \to \infty} \abs{\frac{(n+1)^n}{n^n}}                      \\
+                      & = \infty>1                                                           \\
+                \end{align*}
+          \item $\displaystyle \sum_{n = 0}^{\infty} \frac{(-1)^nn^n}{n!}$ Diverges by the ratio test
+                \begin{align*}
+                      & = \lim_{n \to \infty} \abs{\frac{(-1)^{n+1}(n+1)^{n+1}}{(n+1)!}\frac{n!}{(-1)^nn^n}} \\
+                      & = \lim_{n \to \infty} \abs{-\frac{(n+1)(n+1)^n}{(n+1)}\frac{1}{n^n}}                 \\
+                      & = \lim_{n \to \infty} \abs{-\frac{(n+1)^n}{n^n}}                                     \\
+                      & = \infty>1                                                                           \\
+                \end{align*}
+          \item $\displaystyle \sum_{n = 0}^{\infty} \frac{3^n}{n^n}$ Converges by the ratio test to $7.66289531150130$
+                \begin{align*}
+                      & = \lim_{n \to \infty} \abs{\frac{3^{n+1}}{(n+1)^{n+1}}\frac{n^n}{3^n}} \\
+                      & = \lim_{n \to \infty} \abs{\frac{3}{(n+1)^{n+1}}(n^n)}                 \\
+                      & = 0 < 1                                                                \\
+                \end{align*}
+          \item $\displaystyle \sum_{n = 0}^{\infty} \frac{(-1)^n3^n}{n^n}$ Converges by the alternating series test to $-0.498038749478000$.
+                \begin{align*}
+                      & = \lim_{n \to \infty} \abs{\frac{(-1)^{n+1}3^{n+1}}{(n+1)^{n+1}}\frac{n^n}{(-1)^n3^n}} \\
+                      & = \lim_{n \to \infty} \abs{-\frac{3}{(n+1)^{n+1}}(n^n)}                                \\
+                      & = 0 < 1                                                                                \\
+                \end{align*}
+          \item $\displaystyle \sum_{n = 0}^{\infty} \frac{n!}{3^n}$ Diverges by the ratio test
+                \begin{align*}
+                      & = \lim_{n \to \infty} \abs{\frac{(n+1)!}{3^{n+1}}\frac{3^n}{n!}} \\
+                      & = \lim_{n \to \infty} \abs{\frac{(n+1)!}{3(n!)}}                 \\
+                      & = \infty > 1                                                     \\
+                \end{align*}
+          \item $\displaystyle \sum_{n = 0}^{\infty} \frac{n!}{(-1)^n3^n}$ Diverges by the ratio test
+                \begin{align*}
+                      & = \lim_{n \to \infty} \abs{\frac{(n+1)!}{(-1)^{n+1}3^{n+1}}\frac{(-1)^n3^n}{n!}} \\
+                      & = \lim_{n \to \infty} \abs{-\frac{(n+1)!}{3(n!)}}                                \\
+                      & = \infty > 1                                                                     \\
+                \end{align*}
+          \item $\displaystyle \sum_{n = 0}^{\infty} \frac{n!}{n^n}$ Converges by the ratio test to $1.879853862175258$
+                \begin{align*}
+                      & = \lim_{n \to \infty} \abs{\frac{(n+1)!}{(n+1)^{n+1}}\frac{n^n}{n!}} \\
+                      & = \lim_{n \to \infty} \abs{\frac{n^n}{(n+1)^n}}                      \\
+                      & = 0 < 1                                                              \\
+                \end{align*}
+          \item $\displaystyle \sum_{n = 0}^{\infty} \frac{(-1)^nn!}{n^n}$ Converges by the ratio test to $0.344168399133$
+                \begin{align*}
+                      & = \lim_{n \to \infty} \abs{\frac{(-1)^{n+1}(n+1)!}{(n+1)^{n+1}}\frac{n^n}{(-1)^nn!}} \\
+                      & = \lim_{n \to \infty} \abs{-\frac{n^n}{(n+1)^n}}                                     \\
+                      & = 0 < 1                                                                              \\
+                \end{align*}
+          \item $\displaystyle \sum_{n = 0}^{\infty} \frac{n^n}{3^n}$ Diverges by the divergence test
+                \begin{align*}
+                      & = \lim_{n \to \infty} \frac{n^n}{3^n} \\
+                      & = \infty \neq 0                       \\
+                \end{align*}
+          \item $\displaystyle \sum_{n = 0}^{\infty} \frac{(-1)^nn^n}{3^n}$ Diverges by the divergence test
+                \begin{align*}
+                      & = \lim_{n \to \infty} \frac{(-1)^nn^n}{3^n} \\
+                      & = \infty \neq 0                             \\
+                \end{align*}
+     \end{enumerate}
+     A couple notes are warranted here, first of all I got the summation results in a) and b) using the Maclaurin series (Taylor series about 0), which is something I learned very recently in MATH-1550H,
+     the other results were gotten through messing around with Sage, which was being remarkably frustrating for these sums for some reason. I tried to find nicer ways to express the sums, both by hand and with
+     Sage, to little success so apologies for the really accurate decimal expansions. Here's Sage being petulant despite my best attempts to get it to behave. Note the sum starting at 1 instead of 0
+     because starting at 0 causes Sage to throw an non-descriptive error which ends with what I think is an empty string explaining the failure reason, very helpful!
+
+     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+          \prompt{In}{incolor}{1}{\boxspacing}
+          \begin{minted}[breaklines, autogobble]{sage}
+            from IPython.core.interactiveshell import InteractiveShell
+            InteractiveShell.ast_node_interactivity = "all"
+            
+            n = var('n')
+            k = var('k')
+            
+            sum(((3^n)/(n^n)), n, 1, oo)
+            limit(sum(((3^n)/(n^n)), n, 1, k), k=oo)
+        \end{minted}
+     \end{tcolorbox}
+     \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+          \prompt{Out}{outcolor}{1}{\boxspacing}
+          \begin{minted}[breaklines, autogobble]{sage}
+            sum(3^n/n^n, n, 1, +Infinity)
+        \end{minted}
+     \end{tcolorbox}
+     \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+          \prompt{Out}{outcolor}{1}{\boxspacing}
+          \begin{minted}[breaklines, autogobble]{sage}
+            limit(sum(3^n/n^n, n, 1, k), k, +Infinity)
+        \end{minted}
+     \end{tcolorbox}
+\end{soln}
+
+% PROBLEM 2
+\begin{problem}
+Does the series $\displaystyle \sum_{n = 0}^{\infty} \left[\frac{1}{3n+1}-\frac{1}{3n+2}+\frac{1}{3n+3}\right]$ converge or diverge? If it converges, does it do so conditionally or absolutely?
+\end{problem}
+\begin{soln} ~\\
+     $$\sum_{n = 0}^{\infty} \left[\frac{1}{3n+1}-\frac{1}{3n+2}+\frac{1}{3n+3}\right]$$
+     $$\sum_{n = 0}^{\infty} \frac{1}{3n+1} - \sum_{n = 0}^{\infty}\frac{1}{3n+2} + \sum_{n = 0}^{\infty}\frac{1}{3n+3}$$
+     Each of those diverge, so the original series will be some variation of divergent as well. This can be verified with the integral test as follows
+     \begin{align*}
+           & = \lim_{k \to \infty}  \int_{0}^{k} \frac{1}{3x+1}-\frac{1}{3x+2}+\frac{1}{3x+3} \,dx                                                                  \\
+           & = \lim_{k \to \infty}  \left[\int_{0}^{k} \frac{1}{3x+1} \,dx - \int_{0}^{k} \frac{1}{3x+2} \,dx + \int_{0}^{k}\frac{1}{3x+3} \,dx\right]              \\
+           & = \lim_{k \to \infty}  \left[\eval*{\frac{1}{3}\ln(3x+1)}_{0}^{k} - \eval*{\frac{1}{3}\ln(3x+2)}_{0}^{k} + \eval*{\frac{1}{3}\ln(3x+3)}_{0}^{k}\right] \\
+           & = \lim_{k \to \infty}  \frac{1}{3}\eval*{\left[\ln(3x+1) - \ln(3x+2) + \ln(3x+3)\right]}_{0}^{k}                                                       \\
+           & = \lim_{k \to \infty}  \frac{1}{3}\eval*{\left[\ln(\frac{3x+1}{3x+2}(3x+3))\right]}_{0}^{k}                                                            \\
+           & = \lim_{k \to \infty}  \frac{1}{3}\left[\ln(\frac{(3k+1)(3k+3)}{3k+2})\right]                                                                          \\
+           & = \infty                                                                                                                                               \\
+     \end{align*}
+     $\therefore$ Because the integral diverges per the integral test for convergence the series must also diverge.
+\end{soln}
+\end{document}

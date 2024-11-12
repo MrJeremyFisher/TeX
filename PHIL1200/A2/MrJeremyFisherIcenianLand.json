@@ -1,0 +1,48 @@
+{
+    "id": "0e5e8222-e53e-4bc9-b8a6-63146d6a3d7c",
+    "name": "MrJeremyFisher Icenian Land",
+    "info": {
+        "version": "3.0.0-beta3",
+        "last_update": 1709351788
+    },
+    "features": [
+        {
+            "id": "bcc88faf-39d8-404c-83eb-59eb6792b068",
+            "polygon": [
+                [
+                    [
+                        -3908,
+                        -4385
+                    ],
+                    [
+                        -3892,
+                        -4385
+                    ],
+                    [
+                        -3892,
+                        -4407
+                    ],
+                    [
+                        -3908,
+                        -4407
+                    ]
+                ]
+            ],
+            "name": "House"
+        },
+        {
+            "id": "979b38ec-fae5-485a-b719-4b1200a91f36",
+            "rectangle": [
+                [
+                    -3820,
+                    -4345
+                ],
+                [
+                    -3837,
+                    -4362
+                ]
+            ],
+            "name": "Shop"
+        }
+    ]
+}

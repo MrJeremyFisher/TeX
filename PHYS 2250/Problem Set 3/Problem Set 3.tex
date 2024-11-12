@@ -1,0 +1,355 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{changepage}
+\usepackage{circuitikz}
+\usepackage{pgfplots}
+\usepackage{physics}
+\usepackage{hyperref}
+\usepackage{siunitx}
+\usepackage[breakable]{tcolorbox}
+\usepackage[inline]{enumitem}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{soln}{Solution}
+
+\pgfplotsset{compat=newest}
+\usetikzlibrary{lindenmayersystems}
+\usetikzlibrary{arrows}
+
+\definecolor{incolor}{HTML}{303F9F}
+\definecolor{outcolor}{HTML}{D84315}
+\definecolor{cellborder}{HTML}{CFCFCF}
+\definecolor{cellbackground}{HTML}{F7F7F7}
+\newcommand{\eq}{=}
+\usetikzlibrary{positioning, fit, calc}
+\pgfdeclarelayer{background}  
+\pgfsetlayers{background,main}
+
+\makeatletter
+\newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+\makeatother
+\newcommand{\prompt}[4]{
+    \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+}
+
+\newcommand{\thevenin}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (2,0) to[battery1, l_=$V_{Th}\eq#1$] (2,2) 
+      to[resistor, l_=$R_{Th}\eq#2$] (0,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\norton}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (3,0) to[american current source, l_=$I_{N}\eq#1$] (3,2) -- (0,2) (2,0)
+      to[resistor, l=$R_{N}\eq#2$] (2,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\highlight}[1]{\colorbox{yellow}{$\displaystyle #1$}}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+    }
+
+\NewDocumentCommand{\evalat}{sO{\big}mm}{%
+  \IfBooleanTF{#1}
+   {\mleft. #3 \mright|_{#4}}
+   {#3#2|_{#4}}%
+}
+
+\title{Physics 2250: Problem Set III}
+\author{Jeremy Favro}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+% PROBLEM 1
+\begin{problem}
+[\textbf{BONUS}]Consider the circuit below.
+\begin{center}
+  \begin{circuitikz} \draw
+    (0,2) to[battery1, l_=$9\unit{\volt}$] (0,0) (0,2) 
+    to[capacitor, l=$C\eq3\unit{\micro\farad}$] (2,2)
+    to[resistor, l=$R_1\eq6\unit{\kilo\ohm}$] (4,2) -- (4,0) -- (2,0)
+    to[resistor, l_=$R_2\eq3\unit{\kilo\ohm}$] (2,2)  (0,0)
+    to[switch, l_=$S$] (2,0)
+    ;
+  \end{circuitikz}
+\end{center}
+\end{problem}
+\begin{soln} ~\\
+  a) Because resistors in parallel share a voltage drop we can simplify $R_1$ and $R_2$ here
+  $R_{eq}=\displaystyle{\left(\frac{1}{6\unit{\kilo\ohm}}+\frac{1}{3\unit{\kilo\ohm}}\right)^{-1}}=2\unit{\kilo\ohm}$
+  Using the formula for voltage across a resistor as a function of time in an RC circuit given in the course text we get that
+  \begin{align*}
+     & 4.5\unit{\volt}=9\unit{\volt}e^{\frac{-t}{R_{eq}C}}                                                            \\
+     & 4.5\unit{\volt}=9\unit{\volt}e^{\frac{-t}{\num{2d3}\unit{\ohm}\cdot\num{3d-6}\unit{\farad}}}                   \\
+     & 4.5\unit{\volt}=9\unit{\volt}e^{\frac{-t}{\num{6d-3}\unit{\ohm\farad}}}                                        \\
+     & \ln(\frac{1}{2})={\frac{-t}{\num{6d-3}\unit{\ohm\farad}}}                                                      \\
+     & -\num{6d-3}\unit{\ohm\farad}\ln(\frac{1}{2})=t\approxeq \num{4.159d-3}\unit{\second}=4.159\unit{\milli\second}
+  \end{align*}
+  b) Again using the course text to obtain a formula for the voltage across a capacitor versus time, which, when equal to the source voltage will indicate a fully charged capacitor
+  $$v_c(t)=V_s\left[1-e^{\frac{-t}{R_{eq}C}} \right]$$
+  without doing any rearranging for $t$ it can be seen that for $v_c=9\unit{\volt}$ $\displaystyle{1-e^{\frac{-t}{R_{eq}C}}}$ must be 1, thus the exponential term must be zero which only occurs
+  at an infinitely distant time. So the capacitor can never be ``fully'' charged in a mathematical sense. However (I think this makes sense) because the universe
+  isn't infinitely granular (right?) when $9\unit{\volt}C-v_cC < e \text{ (the electron charge)}$ the capacitor can be considered effectively fully charged as there exists
+  no smaller charge carrier to further equalize the charge at that instant. The aformentioned instant occurs at ~0.0132s. See ``I think this makes sense'' for rationalization.
+\end{soln}
+
+% PROBLEM 2
+\begin{problem}
+Find the value of current $I$ flowing through the $1\unit{\ohm}$ resistor.
+\begin{center}
+  \begin{circuitikz} \draw
+    (0,0) to[resistor, l_=$R_3\eq1\unit{\ohm}$] (0,2) (2,2)
+    to[battery1, l_=$3\unit{\volt}$] (0,2) (2,2)
+    to[resistor, l=$R_1\eq3\unit{\ohm}$] (4.5,2)
+    to[battery1, l=$15\unit{\volt}$] (4.5,0) -- (2,0)
+    to[resistor, l_=$R_2\eq6\unit{\ohm}$, o-] (2,2) (2,0) -- (0,0)
+    ;
+    
+    \draw [-stealth, line width=0.5mm] (1,0) node[below right] {$I_3$} -- (2,0) ;
+    \draw [-stealth, line width=0.5mm] (2,0.44) node[right] {$I_2$} -- (2,0) ;
+    \draw [-stealth, line width=0.5mm] (2,0) node[below right] {$I_1$} -- (2.5,0) ;
+    \draw (2,0) node[below left] {$\epsilon_1$};
+    \draw [*-] (.25,2.079) node[above left] {B};
+    \draw [*-] (.25,0.079) node[below left] {A};
+  \end{circuitikz}
+\end{center}
+\end{problem}
+\begin{soln} ~\\
+  a) Going around both loops clockwise starting at $\epsilon_1$ (and looking at the junction at $\epsilon_1$) we get
+  \begin{align*}
+     & 0 = -I_3R_3+3\unit{\volt}-I_2R_2 \\
+     & 0 = 15\unit{\volt}-I_1R_1-I_2R_2 \\
+     & 0 = I_3 + I_2 - I_1
+  \end{align*}
+  which when solved yields $I_3=\displaystyle{\frac{7}{3}}\unit{\ampere}$ \\
+  b) Removing the $3\unit{\volt}$ battery and replacing it with a wire we get a simple three resistor circuit where $R_{eq}=\displaystyle\left(\frac{1}{1\unit{\ohm}}+\frac{1}{6\unit{\ohm}}\right)^{-1}+3\unit{\ohm}=\frac{27}{7}\unit{\ohm}$
+  which therefore has an $I_{tot}=\displaystyle\frac{15\unit{\volt}}{\frac{27}{7}\unit{\ohm}}=\frac{35}{9}\unit{\ampere}$ which is divided into the $R_3$ branch
+  per the current divider rule $I_3=\displaystyle\frac{35}{9}\unit{\ampere}\cdot\frac{6}{7}=\frac{10}{3}\unit{\ampere}$ flowing ``downwards'' (negative). Then removing the $15\unit{\volt}$ resistor
+  we get a circuit with $R_{eq}=\displaystyle\left(\frac{1}{3\unit{\ohm}}+\frac{1}{6\unit{\ohm}}\right)^{-1}+1\unit{\ohm}=3\unit{\ohm}$ which has an $I_{tot}=\displaystyle\frac{3\unit{\volt}}{3\unit{\ohm}}=1\unit{\ampere}$
+  all of which flows ``upwards'' through $R_3$. Therefore the total current when these two are superimposed is $I_3=1\unit{\ampere}-\displaystyle\frac{10}{3}\unit{\ampere}=-\frac{7}{3}\unit{\ampere}$
+  upwards, which is actually downwards because of the sign. \\
+  c) We can solve the circuit created by removing $R_3$ using superposition to determine that the 3V-only circuit will have a potential drop across port AB of $3\unit{\volt}$ and the 15V-only
+  circuit will have one of $10\unit{\volt}$. This means that $V_{Th}=V_{15AB}-V_{3AB}=10\unit{\volt}-3\unit{\volt}=7\unit{\volt}$. $R_{Th}$ is obtained by shorting both voltage sources and looking
+  at the current path from terminal A to terminal B so $R_{Th}=\displaystyle\left(\frac{1}{3\unit{\ohm}}+\frac{1}{6\unit{\ohm}}\right)^{-1}=2\unit{\ohm}$ so the circuit's Th\'evenin equivalent looks like
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (2,0) to[battery1, l_=$V_{Th}\eq7\unit{\volt}$] (2,2) 
+      to[resistor, l_=$R_{Th}\eq2\unit{\ohm}$] (0,2)
+      ;
+      \draw [*-] (0,2.079) node[above left] {B};
+      \draw [*-] (0,0.079) node[below left] {A};
+    \end{circuitikz}
+  \end{center}
+  So when a $1\unit{\ohm}$ load is placed across port AB it will experience a current of $I_{load}=\displaystyle\frac{V_{Th}}{R_{tot}}=\frac{7\unit{\volt}}{2\unit{\ohm}+1\unit{\ohm}}=\frac{7}{3}\unit{\ampere}$\\
+  d) Using superposition to solve for $I_N$ we get two circuits
+  \begin{center}
+    \begin{circuitikz} \draw
+      (2,2)
+      to[battery1, l_=$3\unit{\volt}$] (0,2) (2,2)
+      to[resistor, l=$R_1\eq3\unit{\ohm}$] (4.5,2)
+      -- (4.5,0) -- (2,0)
+      to[resistor, l_=$R_2\eq6\unit{\ohm}$, o-] (2,2) (2,0) -- (0,0)
+      (.0,2.079) -- (.0,0.079)
+      ;
+      \node at (2.5,3.2) {Circuit A};
+      \draw [*-] (.0,2.079) node[above left] {B};
+      \draw [*-] (.0,0.079) node[below left] {A};
+    \end{circuitikz}
+    \begin{circuitikz} \draw
+      (2,2)
+      -- (0,2) (2,2)
+      to[resistor, l=$R_1\eq3\unit{\ohm}$] (4.5,2)
+      to[battery1, l=$15\unit{\volt}$] (4.5,0) -- (2,0)
+      to[resistor, l_=$R_2\eq6\unit{\ohm}$, o-] (2,2) (2,0) -- (0,0)
+      (0,2.079) -- (0,0.079)
+      ;
+      \node at (2.5,3.2) {Circuit B};
+      \draw [*-] (0,2.079) node[above left] {B};
+      \draw [*-] (0,0.079) node[below left] {A};
+    \end{circuitikz}
+  \end{center}
+  In circuit A we get a current through port AB of $I_{AB}=\displaystyle3\unit{\volt}\left(3^{-1}+6^{-1}\right)=\frac{3}{2}\unit{\ampere}$. In circuit B we've shorted $R_2$ so the current through
+  port AB is $I_{AB}=\displaystyle\frac{15\unit{\volt}}{3\unit{\ohm}}=5\unit{\ampere}$. So when superimposing these currents we get that $I_N=5\unit{\ampere}-\displaystyle\frac{3}{2}\unit{\ampere}=\frac{7}{2}\unit{\ampere}$.
+  $R_N$ can be found by shorting both voltage sources and looking in from port AB at how current will travel so $R_N=\left(6^{-1}\unit{\ohm}^{-1}+3^{-1}\unit{\ohm}^{-1}\right)^{-1}=2\unit{\ohm}$. Therefore the Norton equivalent looks like
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (3,0) to[american current source, l_=$I_{N}\eq\frac{7}{2}\unit{\ampere}$] (3,2) -- (0,2) (2,0)
+      to[resistor, l=$R_{N}\eq2\unit{\ohm}$] (2,2)
+      ;
+      \draw [*-] (0,2.079) node[above left] {B};
+      \draw [*-] (0,0.079) node[below left] {A};
+    \end{circuitikz}
+  \end{center}
+  So when a $1\unit{\ohm}$ load is placed between terminals A and B it will experience a current given by the associated current divider $I_{load}=I_N\cdot\displaystyle\frac{R_N}{R_N+1\unit{\ohm}}=\frac{7}{2}\unit{\ampere}\cdot\displaystyle\frac{2\unit{\ohm}}{2\unit{\ohm}+1\unit{\ohm}}=\frac{7}{3}\unit{\ampere}$
+\end{soln}
+
+% PROBLEM 3
+\begin{problem}
+Determine the Norton \textbf{and} Th\'evenin equivalents of the circuit below.
+\begin{center}
+  \begin{circuitikz}[scale=1.25]
+    \draw
+    (0,0) to[american current source, l=$I_S\eq10\unit{\ampere}$] (0,2)
+    to[resistor, l=$R_1\eq3\unit{\ohm}$] (2,2)
+    to[battery1, l_=$V_A\eq20\unit{\volt}$] (2,1)
+    to[resistor, l=$R_3\eq6\unit{\ohm}$] (2,0)
+    to[resistor, l=$R_2\eq3\unit{\ohm}$] (0,0) (2,0)
+    to[resistor, l_=$R_4\eq4\unit{\ohm}$] (4,0)
+    to[resistor, l=$R_5\eq2\unit{\ohm}$] (4,2) -- (2,2)
+    ;
+    \draw [-o] (4,2) -- (4.5,2);
+    \draw [-o] (4,0) -- (4.5,0);
+  \end{circuitikz}
+\end{center}
+\end{problem}
+\begin{soln} ~\\
+  Th\'evenin:
+  Solving the circuit using superposition yields two sub circuits
+  \begin{center}
+    \begin{circuitikz}[scale=1.25] \draw
+      (0,0) to[open] (0,2)
+      to[resistor, l=$R_1\eq3\unit{\ohm}$] (2,2)
+      to[battery1, l_=$V_A\eq20\unit{\volt}$] (2,1)
+      to[resistor, l=$R_3\eq6\unit{\ohm}$] (2,0)
+      to[resistor, l=$R_2\eq3\unit{\ohm}$] (0,0) (2,0)
+      to[resistor, l_=$R_4\eq4\unit{\ohm}$] (4,0)
+      to[resistor, l=$R_5\eq2\unit{\ohm}$] (4,2) -- (2,2)
+      ;
+      \node at (2.5,3.2) {Circuit A};
+      \draw [-o] (4,2) -- (4.5,2);
+      \draw [-o] (4,0) -- (4.5,0);
+    \end{circuitikz}
+    \begin{circuitikz}[scale=1.25] \draw
+      (0,0) to[american current source, l=$I_S\eq10\unit{\ampere}$] (0,2)
+      to[resistor, l=$R_1\eq3\unit{\ohm}$] (2,2)
+      to[resistor, l_=$R_3\eq6\unit{\ohm}$] (2,0)
+      to[resistor, l=$R_2\eq3\unit{\ohm}$] (0,0) (2,0)
+      to[resistor, l_=$R_4\eq4\unit{\ohm}$] (4,0)
+      to[resistor, l=$R_5\eq2\unit{\ohm}$] (4,2) -- (2,2)
+      ;
+      \node at (2.5,3.2) {Circuit B};
+      \draw [-o] (4,2) -- (4.5,2);
+      \draw [-o] (4,0) -- (4.5,0);
+    \end{circuitikz}
+  \end{center}
+  In this case we are trying to solve for the voltage across $R_5$ in both circuits. In circuit A $R_1$ and $R_2$ don't have any effect on the circuit as they have no current passing through them so they can be ignored.
+  To determine the voltage across $R_{5A}$ we can find the equivalent resistance $R_{eq}=R_3+R_4+R_5=12\unit{\ohm}$ and thus $I_{tot}=\displaystyle\frac{20\unit{\volt}}{12\unit{\ohm}}=\frac{5}{3}\unit{\ampere}$
+  therefore $V_{5A}=\frac{5}{3}\unit{\ampere}\cdot2\unit{\ohm}=\frac{10}{3}\unit{\volt}$. In circuit B the voltage across $R_5$ is determined by the current divider created by the $R_3$-$R_5$
+  branch, $\displaystyle I_5=I_S\frac{R_3}{R_5+R_4+R_3}=5\unit{\ampere}\implies V_{5B}=5\unit{\ampere}\cdot2\unit{\ohm}=10\unit{\volt}$. Superimposing these two voltages gives us the voltage across the port 
+  $V_{port}=V_{5A}+V_{5B}=\displaystyle\frac{40}{3}\unit{\volt}=V_{Th}$. $R_{Th}$ can be found by eliminating the active components which removes $R_1$ and $R_2$ as the current source is replaced with an open. From there
+  $R_{Th}=\displaystyle\left((R_3+R_4)^{-1}+R_5^{-1}\right)^{-1}=\frac{5}{3}\unit{\ohm}$. Therefore the Th\'evenin equivalent becomes \\
+  \thevenin{\frac{40}{3}\unit{\volt}}{\frac{5}{3}\unit{\ohm}} ~\\
+  Norton: Solving the circuit using superposition and shorting across the port 
+  \begin{center}
+    \begin{circuitikz}[scale=1.25] \draw
+      (0,0) to[open] (0,2)
+      to[resistor, l=$R_1\eq3\unit{\ohm}$] (2,2)
+      to[battery1, l_=$V_A\eq20\unit{\volt}$] (2,1)
+      to[resistor, l=$R_3\eq6\unit{\ohm}$] (2,0)
+      to[resistor, l=$R_2\eq3\unit{\ohm}$] (0,0) (2,0)
+      to[resistor, l_=$R_4\eq4\unit{\ohm}$] (4,0)
+      to[resistor, l=$R_5\eq2\unit{\ohm}$] (4,2) -- (2,2)
+      ;
+      \node at (2.5,3.2) {Circuit A};
+      \draw (4,2) -- (4.5,2) -- (4.5,0) -- (4,0);
+    \end{circuitikz}
+    \begin{circuitikz}[scale=1.25] \draw
+      (0,0) to[american current source, l=$I_S\eq10\unit{\ampere}$] (0,2)
+      to[resistor, l=$R_1\eq3\unit{\ohm}$] (2,2)
+      to[resistor, l_=$R_3\eq6\unit{\ohm}$] (2,0)
+      to[resistor, l=$R_2\eq3\unit{\ohm}$] (0,0) (2,0)
+      to[resistor, l_=$R_4\eq4\unit{\ohm}$] (4,0)
+      to[resistor, l=$R_5\eq2\unit{\ohm}$] (4,2) -- (2,2)
+      ;
+      \node at (2.5,3.2) {Circuit B};
+      \draw (4,2) -- (4.5,2) -- (4.5,0) -- (4,0);
+    \end{circuitikz}
+  \end{center}
+  In circuit A $R_1$ and $R_2$ experience no current and therefore have no effect on the circuit. $R_5$ is shorted and therefore also has no effect on the circuit, so the current through the shorted port is $I_{tot}=I_{B}=\displaystyle\frac{20\unit{\volt}}{6\unit{\ohm}+4\unit{\ohm}}=2\unit{\ampere}$.
+  In circuit B $R_5$ is again shorted and therefore has no effect on the circuit so the current through the shorted port is the current through $R_4$ which is determined by the $R_3$-$R_4$ current divider
+  $I_{port}=I_B=I_S\cdot\displaystyle\frac{R_3}{R_3+R_4}=10\unit{\ampere}\cdot\frac{6\unit{\ohm}}{6\unit{\ohm}+4\unit{\ohm}}=6\unit{\ampere}$. So, $I_N=I_A+I_B=8\unit{\ampere}$. $R_N$ is determined through the same 
+  method as Th\'evenin so I will spare the details I went through previously and just state that $R_N=\displaystyle\frac{5}{3}\unit{\ohm}$. Therefore the Norton equivalent looks like
+  \norton{8\unit{\ampere}}{\frac{5}{3}\unit{\ohm}}
+\end{soln}
+
+% PROBLEM 4
+\begin{problem}
+[\textbf{BONUS}] A simple model of a photovoltaic solar cell is a current source with the current proportional to the power of sunlight falling on it. 
+(A more accurate model includes a diode, which is a nonlinear element we will learn about later in the course). There is some leakage current in the
+source, which can be modelled with a parallel resistor, Rp. There is also a voltage drop in the transmission of the power that can be modelled by resistors in series, Rs, connecting to the load. 
+The load resistance is given by RL. This crude model is represented in the figure below
+\begin{center}
+  \begin{circuitikz} \draw
+    (0,0) coordinate(bottom) to[american current source, l=$I_S\eq0.2\unit{\ampere}$, name=s] (0,2) coordinate(top) -- (1,2)
+    to[resistor, l=$R_P\eq3\unit{\ohm}$] (1,0) -- (0,0) (1,0) 
+    to[resistor, l=$R_S\eq1.8\unit{\ohm}$, name=rt] (7,0) 
+    to[resistor, l=$R_L$, name=rl] (7,2)
+    to[resistor, l=$R_S\eq1.8\unit{\ohm}$] (1,2) (7,0) coordinate(rl2);
+    \begin{pgfonlayer}{background}
+      \draw     
+      node[fit={($(top.north)+(0,.5)$) ($(bottom.south)+(0,-.5)$) ($(s.west)+(-2,0)$) ($(rt.east)+(0.4,0)$)}, draw, fill=blue, opacity=0.2, dashed, label={Power Source}, inner sep=10pt]{}
+      node[fit={($(top.north)+(3.25,0)$) ($(bottom.south)+(3.25,0)$) ($(rt.east)+(0.25,0)$)}, draw, fill=green, opacity=0.2, dashed, label={Transmission}, inner sep=10pt]{}
+      node[fit={($(rl.north)+(0,1)$) ($(rl2.west)+(-0.75,0)$) (7.25,0)}, draw, fill=red, opacity=0.2, dashed, label={Load}, inner sep=10pt]{};
+    \end{pgfonlayer}
+  \end{circuitikz}
+\end{center}
+\end{problem}
+\begin{soln} ~\\
+  a) Knowing that $P=IV=I^2R$ we can set up an equation for $P_{L}$ in terms of $R_{L}$ which can be differentiated to determine maxima and minima. 
+  $I_L=I_S\cdot\displaystyle\frac{R_P}{R_P+R_L+2R_S}\implies P_L=I_L^2R_L=\left(I_S\cdot\frac{R_P}{R_P+R_L+2R_S}\right)^2\cdot R_L$
+  \begin{align*}
+   & \frac{d}{dR_L}\left[\left(I_S\cdot\frac{R_P}{R_P+R_L+2R_S}\right)^2\cdot R_L\right] \\
+   & \frac{d}{dR_L}\left[\frac{I_S^2R_P^2R_L}{\left(R_P+R_L+2R_S\right)^2} \right] \\
+   & \frac{\frac{d}{dR_L}\left[I_S^2R_P^2R_L\right]\left(R_P+R_L+2R_S\right)^2-\frac{d}{dR_L}\left[\left(R_P+R_L+2R_S\right)^2\right]I_S^2R_P^2R_L}{\left(R_P+R_L+2R_S\right)^4} \\
+   & I_S^2R_P^2\cdot\frac{\frac{d}{dR_L}\left[R_L\right]\left(R_P+R_L+2R_S\right)^2-\frac{d}{dR_L}\left[\left(R_P+R_L+2R_S\right)^2\right]R_L}{\left(R_P+R_L+2R_S\right)^4} \\
+   & I_S^2R_P^2\cdot\frac{\left(R_P+R_L+2R_S\right)^2-2\left(R_P+R_L+2R_S\right)\frac{d}{dR_L}\left[\left(R_P+R_L+2R_S\right)\right]R_L}{\left(R_P+R_L+2R_S\right)^4} \\
+   & I_S^2R_P^2\cdot\frac{\left(R_P+R_L+2R_S\right)^2-2\left(R_P+R_L+2R_S\right)R_L}{\left(R_P+R_L+2R_S\right)^4} \\
+  \end{align*}
+  Wow, great, I think I did that correctly. Now we solve $P_L^\prime=0$
+  \begin{align*}
+    & 0 = \frac{I_S^2R_P^2\left(R_P+R_L+2R_S\right)^2}{\left(R_P+R_L+2R_S\right)^4} - \frac{2I_S^2R_P^2\left(R_P+R_L+2R_S\right)R_L}{\left(R_P+R_L+2R_S\right)^4}\\
+    & 0 = \frac{I_S^2R_P^2}{\left(R_P+R_L+2R_S\right)^2} - \frac{2I_S^2R_P^2R_L}{\left(R_P+R_L+2R_S\right)^3} \\
+    & \frac{2I_S^2R_P^2R_L}{\left(R_P+R_L+2R_S\right)} = I_S^2R_P^2\\
+    & \frac{1}{2R_L} = \frac{1}{\left(R_P+R_L+2R_S\right)} \\
+    & 2R_L = R_P+R_L+2R_S \\
+    & R_L = R_P+2R_S \\
+   \end{align*}
+   So $P_L^\prime$ has only one zero at $R_L = 3+2(1.8)=6.6\unit{\ohm}$. Looking at the function on a graph which I will omit here to save myself the paper and ink reveals this point to be a maximum. The same conclusion could
+   also be arrived at through testing the second derivative.\\
+   b) Removing $R_L$ also takes both transmission resistors out of the equation whichs means that $V_{Th}=I_SR_P=0.2\unit{\ampere}\cdot3\unit{\ohm}=\displaystyle\frac{3}{5}\unit{\volt}$. $R_{Th}$ is 
+   the combined resistance of both transmission resistors and the parallel resistor as when $I_S$ is opened that is the only path through which current flows from the port so $R_{Th}=2R_S+R_P=6.6\unit{\ohm}$.
+   Therefore the Th\'evenin equivalent looks like
+   \thevenin{\frac{3}{5}\unit{\volt}}{6.6\unit{\ohm}}
+   $R_{Th}$ is the same as the optimal $R_L$ because the optimal $R_L$ will shift to match $R_{Th}$ per $P_L=I_SV_L=I_S^2R_L$. Because the current is constant if $R_L<R_{Th}$ then $R_L$ is no longer optimal and must increase
+   up to $R_{Th}$ to create the greatest possible voltage drop across itself. In reverse, increasing $R_{L}$ past this happy point will mean more current travels through $R_{P}$ which defeats the purpose of increasing $R_{L}$.
+   c) The maximum power delivery occurs when $R_L$ is optimal so is $P_L=I_L^2R_L=\displaystyle\left(0.2\unit{\ampere}\frac{3\unit{\ohm}}{2\cdot1.8\unit{\ohm}+6.6\unit{\ohm}+3\unit{\ohm}}\right)^26.6\unit{\ohm}\approxeq13.64\unit{\milli\watt}$. $P_{tot}=V_{tot}I_S=(V_P+V_S+V_L)I_S\approxeq92.73\unit{\milli\watt}$,
+   therefore the resistor uses $\displaystyle\frac{13.64\unit{\milli\watt}}{92.73\unit{\milli\watt}}\cdot100\approxeq14.71\%$ of the total expendable power.
+\end{soln}
+\end{document}

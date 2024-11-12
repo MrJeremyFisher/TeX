@@ -1,0 +1,21 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{} Right\PYGZhy{}Hand rule}
+\PYG{n}{clear\PYGZus{}vars}\PYG{p}{()}
+
+\PYG{n}{x} \PYG{o}{=} \PYG{n}{var}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}x\PYGZsq{}}\PYG{p}{)}
+\PYG{n}{i} \PYG{o}{=} \PYG{n}{var}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}i\PYGZsq{}}\PYG{p}{)}
+\PYG{n}{n} \PYG{o}{=} \PYG{n}{var}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}n\PYGZsq{}}\PYG{p}{)}
+
+\PYG{n}{g} \PYG{o}{=} \PYG{n}{function}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}g\PYGZsq{}}\PYG{p}{)(}\PYG{n}{x}\PYG{p}{)}
+
+\PYG{n}{g}\PYG{p}{(}\PYG{n}{x}\PYG{p}{)} \PYG{o}{=} \PYG{n}{x}\PYG{o}{\PYGZca{}}\PYG{l+m+mi}{2}
+
+\PYG{n}{lower\PYGZus{}lim} \PYG{o}{=} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{2}
+\PYG{n}{upper\PYGZus{}lim} \PYG{o}{=} \PYG{l+m+mi}{2}
+
+\PYG{n}{s} \PYG{o}{=} \PYG{n}{function}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}s\PYGZsq{}}\PYG{p}{)(}\PYG{n}{n}\PYG{p}{)}
+
+\PYG{n}{s}\PYG{p}{(}\PYG{n}{n}\PYG{p}{)} \PYG{o}{=} \PYG{n+nb}{sum}\PYG{p}{(((}\PYG{n}{upper\PYGZus{}lim}\PYG{o}{\PYGZhy{}}\PYG{n}{lower\PYGZus{}lim}\PYG{p}{)}\PYG{o}{/}\PYG{n}{n}\PYG{p}{)}\PYG{o}{*}\PYG{n}{g}\PYG{p}{(}\PYG{n}{lower\PYGZus{}lim}\PYG{o}{+}\PYG{n}{i}\PYG{o}{*}\PYG{p}{((}\PYG{n}{upper\PYGZus{}lim}\PYG{o}{\PYGZhy{}}\PYG{n}{lower\PYGZus{}lim}\PYG{p}{)}\PYG{o}{/}\PYG{n}{n}\PYG{p}{)),} \PYG{n}{i}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{n}\PYG{p}{)} \PYG{c+c1}{\PYGZsh{} Sum of the expression starting at i = 1, up to i = n}
+
+\PYG{n}{show}\PYG{p}{(}\PYG{l+m+mi}{4}\PYG{o}{*}\PYG{l+m+mi}{4} \PYG{o}{\PYGZhy{}} \PYG{n}{limit}\PYG{p}{(}\PYG{n}{s}\PYG{p}{(}\PYG{n}{n}\PYG{p}{),} \PYG{n}{n}\PYG{o}{=}\PYG{n}{infinity}\PYG{p}{))} \PYG{c+c1}{\PYGZsh{} area of y=4 minus limit of the above sum as n \PYGZhy{}\PYGZgt{} infinity}
+\end{Verbatim}

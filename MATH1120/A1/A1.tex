@@ -1,0 +1,171 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{minted}
+\usepackage{pythonhighlight}
+\usepackage[inline]{enumitem}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{soln}{Solution}
+
+\title{Calculus II: Assignment 1}
+\author{Jeremy Favro}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+% PROBLEM 1
+\begin{problem}
+Find the area of the finite region between the parabola $y = x^2$ and the line $y = 4$ by setting
+up and evaluating a suitable definite integral. The evaluation should be done both by hand
+and by using SageMath.
+\end{problem}
+\begin{soln} The area we are looking for is the result of the subtraction of the area under $y=4$ and $y=x^2$ between their intersection points.
+    This means that $\int_{P_1}^{P_2} 4 \,dx - \int_{P_1}^{P_2} x^2 \,dx$ will give us our area.
+    To determine $P_1 \& P_2$, set $x^2=4$ and solve.
+    \begin{align*}
+         & x^2=4      \\
+         & x=\sqrt{4} \\
+         & x=\pm 2    \\
+    \end{align*}
+    So,
+    \begin{align*}
+         & = \int_{-2}^{2} 4 \,dx - \int_{-2}^{2} x^2 \,dx           \\
+         & = (4(2) - \frac{1}{3}(2)^3) - (4(-2) - \frac{1}{3}(-2)^3) \\
+         & = \frac{32}{3}                                            \\
+    \end{align*}
+
+    $$\therefore \frac{32}{3} \text{ is the area between } y = x^2 \text{ and } y = 4 \text{, on the interval } [-2,2]$$
+
+    \noindent Using sage to evaluate:
+
+    \begin{minted}[breaklines]{sage}
+# Plain ol' integration 
+clear_vars()
+        
+x = var('x')
+        
+f = x^2
+g = 4
+        
+show(integral(g, x, -2, 2)-integral(f(x), x, -2, 2))
+    \end{minted}
+\end{soln}
+
+% PROBLEM 2
+\begin{problem}
+Compute the definite integral you set up in solving $1$ using the Right-Hand Rule formula, as
+described in the accompanying handout Right-Hand Rule Riemann Sums. The evaluation of
+the formula, once you've set it up, should be done both by hand and by using SageMath.
+\end{problem}
+\begin{soln}
+    The Right-Hand Rule formula,
+    \begin{equation}
+        \lim_{n \to \infty}\left[\sum_{i = 1}^{n}\left( \frac{b-a}{n} \cdot f\left(a+i\frac{b-a}{n}\right) \right) \right]
+    \end{equation}
+    Where $a$ is the left bound and $b$ is the right bound.
+    \begin{align*}
+         & = \lim_{n \to \infty}\left[\sum_{i = 1}^{n}\left( \frac{2-(-2)}{n} \cdot f\left(-2+i\frac{2-(-2)}{n}\right) \right) \right]                                                                                                       \\
+         & = \lim_{n \to \infty}\left[\sum_{i = 1}^{n}\left( \frac{4}{n} \cdot f\left(-2+i\frac{4}{n}\right) \right) \right]                                                                                                                 \\
+         & = \lim_{n \to \infty}\left[\frac{4}{n}\sum_{i = 1}^{n}\left(-2+i\frac{4}{n}\right)^2 \right]                                                                                                                                      \\
+         & = \lim_{n \to \infty}\left[\frac{4}{n}\sum_{i = 1}^{n}\left(4-i\frac{16}{n} + i^2\frac{16}{n^2}\right) \right]                                                                                                                    \\
+         & = \lim_{n \to \infty}\left[\frac{4}{n}\left(\sum_{i = 1}^{n}\left(4\right)-\sum_{i = 1}^{n}\left(i\frac{16}{n}\right) + \sum_{i = 1}^{n}\left(i^2\frac{16}{n^2}\right)\right) \right]                                             \\
+         & = \lim_{n \to \infty}\left[\frac{4}{n}\left(4n-\frac{16}{n}\sum_{i = 1}^{n}i + \frac{16}{n^2}\sum_{i = 1}^{n}i^2\right) \right] \implies \text{ use summation identities for } \sum_{i = 1}^{n}i \text{ and } \sum_{i = 1}^{n}i^2 \\
+         & = \lim_{n \to \infty}\left[\frac{4}{n}\left(4n-\frac{16}{\cancel{n}}\frac{\cancel{n}(n+1)}{2} + \frac{16}{n^{\cancel{2}}}\frac{\cancel{n}(2n+1)(n+1)}{6}\right) \right]                                                           \\
+         & = \lim_{n \to \infty}\left[\frac{4}{n}\left(4n-\frac{16(n+1)}{2} + \frac{16(2n+1)(n+1)}{6n}\right) \right]                                                                                                                        \\
+         & = \lim_{n \to \infty}\left[\frac{4}{n}\left(4n+\frac{16(n+1)}{2}\left(- 1 + \frac{2n+1}{3n}\right)\right) \right]                                                                                                                 \\
+         & = \lim_{n \to \infty}\left[\frac{4}{n}\left(4n+\frac{16(n+1)}{2}\left(- 1 + \frac{2\cancel{n}}{3\cancel{n}}+\frac{1}{3n}\right)\right) \right]                                                                                    \\
+         & = \lim_{n \to \infty}\left[\frac{4}{n}\left(4n+\frac{16(n+1)}{2}\left(- 1 + \frac{2}{3}+\frac{1}{3n}\right)\right) \right]                                                                                                        \\
+         & = \lim_{n \to \infty}\left[\left(\frac{4}{\cancel{n}}4\cancel{n}+\frac{4}{n}\frac{16(n+1)}{2}\left(- 1 + \frac{2}{3}+\frac{1}{3n}\right)\right) \right]                                                                           \\
+         & = \lim_{n \to \infty}\left[\left(16+\frac{64(n+1)}{2n}\left(- 1 + \frac{2}{3}+\frac{1}{3n}\right)\right) \right]                                                                                                                  \\
+         & = \lim_{n \to \infty}\left[\left(16+\left(\frac{64\cancel{n}}{2\cancel{n}}+\frac{64}{2n}\right)\left(-\frac{1}{3}+\frac{1}{3n}\right)\right) \right]                                                                              \\
+         & = \lim_{n \to \infty}\left[\left(16-\frac{32}{3}+\frac{32}{3n}-\frac{64}{6n}+\frac{64}{6n^2}\right) \right]                                                                                                                       \\
+         & = \lim_{n \to \infty}\left[16-\frac{32}{3}+\cancelto{0}{\frac{32}{3n}}-\cancelto{0}{\frac{64}{6n}}+\cancelto{0}{\frac{64}{6n^2}} \right]                                                                                          \\
+         & = 16-\frac{32}{3}                                                                                                                                                                                                                 \\
+         & = \frac{16}{3}                                                                                                                                                                                                                    \\
+    \end{align*}
+    Subtracting the result of the Right-Hand Rule formula run on $x^2$ from the result when run on $y=4$ (omitted for space because it's just a souped up way to do $base \cdot height$) yields the area between the two.
+    $$16-\frac{16}{3}=\frac{32}{3}$$
+
+    \noindent Using sage to evaluate:
+    \begin{minted}[breaklines]{sage}
+# Right-Hand rule
+clear_vars()
+        
+x = var('x')
+i = var('i')
+n = var('n')
+        
+g = function('g')(x)
+        
+g(x) = x^2
+        
+lower_lim = -2
+upper_lim = 2
+        
+s = function('s')(n)
+        
+s(n) = sum(((upper_lim-lower_lim)/n)*g(lower_lim+i*((upper_lim-lower_lim)/n)), i, 1, n) # Sum of the expression starting at i = 1, up to i = n
+        
+show(4*4 - limit(s(n), n=infinity)) # area of y=4 minus limit of the above sum as n -> infinity        
+    \end{minted}
+\end{soln}
+
+% PROBLEM 3
+\begin{problem}
+Use Archimedes' theorem and the observations above to find the area of the region described
+in question 1. After you've set it up, you should do the computation both by hand and by
+using SageMath.
+\end{problem}
+\begin{soln}
+    We know that for each subsequent triangle drawn, its area is $\frac{1}{8}$ of the area of the previous triangle.
+    This means that the total area added to the approximation by each step is $\frac{A_{n-1}n}{8}$, meaning that the area for any given step, $n$, can be determined by computing
+    the sum of all previous areas. This can be written as follows, where $Z$ (chosen because $A$ is a point in the original triangle) is the area of our original triangle $\triangle ABC$
+
+    \begin{equation}
+        \lim_{k \to \infty}\left[\sum_{n = 1}^{k} Z \cdot \frac{2^{n-1}}{8^{n-1}}\right]
+    \end{equation}
+
+    This summation can then be computed for the given triangle, $\triangle ABC$, which has an area of $8$.
+
+    \begin{align*}
+         & = \lim_{k \to \infty}\left[\sum_{n = 1}^{k} 8 \cdot \frac{2^{n-1}}{8^{n-1}}\right]                                                  \\
+         & = \lim_{k \to \infty}\left[8\sum_{n = 1}^{k} \frac{2^{n-1}}{8^{n-1}}\right]                                                         \\
+         & = \lim_{k \to \infty}\left[8\sum_{n = 1}^{k} 2^{-2n+2}\right]                                                                       \\
+         & = \lim_{k \to \infty}\left[8\sum_{n = 1}^{k} (2^2)^{-n+1}\right]                                                                    \\
+         & = \lim_{k \to \infty}\left[8\sum_{n = 1}^{k} 4^{-n+1}\right]                                                                        \\
+         & = \lim_{k \to \infty}\left[8\sum_{n = 1}^{k} 4^{-n}\cdot 4\right]                                                                   \\
+         & = \lim_{k \to \infty}\left[8\sum_{n = 1}^{k} 4^{-n}\cdot 4\right] \implies \text{ use summation identity for } \sum_{n = 1}^{k}ar^n \\
+         & = \lim_{k \to \infty}\left[8 \frac{4}{1-4} \right]                                                                                  \\
+         & = 8 \frac{4}{1-4}                                                                                                                   \\
+         & = \frac{32}{3}                                                                                                                      \\
+    \end{align*}
+
+    \noindent Using sage to evaluate:
+    \begin{minted}[breaklines]{sage}
+# Archimedes triangle sums
+clear_vars()
+        
+x = var('x')
+k = var('k')
+n = var('n')
+        
+s = function('s')(n)
+        
+a = 8 # area of the first triangle, bh/2
+        
+s(n) = sum(a*((2^(n-1))/(8^(n-1))), n, 1, k) # Sum of the expression starting at n = 1, up to n = k
+        
+show(limit(s(n), k=infinity)) # Sum as # of triangles -> infty
+    \end{minted}
+\end{soln}
+
+\end{document}

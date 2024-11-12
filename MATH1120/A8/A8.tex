@@ -1,0 +1,184 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{changepage}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{physics}
+\usepackage{minted}
+\usepackage{hyperref}
+\usepackage[breakable]{tcolorbox}
+\usepackage[inline]{enumitem}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{soln}{Solution}
+
+\pgfplotsset{compat=newest}
+\usetikzlibrary{lindenmayersystems}
+
+\definecolor{incolor}{HTML}{303F9F}
+\definecolor{outcolor}{HTML}{D84315}
+\definecolor{cellborder}{HTML}{CFCFCF}
+\definecolor{cellbackground}{HTML}{F7F7F7}
+
+\tikzset
+{%
+  axes/.style={thick,-latex},
+  cylinder/.style={right color=blue!80,left color=white,fill opacity=0.7},
+  paraboloid back/.style={left color=magenta!80,fill opacity=0.4},
+  paraboloid front/.style={left color=white, right color=magenta!80,fill opacity=0.4},
+}
+
+\makeatletter
+\newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+\makeatother
+\newcommand{\prompt}[4]{
+    \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+}
+
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+    }
+
+\NewDocumentCommand{\evalat}{sO{\big}mm}{%
+  \IfBooleanTF{#1}
+   {\mleft. #3 \mright|_{#4}}
+   {#3#2|_{#4}}%
+}
+
+\tikzset{koch snowflake/.style={insert path={%
+   l-system [l-system={rule set={F -> F-F++F-F}, axiom=F++F++F,
+    step=3cm/3^#1, angle=60, order=#1,anchor=center}] -- cycle}}}
+
+\title{Calculus II: Assignment 8}
+\author{Jeremy Favro}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+% PROBLEM 1
+\begin{problem}
+Verify that the series $\sum_{n = 0}^{\infty} \frac{2}{(4n + 1)(4n + 3)}$ converges using one or more of the convergence tests given in class.
+\end{problem}
+\begin{soln} Using the integral test which states that for some series $\sum_{n = k}^{\infty} f(n)$ converges or diverges as $\int_{k}^{\infty} f(x) \,dx$ converges or diverges.
+    In our case we have $f(n)=\frac{2}{(4n + 1)(4n + 3)}$ which can be directly converted to a continuous function $f(x)=\frac{2}{(4x + 1)(4x + 3)}$ so
+    \begin{align*}
+         & = \int_{0}^{\infty} \frac{2}{(4x + 1)(4x + 3)} \,dx                                                                                              \\
+         & = \lim_{t \to \infty} \int_{0}^{t} \frac{2}{(4x + 1)(4x + 3)} \,dx                                                                               \\
+         & = \lim_{t \to \infty} \int_{0}^{t} \frac{A}{(4x + 1)}+\frac{B}{(4x + 3)} \,dx                                                                    \\
+         & = \lim_{t \to \infty} \int_{0}^{t} \frac{4Ax+3A+4Bx+B}{(4x + 1)(4x + 3)} \,dx                                                                    \\
+         & = \lim_{t \to \infty} \int_{0}^{t} \frac{4(A+B)x+(3A+B)}{(4x + 1)(4x + 3)} \,dx \rightsquigarrow 3A+B=2, \, A+B=0 \implies A=-B, \, B=-1, \, A=1 \\
+         & = \lim_{t \to \infty} \left[ \int_{0}^{t} \frac{1}{(4x + 1)} \,dx - \int_{0}^{t} \frac{1}{(4x + 3)} \,dx \right]                                 \\
+         & = \frac{1}{4}\lim_{t \to \infty} \left[ \eval*{\ln(4x+1) - \ln(4x+3)}_{0}^{t} \right]                                                            \\
+         & = \frac{1}{4}\lim_{t \to \infty} \left[ \ln(4t+1) - \ln(4t+3) - (\ln(4(0)+1) - \ln(4(0)+3)) \right]                                              \\
+         & = \frac{1}{4}\lim_{t \to \infty} \left[ \cancelto{0}{\ln(\frac{4t+1}{4t+3})} - \ln(\frac{1}{3}) \right]                                          \\
+         & =  - \frac{1}{4}\ln(\frac{1}{3})                                                                                                                 \\
+    \end{align*}
+    $\therefore$ Because the integral converges the series must also converge.
+\end{soln}
+
+\newpage
+
+% PROBLEM 2
+\begin{problem}
+Use SageMath to to find the sum of the series in question 1
+\end{problem}
+\begin{soln} ~\\
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+        \prompt{In}{incolor}{1}{\boxspacing}
+        \begin{minted}[breaklines, autogobble]{sage}
+            clear_vars()
+
+            n = var('n')
+            
+            sum(2/((4*n+1)*(4*n+3)), n, 0, oo)
+        \end{minted}
+    \end{tcolorbox}
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+        \prompt{Out}{outcolor}{1}{\boxspacing}
+        \begin{minted}[breaklines, autogobble]{sage}
+            1/4*pi
+        \end{minted}
+    \end{tcolorbox}
+\end{soln}
+
+% PROBLEM 3
+\begin{problem}
+What series involving powers of $x$ has $\frac{1}{1+x^2}$ as its sum? For which values of $x$ does this series converge?
+\end{problem}
+\begin{soln} Using the power series formula $\sum_{n = 0}^{\infty} ar^n=\frac{a}{1-r}$ we can tell that $a=1$, so we just need to find a suitable $r$ s.t.
+    $\frac{1}{1-r}=\frac{1}{1+x^2}$ then plug that into the series.
+
+    $$=\frac{1}{1-(-x^2)}=\frac{1}{1+x^2}$$
+    $$\therefore \sum_{n = 0}^{\infty} (-x^2)^n \text{ is the series of powers of } x \text{ which is equivalent to } \frac{1}{1+x^2}$$
+    The series converges for values of $x$ which satisfy $\abs{-x^2}<1$, so any value on the interval $[-1,1]$ (potentially excluding the endpoints).
+    Testing the endpoints $-1$ and $1$ to ensure the series doesn't also converge there: $\sum_{n = 0}^{\infty} (-1^2)^n$ will diverge per the divergence test
+    as $\lim_{n \to \infty} (-1^2)^n \neq 0$. The same is true for $\sum_{n = 0}^{\infty} (1^2)^n$ as $\lim_{n \to \infty} (1^2)^n \neq 0$.
+
+    $$\therefore \sum_{n = 0}^{\infty} (-x^2)^n \text{ is the series of powers of } x \text{ which is equivalent to } \frac{1}{1+x^2} \text { which converges on } (-1,1) $$
+\end{soln}
+
+% PROBLEM 4
+\begin{problem}
+Since $\frac{d}{dx} \arctan(x) = \frac{1}{1+x^2}$ what series involving powers of $x$ should be equal to $\arctan(x)$ when it converges? For which values of $x$ does this series converge?
+\end{problem}
+\begin{soln} Knowing that $\frac{d}{dx} \arctan(x) = \frac{1}{1+x^2}$, we also know that $\arctan(x) = \int_{}^{} \frac{1}{1+x^2} \,dx$. Applying that to the series which resolves to $\frac{1}{1+x^2}$:
+    %$$\sum_{n = 0}^{\infty} ar^n=\frac{a}{1-r}=\arctan(x)$$
+    $$= \int_{}^{} \sum_{n = 0}^{\infty} \left[(-x^2)^n\right] \,dx = \arctan(x)$$
+    $$= \sum_{n = 0}^{\infty} \left[\int_{}^{} (-x^2)^n \,dx\right] = \arctan(x)$$
+    $$\therefore \sum_{n = 0}^{\infty} \left[\int_{}^{} (-x^2)^n \,dx\right] = \sum_{n = 0}^{\infty} \frac{(-1)^nx^{2n+1}}{2n + 1} = \arctan(x)$$
+    \noindent Testing for convergence using the ratio test which we have yet to do in lecture but I think I've figured it out from the archive page:
+    \begin{align*}
+         & = \lim_{n \to \infty} \abs{\frac{\frac{(-1)^{n+1}x^{2n+2}}{2n+2}}{\frac{(-1)^{n}x^{2n+1}}{2n+1}}} \\
+         & = \lim_{n \to \infty} \abs{\frac{(-1)^{n+1}x^{2n+2}}{2n+2} \frac{2n+1}{(-1)^{n}x^{2n+1}}}         \\
+         & = \lim_{n \to \infty} \abs{\frac{(-1)^{n+1}}{(-1)^{n}}\frac{2n+1}{2n+2}\frac{x^{2n+2}}{x^{2n+1}}} \\
+         & = \lim_{n \to \infty} \abs{\frac{(-1)^{n+1}}{(-1)^{n}}\frac{2n+1}{2n+2}\frac{x^{2n+2}}{x^{2n+1}}} \\
+         & = \abs{(-1)(1)(x)}                                                                                \\
+         & = \abs{x}                                                                                         \\
+    \end{align*}
+    \noindent So, by the ratio test the series converges for values of $\abs{x}<1$, so any value on the interval $[-1,1]$ (potentially excluding the endpoints). Testing the endpoints for convergence:
+
+    Setting $x=1$ yields $\frac{(-1)^n(1)^{2n+1}}{2n + 1}= (-1)^n\frac{1}{2n + 1}$ where $a_n=\frac{1}{2n + 1}$ which is: always decreasing past $n=0$, always greater than $0$ past $n=0$, and $\lim_{n \to \infty} \frac{1}{2n + 1} = 0$.
+    So by the alternating series test the series converges at $x=1$.
+
+    Doing the same for $x=-1$ yields $\frac{(-1)^n(-1)^{2n+1}}{2n + 1} = (-1)^{3n+1}\frac{1}{2n + 1}$ where $a_n=\frac{1}{2n + 1}$ which is always positive and nonzero past $n=0$,
+    decreasing past $n=0$, and $\lim_{n \to \infty} \frac{1}{2n + 1} = 0$ which means that by the alternating series test, the series converges on $[-1,1]$.
+
+    $$\therefore \sum_{n = 0}^{\infty} \frac{(-1)^nx^{2n+1}}{2n + 1} \text{ is the series of powers of } x \text{ which is equivalent to } \arctan(x) \text { which converges on } [-1,1] $$
+\end{soln}
+
+% PROBLEM 4
+\begin{problem}
+Given that $\arctan(1) = \frac{\pi}{4}$, what is the connection between the series in questions 1 and 4?
+\end{problem}
+\begin{soln}
+    Let $S_1$ be the series in question 1 $\left(\sum_{n = 0}^{\infty} \frac{2}{(4n + 1)(4n + 3)}\right)$
+    and $S_2$ be the series in question 4 $\left(\sum_{n = 0}^{\infty} \frac{(-1)^nx^{2n+1}}{2n + 1}\right)$
+    $\arctan(1) = \frac{\pi}{4}$ means that $S_2$ converges to $\frac{\pi}{4}$ when $x=1$. $S_1$ always converges to $\frac{\pi}{4}$. There's a couple connections here but they all feel too obvious to warrant
+    a question of their own. Just in case I'll list them anyway:
+
+    \begin{enumerate}
+        \item Both $S_1$ and $S_2$ are equal and converge when $x=1$
+        \item Both $S_1$ and $S_2$ can be used to approximate $\pi$
+        \item $S_1 \pm S_2$ is convergent
+    \end{enumerate}
+
+    \noindent Other than those three, obvious as they might be, I can't think of any other connection between the two
+\end{soln}
+
+
+
+
+\end{document}

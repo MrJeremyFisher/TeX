@@ -1,0 +1,139 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{changepage}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{physics}
+\usepackage{minted}
+\usepackage{hyperref}
+\usepackage[breakable]{tcolorbox}
+\usepackage[inline]{enumitem}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{soln}{Solution}
+
+\pgfplotsset{compat=newest}
+\usetikzlibrary{lindenmayersystems}
+
+\definecolor{incolor}{HTML}{303F9F}
+\definecolor{outcolor}{HTML}{D84315}
+\definecolor{cellborder}{HTML}{CFCFCF}
+\definecolor{cellbackground}{HTML}{F7F7F7}
+
+\tikzset
+{%
+  axes/.style={thick,-latex},
+  cylinder/.style={right color=blue!80,left color=white,fill opacity=0.7},
+  paraboloid back/.style={left color=magenta!80,fill opacity=0.4},
+  paraboloid front/.style={left color=white, right color=magenta!80,fill opacity=0.4},
+}
+
+\makeatletter
+\newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+\makeatother
+\newcommand{\prompt}[4]{
+    \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+}
+
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+    }
+
+\NewDocumentCommand{\evalat}{sO{\big}mm}{%
+  \IfBooleanTF{#1}
+   {\mleft. #3 \mright|_{#4}}
+   {#3#2|_{#4}}%
+}
+
+\tikzset{koch snowflake/.style={insert path={%
+   l-system [l-system={rule set={F -> F-F++F-F}, axiom=F++F++F,
+    step=3cm/3^#1, angle=60, order=#1,anchor=center}] -- cycle}}}
+
+\title{Calculus II: Assignment 11}
+\author{Jeremy Favro}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+% PROBLEM 1
+\begin{problem}
+For what values of x does the series $\displaystyle \sum_{n = 0}^{\infty} (-1)^n(n+1)x^n$ converge?
+\end{problem}
+\begin{soln}
+      \begin{align*}
+             & = \lim_{n \to \infty} \abs{\frac{(-1)^{n+1}(n+2)x^{n+1}}{(-1)^n(n+1)x^n}} \\
+             & = \lim_{n \to \infty} \abs{(-1)x\frac{(n+2)}{(n+1)}}                      \\
+             & = \lim_{n \to \infty} \abs{x\frac{1}{1}}                                  \\
+             & = \lim_{n \to \infty} \abs{x}                                             \\
+      \end{align*}
+      \begin{align*}
+             & = \lim_{n \to \infty} \abs{(-1)^n(n+1)(\pm 1)^n} \\
+             & = \lim_{n \to \infty} \abs{n+1}                  \\
+             & = \infty                                         \\
+      \end{align*}
+      \noindent $\therefore$ By the ratio test (and divergence test for endpoints) the series $\displaystyle \sum_{n = 0}^{\infty} (-1)^n(n+1)x^n$ converges for all $\abs{x}<1$
+\end{soln}
+
+% PROBLEM 2
+\begin{problem}
+Use Taylor's Formula to show that $\displaystyle \frac{1}{(1+x)^2}=\sum_{n = 0}^{\infty} (-1)^n(n+1)x^n$ when the series converges.
+\end{problem}
+\begin{soln} ~\\
+      \begin{center}
+            \begin{tabular}{ c | c | c }
+                  $f^{(0)}(a=0)$ & $\frac{1}{(1+x)^2}$   & 1   \\
+                  $f^{(1)}(a)$   & $-\frac{2}{(1+x)^3}$  & -2  \\
+                  $f^{(2)}(a)$   & $\frac{6}{(1+x)^4}$   & 6   \\
+                  $f^{(3)}(a)$   & $-\frac{24}{(1+x)^5}$ & -24 \\
+                  $f^{(4)}(a)$   & $\frac{120}{(1+x)^6}$ & 120
+            \end{tabular}
+            $\implies\displaystyle \frac{d^n}{dx^n}=(-1)^n\frac{(n+1)!}{(1+x)^{n+2}}=(-1)^n(n+1)!$ (for $x=0$)
+      \end{center}
+      \begin{align*}
+             & = \sum_{n=0}^{\infty} \frac{(-1)^n\frac{(n+1)!}{1}}{n!}x^n \\
+             & = \sum_{n=0}^{\infty} (-1)^n\frac{(n+1)!}{n!}x^n           \\
+             & = \sum_{n=0}^{\infty} (-1)^n(n+1)x^n
+      \end{align*}
+      \noindent $\therefore$ By the ratio test (and divergence test for endpoints) the series $\displaystyle \sum_{n = 0}^{\infty} (-1)^n(n+1)x^n$ converges for all $\abs{x}<1$
+\end{soln}
+
+% PROBLEM 3
+\begin{problem}
+Use algebra to show that $\displaystyle \frac{1}{(1+x)^2}=\sum_{n = 0}^{\infty} (-1)^n(n+1)x^n$ when the series converges.
+\end{problem}
+\begin{soln} If we take $\displaystyle \sum_{n=0}^{\infty}(-1)^nx^n=\frac{1}{1+x}=\frac{1}{1-(-x)}$ then
+      \begin{align*}
+             & = \frac{d}{dx}\frac{1}{1+x} \\
+             & = -\frac{1}{(1+x)^2}
+      \end{align*}
+      And
+      \begin{align*}
+             & = \frac{d}{dx}\sum_{n=0}^{\infty}(-1)^nx^n \\
+             & = \sum_{n=0}^{\infty}(-1)^nnx^{n-1}
+      \end{align*}
+      Which has a leading term of 0 so we can shift it up one
+      \begin{align*}
+             & = \sum_{n=1}^{\infty}(-1)^{n+1} (n+1) x^{n} \\
+             & = -\sum_{n=0}^{\infty}(-1)^n(n+1)x^n
+      \end{align*}
+      So the series for $\displaystyle \frac{1}{1+x}$ when differentiated and manipulated slightly results in the series for $\displaystyle \frac{1}{(1+x)^2}$, with the same transformations applying to
+      the functions themselves. \\
+
+      \noindent $\displaystyle \therefore \sum_{n=0}^{\infty}(-1)^n(n+1)x^n$ is indeed the power series representation of $\displaystyle \frac{1}{(1+x)^2}$ when it converges.
+
+\end{soln}
+
+\end{document}

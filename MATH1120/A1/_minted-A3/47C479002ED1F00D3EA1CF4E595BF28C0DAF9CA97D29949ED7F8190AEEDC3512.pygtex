@@ -1,0 +1,16 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{} Archimedes triangle sums}
+\PYG{n}{clear\PYGZus{}vars}\PYG{p}{()}
+
+\PYG{n}{x} \PYG{o}{=} \PYG{n}{var}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}x\PYGZsq{}}\PYG{p}{)}
+\PYG{n}{k} \PYG{o}{=} \PYG{n}{var}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}k\PYGZsq{}}\PYG{p}{)}
+\PYG{n}{n} \PYG{o}{=} \PYG{n}{var}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}n\PYGZsq{}}\PYG{p}{)}
+
+\PYG{n}{s} \PYG{o}{=} \PYG{n}{function}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}s\PYGZsq{}}\PYG{p}{)(}\PYG{n}{n}\PYG{p}{)}
+
+\PYG{n}{a} \PYG{o}{=} \PYG{l+m+mi}{8} \PYG{c+c1}{\PYGZsh{} area of the first triangle, bh/2}
+
+\PYG{n}{s}\PYG{p}{(}\PYG{n}{n}\PYG{p}{)} \PYG{o}{=} \PYG{n+nb}{sum}\PYG{p}{(}\PYG{n}{a}\PYG{o}{*}\PYG{p}{((}\PYG{l+m+mi}{2}\PYG{o}{\PYGZca{}}\PYG{p}{(}\PYG{n}{n}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{))}\PYG{o}{/}\PYG{p}{(}\PYG{l+m+mi}{8}\PYG{o}{\PYGZca{}}\PYG{p}{(}\PYG{n}{n}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{))),} \PYG{n}{n}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{k}\PYG{p}{)} \PYG{c+c1}{\PYGZsh{} Sum of the expression starting at n = 1, up to n = k}
+
+\PYG{n}{show}\PYG{p}{(}\PYG{n}{limit}\PYG{p}{(}\PYG{n}{s}\PYG{p}{(}\PYG{n}{n}\PYG{p}{),} \PYG{n}{k}\PYG{o}{=}\PYG{n}{infinity}\PYG{p}{))} \PYG{c+c1}{\PYGZsh{} Sum as \PYGZsh{} of triangles \PYGZhy{}\PYGZgt{} infty}
+\end{Verbatim}

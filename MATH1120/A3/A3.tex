@@ -1,0 +1,170 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{physics}
+\usepackage{minted}
+\usepackage{pythonhighlight}
+\usepackage{pdfpages}
+\usepackage[inline]{enumitem}
+\usepackage[breakable]{tcolorbox}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{soln}{Solution}
+
+\pgfplotsset{compat=newest}
+
+\definecolor{incolor}{HTML}{303F9F}
+\definecolor{outcolor}{HTML}{D84315}
+\definecolor{cellborder}{HTML}{CFCFCF}
+\definecolor{cellbackground}{HTML}{F7F7F7}
+
+\tikzset
+{%
+  axes/.style={thick,-latex},
+  cylinder/.style={right color=blue!80,left color=white,fill opacity=0.7},
+  paraboloid back/.style={left color=magenta!80,fill opacity=0.4},
+  paraboloid front/.style={left color=white, right color=magenta!80,fill opacity=0.4},
+}
+
+\makeatletter
+\newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+\makeatother
+\newcommand{\prompt}[4]{
+    \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+}
+
+
+\NewDocumentCommand{\evalat}{sO{\big}mm}{%
+  \IfBooleanTF{#1}
+   {\mleft. #3 \mright|_{#4}}
+   {#3#2|_{#4}}%
+}
+
+\newcommand\nnfootnote[1]{%
+  \begingroup
+  \renewcommand\thefootnote{}\footnote{#1}%
+  \addtocounter{footnote}{-1}%
+  \endgroup
+}
+
+
+\title{Calculus II: Assignment 3}
+\author{Jeremy Favro}
+\date{\today}
+
+% DOC BEGIN
+
+\begin{document}
+
+\maketitle
+
+\noindent Consider the region below the curve $y = \frac{1}{x}$ and above the $x$-axis for $1 \leq x < \infty$.
+
+% PROBLEM 1
+\begin{problem}
+Compute the area of the given region, both by hand and using SageMath.
+\end{problem}
+\begin{soln}
+    \begin{align*}
+         & = \int_{1}^{\infty} \frac{1}{x} \,dx                               \\
+         & = \lim_{n \to \infty}  \left[\int_{1}^{n} \frac{1}{x} \,dx \right] \\
+         & = \lim_{n \to \infty}  \left[\evaluated{\ln(x)}_{1}^{n}\right]     \\
+         & = \lim_{n \to \infty}  \left[\ln(n)-\ln(1)\right]                  \\
+         & = \lim_{n \to \infty}  \ln(n)                                      \\
+         & = +\infty                                                          \\
+    \end{align*}
+
+    \noindent Using sage to evaluate:
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+        \prompt{In}{incolor}{1}{\boxspacing}
+        \begin{minted}[breaklines, autogobble]{sage}
+            clear_vars()
+            from sage.symbolic.integration.integral import definite_integral # Necessary in some versions for definite_integral()
+            
+            x = var('x')
+            t = var('n')
+            
+            f = 1/x
+            
+            assume(n-1>0)
+            
+            limit(definite_integral(f, x, 1, n), n=oo)
+        \end{minted}
+    \end{tcolorbox}
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+        \prompt{Out}{outcolor}{1}{\boxspacing}
+        \begin{minted}[breaklines, autogobble]{sage}
+            +Infinity
+        \end{minted}
+    \end{tcolorbox}
+
+
+
+    $$\therefore \text{ the area of } \frac{1}{x} \text{ on } [1,\infty) \text{ is } \infty$$
+\end{soln}
+
+% PROBLEM 2
+\begin{problem}
+Compute the volume of the solid obtained by revolving the given region about the x-axis, both
+by hand and using SageMath.
+\end{problem}
+\begin{soln}
+    \begin{align*}
+         & = \pi\int_{1}^{\infty} \frac{1}{x^2} \,dx                               \\
+         & = \lim_{n \to \infty}  \left[\pi\int_{1}^{n} \frac{1}{x^2} \,dx \right] \\
+         & = \lim_{n \to \infty}  \left[-\pi\evaluated{\frac{1}{x}}_{n}^{1}\right] \\
+         & = -\pi\lim_{n \to \infty}  \left[\evaluated{\frac{1}{x}}_{n}^{1}\right] \\
+         & = -\pi\lim_{n \to \infty}  \left[\frac{1}{n}-\frac{1}{1}\right]         \\
+         & = -\pi\lim_{n \to \infty}  \frac{1}{n}-1                                \\
+         & = \pi                                                                   \\
+    \end{align*}
+
+    \noindent Using sage to evaluate:
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+        \prompt{In}{incolor}{2}{\boxspacing}
+        \begin{minted}[breaklines, autogobble]{sage}
+            clear_vars()
+            from sage.symbolic.integration.integral import definite_integral # Necessary in some versions for definite_integral()
+            
+            x = var('x')
+            n = var('n')
+            
+            f = 1/x
+            
+            assume(n-1>0)
+            
+            limit(definite_integral(pi*f^2, x, 1, n), n=oo)
+        \end{minted}
+    \end{tcolorbox}
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+        \prompt{Out}{outcolor}{2}{\boxspacing}
+        \begin{minted}[breaklines, autogobble]{sage}
+            pi
+        \end{minted}
+    \end{tcolorbox}
+
+    $$\therefore \text{ the volume of } \frac{1}{x} \text{ on } [1,\infty) \text{ rotated about the } x \text{-axis} \text{ is } \pi$$
+\end{soln}
+
+% PROBLEM 3
+\begin{problem}
+There is something a little paradoxical about the (correct :-) answers to 1 and 2. What is the
+paradox? Explain what's going on as best you can.
+\end{problem}
+\begin{soln}
+    The area under $\frac{1}{x}$ (on $[1, \infty)$, implied) is infinite, but the volume of the solid of revolution about the $x$-axis is finite, $\pi$ in this case.
+    This seems paradoxical as rotating an infinite area about the $x$-axis should give you an infinite volume. I think the reason this doesn't occur is because $\int \frac{1}{x} \,dx = \ln(x)$,
+    which is strictly increasing (though very slowly, as $x\to\infty$, $\ln(x)\to\infty$), whereas $\int \frac{1}{x^2} \,dx = -\frac{1}{x}$,
+    which is strictly \textit{decreasing} (again though very slowly, as $x\to\infty$, $-\frac{1}{x}\to\infty$, though $-\frac{1}{x}$ will never equal 0).
+    This means that though the area is infinite, the amount added to the volume decays ("falls off") quick enough that it approaches a finite value, which is a little weird sounding but I think it makes sense.
+\end{soln}
+
+\nnfootnote{Woohoo, finally figured out how to do nice embedding of sage code in \LaTeX, now to figure out plotting solids of revolution}
+\end{document}

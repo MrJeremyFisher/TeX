@@ -1,0 +1,155 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{changepage}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{physics}
+\usepackage{minted}
+\usepackage{hyperref}
+\usepackage[breakable]{tcolorbox}
+\usepackage[inline]{enumitem}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{soln}{Solution}
+
+\pgfplotsset{compat=newest}
+\usetikzlibrary{lindenmayersystems}
+
+\definecolor{incolor}{HTML}{303F9F}
+\definecolor{outcolor}{HTML}{D84315}
+\definecolor{cellborder}{HTML}{CFCFCF}
+\definecolor{cellbackground}{HTML}{F7F7F7}
+
+\tikzset
+{%
+  axes/.style={thick,-latex},
+  cylinder/.style={right color=blue!80,left color=white,fill opacity=0.7},
+  paraboloid back/.style={left color=magenta!80,fill opacity=0.4},
+  paraboloid front/.style={left color=white, right color=magenta!80,fill opacity=0.4},
+}
+
+\makeatletter
+\newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+\makeatother
+\newcommand{\prompt}[4]{
+    \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+}
+
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+    }
+
+\NewDocumentCommand{\evalat}{sO{\big}mm}{%
+  \IfBooleanTF{#1}
+   {\mleft. #3 \mright|_{#4}}
+   {#3#2|_{#4}}%
+}
+
+\tikzset{koch snowflake/.style={insert path={%
+   l-system [l-system={rule set={F -> F-F++F-F}, axiom=F++F++F,
+    step=3cm/3^#1, angle=60, order=#1,anchor=center}] -- cycle}}}
+
+\title{Calculus II: Assignment 10}
+\author{Jeremy Favro}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+% PROBLEM 1
+\begin{problem}
+For what values of x does the series $\displaystyle \sum_{n = 0}^{\infty} \frac{(-1)^nx^{2n+1}}{(2n+1)!}$ converge?
+\end{problem}
+\begin{soln}
+      \begin{align*}
+             & = \lim_{n \to \infty} \abs{\frac{(-1)^{n+1}x^{2(n+1)+1}}{(2(n+1)+1)!}\frac{(2n+1)!}{(-1)^nx^{2n+1}}}     \\
+             & = \lim_{n \to \infty} \abs{\frac{(-1)^{n+1}}{(-1)^n}\frac{x^{2n+3}}{x^{2n+1}}\frac{(2n+1)!}{(2n+3)!}}    \\
+             & = \lim_{n \to \infty} \abs{(-1)(x^2)\frac{(2n+1)!}{(2n+3)!}}                                             \\
+             & = \lim_{n \to \infty} \abs{\frac{(-1)(x^2)}{(2n+3)(2n+2)}}                                               \\
+             & = \lim_{n \to \infty} \abs{\frac{(-1)(x^2)}{4n^2+10n+6}}                                                 \\
+             & = \lim_{n \to \infty} \abs{\frac{\frac{(-1)(x^2)}{n^2}}{\frac{4n^2}{n^2}+\frac{10n}{n^2}+\frac{6}{n^2}}} \\
+             & = 0
+      \end{align*}
+      \noindent $\therefore$ By the ratio test the series $\displaystyle \sum_{n = 0}^{\infty} \frac{(-1)^nx^{2n+1}}{(2n+1)!}$ converges for all $x$
+\end{soln}
+
+% PROBLEM 2
+\begin{problem}
+What function does the series $\displaystyle \sum_{n = 0}^{\infty} \frac{(-1)^nx^{2n+1}}{(2n+1)!}$ equal when it converges?
+\end{problem}
+\begin{soln} The series should converge to some alternating function, so it's probably a trig function of some kind. To determine which I used SageMath so I didn't have to go through all of them,
+      but I'll also work through determining properly. Knowing which function the series equals, I look at the $n^{th}$ derivative pattern for the Taylor Series of $\sin(x)$ about 0:
+      \begin{center}
+            \begin{tabular}{ c | c | c }
+                  $f^{(0)}(a=0)$ & $\sin(a)$  & 0  \\
+                  $f^{(1)}(a)$   & $\cos(a)$  & 1  \\
+                  $f^{(2)}(a)$   & $-\sin(a)$ & 0  \\
+                  $f^{(3)}(a)$   & $-\cos(a)$ & -1 \\
+                  $f^{(4)}(a)$   & $\sin(a)$  & 0
+            \end{tabular}
+      \end{center}
+      \noindent So the series expansion should look like
+      \begin{align*}
+             & = \frac{0}{0!}x^0+\frac{1}{1!}x^1+\frac{0}{2!}x^2+\frac{-1}{3!}x^3+\frac{0}{4!}x^4+\frac{1}{5!}x^5+\ldots \\
+             & = \frac{1}{1!}x^1+\frac{-1}{3!}x^3+\frac{1}{5!}x^5+\ldots                                                 \\
+             & = \sum_{n = 0}^{\infty} \frac{(-1)^nx^{2n+1}}{(2n+1)!}
+      \end{align*}
+      $\therefore$ $\displaystyle \sum_{n = 0}^{\infty} \frac{(-1)^nx^{2n+1}}{(2n+1)!}=\sin(x)$ when it converges
+\end{soln}
+
+% PROBLEM 3
+\begin{problem}
+For what values of x does the series $\displaystyle \sum_{n = 0}^{\infty} (n+1)x^n$ converge?
+\end{problem}
+\begin{soln}
+      \begin{align*}
+             & = \lim_{n \to \infty} \abs{\frac{(n+2)x^{n+1}}{(n+1)x^n}}          \\
+             & = \lim_{n \to \infty} \abs{x\frac{(n+2)}{(n+1)}}                   \\
+             & = \lim_{n \to \infty} \abs{x\frac{1+\frac{2}{n}}{(1+\frac{1}{n})}} \\
+             & = \lim_{n \to \infty} \abs{x}
+      \end{align*}
+      \noindent Testing endpoints as well
+      \begin{align*}
+             & = \lim_{n \to \infty} \abs{(n+1)(\pm 1)^n} \\
+             & = \lim_{n \to \infty} (n+1)                \\
+             & = \infty
+      \end{align*}
+      \noindent $\therefore$ By the ratio test the series $\displaystyle \sum_{n = 0}^{\infty} (n+1)x^n$ converges for all $\abs{x}<1$
+\end{soln}
+
+% PROBLEM 4
+\begin{problem}
+What function does the series $\displaystyle \sum_{n = 0}^{\infty} (n+1)x^n$ equal when it converges?
+\end{problem}
+\begin{soln} The easiest way I can think of to approach this is to try and get $(n+1)x^n$ into the form $ax^n$ which can then be simplified using the formula for geometric series.
+      \begin{align*}
+             & = \int \sum_{n = 0}^{\infty} (n+1)x^n \,dx \\
+             & = \sum_{n = 0}^{\infty} \int (n+1)x^n \,dx \\
+             & = \sum_{n = 0}^{\infty} x^{n+1}            \\
+             & = \sum_{n = 0}^{\infty} xx^n
+      \end{align*}
+      Which is a geometric series with common ratio $x$ and first term $x$, which can be rewritten as $\frac{x}{1-x}$ (for all $x<1$) which we can then differentiate to cancel out the previous integration and arrive at a
+      function for the original series.
+      \begin{align*}
+             & = \frac{d}{dx} \frac{x}{1-x}                                                          \\
+             & = \frac{\left[\frac{d}{dx}(x)\right](1-x)-\left[\frac{d}{dx}(1-x)\right](x)}{(1-x)^2} \\
+             & = \frac{1-x+x}{(1-x)^2}                                                               \\
+             & = \frac{1}{(1-x)^2}
+      \end{align*}
+      \noindent $\therefore$ $\displaystyle \sum_{n = 0}^{\infty} (n+1)x^n = \frac{1}{(1-x)^2}$ when it converges
+\end{soln}
+
+$$\{\}=0, \, n+1=n\cup \{n\} \implies \{\{\}\}=1 \therefore \{\{\}\}\cup\{\{\{\}\}\}=\{\{\},\{\{\}\}\}=2$$
+\end{document}

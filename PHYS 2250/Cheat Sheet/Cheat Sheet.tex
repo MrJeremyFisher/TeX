@@ -1,0 +1,171 @@
+\documentclass[10pt,landscape,letterpaper]{cheatsheet}
+
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{graphicx,lipsum}
+\usepackage{enumitem}
+\usepackage{mdframed}
+\usepackage{siunitx}
+\usepackage{tikz}
+\usepackage{circuitikz}
+\usepackage{cancel}
+
+% Tikz Setup
+\usetikzlibrary{positioning, fit, calc}
+
+% Quickies
+\newcommand{\eq}{=}
+
+% Circuit Macros
+\newcommand{\thevenin}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (2,0) to[battery1, l_=$V_{Th}\eq#1$] (2,2) 
+      to[resistor, l_=$R_{Th}\eq#2$] (0,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\norton}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (3,0) to[american current source, l_=$I_{N}\eq#1$] (3,2) -- (0,2) (2,0)
+      to[resistor, l=$R_{N}\eq#2$] (2,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+% Title
+\title{Electronics Cheat Sheet}
+\author{Jeremy Favro}
+\date{\today\\Revision 1}
+
+\begin{document}
+
+\maketitle
+
+\section*{Miscellaneous}
+\subsection*{Time Constants}
+For capacitors
+$V_{C}=V_s\left[1-e^{-\frac{t}{RC}}\right]$
+$V_{R}=V_se^{-\frac{t}{RC}}$ \\
+And for inductors
+$V_{R}=V_s\left[1-e^{-\frac{tR}{L}}\right]$
+$V_{L}=V_se^{-\frac{tR}{L}}$
+\subsection*{Th\'evenin}
+Solve circuit for voltage across port ($V_A-V_B$), solve for equivalent resistance by replacing batteries with wires and current sources with opens and trace a current path from A to B.
+Put the voltage source in \textbf{series} with the equivalent resistor.
+\subsection*{Norton}
+Short the port and find the current through the port short. Find resistance using the same method as Th\'evenin.
+Put the current source in \textbf{parallel} (across the port) with the equivalent resistor.
+\subsection*{Differentials}
+$V_R=IR=R\frac{dQ}{dt}$\\
+$V_L=L\frac{dI}{dt}=L\frac{d^2Q}{dt^2}$\\
+$V_C=\frac{Q}{C}$\\
+\subsection*{Diode}
+\begin{circuitikz}[scale=0.5]
+  \pgfextra{\ctikzset{bipoles/resistor/width=.4,
+  bipoles/resistor/height=.15}}
+  % PN Contact
+  \draw[fill=black!15, draw=black, line width = 0.2mm] (-3.5,0) rectangle (-2.5,1);
+  \draw[line width = 0.2mm] (-2.5,0) rectangle (-1.5,1);
+  \node at (-3,0.5) {p};
+  \node at (-2,0.5) {n};
+  \draw (-3.5,0.5) -- (-4,0.5) node[left] {A};
+  \draw (-1.5,0.5) -- (-1,0.5) node[right] {C};
+  \draw [-{Triangle[round]}] (-3,-0.5) -- (-2,-0.5) node[pos=0.5,below] {$I$};
+  
+  % Diode
+  \draw (1,0.5) node[left] {A} to[diode] (3,0.5) node[right] {C};
+  \draw [-{Triangle[round]}] (1.5,-0.5) -- (2.5,-0.5) node[pos=0.5,below] {$I$};		
+  
+  \end{circuitikz}
+
+\section*{Op-Amps}
+\subsection*{Inverting Amplifier}
+\begin{circuitikz}
+  \draw 
+  \pgfextra{\ctikzset{bipoles/resistor/width=.4,
+      bipoles/resistor/height=.15}}
+  node[op amp, scale=0.5](A){A} % (a -| b) takes the y of a and the x of b!
+  (A.-) to[resistor, l_=$R_i$] ++(-1,0) node[left]{$V_i$} 
+  (A.+) node[ground]{}
+  (A.-) -- ++(0,0.5) coordinate(RF) to[resistor, l=$R_f$]  (RF -| A.out) -- (A.out) node[right]{$V_o=-\frac{R_f}{R_i}V_i$}
+  ;
+\end{circuitikz}
+\subsection*{Non-Inverting Amplifier}
+\begin{circuitikz}
+  \draw 
+  \pgfextra{\ctikzset{bipoles/resistor/width=.4,
+      bipoles/resistor/height=.15}}
+  node[op amp, scale=0.5](A){A} % (a -| b) takes the y of a and the x of b!
+  (A.-) to[resistor, l_=$R_i$] ++(-1,0) node[ground]{}
+  (A.+) node[left]{$V_i$}
+  (A.-) -- ++(0,0.5) coordinate(RF) to[resistor, l=$R_f$]  (RF -| A.out) -- (A.out) node[right]{$V_o=\left(1+\frac{R_f}{R_i}\right)V_i$}
+  ;
+\end{circuitikz}
+\subsection*{Voltage Follower}
+\begin{circuitikz}
+  \draw 
+  \pgfextra{\ctikzset{bipoles/resistor/width=.4,
+      bipoles/resistor/height=.15}}
+  node[op amp, scale=0.5](A){A} % (a -| b) takes the y of a and the x of b!
+  (A.+) node[left]{$V_i$}
+  (A.-) -- ++(0,0.5) coordinate(RF) --  (RF -| A.out) -- (A.out) node[right]{$V_o=V_i$}
+  ;
+\end{circuitikz}
+\subsection*{(Inverting) Adder}
+\begin{circuitikz}
+  \draw 
+  \pgfextra{\ctikzset{bipoles/resistor/width=.4,
+      bipoles/resistor/height=.15}}
+  node[op amp, scale=0.5](A){A} % (a -| b) takes the y of a and the x of b!
+  (A.-) -- ++(-.25,0) coordinate(J1) to[resistor, l_=$R_2$] ++(-1,0) node[left]{$V_2$}
+  (J1) -- ++(0,0.6) to[resistor, l_=$R_1$] ++(-1,0) node[left]{$V_1$}
+  (J1) -- ++(0,-0.5) to[resistor, l=$R_3$] ++(-1,0) node[left]{$V_3$}
+  (A.+) node[ground]{}
+  (A.-) -- ++(0,0.5) coordinate(RF) to[resistor, l=$R_f$]  (RF -| A.out) -- (A.out) node[right]{$V_o$}
+  ;
+\end{circuitikz}
+$V_o=-R_f\left(\frac{V_1}{R_1}+\frac{V_2}{R_2}+\frac{V_3}{R_3}\right)$
+\subsection*{Subtractor}
+\begin{circuitikz}
+  \draw 
+  \pgfextra{\ctikzset{bipoles/resistor/width=.4,
+      bipoles/resistor/height=.15}}
+  node[op amp, scale=0.5](A){A} % (a -| b) takes the y of a and the x of b!
+  (A.-) to[resistor, l_=$R_1$] ++(-1,0) node[left]{$V_1$} 
+  (A.+) to[resistor, l=$R_2$] ++(-1,0) node[left]{$V_2$} 
+  (A.-) -- ++(0,0.5) coordinate(RF) to[resistor, l=$R_f$]  (RF -| A.out) -- (A.out) node[right]{$V_o=\frac{R_f}{R_i}\left(V_2-V_1\right)$}
+  (A.+) node[ground]{}
+  ;
+\end{circuitikz}
+\subsection*{Integrator}
+\begin{circuitikz}
+  \draw 
+  \pgfextra{\ctikzset{bipoles/resistor/width=.4,
+      bipoles/resistor/height=.15, capacitors/scale=0.5}}
+  node[op amp, scale=0.5](A){A} % (a -| b) takes the y of a and the x of b!
+  (A.-) to[resistor, l_=$R_i$] ++(-1,0) node[left]{$V_i$} 
+  (A.-) -- ++(0,0.5) coordinate(RF) to[capacitor, l=$C$]  (RF -| A.out) -- (A.out) node[right]{$V_o$}
+  (A.+) node[ground]{}
+  ;
+\end{circuitikz}
+$V_o=-\displaystyle\frac{1}{R_iC}\int_{0}^{t} V_i \, dt+V_o(t=0)$
+\subsection*{Differentiator}
+\begin{circuitikz}
+  \draw 
+  \pgfextra{\ctikzset{bipoles/resistor/width=.4,
+      bipoles/resistor/height=.15, capacitors/scale=0.5}}
+  node[op amp, scale=0.5](A){A} % (a -| b) takes the y of a and the x of b!
+  (A.-) to[capacitor, l_=$C$] ++(-1,0) node[left]{$V_i$} 
+  (A.-) -- ++(0,0.5) coordinate(RF) to[resistor, l=$R_f$]  (RF -| A.out) -- (A.out) node[right]{$V_o=-RC\frac{dV_i}{dt}$}
+  (A.+) node[ground]{}
+  ;
+\end{circuitikz}
+\end{document}

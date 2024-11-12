@@ -1,0 +1,133 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{physics}
+\usepackage{minted}
+
+\usepackage{changepage}
+\usepackage{hyperref}
+\usepackage{pythonhighlight}
+\usepackage{pdfpages}
+\usepackage[inline]{enumitem}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{soln}{Solution}
+
+\pgfplotsset{compat=newest}
+
+\NewDocumentCommand{\evalat}{sO{\big}mm}{%
+  \IfBooleanTF{#1}
+   {\mleft. #3 \mright|_{#4}}
+   {#3#2|_{#4}}%
+}
+
+\title{Calculus II: Assignment 2e}
+\author{Jeremy Favro}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+Bhaskara II (1114-1185), also known as Bhaskaracharya (“Bhaskara the
+Teacher”), was an Indian mathematician and astronomer who continued the
+Indian tradition of writing mathematics in verse. Here are two problems
+from his book on arithmetic, \textit{Lilavati}, which was named after and dedicated
+to his daughter. “Lilavati” apparently means “playful”, and a number of
+the problems in the book fit the title. Here are two such problems from
+\textit{Lilavati}, taken from the prose translation by Henry Colebrooke \cite{AAM}.
+~\\
+\begin{adjustwidth}{75pt}{75pt}
+    \textit{
+        \indent 54. Out of a swarm of bees, one-fifth part settled on a blossom
+        of Columba; and one-third on a flower of Sil\`ind'hr\`i; three times
+        the difference of those numbers flew to the bloom of a Cu\'taja. One
+        bee, which remained, hovered and flew about in the air, allured
+        at the same moment by the pleasing fragrance of a jasmin and
+        pandanus. Tell me, charming woman, the number of bees.
+    }
+    ~\\~\\
+    \textit{
+        \indent 68. The square-root of half the number of a swarm of bees is
+        gone to the shrub of jasmin; and so are eight-ninths of the whole
+        swarm; a female is buzzing to one remaining male that is humming
+        within a lotus, in which he is confined, having been allured to its
+        fragrance at night. Say, lovely woman, the number of bees.
+    }
+\end{adjustwidth}
+
+
+
+% PROBLEM 1
+\begin{problem}
+Solve problem 54, given above.
+\end{problem}
+\begin{soln} ~\\
+    \begin{align*}
+         & b = \frac{1}{5}b + \frac{1}{3}b + 3b(\frac{1}{3} - \frac{1}{5}) + 1 \\
+         & b = \frac{1}{5}b + \frac{1}{3}b + 3b(\frac{1}{3} - \frac{1}{5}) + 1 \\
+         & b = \frac{1}{5}b + \frac{1}{3}b + \frac{2}{5}b + 1                  \\
+         & b = \frac{14}{15}b + 1                                              \\
+         & 15b = 14b + 15                                                      \\
+         & 15b - 14b = 15                                                      \\
+         & b = 15                                                              \\
+    \end{align*}
+
+    \begin{center}
+        % \begin{adjustwidth}{75pt}{75pt}
+        \textit{
+            Let b count the bees \\
+            Give a fifth to a third and another two fifths \\
+            Recall the jasmine and give one \\
+            Then both by fifteen taking fourteen gives b \\
+        }
+        % \end{adjustwidth}
+    \end{center}
+
+    \noindent Definitely not my proudest work, but I'm doing a physics degree for a reason ;)
+\end{soln}
+
+\newpage
+
+% PROBLEM 2
+\begin{problem}
+Solve problem 68, given above.
+\end{problem}
+\begin{soln} ~\\
+    \begin{align*}
+         & b = \sqrt{\frac{1}{2}b} + \frac{8}{9}b + 2                                                                                                          \\
+         & b = \frac{\sqrt{b}}{\sqrt{2}} + \frac{8}{9}b + 2                                                                                                    \\
+         & b - \frac{8}{9}b - 2 = \frac{\sqrt{b}}{\sqrt{2}}                                                                                                    \\
+         & \frac{1}{9}b - 2 = \frac{\sqrt{b}}{\sqrt{2}}                                                                                                        \\
+         & (\frac{1}{9}b - 2)^2 = \frac{1}{2}b                                                                                                                 \\
+         & 0 = \frac{1}{81}b^2-\frac{4}{9}b+4 - \frac{1}{2}b                                                                                                   \\
+         & 0 = \frac{1}{81}b^2-\frac{17}{18}b+4 \rightsquigarrow \frac{\frac{17}{18}\pm\sqrt{\left(-\frac{17}{18}\right)^2-4(\frac{1}{81})(4)}}{2\frac{1}{81}} \\
+    \end{align*}
+
+    \noindent So there are either $72$ or $\frac{9}{2}$ bees. Since fractional bees are unrealistic, we probably have $72$ bees.
+
+    \begin{center}
+        \textit{
+            Let b count the bees \\
+            Root half and add eight-ninths \\
+            Think of the lovers, add two \\
+            Square, expand, and set to nil \\
+            Employ a formula and reason a solution \\
+        }
+    \end{center}
+\end{soln}
+
+
+\begin{thebibliography}{2}
+    \bibitem{AAM}
+    \textit{Algebra, with Arithmetic and mensuration, from the Sanscrit of Brahmegupta
+        and Bh\`ascara}, Henry Thomas Colebrooke, 1817. Online at: \verb https://archive.org/stream/algebrawitharith00brahuoft\#mode/2up
+\end{thebibliography}
+\end{document}
