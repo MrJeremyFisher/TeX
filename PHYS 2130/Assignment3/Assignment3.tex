@@ -76,20 +76,72 @@ $$x_p(t)=D\cos\left(\omega t-\delta\right)$$
 Where:
 $$D=\frac{A}{\sqrt{\left(\omega_0^2-\omega^2\right)^2+4\omega^2\beta^2}}$$
 $$\delta=\arctan\left(\frac{2\omega\beta}{\omega_0^2-\omega^2}\right)$$
+\begin{enumerate}[label=(\alph*)]
+      \item Consider an underdamped driven oscillator that starts with the initial conditions $x(t=0)=x_0$ and $\dot{x}(t=0)=0$.
+            Find the analytical expressions for the unknown coefficients in $x(t)$ using these initial conditions.
+
+      \item Write a python program that returns (and prints) the values of $\omega_1$, $\beta$, $\phi$, $D$ and $\delta$ for a given $x_0$. This should
+            be coded as a function called \verb|harm_osc_params| that accepts as inputs $\omega_0$, $\beta$, $A$, $\omega$ and $x_0$.
+
+      \item In the same python program, now write a new function, \verb|harm_osc_x_pos|, that calculates the array of positions $x$ of the
+            harmonic oscillator for a given array of times $t$. This function should receive the array $t$ as an input as well as the values of $\omega_0$,
+            $\beta$, $A$, $\omega$ and $x_0$. It should call the previously written function \verb|harm_osc_params| for the calculations of all the oscillation parameters.
+            It should return the array of positions $x$ of the harmonic oscillator for each value of $t$.
+
+      \item In the same python program, now write a new function to plot the data, \verb|harm_osc_x_plot_single|. The
+            function receives as inputs the arrays $t$ and $x$ generated at the previous step.
+
+      \item Pick three values of $\beta$ (remember of the constraint $\beta<w_0$) and plot in the same graph $x(t)$ for the three
+            chosen values. For reference use $w_0=1\unit{\per\second}$ and $A=1\unit{\per\second\squared}$ (but play with the values of $A$ to see the relative
+            importance of the driver and the damping). Comment on what effect $\beta$ has on both the transient and steady- state solution.
+
+      \item To help you distinguish the different effects, now write a function called \verb|harm_osc_damp_drive| that plots
+            in the same graph, $s(t)$, $\Gamma(t)$, $x_c(t)$ and $x_p(t)$. Comment on the results, specifically on the contribution of each component.
+
+      \item Finally, write a new function called \verb|harm_osc_euler_cromer| that receives has input parameters $\omega_0$, $\beta$,
+            $A$, $\omega$, $x_0$, and the analytical solution $x(t)$. This function should calculate a new $x(t)$, called $x_{EC}(t)$, that uses
+            the Euler-Cromer method to determine the position of the oscillator as a function of time for the same initial conditions. Additionally, the function should
+            plot, on the same graph, the solutions $x(t)$ and $x_{EC}(t)$ obtained with the analytical and Euler-Cromer methods, respectively, and the residuals, i.e.,
+            the difference $x(t)-x_{EC}(t)$. Discuss how you choose a value of $\Delta t$ that gives a sufficiently accurate answer (which means defining
+            ``sufficiently accurate'').
+\end{enumerate}
 \end{problem}
 \begin{soln}
-      \begin{align*}
-             & x(t=0)=B\cos\left(-\phi\right)+D\cos\left(-\delta\right)=x_0             \\
-             & \Rightarrow x_0-D\cos\left(\delta\right)=B\cos\left(\phi\right)          \\
-             & \Rightarrow \frac{x_0-D\cos\left(\delta\right)}{\cos\left(\phi\right)}=B \\
-      \end{align*}
-      \begin{align*}
-             & \dot{x}(t=0)=-B\omega_1\sin\left(-\phi\right)-B\beta\cos\left(-\phi\right)-D\omega\sin\left(-\delta\right)=0                                                                                                 \\
-             & =B\omega_1\sin\left(\phi\right)-B\beta\cos\left(\phi\right)+D\omega\sin\left(\delta\right)                                                                                                                   \\
-             & =\frac{x_0-D\cos\left(\delta\right)}{\cos\left(\phi\right)}\omega_1\sin\left(\phi\right)-\frac{x_0-D\cos\left(\delta\right)}{\cos\left(\phi\right)}\beta\cos\left(\phi\right)+D\omega\sin\left(\delta\right) \\
-             & =\left(x_0-D\cos\left(\delta\right)\right)\omega_1\tan\left(\phi\right)-\left(x_0-D\cos\left(\delta\right)\right)\beta+D\omega\sin\left(\delta\right)                                                        \\
-             & \Rightarrow -\frac{D\omega\sin\left(\delta\right)}{\left(x_0-D\cos\left(\delta\right)\right)}=\omega_1\tan\left(\phi\right)-\beta                                                                            \\
-             & \Rightarrow \arctan\left(\frac{\beta-\frac{D\omega\sin\left(\delta\right)}{\left(x_0-D\cos\left(\delta\right)\right)}}{\omega_1}\right)=\phi                                                                 \\
-      \end{align*}
+      \begin{enumerate}[label=(\alph*)]
+            \item \begin{align*}
+                         & x(t=0)=B\cos\left(-\phi\right)+D\cos\left(-\delta\right)=x_0             \\
+                         & \Rightarrow x_0-D\cos\left(\delta\right)=B\cos\left(\phi\right)          \\
+                         & \Rightarrow \frac{x_0-D\cos\left(\delta\right)}{\cos\left(\phi\right)}=B \\
+                  \end{align*}
+                  \begin{align*}
+                         & \dot{x}(t=0)=-B\omega_1\sin\left(-\phi\right)-B\beta\cos\left(-\phi\right)-D\omega\sin\left(-\delta\right)=0                                                                                                 \\
+                         & =B\omega_1\sin\left(\phi\right)-B\beta\cos\left(\phi\right)+D\omega\sin\left(\delta\right)                                                                                                                   \\
+                         & =\frac{x_0-D\cos\left(\delta\right)}{\cos\left(\phi\right)}\omega_1\sin\left(\phi\right)-\frac{x_0-D\cos\left(\delta\right)}{\cos\left(\phi\right)}\beta\cos\left(\phi\right)+D\omega\sin\left(\delta\right) \\
+                         & =\left(x_0-D\cos\left(\delta\right)\right)\omega_1\tan\left(\phi\right)-\left(x_0-D\cos\left(\delta\right)\right)\beta+D\omega\sin\left(\delta\right)                                                        \\
+                         & \Rightarrow -\frac{D\omega\sin\left(\delta\right)}{\left(x_0-D\cos\left(\delta\right)\right)}=\omega_1\tan\left(\phi\right)-\beta                                                                            \\
+                         & \Rightarrow \arctan\left(\frac{\beta-\frac{D\omega\sin\left(\delta\right)}{\left(x_0-D\cos\left(\delta\right)\right)}}{\omega_1}\right)=\phi                                                                 \\
+                  \end{align*}
+
+            \item \inputminted[breaklines, autogobble]{python3}{./python/q1/q1b.py} % TODO: Figure out imports or something idk.
+                  \newpage
+            \item \inputminted[breaklines, autogobble]{python3}{./python/q1/q1c.py}
+
+            \item In the same python program, now write a new function to plot the data, \verb|harm_osc_x_plot_single|. The
+                  function receives as inputs the arrays $t$ and $x$ generated at the previous step.
+
+            \item Pick three values of $\beta$ (remember of the constraint $\beta<w_0$) and plot in the same graph $x(t)$ for the three
+                  chosen values. For reference use $w_0=1\unit{\per\second}$ and $A=1\unit{\per\second\squared}$ (but play with the values of $A$ to see the relative
+                  importance of the driver and the damping). Comment on what effect $\beta$ has on both the transient and steady- state solution.
+
+            \item To help you distinguish the different effects, now write a function called \verb|harm_osc_damp_drive| that plots
+                  in the same graph, $s(t)$, $\Gamma(t)$, $x_c(t)$ and $x_p(t)$. Comment on the results, specifically on the contribution of each component.
+
+            \item Finally, write a new function called \verb|harm_osc_euler_cromer| that receives has input parameters $\omega_0$, $\beta$,
+                  $A$, $\omega$, $x_0$, and the analytical solution $x(t)$. This function should calculate a new $x(t)$, called $x_{EC}(t)$, that uses
+                  the Euler-Cromer method to determine the position of the oscillator as a function of time for the same initial conditions. Additionally, the function should
+                  plot, on the same graph, the solutions $x(t)$ and $x_{EC}(t)$ obtained with the analytical and Euler-Cromer methods, respectively, and the residuals, i.e.,
+                  the difference $x(t)-x_{EC}(t)$. Discuss how you choose a value of $\Delta t$ that gives a sufficiently accurate answer (which means defining
+                  ``sufficiently accurate'').
+      \end{enumerate}
 \end{soln}
 \end{document}
