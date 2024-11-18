@@ -1,0 +1,95 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{changepage}
+\usepackage{circuitikz}
+\usepackage{pgfplots}
+\usepackage{subcaption}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{minted}
+\usepackage[breakable]{tcolorbox}
+\usepackage[inline]{enumitem}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{soln}{Solution}
+
+\pgfplotsset{compat=newest}
+\usetikzlibrary{lindenmayersystems}
+\usetikzlibrary{arrows}
+
+\definecolor{incolor}{HTML}{303F9F}
+\definecolor{outcolor}{HTML}{D84315}
+\definecolor{cellborder}{HTML}{CFCFCF}
+\definecolor{cellbackground}{HTML}{F7F7F7}
+\newcommand{\eq}{=}
+\tikzset
+{%
+  axes/.style={thick,-latex},
+  cylinder/.style={right color=blue!80,left color=white,fill opacity=0.7},
+  paraboloid back/.style={left color=magenta!80,fill opacity=0.4},
+  paraboloid front/.style={left color=white, right color=magenta!80,fill opacity=0.4},
+}       
+
+\makeatletter
+\newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+\makeatother
+\newcommand{\prompt}[4]{
+    \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+}
+
+\newcommand{\highlight}[1]{\colorbox{yellow}{$\displaystyle #1$}}
+
+\NewDocumentCommand{\evalat}{sO{\big}mm}{%
+  \IfBooleanTF{#1}
+   {\mleft. #3 \mright|_{#4}}
+   {#3#2|_{#4}}%
+}
+
+\title{Physics 2130: Assignment III}
+\author{Jeremy Favro}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+% PROBLEM 1
+\begin{problem}
+Consider the driven, damped harmonic oscillator. Its equation of motion is:
+$$\ddot{x}+2\beta\dot{x}+\omega_0^2=A\cos\left(\omega t\right)$$
+In the case of an underdamped oscillator, i.e., $\beta<\omega_0^2$ we found that the solution for the equation of motion is:
+$$x(t)=x_c(t)+x_p(t)$$
+Where:
+$$x_c(t)e^{-\beta t}\left[c_1e^{i\omega_1 t}+c_2e^{-i\omega_1 t}\right]=Be^{-\beta t}\cos\left(\omega_1 t-\phi\right)=\Gamma(t)s(t)$$
+And where:
+$$\omega_1=\sqrt{w_0^2-\beta^2}$$
+$$\Gamma(t)=Be^{-\beta t}$$
+$$s(t)=\left(\omega_1 t-\phi\right)$$
+The particular solution is instead:
+$$x_p(t)=D\cos\left(\omega t-\delta\right)$$
+Where:
+$$D=\frac{A}{\sqrt{\left(\omega_0^2-\omega^2\right)^2+4\omega^2\beta^2}}$$
+$$\delta=\arctan\left(\frac{2\omega\beta}{\omega_0^2-\omega^2}\right)$$
+\end{problem}
+\begin{soln}
+      \begin{align*}
+             & x(t=0)=B\cos\left(-\phi\right)+D\cos\left(-\delta\right)=x_0             \\
+             & \Rightarrow x_0-D\cos\left(\delta\right)=B\cos\left(\phi\right)          \\
+             & \Rightarrow \frac{x_0-D\cos\left(\delta\right)}{\cos\left(\phi\right)}=B \\
+      \end{align*}
+      \begin{align*}
+             & \dot{x}(t=0)=-B\omega_1\sin\left(-\phi\right)-B\beta\cos\left(-\phi\right)-D\omega\sin\left(-\delta\right)=0                                                                                                 \\
+             & =B\omega_1\sin\left(\phi\right)-B\beta\cos\left(\phi\right)+D\omega\sin\left(\delta\right)                                                                                                                   \\
+             & =\frac{x_0-D\cos\left(\delta\right)}{\cos\left(\phi\right)}\omega_1\sin\left(\phi\right)-\frac{x_0-D\cos\left(\delta\right)}{\cos\left(\phi\right)}\beta\cos\left(\phi\right)+D\omega\sin\left(\delta\right) \\
+             & =\left(x_0-D\cos\left(\delta\right)\right)\omega_1\tan\left(\phi\right)-\left(x_0-D\cos\left(\delta\right)\right)\beta+D\omega\sin\left(\delta\right)                                                        \\
+             & \Rightarrow -\frac{D\omega\sin\left(\delta\right)}{\left(x_0-D\cos\left(\delta\right)\right)}=\omega_1\tan\left(\phi\right)-\beta                                                                            \\
+             & \Rightarrow \arctan\left(\frac{\beta-\frac{D\omega\sin\left(\delta\right)}{\left(x_0-D\cos\left(\delta\right)\right)}}{\omega_1}\right)=\phi                                                                 \\
+      \end{align*}
+\end{soln}
+\end{document}

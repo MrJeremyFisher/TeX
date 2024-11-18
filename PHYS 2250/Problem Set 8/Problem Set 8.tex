@@ -154,7 +154,7 @@ For the following logic circuit,
             \begin{circuitikz}
               \draw (0,0) node[ieeestd nor port, anchor=in 1](PQNOR){} (PQNOR.out) node[above right ]{$\overline{\left(p+q\right)}$}
               (PQNOR.out) -- ++(1,0) node[ieeestd nand port, anchor=in 1](PNRNAND){} (PNRNAND.out) node[above right]{$\overline{\overline{\left(p+q\right)}\overline{r}}$}
-              (PNRNAND.out) -- ++(1.5,0) node[ieeestd or port, anchor=in 1](OUTOUT){} (OUTOUT.out) node[right]{$rs+\overline{\overline{\left(p+q\right)}\overline{r}}=rs+\left(p+q\right)r=r(s+p+q)$}
+              (PNRNAND.out) -- ++(1.5,0) node[ieeestd or port, anchor=in 1](OUTOUT){} (OUTOUT.out) node[right]{$rs+\overline{\overline{\left(p+q\right)}\overline{r}}=rs+p+q+r=p+q+r+rs$}
               (PNRNAND.in 2) node[ieeestd not port, rotate=90, scale=.5, anchor=out](NOT){} (NOT.out) node[left]{$\overline{r}$}
               (NOT.in) node[ieeestd and port, anchor=in 1](RSAND){} (RSAND.out) node[above right]{$rs$}
               (RSAND.out) -| (OUTOUT.in 2)
@@ -170,16 +170,24 @@ For the following logic circuit,
               % and between the second and the third columns.
               % The letter ’c’ means the value will be centered within the column,
               % letter ’l’, left-aligned, and ’r’, right-aligned.
-              p & q & r & s & rs & p+q & (p+q)r & r(p+q+s) \\ % Use & to separate the columns
+              p & q & r & s & rs & p+q & (p+q)r & p+q+r+rs \\ % Use & to separate the columns
               \hline % Put a horizontal line between the table header and the rest.
               F & F & F & F & F  & F   & F      & F        \\
               F & F & F & T & F  & F   & F      & F        \\
+              F & F & T & F & F  & F   & F      & T        \\
+              F & T & F & F & F  & T   & F      & T        \\
+              T & F & F & F & F  & T   & F      & T        \\
               F & F & T & T & T  & F   & F      & T        \\
               F & T & T & T & T  & T   & T      & T        \\
               T & T & T & T & T  & T   & T      & T        \\
-              T & T & T & F & F  & T   & F      & T        \\
-              T & T & F & F & F  & T   & F      & F        \\
-              T & F & F & F & F  & T   & F      & F
+              T & F & F & T & F  & T   & F      & T        \\
+              F & T & T & F & F  & T   & T      & T        \\
+              T & F & T & F & F  & T   & T      & T        \\
+              F & T & F & T & F  & T   & F      & T        \\
+              T & F & T & T & T  & T   & T      & T        \\
+              T & T & F & F & F  & T   & F      & T        \\
+              T & T & T & F & F  & T   & T      & T        \\
+              T & T & F & T & F  & T   & F      & T        \\
             \end{array}
           \end{displaymath}
   \end{enumerate}
@@ -265,7 +273,8 @@ the numerals 0-9 (and no other useful ``patterns'').
             \end{array}
           \end{displaymath}
           As can be seen in the table, the $d$ segment is the segment that is off when the ``result'' is LO, meanining the transistor is cut off and the lamp is OFF.
-    \item Traversing the circuit we get $\overline{B\overline{(A+C+D)}}$ then, by DeMorgan's Theorem, $\overline{BX}=\overline{B}+\overline{X}=\overline{B}+(A+C+D)$
+    \item Traversing the circuit we get $\overline{B\overline{(A+C+D)}}$ then, by DeMorgan's Theorem, $\overline{BX}=\overline{B}+\overline{X}=\overline{B}+(A+C+D)$.
+          This result is consistent with the above truth table.
     \item ~[\textbf{BONUS}] \begin{center}
             \begin{circuitikz}
               \draw (0,0) node[ieeestd nand port, anchor=in 1](NAND){} (NAND.in 1) -- (NAND.in 2) -- ++(-0.25, 0) node[left]{$B$}
@@ -362,7 +371,7 @@ the numerals 0-9 (and no other useful ``patterns'').
             \hline  
             1 & 0   & 1 & 1 & . & 1 & 1   
           \end{tabular} \\
-          Then $1011.11_2=(2^3+2^1+2^0).(2^{-1}+2^{-2})_{10}=11.75_{10}$
+          Then $1011.11_2=(2^3+2^1+2^0)_{10}+(2^{-1}+2^{-2})_{10}=11.75_{10}$
   \end{enumerate}
 \end{soln}
 \end{document}
