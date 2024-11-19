@@ -120,7 +120,9 @@
               T & F & F & T                           & T                                 \\
               F & F & F & T                           & F                                 \\
               F & F & T & F                           & F                                 \\
-              F & T & T & F                           & F
+              F & T & T & F                           & F                                 \\
+              T & F & T & F                           & F                                 \\
+              F & T & F & F                           & F                                 \\
             \end{array}
           \end{displaymath}
   \end{enumerate}
@@ -198,6 +200,20 @@ For the following logic circuit,
 \begin{problem}{\textbf{BONUS}}
 Consider the circuit shown below with the two inputs $p$ and $q$ (of voltages $V_p$ and $V_q$). Note that in this logic circuit we are only interested in knowing when the inputs and outputs
 voltages are high (HI) or low (LO), not theiractual value in volts. The convention is HI=1 and LO=0.
+\begin{center}
+  \begin{circuitikz}
+    \draw \pgfextra{\ctikzset{bipoles/resistor/width=.4, bipoles/resistor/height=.2}}
+    (0,0) node[left]{$V_q$} -- ++(0.25,0) to[resistor, l=$R_q$] ++(1,0) -- ++(0.85,0) node[npn, anchor=E](T){1}
+    (T.base) to[resistor, l_=$R_p$] ++(-1,0) -- ++(-0.25,0) node[left]{$V_p$} 
+    (T.collector) |- ++(1,1) node[npn, anchor=B](T2){2} (T2.collector) -- ++(1.5,0) node[right]{$V_{out}$}
+    (T.emitter) -- ++(1,0) node[npn, anchor=B](T3){3} (T3.collector) -- ++(1,0) to[crossing] ++(0,2) -- ++(0,1)
+    to[resistor, l=$R_{C2}$] ++(0,1) coordinate(VCC) -- ++(1,0) node[right]{$V_{CC}$} 
+    (VCC) -- (VCC -| T.collector) to[resistor, l=$R_{C1}$] ++(0,-1) -- (T.collector)
+    (T2.emitter) -- ++(1.25,0) coordinate(R) -- (T3.emitter -| R) coordinate(G) node[ground]{}
+    (T3.emitter) -- (G)
+    ;
+  \end{circuitikz}
+\end{center}
 \begin{enumerate}[label=(\alph*)]
   \item Construct and complete a full truth table for $q$, $p$, and $V_{out}$ (and any intermediate conditions you wish to include). Highlight the $p$, $q$ conditions for which the output $V_{out}=$HI (or 1).
   \item Write a \underline{simplified} logic expression in terms of $p$ and $q$ for the network.
