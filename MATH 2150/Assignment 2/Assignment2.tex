@@ -78,7 +78,7 @@
 
 \maketitle
 \noindent Note: I've kept $p$, $q$, and $r$ throughout my solutions and only substituted the actual numbers in at the end. This is because I find it easier,
-especially when dealing with things that might cancel nicely, to deal with variables rather than the numbers they represent. In my case my 
+especially when dealing with things that might cancel nicely, to deal with variables rather than the numbers they represent. In my case my
 student number is 0805980 so $p=9$, $q=5$, and $r=22$.
 \\
 % PROBLEM 1
@@ -103,21 +103,21 @@ $$\frac{d^2y}{dx^2}-2q\frac{dy}{dx}+q^2y=2q^2\left(q^2+4\right)^2\cos^2\left(x\r
   \begin{align*}
     y_p=                & A\cos\left(2x\right)+B\sin\left(2x\right)+Cx+D+x^2\left(Ex+F\right)e^{qx}+G\cos(x)+H\sin(x) \\
     y_p^\prime=         & -2A\sin(2x)+2B\cos(2x)+C+3Ex^2e^{qx}+qEx^3e^{qx}+2Fxe^{qx}+Fqx^2e^{qx}-G\sin(x)+H\cos(x)    \\
-    y_p^{\prime\prime}= & -4A\cos(2x)-4B\sin(2x)+6Exe^{qx}+3Eqx^2e^{qx}+3Eqx^2e^{qx}+Eq^2x^3e^{qx}+2Fe^{qx}+          \\ 
+    y_p^{\prime\prime}= & -4A\cos(2x)-4B\sin(2x)+6Exe^{qx}+3Eqx^2e^{qx}+3Eqx^2e^{qx}+Eq^2x^3e^{qx}+2Fe^{qx}+          \\
                         & 2Fqxe^qx+2Fxe^{qx}+Fq^2x^2e^{qx}-G\cos(x)-H\sin(x)
   \end{align*}
   Which can then be plugged into the original differential equation in place of $y$, $y^\prime$, and $y^{\prime\prime}$
   \begin{align*}
-     & -4A\cos(2x)-4B\sin(2x)+6Exe^{qx}+3Eqx^2e^{qx}+3Eqx^2e^{qx}+Eq^2x^3e^{qx}+2Fe^{qx}+2Fqxe^{qx}+2Fxe^{qx}+Fq^2x^2e^{qx} \\ &-G\cos(x)-H\sin(x)    \\                                                              
+     & -4A\cos(2x)-4B\sin(2x)+6Exe^{qx}+3Eqx^2e^{qx}+3Eqx^2e^{qx}+Eq^2x^3e^{qx}+2Fe^{qx}+2Fqxe^{qx}+2Fxe^{qx}+Fq^2x^2e^{qx} \\ &-G\cos(x)-H\sin(x)    \\
      & -2q\left[-2A\sin(2x)+2B\cos(2x)+C+3Ex^2e^{qx}+qEx^3e^{qx}+2Fxe^{qx}+Fqx^2e^{qx}-G\sin(x)+H\cos(x)\right]             \\
-     & +q^2\left[A\cos\left(2x\right)+B\sin\left(2x\right)+Cx+D+x^2\left(Ex+F\right)e^{qx}+G\cos(x)+H\sin(x)\right]         \\ 
+     & +q^2\left[A\cos\left(2x\right)+B\sin\left(2x\right)+Cx+D+x^2\left(Ex+F\right)e^{qx}+G\cos(x)+H\sin(x)\right]         \\
      & =q^2\left(q^2+4\right)^2+q^2\left(q^2+4\right)^2\cos\left(2x\right)+6pxe^{qx}+q^3x+(q^2+1)^2p\cos\left(x\right)
   \end{align*}
-  Which when multiplied out yields 
+  Which when multiplied out yields
   \begin{align*}
-     & -4A\cos(2x)-4B\sin(2x)+6Exe^{qx}+3Eqx^2e^{qx}+3Eqx^2e^{qx}+Eq^2x^3e^{qx}+2Fe^{qx}+2Fqxe^{qx}+2Fxe^{qx}+Fq^2x^2e^{qx}               \\ 
-     & -G\cos(x)-H\sin(x) +4qA\sin(2x)-4qB\cos(2x)-2qC-6qEx^2e^{qx}-2q^2Ex^3e^{qx}-4qFxe^{qx}-2Fq^2x^2e^{qx}                              \\ 
-     & +2qG\sin(x)-2qH\cos(x)+Aq^2\cos\left(2x\right)+Bq^2\sin\left(2x\right)+Cq^2x+D+Eq^2x^3e^{qx}+Fq^2x^2e^{qx}+q^2G\cos(x)+q^2H\sin(x) \\ 
+     & -4A\cos(2x)-4B\sin(2x)+6Exe^{qx}+3Eqx^2e^{qx}+3Eqx^2e^{qx}+Eq^2x^3e^{qx}+2Fe^{qx}+2Fqxe^{qx}+2Fxe^{qx}+Fq^2x^2e^{qx}               \\
+     & -G\cos(x)-H\sin(x) +4qA\sin(2x)-4qB\cos(2x)-2qC-6qEx^2e^{qx}-2q^2Ex^3e^{qx}-4qFxe^{qx}-2Fq^2x^2e^{qx}                              \\
+     & +2qG\sin(x)-2qH\cos(x)+Aq^2\cos\left(2x\right)+Bq^2\sin\left(2x\right)+Cq^2x+D+Eq^2x^3e^{qx}+Fq^2x^2e^{qx}+q^2G\cos(x)+q^2H\sin(x) \\
      & =q^2\left(q^2+4\right)^2+q^2\left(q^2+4\right)^2\cos\left(2x\right)+6pxe^{qx}+q^3x+(q^2+1)^2p\cos\left(x\right)
   \end{align*}
   Which can be solved to determine the unknown coefficients
@@ -159,28 +159,39 @@ $$qx^2\frac{d^2y}{dx^2}-9qx\frac{dy}{dx}+26qy=px^5\ln^2\left(x\right),\qquad x>0
      & qm^2 -10qm+26q=0 \implies m=\frac{10q\pm\sqrt{100q^2-104q^2}}{2q}=5\pm i                                      \\
      & \therefore y_h(x)=C_1x^{5+i}+C_2x^{5-i}=x^5\left(C_3\cos\left(\ln(x)\right)+C_4\sin\left(\ln(x)\right)\right) \\
   \end{align*}
-  Then, using variation of parameters 
+  Then, using variation of parameters
   $$y_p(x)=-y_1(x)\int\frac{g(x)y_2(x)}{W\left[y_1,y_2\right]}\,dx+y_2(x)\int\frac{g(x)y_1(x)}{W\left[y_1,y_2\right]}\,dx$$
-  Where $g(x)=px^5\ln^2\left(x\right)$.
+  Where $g(x)=\frac{p}{q}x^3\ln^2\left(x\right)$ (the left hand side divided by $qx^2$).
   \begin{align*}
      & W\left[y_1,y_2\right]=
     \begin{vmatrix}
-      y_1        & y_2          \\
-      y_1^\prime & y_2^\prime 
+      y_1        & y_2        \\
+      y_1^\prime & y_2^\prime
     \end{vmatrix}
     =
     \begin{vmatrix}
-      x^5\cos\left(\ln(x)\right)                             & x^5\sin\left(\ln(x)\right)                               \\
-      5x^4\cos\left(\ln(x)\right)-x^4\sin\left(\ln(x)\right) & 5x^4\sin\left(\ln(x)\right)+x^4\cos\left(\ln(x)\right) 
+      x^5\cos\left(\ln(x)\right)                             & x^5\sin\left(\ln(x)\right)                             \\
+      5x^4\cos\left(\ln(x)\right)-x^4\sin\left(\ln(x)\right) & 5x^4\sin\left(\ln(x)\right)+x^4\cos\left(\ln(x)\right)
     \end{vmatrix} \\
      & = \left[5x^4\sin\left(\ln(x)\right)+x^4\cos\left(\ln(x)\right)\right]x^5\cos\left(\ln(x)\right)
-    -\left[5x^4\cos\left(\ln(x)\right)-x^4\sin\left(\ln(x)\right)\right]x^5\sin\left(\ln(x)\right)                       \\
+    -\left[5x^4\cos\left(\ln(x)\right)-x^4\sin\left(\ln(x)\right)\right]x^5\sin\left(\ln(x)\right)                  \\
      & = \cancel{5x^9\sin\left(\ln(x)\right)\cos\left(\ln(x)\right)}+x^9\cos^2\left(\ln(x)\right)
-    \cancel{-5x^9\cos\left(\ln(x)\right)\sin\left(\ln(x)\right)} +x^9\sin^2\left(\ln(x)\right)\\
-    & = x^9\cos^2\left(\ln(x)\right)+x^9\sin^2\left(\ln(x)\right) = x^9
+    \cancel{-5x^9\cos\left(\ln(x)\right)\sin\left(\ln(x)\right)} +x^9\sin^2\left(\ln(x)\right)                      \\
+     & = x^9\cos^2\left(\ln(x)\right)+x^9\sin^2\left(\ln(x)\right) = x^9
   \end{align*}
   So,
-  $$y_p(x)=-\cos\left(\ln(x)\right)\int\frac{px^{10}\ln^2\left(x\right)\sin\left(\ln(x)\right)}{x^9}\,dx+
-    \sin\left(\ln(x)\right)\int\frac{px^{10}\ln^2\left(x\right)\cos\left(\ln(x)\right)}{x^9}\,dx$$
+  \begin{align*}
+     & y_p(x)=-x^5\cos\left(\ln(x)\right)\int\frac{px^{8}\ln^2\left(x\right)\sin\left(\ln(x)\right)}{qx^9}\,dx \\
+     & +x^5\sin\left(\ln(x)\right)\int\frac{px^{8}\ln^2\left(x\right)\cos\left(\ln(x)\right)}{qx^9}\,dx  \\
+     & =-\frac{p}{q}x^5\cos\left(\ln(x)\right)\left[2\ln(x)\sin\left(\ln(x)\right)+\left(2-\ln^2(x)\right)\cos\left(\ln(x)\right)\right] \\
+     & +\frac{p}{q}x^5\sin\left(\ln(x)\right)\left[\left(\ln^2(x)-2\right)\sin\left(\ln(x)\right)+2\ln(x)\cos\left(\ln(x)\right)\right]  \\
+     & =-\frac{p}{q}x^5\cos\left(\ln(x)\right)2\ln(x)\sin\left(\ln(x)\right)-\frac{p}{q}x^5\cos\left(\ln(x)\right)\left(2-\ln^2(x)\right)\cos\left(\ln(x)\right) \\
+     & +\frac{p}{q}x^5\sin\left(\ln(x)\right)\left(\ln^2(x)-2\right)\sin\left(\ln(x)\right)+\frac{p}{q}x^5\sin\left(\ln(x)\right)2\ln(x)\cos\left(\ln(x)\right)  \\
+     & = -\frac{p}{q}x^5\cos\left(\ln(x)\right)\left(2-\ln^2(x)\right)\cos\left(\ln(x)\right)+\frac{p}{q}\sin\left(\ln(x)\right)\left(\ln^2(x)-2\right)\sin\left(\ln(x)\right) \\
+     & -\frac{p}{q}x^5\left(2-\ln^2(x)\right)\cos^2\left(\ln(x)\right)+\frac{p}{q}\left(\ln^2(x)-2\right)\sin^2\left(\ln(x)\right)                                             \\
+     & = \frac{p}{q}x^5\left[-2\cos^2\left(\ln(x)\right)+\ln^2(x)\cos^2\left(\ln(x)\right)+\ln^2(x)\sin^2\left(\ln(x)\right)-2\sin^2\left(\ln(x)\right)\right]                 \\
+     & = \frac{p}{q}x^5\left[\ln^2(x)-2\right]                                                                                                                                  \\
+  \end{align*}
+  $$\therefore y(x)=x^5\left(C_3\cos\left(\ln(x)\right)+C_4\sin\left(\ln(x)\right)+\frac{9}{5}\left[\ln^2(x)-2\right]\right) $$
 \end{soln}
 \end{document}
