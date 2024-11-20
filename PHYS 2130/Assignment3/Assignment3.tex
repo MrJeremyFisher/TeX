@@ -93,7 +93,7 @@ $$\delta=\arctan\left(\frac{2\omega\beta}{\omega_0^2-\omega^2}\right)$$
 
       \item Pick three values of $\beta$ (remember of the constraint $\beta<w_0$) and plot in the same graph $x(t)$ for the three
             chosen values. For reference use $w_0=1\unit{\per\second}$ and $A=1\unit{\per\second\squared}$ (but play with the values of $A$ to see the relative
-            importance of the driver and the damping). Comment on what effect $\beta$ has on both the transient and steady- state solution.
+            importance of the driver and the damping). Comment on what effect $\beta$ has on both the transient and steady-state solution.
 
       \item To help you distinguish the different effects, now write a function called \verb|harm_osc_damp_drive| that plots
             in the same graph, $s(t)$, $\Gamma(t)$, $x_c(t)$ and $x_p(t)$. Comment on the results, specifically on the contribution of each component.
@@ -126,15 +126,28 @@ $$\delta=\arctan\left(\frac{2\omega\beta}{\omega_0^2-\omega^2}\right)$$
                   \newpage
             \item \inputminted[breaklines, autogobble]{python3}{./python/q1/q1c.py}
 
-            \item In the same python program, now write a new function to plot the data, \verb|harm_osc_x_plot_single|. The
-                  function receives as inputs the arrays $t$ and $x$ generated at the previous step.
+            \item \inputminted[breaklines, autogobble]{python3}{./python/q1/q1d.py}
+                  \begin{center}
+                        \includegraphics[scale=0.75]{Figure_1.png}
+                  \end{center}
+                  The first regime, visible as the rapid oscillations from $t=0$ to $t\approx 30$ is dominated by the $Be^{-\beta t}\cos\left(\omega_1 t-\phi\right)$ term. Because
+                  This term contains an exponential decay factor it will fade away as time progresses leaving the $D\cos\left(\omega t-\delta\right)$ term as the only oscillator.
+                  The first regime has a period of $\approx 3.2\unit{\radian\per\second}$, which is consistent with $\omega_1=\frac{2\pi}{\sqrt{w_0^2-\beta^2}}=\frac{2\pi}{\sqrt{2^2-0.25^2}}\approx 3.2\unit{\radian\per\second}$.
+                  The second regime has a period of $\approx 63\unit{\radian\per\second}$, which is consistent with $\omega=\frac{2\pi}{63}\approx0.1$.
 
-            \item Pick three values of $\beta$ (remember of the constraint $\beta<w_0$) and plot in the same graph $x(t)$ for the three
-                  chosen values. For reference use $w_0=1\unit{\per\second}$ and $A=1\unit{\per\second\squared}$ (but play with the values of $A$ to see the relative
-                  importance of the driver and the damping). Comment on what effect $\beta$ has on both the transient and steady- state solution.
+            \item \inputminted[breaklines, autogobble]{python3}{./python/q1/q1e.py}
+                  \begin{center}
+                        \includegraphics[scale=0.75]{Figure_2.png}
+                  \end{center}
+                  As is expected here, greater values of $\beta$ result in quicker die-off of the transient solution. $\beta$ only slightly effects
+                  the steady-state solution, causing slight displacement as the transient solution never actually reaches zero.
 
-            \item To help you distinguish the different effects, now write a function called \verb|harm_osc_damp_drive| that plots
-                  in the same graph, $s(t)$, $\Gamma(t)$, $x_c(t)$ and $x_p(t)$. Comment on the results, specifically on the contribution of each component.
+            \item \inputminted[breaklines, autogobble]{python3}{./python/q1/q1f.py}
+                  \begin{center}
+                        \includegraphics[scale=0.75]{Figure_3.png}
+                  \end{center}
+                  $s(t)$ contributes the oscillation of the transient solution. $\Gamma(t)$ contributes the exponential decay envelope. $x_c(t)$ contributes,
+                  being the product of $s(t)$ and $\Gamma(t)$ produces the initial decaying transient solution. $x_p(t)$ contributes the steady-state solution.
 
             \item Finally, write a new function called \verb|harm_osc_euler_cromer| that receives has input parameters $\omega_0$, $\beta$,
                   $A$, $\omega$, $x_0$, and the analytical solution $x(t)$. This function should calculate a new $x(t)$, called $x_{EC}(t)$, that uses

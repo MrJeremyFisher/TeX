@@ -1,0 +1,186 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{changepage}
+\usepackage{circuitikz}
+\usepackage{minted}
+\usepackage{pgfplots}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage[breakable]{tcolorbox}
+\usepackage[inline]{enumitem}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{soln}{Solution}
+
+\pgfplotsset{compat=newest}
+\usetikzlibrary{lindenmayersystems}
+\usetikzlibrary{arrows}
+
+\definecolor{incolor}{HTML}{303F9F}
+\definecolor{outcolor}{HTML}{D84315}
+\definecolor{cellborder}{HTML}{CFCFCF}
+\definecolor{cellbackground}{HTML}{F7F7F7}
+\newcommand{\eq}{=}
+\usetikzlibrary{positioning, fit, calc}
+\pgfdeclarelayer{background}  
+\pgfsetlayers{background,main}
+
+\makeatletter
+\newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+\makeatother
+\newcommand{\prompt}[4]{
+    \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+}
+
+\newcommand{\thevenin}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (2,0) to[battery1, l_=$V_{Th}\eq#1$] (2,2) 
+      to[resistor, l_=$R_{Th}\eq#2$] (0,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\norton}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (3,0) to[american current source, l_=$I_{N}\eq#1$] (3,2) -- (0,2) (2,0)
+      to[resistor, l=$R_{N}\eq#2$] (2,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\highlight}[1]{\colorbox{yellow}{$\displaystyle #1$}}
+
+\NewDocumentCommand{\evalat}{sO{\big}mm}{%
+  \IfBooleanTF{#1}
+   {\mleft. #3 \mright|_{#4}}
+   {#3#2|_{#4}}%
+}
+
+\title{Math 2150: Assignment I}
+\author{Jeremy Favro}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\noindent Note: I've kept $p$, $q$, and $r$ throughout my solutions and only substituted the actual numbers in at the end. This is because I find it easier,
+especially when dealing with things that might cancel nicely, to deal with variables rather than the numbers they represent. In my case my 
+student number is 0805980 so $p=9$, $q=5$, and $r=22$.
+\\
+% PROBLEM 1
+\begin{problem}
+\end{problem}
+\begin{soln}
+\end{soln}
+\newpage
+
+% PROBLEM 2
+\begin{problem}
+Solve the following differential equation using the method of undetermined coefficients.
+$$\frac{d^2y}{dx^2}-2q\frac{dy}{dx}+q^2y=2q^2\left(q^2+4\right)^2\cos^2\left(x\right)+6pxe^{qx}+q^3x+(q^2+1)^2p\cos\left(x\right)$$
+\end{problem}
+\begin{soln} First we solve the homogeneous portion
+  \begin{align*}
+     & \frac{d^2y}{dx^2}-2q\frac{dy}{dx}+q^2y=0\rightsquigarrow y=e^{mx}                                                    \\
+     & m^2-2qm+q^2=0 \implies m = \frac{2q\pm\sqrt{4q^2-4q^2}}{2} = q                                                       \\
+     & \therefore y_h(x)=C_1e^{qx}+C_2xe^{qx} \text{ where } xe^{qx} \text{ is the result of reduction of order on } e^{qx} \\
+  \end{align*}
+  Then, using undetermined coefficients
+  \begin{align*}
+    y_p=                & A\cos\left(2x\right)+B\sin\left(2x\right)+Cx+D+x^2\left(Ex+F\right)e^{qx}+G\cos(x)+H\sin(x) \\
+    y_p^\prime=         & -2A\sin(2x)+2B\cos(2x)+C+3Ex^2e^{qx}+qEx^3e^{qx}+2Fxe^{qx}+Fqx^2e^{qx}-G\sin(x)+H\cos(x)    \\
+    y_p^{\prime\prime}= & -4A\cos(2x)-4B\sin(2x)+6Exe^{qx}+3Eqx^2e^{qx}+3Eqx^2e^{qx}+Eq^2x^3e^{qx}+2Fe^{qx}+          \\ 
+                        & 2Fqxe^qx+2Fxe^{qx}+Fq^2x^2e^{qx}-G\cos(x)-H\sin(x)
+  \end{align*}
+  Which can then be plugged into the original differential equation in place of $y$, $y^\prime$, and $y^{\prime\prime}$
+  \begin{align*}
+     & -4A\cos(2x)-4B\sin(2x)+6Exe^{qx}+3Eqx^2e^{qx}+3Eqx^2e^{qx}+Eq^2x^3e^{qx}+2Fe^{qx}+2Fqxe^{qx}+2Fxe^{qx}+Fq^2x^2e^{qx} \\ &-G\cos(x)-H\sin(x)    \\                                                              
+     & -2q\left[-2A\sin(2x)+2B\cos(2x)+C+3Ex^2e^{qx}+qEx^3e^{qx}+2Fxe^{qx}+Fqx^2e^{qx}-G\sin(x)+H\cos(x)\right]             \\
+     & +q^2\left[A\cos\left(2x\right)+B\sin\left(2x\right)+Cx+D+x^2\left(Ex+F\right)e^{qx}+G\cos(x)+H\sin(x)\right]         \\ 
+     & =q^2\left(q^2+4\right)^2+q^2\left(q^2+4\right)^2\cos\left(2x\right)+6pxe^{qx}+q^3x+(q^2+1)^2p\cos\left(x\right)
+  \end{align*}
+  Which when multiplied out yields 
+  \begin{align*}
+     & -4A\cos(2x)-4B\sin(2x)+6Exe^{qx}+3Eqx^2e^{qx}+3Eqx^2e^{qx}+Eq^2x^3e^{qx}+2Fe^{qx}+2Fqxe^{qx}+2Fxe^{qx}+Fq^2x^2e^{qx}               \\ 
+     & -G\cos(x)-H\sin(x) +4qA\sin(2x)-4qB\cos(2x)-2qC-6qEx^2e^{qx}-2q^2Ex^3e^{qx}-4qFxe^{qx}-2Fq^2x^2e^{qx}                              \\ 
+     & +2qG\sin(x)-2qH\cos(x)+Aq^2\cos\left(2x\right)+Bq^2\sin\left(2x\right)+Cq^2x+D+Eq^2x^3e^{qx}+Fq^2x^2e^{qx}+q^2G\cos(x)+q^2H\sin(x) \\ 
+     & =q^2\left(q^2+4\right)^2+q^2\left(q^2+4\right)^2\cos\left(2x\right)+6pxe^{qx}+q^3x+(q^2+1)^2p\cos\left(x\right)
+  \end{align*}
+  Which can be solved to determine the unknown coefficients
+  \begin{align*}
+     & -4B+4qA+Bq^2=0 \implies\frac{-4qA}{q^2-4}=B                                                                                \\
+     & -4A-4qB+Aq^2=q^2\left(q^2+4\right)^2\implies\frac{q^2\left(q^2+4\right)^2}{q^2-4+\frac{16q^2}{q^2-4}}=A=525\implies B=-500 \\
+     & Cq^2=q^3\implies C=q=5                                                                                                     \\
+     & -2qC+D=q^2\left(q^2+4\right)^2\implies D=q^2\left(q^2+4\right)^2+2qC=21075                                                 \\
+     & 2F=0\implies F=0                                                                                                           \\
+     & 6E+2Fq+2F-4qF=6E=6p\implies E=p=9                                                                                          \\
+     & -H+2qG+q^2H=0\implies \frac{-2qG}{q^2-1}=H                                                                                 \\
+     & -G-2qH+q^2G=\left(q^2+1\right)^2p\implies G=\frac{\left(q^2+1\right)^2p}{\frac{4q^2}{q^2-1}-1+q^2}=216\implies H=-90       \\
+  \end{align*}
+  \begin{align*}
+     & A=525   \\
+     & B=-500  \\
+     & C=5     \\
+     & D=21075 \\
+     & E=9     \\
+     & F=0     \\
+     & G=216   \\
+     & H=-90   \\
+  \end{align*}
+  So,
+  $$y_p=525\cos\left(2x\right)-500\sin\left(2x\right)+5x+21075+9x^3e^{5x}+216\cos(x)-90\sin(x)$$
+  $$\therefore y=C_1e^{qx}+C_2xe^{qx}+525\cos\left(2x\right)-500\sin\left(2x\right)+5x+21075+9x^3e^{5x}+216\cos(x)-90\sin(x)$$
+\end{soln}
+\newpage
+
+% PROBLEM 3
+\begin{problem}
+Solve the following differential equation using variation of parameters
+$$qx^2\frac{d^2y}{dx^2}-9qx\frac{dy}{dx}+26qy=px^5\ln^2\left(x\right),\qquad x>0$$
+\end{problem}
+\begin{soln} First we solve the homogeneous portion
+  \begin{align*}
+     & qx^2\frac{d^2y}{dx^2}-9qx\frac{dy}{dx}+26qy=0 \rightsquigarrow y=x^m                                          \\
+     & qx^2m^2x^{m-2}-9qxmx^{m-1}+26qx^m=0                                                                           \\
+     & qm^2 -10qm+26q=0 \implies m=\frac{10q\pm\sqrt{100q^2-104q^2}}{2q}=5\pm i                                      \\
+     & \therefore y_h(x)=C_1x^{5+i}+C_2x^{5-i}=x^5\left(C_3\cos\left(\ln(x)\right)+C_4\sin\left(\ln(x)\right)\right) \\
+  \end{align*}
+  Then, using variation of parameters 
+  $$y_p(x)=-y_1(x)\int\frac{g(x)y_2(x)}{W\left[y_1,y_2\right]}\,dx+y_2(x)\int\frac{g(x)y_1(x)}{W\left[y_1,y_2\right]}\,dx$$
+  Where $g(x)=px^5\ln^2\left(x\right)$.
+  \begin{align*}
+     & W\left[y_1,y_2\right]=
+    \begin{vmatrix}
+      y_1        & y_2          \\
+      y_1^\prime & y_2^\prime 
+    \end{vmatrix}
+    =
+    \begin{vmatrix}
+      x^5\cos\left(\ln(x)\right)                             & x^5\sin\left(\ln(x)\right)                               \\
+      5x^4\cos\left(\ln(x)\right)-x^4\sin\left(\ln(x)\right) & 5x^4\sin\left(\ln(x)\right)+x^4\cos\left(\ln(x)\right) 
+    \end{vmatrix} \\
+     & = \left[5x^4\sin\left(\ln(x)\right)+x^4\cos\left(\ln(x)\right)\right]x^5\cos\left(\ln(x)\right)
+    -\left[5x^4\cos\left(\ln(x)\right)-x^4\sin\left(\ln(x)\right)\right]x^5\sin\left(\ln(x)\right)                       \\
+     & = \cancel{5x^9\sin\left(\ln(x)\right)\cos\left(\ln(x)\right)}+x^9\cos^2\left(\ln(x)\right)
+    \cancel{-5x^9\cos\left(\ln(x)\right)\sin\left(\ln(x)\right)} +x^9\sin^2\left(\ln(x)\right)\\
+    & = x^9\cos^2\left(\ln(x)\right)+x^9\sin^2\left(\ln(x)\right) = x^9
+  \end{align*}
+  So,
+  $$y_p(x)=-\cos\left(\ln(x)\right)\int\frac{px^{10}\ln^2\left(x\right)\sin\left(\ln(x)\right)}{x^9}\,dx+
+    \sin\left(\ln(x)\right)\int\frac{px^{10}\ln^2\left(x\right)\cos\left(\ln(x)\right)}{x^9}\,dx$$
+\end{soln}
+\end{document}
