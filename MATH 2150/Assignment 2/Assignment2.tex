@@ -79,12 +79,162 @@
 \maketitle
 \noindent Note: I've kept $p$, $q$, and $r$ throughout my solutions and only substituted the actual numbers in at the end. This is because I find it easier,
 especially when dealing with things that might cancel nicely, to deal with variables rather than the numbers they represent. In my case my
-student number is 0805980 so $p=9$, $q=5$, and $r=22$.
+student number is 0805980 so $p=9$, $q=5$, and $r=22$. \textbf{TODO: Are these the same as Asn 1}
 \\
 % PROBLEM 1
 \begin{problem}
+The primary objective of this exercise is to give you the opportunity to explore the effect
+of damping and external forcing on mechanical vibration. The notes attached at the end of
+this assignment provide the mathematical details of forced vibration which you may use to
+contextualize your observations and discussions. You can use the SAGE commands and codes
+I uploaded earlier on the blackboard to complete this assignment. I will also accept if you
+use any other plotting or solution software. Your descriptions should be brief and precise. \\\\
+\textbf{FORCED MECHANICHAL VIBRATIONS}
+\\
+Consider the forced mechanical vibration model of the spring-mass system that was discussed in the class,
+\begin{equation}
+  m\frac{d^2x}{dt^2}+b\frac{dx}{dt}+kx=f(t), \qquad x(0)=x_0, x^\prime(0)=x_1
+\end{equation}
+where $m$ is the mass of the object, $b$ is the damping constant, $k$ is the spring constant, and $f(t)$ is the applied
+force acting on the spring-mass system at time $t$. Consider the special case where
+\begin{equation}
+  m=(p-q)^2,\quad k=q^2
+\end{equation}
+and
+\begin{equation*}
+  x_0=-1-\frac{q}{r}, \qquad x_1=1+\frac{p}{r}
+\end{equation*}
+\begin{enumerate}[label=(\alph*)]
+  \item \textbf{UNDAMPED FORCE VIBRATION:} Consider the case where there is no damping ($b = 0$) and the applied force is given by
+        \begin{equation}
+          f(t)=p\sin\left(\omega t\right)+q\cos\left(\omega t\right)
+        \end{equation}
+        and with the initial conditions given above. Obtain \textbf{five plots} of the solution for each of the following $\omega$ values:
+        \begin{equation}
+          \omega=\sqrt{\frac{k}{m}}+\frac{i-3}{3},\qquad i=1,2,3,4,5
+        \end{equation}
+        The frequency $f_r=\frac{\omega}{2\pi}$ is called the \textbf{resonance frequency}. Describe the behaviour of the solutions
+        at the resonance and the other frequencies.
+  \item \textbf{DAMPED FREE VIBRATION:} Consider equation 1 with the damped free vibration case where $b \neq 0$ and $f (t) = 0$.
+        For your particular $m$ and $k$ values, consider \textbf{three different} $b$ values in which the parameter
+        \begin{equation}
+          \Delta=b^2-4mk
+        \end{equation}
+        is
+        \begin{enumerate}[label=\roman*.]
+          \item Zero (Take $b=2q\left(p-q\right)$)
+          \item Positive (Take $b=3q\left(p-q\right)$)
+          \item Negative (Take $b=q\left(p-q\right)$)
+        \end{enumerate}
+        Obtain the \textbf{solution plots} for each of these cases. Describe the behaviour of the solutions.
+  \item \textbf{DAMPED FORCED VIBRATION:} Consider equation 1 with
+        \begin{equation}
+          f(t)=\frac{r}{p}\sin\left(\gamma t\right)
+        \end{equation}
+        \begin{enumerate}[label=\roman*.]
+          \item For the \textbf{underdamped oscillatory case of question 1(b)(iii) above,} obtain
+                the \textbf{three plots} of the solution for
+                \begin{equation}
+                  b=q\left(p-q\right), \qquad \gamma=\sqrt{\frac{k}{m}-\frac{b^2}{2m^2}}, \qquad i=1,2,3
+                \end{equation}
+                Describe the behavior of the solutions that you observe from the plots.
+          \item The amplitude of the oscillation in part 1(c)(i) is a product of the amplitude of the forcing, $\frac{r}{p}$, and the so called \textbf{Frequency gain} $M\left(\gamma\right)$ which is given by:
+                \begin{equation}
+                  M\left(\gamma\right)=\frac{1}{\sqrt{\left(k-m\gamma^2\right)^2+b^2\gamma^2}}
+                \end{equation}
+                The graph of $M\left(\gamma\right)$ is called the Frequency response curve. Graph each of the three frequency response curves
+                (M as a function of $\gamma$ with the $\gamma$ axis ranging from 0 to 4 for the three different values $b$ used in question \#1(b) above. Describe your observations.
+        \end{enumerate}
+\end{enumerate}
 \end{problem}
-\begin{soln}
+\newpage
+
+\begin{soln} ~
+  \begin{enumerate}[label=(\alph*)]
+    \item   ~\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+            \prompt{In}{incolor}{1}{\boxspacing}
+            \begin{minted}[breaklines, autogobble]{sage}
+              clear_vars()
+              import random
+              from IPython.core.interactiveshell import InteractiveShell
+              interactiveShell.ast_node_interactivity = "all"
+              t = var('t')
+              x = function('x')(t)
+
+              q = 5
+              p = 9
+              r = 22
+
+              m = (p-q)^2
+              k = q^2
+              d = diff(x, t)
+              d2 = diff(d, t)
+
+              plt = Graphics()
+              for i in range(1,6):
+                  omega = sqrt(k/m)+(i-3)/3
+                  eqn = m*d2 + k*x == p*sin(omega*t) + q*cos(omega*t)
+                  sol = desolve(eqn, x, ics=[0, -1-q/r, 1+p/r])
+                  plt += plot(sol, 0, 10, legend_label=rf"$\omega={omega}$", color=random.choice(sorted(colors)))
+
+              plt.legend(True)
+              show(plt)
+              \end{minted}
+          \end{tcolorbox}
+          \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+            \prompt{Out}{outcolor}{1}{\boxspacing}
+            \includegraphics[scale=0.75]{G1.png}
+          \end{tcolorbox}
+    \item ~\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+            \prompt{In}{incolor}{1}{\boxspacing}
+            \begin{minted}[breaklines, autogobble]{sage}
+clear_vars()
+t = var('t')
+x = function('x')(t)
+
+q = 5
+p = 9
+r = 22
+
+m = (p-q)^2
+k = q^2
+d = diff(x, t)
+d2 = diff(d, t)
+
+plt = Graphics()
+for i in range(1,4):
+    b = i*((p-q)*q)
+    eqn = m*d2 + b*d+ k*x == 0
+    sol = desolve(eqn, x, ics=[0, -1-q/r, 1+p/r])
+    plt += plot(sol, 0, 10, legend_label=rf"$b={b}$", color=random.choice(sorted(colors)))
+
+plt.legend(True)
+show(plt)
+        \end{minted}
+          \end{tcolorbox}
+          \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+            \prompt{Out}{outcolor}{1}{\boxspacing}
+            \includegraphics[scale=0.75]{G2.png}
+          \end{tcolorbox}
+    \item \textbf{DAMPED FORCED VIBRATION:} Consider equation 1 with
+          \begin{equation}
+            f(t)=\frac{r}{p}\sin\left(\gamma t\right)
+          \end{equation}
+          \begin{enumerate}[label=\roman*.]
+            \item For the \textbf{underdamped oscillatory case of question 1(b)(iii) above,} obtain
+                  the \textbf{three plots} of the solution for
+                  \begin{equation}
+                    b=q\left(p-q\right), \qquad \gamma=\sqrt{\frac{k}{m}-\frac{b^2}{2m^2}}, \qquad i=1,2,3
+                  \end{equation}
+                  Describe the behavior of the solutions that you observe from the plots.
+            \item The amplitude of the oscillation in part 1(c)(i) is a product of the amplitude of the forcing, $\frac{r}{p}$, and the so called \textbf{Frequency gain} $M\left(\gamma\right)$ which is given by:
+                  \begin{equation}
+                    M\left(\gamma\right)=\frac{1}{\sqrt{\left(k-m\gamma^2\right)^2+b^2\gamma^2}}
+                  \end{equation}
+                  The graph of $M\left(\gamma\right)$ is called the Frequency response curve. Graph each of the three frequency response curves
+                  (M as a function of $\gamma$ with the $\gamma$ axis ranging from 0 to 4 for the three different values $b$ used in question \#1(b) above. Describe your observations.
+          \end{enumerate}
+  \end{enumerate}
 \end{soln}
 \newpage
 
@@ -181,16 +331,16 @@ $$qx^2\frac{d^2y}{dx^2}-9qx\frac{dy}{dx}+26qy=px^5\ln^2\left(x\right),\qquad x>0
   \end{align*}
   So,
   \begin{align*}
-     & y_p(x)=-x^5\cos\left(\ln(x)\right)\int\frac{px^{8}\ln^2\left(x\right)\sin\left(\ln(x)\right)}{qx^9}\,dx \\
-     & +x^5\sin\left(\ln(x)\right)\int\frac{px^{8}\ln^2\left(x\right)\cos\left(\ln(x)\right)}{qx^9}\,dx  \\
-     & =-\frac{p}{q}x^5\cos\left(\ln(x)\right)\left[2\ln(x)\sin\left(\ln(x)\right)+\left(2-\ln^2(x)\right)\cos\left(\ln(x)\right)\right] \\
-     & +\frac{p}{q}x^5\sin\left(\ln(x)\right)\left[\left(\ln^2(x)-2\right)\sin\left(\ln(x)\right)+2\ln(x)\cos\left(\ln(x)\right)\right]  \\
-     & =-\frac{p}{q}x^5\cos\left(\ln(x)\right)2\ln(x)\sin\left(\ln(x)\right)-\frac{p}{q}x^5\cos\left(\ln(x)\right)\left(2-\ln^2(x)\right)\cos\left(\ln(x)\right) \\
-     & +\frac{p}{q}x^5\sin\left(\ln(x)\right)\left(\ln^2(x)-2\right)\sin\left(\ln(x)\right)+\frac{p}{q}x^5\sin\left(\ln(x)\right)2\ln(x)\cos\left(\ln(x)\right)  \\
+     & y_p(x)=-x^5\cos\left(\ln(x)\right)\int\frac{px^{8}\ln^2\left(x\right)\sin\left(\ln(x)\right)}{qx^9}\,dx                                                                 \\
+     & +x^5\sin\left(\ln(x)\right)\int\frac{px^{8}\ln^2\left(x\right)\cos\left(\ln(x)\right)}{qx^9}\,dx                                                                        \\
+     & =-\frac{p}{q}x^5\cos\left(\ln(x)\right)\left[2\ln(x)\sin\left(\ln(x)\right)+\left(2-\ln^2(x)\right)\cos\left(\ln(x)\right)\right]                                       \\
+     & +\frac{p}{q}x^5\sin\left(\ln(x)\right)\left[\left(\ln^2(x)-2\right)\sin\left(\ln(x)\right)+2\ln(x)\cos\left(\ln(x)\right)\right]                                        \\
+     & =-\frac{p}{q}x^5\cos\left(\ln(x)\right)2\ln(x)\sin\left(\ln(x)\right)-\frac{p}{q}x^5\cos\left(\ln(x)\right)\left(2-\ln^2(x)\right)\cos\left(\ln(x)\right)               \\
+     & +\frac{p}{q}x^5\sin\left(\ln(x)\right)\left(\ln^2(x)-2\right)\sin\left(\ln(x)\right)+\frac{p}{q}x^5\sin\left(\ln(x)\right)2\ln(x)\cos\left(\ln(x)\right)                \\
      & = -\frac{p}{q}x^5\cos\left(\ln(x)\right)\left(2-\ln^2(x)\right)\cos\left(\ln(x)\right)+\frac{p}{q}\sin\left(\ln(x)\right)\left(\ln^2(x)-2\right)\sin\left(\ln(x)\right) \\
      & -\frac{p}{q}x^5\left(2-\ln^2(x)\right)\cos^2\left(\ln(x)\right)+\frac{p}{q}\left(\ln^2(x)-2\right)\sin^2\left(\ln(x)\right)                                             \\
      & = \frac{p}{q}x^5\left[-2\cos^2\left(\ln(x)\right)+\ln^2(x)\cos^2\left(\ln(x)\right)+\ln^2(x)\sin^2\left(\ln(x)\right)-2\sin^2\left(\ln(x)\right)\right]                 \\
-     & = \frac{p}{q}x^5\left[\ln^2(x)-2\right]                                                                                                                                  \\
+     & = \frac{p}{q}x^5\left[\ln^2(x)-2\right]                                                                                                                                 \\
   \end{align*}
   $$\therefore y(x)=x^5\left(C_3\cos\left(\ln(x)\right)+C_4\sin\left(\ln(x)\right)+\frac{9}{5}\left[\ln^2(x)-2\right]\right) $$
 \end{soln}
