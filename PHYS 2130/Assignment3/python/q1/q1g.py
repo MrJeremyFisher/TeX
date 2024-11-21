@@ -15,7 +15,7 @@ def harm_osc_euler_cromer(w_0: float,
     x_r = q1c.harm_osc_x_pos(w_0, beta, A, w, x_0, t)
     v = np.zeros_like(t)
     for t_i in range(len(t) - 1):
-        a = A*np.cos(w*t[t_i-1])-2*beta*v[t_i-1]-w_0**2*x[t_i-1] # Should depend on position, right?
+        a = A*np.cos(w*t[t_i])-2*beta*v[t_i]-w_0**2*x[t_i] # Should depend on position, right?
 
 
         v[t_i+1] = v[t_i] + a*dt

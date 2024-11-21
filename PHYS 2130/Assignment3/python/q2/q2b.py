@@ -2,7 +2,6 @@ import numpy as np
 import matplotlib.pyplot as pyplot
 
 g = 9.8
-t = np.arange(0, 30, 0.1)
 
 
 def euler_chromer_nonlinear(theta_0: float,
@@ -23,23 +22,26 @@ def euler_chromer_nonlinear(theta_0: float,
 
     return theta
 
-
+t = np.arange(0, 60, 0.1)
 pyplot.figure(0)
 pyplot.title(r"$F_D=0.5$")
-for i in [10, 25, 45]:
-    pyplot.plot(t, euler_chromer_nonlinear(
-        i, 0, g, 0.5, 0.5, 2/3, t), label=rf"$\theta={i}^\circ$")
+theta_0 = euler_chromer_nonlinear(10, 0, g, 0.5, 0.5, 2/3, t)
+theta_1 = euler_chromer_nonlinear(10.05, 0, g, 0.5, 0.5, 2/3, t)
+pyplot.yscale("log")
+pyplot.plot(t, np.abs(theta_0-theta_1), label=r"$\Delta\theta$")
 pyplot.xlabel("Time (s)")
-pyplot.ylabel("Position (rad)")
+pyplot.ylabel(r"$\Delta\theta\, \text{(rad)}$")
 pyplot.legend()
 
+t = np.arange(0, 300, 0.1)
 pyplot.figure(1)
 pyplot.title(r"$F_D=1.2$")
-for i in [10, 25, 45]:
-    pyplot.plot(t, euler_chromer_nonlinear(
-        i, 0, g, 0.5, 1.2, 2/3, t), label=rf"$\theta={i}^\circ$")
+theta_0 = euler_chromer_nonlinear(10, 0, g, 0.5, 1.2, 2/3, t)
+theta_1 = euler_chromer_nonlinear(10.05, 0, g, 0.5, 1.2, 2/3, t)
+pyplot.yscale("log")
+pyplot.plot(t, np.abs(theta_0-theta_1), label=r"$\Delta\theta$")
 pyplot.xlabel("Time (s)")
-pyplot.ylabel("Position (rad)")
+pyplot.ylabel(r"$\Delta\theta\, \text{(rad)}$")
 pyplot.legend()
 
 pyplot.show()
