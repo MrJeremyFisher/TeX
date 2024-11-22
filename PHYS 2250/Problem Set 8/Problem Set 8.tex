@@ -204,10 +204,10 @@ voltages are high (HI) or low (LO), not theiractual value in volts. The conventi
   \begin{circuitikz}
     \draw \pgfextra{\ctikzset{bipoles/resistor/width=.4, bipoles/resistor/height=.2}}
     (0,0) node[left]{$V_q$} -- ++(0.25,0) to[resistor, l=$R_q$] ++(1,0) -- ++(0.85,0) node[npn, anchor=E](T){1}
-    (T.base) to[resistor, l_=$R_p$] ++(-1,0) -- ++(-0.25,0) node[left]{$V_p$} 
+    (T.base) to[resistor, l_=$R_p$] ++(-1,0) -- ++(-0.25,0) node[left]{$V_p$}
     (T.collector) |- ++(1,1) node[npn, anchor=B](T2){2} (T2.collector) -- ++(1.5,0) node[right]{$V_{out}$}
     (T.emitter) -- ++(1,0) node[npn, anchor=B](T3){3} (T3.collector) -- ++(1,0) to[crossing] ++(0,2) -- ++(0,1)
-    to[resistor, l=$R_{C2}$] ++(0,1) coordinate(VCC) -- ++(1,0) node[right]{$V_{CC}$} 
+    to[resistor, l=$R_{C2}$] ++(0,1) coordinate(VCC) -- ++(1,0) node[right]{$V_{CC}$}
     (VCC) -- (VCC -| T.collector) to[resistor, l=$R_{C1}$] ++(0,-1) -- (T.collector)
     (T2.emitter) -- ++(1.25,0) coordinate(R) -- (T3.emitter -| R) coordinate(G) node[ground]{}
     (T3.emitter) -- (G)
@@ -220,14 +220,43 @@ voltages are high (HI) or low (LO), not theiractual value in volts. The conventi
   \item Reproduce an equivalent logic network using only NOR gates.
 \end{enumerate}
 \end{problem}
-\begin{soln} 
+\begin{soln} ~
+  \begin{enumerate}[label=(\alph*)]
+    \item ~
+          \begin{displaymath}
+            \begin{array}{|c|c|c|c|c|c|c|c|c}
+              % |c c|c| means that there are three columns in the table and
+              % a vertical bar ’|’ will be printed on the left and right borders,
+              % and between the second and the third columns.
+              % The letter ’c’ means the value will be centered within the column,
+              % letter ’l’, left-aligned, and ’r’, right-aligned.
+              p & q & 1 & 2 & 3 & V_{out} \\ % Use & to separate the columns
+              \hline % Put a horizontal line between the table header and the rest.
+              1 & 1 & 1 & 1 & 1 & 0       \\
+              1 & 0 & 1 & 1 & 1 & 0       \\
+              0 & 1 & 0 & 1 & 1 & 0       \\
+              \highlight{0} & \highlight{0} & \highlight{0} & \highlight{1} & \highlight{0} & \highlight{1}       \\
+            \end{array}
+          \end{displaymath}
+    \item If I did the truth table correctly we're looking for a logic expression that is only true when both $p$ and $q$ are false, i.e., $\overline{p}\cdot\overline{q}$
+    \item By DeMorgan's theorem, $\overline{p}\cdot\overline{q}=\overline{p+q}$ which is just a single NOR:
+    \begin{center}
+      \begin{circuitikz}
+        \draw (0,0) node[ieeestd nor port, anchor=in 1](PQNOR){} (PQNOR.out) node[right]{$\overline{\left(p+q\right)}=V_{out}$}
+        (PQNOR.in 1) node[left]{$p$} (PQNOR.in 2) node[left]{$q$}
+        ;
+      \end{circuitikz}
+    \end{center}
+    
+  \end{enumerate}
+
 \end{soln}
 \newpage
 
 % PROBLEM 4
 \begin{problem}
-Consider the seven-segment (a-g) LED numeric display. To display a given ``decimal'' number (i.e. 0-9), various segments need to be powered. 
-A 4-bit input (DCBA) is more than sufficient to create each of the 10 needed numerals. Let's presume that a 4-bit device is only being used to display 
+Consider the seven-segment (a-g) LED numeric display. To display a given ``decimal'' number (i.e. 0-9), various segments need to be powered.
+A 4-bit input (DCBA) is more than sufficient to create each of the 10 needed numerals. Let's presume that a 4-bit device is only being used to display
 the numerals 0-9 (and no other useful ``patterns'').
 \begin{enumerate}[label=(\alph*)]
   \item Complete the (DCBA and a-g) portion of the truth table for the necessary inputs and outputs of the circuit that controls the LED display.
@@ -265,7 +294,7 @@ the numerals 0-9 (and no other useful ``patterns'').
           \end{displaymath}
     \item We are trying to represent 10 distinct input states in binary, so we need
     \item When the decoder's ``result'' (signal at the base of the transistor) is HI, the transistor will be on and the diode will in turn be ON. The opposite
-          occurs when the output is LO as the transistor is cut off and therefore no current flows to activate the diode. 
+          occurs when the output is LO as the transistor is cut off and therefore no current flows to activate the diode.
           \begin{displaymath}
             \begin{array}{|c|c|c|c|c|c|c|c|c|c}
               % |c c|c| means that there are three columns in the table and
@@ -317,73 +346,73 @@ the numerals 0-9 (and no other useful ``patterns'').
 \begin{soln} ~
   \begin{enumerate}[label=(\alph*)]
     \item First convert 77 to binary \begin{align*}
-             & \frac{77}{2}=38R1                           \\
-             & \frac{38}{2}=19R0                           \\
-             & \frac{19}{2}=9R1                            \\
-             & \frac{9}{2}=4R1                             \\
-             & \frac{4}{2}=2R0                             \\
-             & \frac{2}{2}=1R0                             \\
-             & \frac{1}{2}=0R1\implies 77_{10}=1001101_2 
+             & \frac{77}{2}=38R1                         \\
+             & \frac{38}{2}=19R0                         \\
+             & \frac{19}{2}=9R1                          \\
+             & \frac{9}{2}=4R1                           \\
+             & \frac{4}{2}=2R0                           \\
+             & \frac{2}{2}=1R0                           \\
+             & \frac{1}{2}=0R1\implies 77_{10}=1001101_2
           \end{align*}
           Then add,
           \begin{tabular}{ccccccccc}
-            ~ & (1) & ~ & ~ & (1) & (1) & (1) & (1) & ~           \\
-            ~ & ~   & 1 & 0 & 0   & 1   & 1   & 0   & 1           \\
-            ~ & +   & 1 & 1 & 0   & 0   & 0   & 1   & 1           \\
+            ~ & (1) & ~ & ~ & (1) & (1) & (1) & (1) & ~ \\
+            ~ & ~   & 1 & 0 & 0   & 1   & 1   & 0   & 1 \\
+            ~ & +   & 1 & 1 & 0   & 0   & 0   & 1   & 1 \\
             \hline
-            ~ & 1   & 0 & 1 & 1   & 0   & 0   & 0   & 0         
+            ~ & 1   & 0 & 1 & 1   & 0   & 0   & 0   & 0
           \end{tabular}
-          
+
     \item ~\\
           \begin{tabular}{cccccc}
-            ~ & ~ & ~        & 1 & 0 & 1   \\
-            ~ & ~ & $\cross$ & 1 & 0 & 1   \\
+            ~ & ~ & ~        & 1 & 0 & 1 \\
+            ~ & ~ & $\cross$ & 1 & 0 & 1 \\
             \hline
-            ~ & ~ & ~        & 1 & 0 & 1   \\
-            ~ & ~ & 0        & 0 & 0 & ~   \\ 
-            + & 1 & 0        & 1 & ~ & ~   \\ 
+            ~ & ~ & ~        & 1 & 0 & 1 \\
+            ~ & ~ & 0        & 0 & 0 & ~ \\
+            + & 1 & 0        & 1 & ~ & ~ \\
             \hline
-            ~ & 1 & 1        & 0 & 0 & 1 
+            ~ & 1 & 1        & 0 & 0 & 1
           \end{tabular} ~\\
           Then, \\
           \begin{tabular}{cccccccc}
-            ~ & ~        & ~ & ~ & 1 & 0 & 1         \\
-            ~ & $\cross$ & 1 & 1 & 0 & 0 & 1         \\
+            ~ & ~        & ~ & ~ & 1 & 0 & 1 \\
+            ~ & $\cross$ & 1 & 1 & 0 & 0 & 1 \\
             \hline
-            ~ & ~        & 1 & 1 & 0 & 0 & 1         \\
-            ~ & 0        & 0 & 0 & 0 & 0             \\
-            1 & 1        & 0 & 0 & 1                 \\ 
+            ~ & ~        & 1 & 1 & 0 & 0 & 1 \\
+            ~ & 0        & 0 & 0 & 0 & 0     \\
+            1 & 1        & 0 & 0 & 1         \\
             \hline
-            1 & 1        & 1 & 1 & 1 & 0 & 1       
+            1 & 1        & 1 & 1 & 1 & 0 & 1
           \end{tabular}
     \item $111.11_2=1\left(2^2+2^1+2^0+2^{-1}+2^{-2}\right)_{10}=7.75_{10}$
     \item First convert 17 to base 2
           \begin{align*}
-             & \frac{17}{2}=8R1                           \\
-             & \frac{8}{2}=4R0                            \\
-             & \frac{4}{2}=2R0                            \\
-             & \frac{2}{2}=1R0                            \\
-             & \frac{1}{2}=0R1 \implies 17_{10}=10001_2 
+             & \frac{17}{2}=8R1                         \\
+             & \frac{8}{2}=4R0                          \\
+             & \frac{4}{2}=2R0                          \\
+             & \frac{2}{2}=1R0                          \\
+             & \frac{1}{2}=0R1 \implies 17_{10}=10001_2
           \end{align*}
           Then convert 0.34 to base 2. This process would repeat forever as $0.34=\frac{17}{50}$ and 50 is not a power of 2 so I'm stopping one a reasonable approximation is reached.
           \begin{align*}
-             & 0.34\cdot 2 = 0+0.68                                       \\
-             & 0.68\cdot 2 = 1+0.36                                       \\
-             & 0.36\cdot 2 = 0+0.72                                       \\
-             & 0.72\cdot 2 = 1+0.44                                       \\
-             & 0.44\cdot 2 = 0+0.88                                       \\
-             & 0.88\cdot 2 = 1+0.76                                       \\
-             & 0.76\cdot 2 = 1+0.52                                       \\
-             & 0.52\cdot 2 = 1+0.04\implies 0.34_{10}\approx 0.01010111 
+             & 0.34\cdot 2 = 0+0.68                                     \\
+             & 0.68\cdot 2 = 1+0.36                                     \\
+             & 0.36\cdot 2 = 0+0.72                                     \\
+             & 0.72\cdot 2 = 1+0.44                                     \\
+             & 0.44\cdot 2 = 0+0.88                                     \\
+             & 0.88\cdot 2 = 1+0.76                                     \\
+             & 0.76\cdot 2 = 1+0.52                                     \\
+             & 0.52\cdot 2 = 1+0.04\implies 0.34_{10}\approx 0.01010111
           \end{align*}
           So $17.34_{10}\approx 10001.01010111_2$
     \item
           \begin{tabular}{ccccccc}
-            ~ & (1) & ~ & ~ & ~ & ~ & ~     \\
-            ~ & 1   & 0 & 1 & . & 0 & 1     \\
-            + & 1   & 1 & 0 & . & 1 & 0     \\
-            \hline  
-            1 & 0   & 1 & 1 & . & 1 & 1   
+            ~ & (1) & ~ & ~ & ~ & ~ & ~ \\
+            ~ & 1   & 0 & 1 & . & 0 & 1 \\
+            + & 1   & 1 & 0 & . & 1 & 0 \\
+            \hline
+            1 & 0   & 1 & 1 & . & 1 & 1
           \end{tabular} \\
           Then $1011.11_2=(2^3+2^1+2^0)_{10}+(2^{-1}+2^{-2})_{10}=11.75_{10}$
   \end{enumerate}
