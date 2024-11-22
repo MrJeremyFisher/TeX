@@ -79,7 +79,7 @@
 \maketitle
 \noindent Note: I've kept $p$, $q$, and $r$ throughout my solutions and only substituted the actual numbers in at the end. This is because I find it easier,
 especially when dealing with things that might cancel nicely, to deal with variables rather than the numbers they represent. In my case my
-student number is 0805980 so $p=9$, $q=5$, and $r=22$. \textbf{TODO: Are these the same as Asn 1}
+student number is 0805980 so $p=9$, $q=5$, and $r=22$.
 \\
 % PROBLEM 1
 \begin{problem}
@@ -151,7 +151,9 @@ and
 
 \begin{soln} ~
   \begin{enumerate}[label=(\alph*)]
-    \item   ~\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+    \item At any frequency other than the resonance we see a chaotic increase and decrease in the amplitude of the oscillation.
+          At resonance, the oscillation increases with time.
+          \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
             \prompt{In}{incolor}{1}{\boxspacing}
             \begin{minted}[breaklines, autogobble]{sage}
               clear_vars()
@@ -185,8 +187,12 @@ and
             \prompt{Out}{outcolor}{1}{\boxspacing}
             \includegraphics[scale=0.75]{G1.png}
           \end{tcolorbox}
-    \item ~\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-            \prompt{In}{incolor}{1}{\boxspacing}
+          \newpage
+    \item In the critically damped case we see a rapid non oscillating decay towards the steady state of the system. In the
+          overdamped case we see a less rapid but still non oscillating decay towards the steady state of the system. In the underdamped case
+          we see a slight oscillation that is dampened towards the steady state.
+          \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+            \prompt{In}{incolor}{2}{\boxspacing}
             \begin{minted}[breaklines, autogobble]{sage}
 clear_vars()
 t = var('t')
@@ -210,29 +216,83 @@ for i in range(1,4):
 
 plt.legend(True)
 show(plt)
-        \end{minted}
+            \end{minted}
           \end{tcolorbox}
           \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-            \prompt{Out}{outcolor}{1}{\boxspacing}
+            \prompt{Out}{outcolor}{2}{\boxspacing}
             \includegraphics[scale=0.75]{G2.png}
           \end{tcolorbox}
-    \item \textbf{DAMPED FORCED VIBRATION:} Consider equation 1 with
-          \begin{equation}
-            f(t)=\frac{r}{p}\sin\left(\gamma t\right)
-          \end{equation}
+          \newpage
+    \item 
           \begin{enumerate}[label=\roman*.]
-            \item For the \textbf{underdamped oscillatory case of question 1(b)(iii) above,} obtain
-                  the \textbf{three plots} of the solution for
-                  \begin{equation}
-                    b=q\left(p-q\right), \qquad \gamma=\sqrt{\frac{k}{m}-\frac{b^2}{2m^2}}, \qquad i=1,2,3
-                  \end{equation}
-                  Describe the behavior of the solutions that you observe from the plots.
-            \item The amplitude of the oscillation in part 1(c)(i) is a product of the amplitude of the forcing, $\frac{r}{p}$, and the so called \textbf{Frequency gain} $M\left(\gamma\right)$ which is given by:
-                  \begin{equation}
-                    M\left(\gamma\right)=\frac{1}{\sqrt{\left(k-m\gamma^2\right)^2+b^2\gamma^2}}
-                  \end{equation}
-                  The graph of $M\left(\gamma\right)$ is called the Frequency response curve. Graph each of the three frequency response curves
-                  (M as a function of $\gamma$ with the $\gamma$ axis ranging from 0 to 4 for the three different values $b$ used in question \#1(b) above. Describe your observations.
+            \item For each case we see an initial (transient) oscillation which is quickly damped out towards the steady-state solution created by the driving oscillation.
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+                    \prompt{In}{incolor}{3}{\boxspacing}
+                    \begin{minted}[breaklines, autogobble]{sage}
+clear_vars()
+t = var('t')
+x = function('x')(t)
+
+q = 5
+p = 9
+r = 22
+
+m = (p-q)^2
+k = q^2
+d = diff(x, t)
+d2 = diff(d, t)
+
+plt = Graphics()
+for i in range(1,4):
+    b = ((p-q)*q)
+    gamma = sqrt((k/m)-((b^2)/(2*m^2)))+(i-2)/2
+
+    eqn = m*d2 + b*d+ k*x == (r/p)*sin(gamma*t)
+    sol = desolve(eqn, x, ics=[0, -1-q/r, 1+p/r])
+    plt += plot(sol, 0.01, 10, legend_label=rf"$\gamma={gamma}$", color=random.choice(sorted(colors)))
+    
+plt.legend(True)
+show(plt)
+                \end{minted}
+                  \end{tcolorbox}
+                  \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+                    \prompt{Out}{outcolor}{3}{\boxspacing}
+                    \includegraphics[scale=0.75]{G3.png}
+                  \end{tcolorbox}
+                  \newpage
+            \item Here we observe that increased damping results in a lower overall frequency response. After some damping coefficient the resonant frequency
+            is no longer apparent on the graph as the system is so highly damped that regardless of the frequency of the driving force there is minimal effect.
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+                    \prompt{In}{incolor}{4}{\boxspacing}
+                    \begin{minted}[breaklines, autogobble]{sage}
+clear_vars()
+t = var('t')
+x = function('x')(t)
+
+q = 5
+p = 9
+r = 22
+
+m = (p-q)^2
+k = q^2
+d = diff(x, t)
+d2 = diff(d, t)
+
+plt_freq = Graphics()
+gamma = var('gamma')
+for i in range(1,4):
+    b = i*((p-q)*q)
+    M(gamma) = 1/(sqrt((k-m*gamma^2)^2+b^2*gamma^2))
+    plt_freq += plot(M(gamma), 0, 4, legend_label=rf"$b={b}$", color=random.choice(sorted(colors))) 
+    
+plt_freq.legend(True)
+show(plt_freq)
+          \end{minted}
+                  \end{tcolorbox}
+                  \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+                    \prompt{Out}{outcolor}{4}{\boxspacing}
+                    \includegraphics[scale=0.75]{G4.png}
+                  \end{tcolorbox}
           \end{enumerate}
   \end{enumerate}
 \end{soln}

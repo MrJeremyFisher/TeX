@@ -263,8 +263,7 @@ the numerals 0-9 (and no other useful ``patterns'').
               0   & 0000 & 1 & 1 & 1 & 1 & 1 & 0 & 1 \\
             \end{array}
           \end{displaymath}
-    \item What I think this is asking is if you have some kind of device (decoder) between the 4 DCBA inputs and the LED matrix, how many inputs and outputs must that device have.
-          Logically then this device must have 4 inputs seven outputs, one for each LED in the matrix.
+    \item We are trying to represent 10 distinct input states in binary, so we need
     \item When the decoder's ``result'' (signal at the base of the transistor) is HI, the transistor will be on and the diode will in turn be ON. The opposite
           occurs when the output is LO as the transistor is cut off and therefore no current flows to activate the diode. 
           \begin{displaymath}
@@ -366,8 +365,7 @@ the numerals 0-9 (and no other useful ``patterns'').
              & \frac{2}{2}=1R0                            \\
              & \frac{1}{2}=0R1 \implies 17_{10}=10001_2 
           \end{align*}
-          Then convert 0.34 to base 2. I'm going to throw some computer science at this and say there's a Mantissa limit of 8 bits (unsigned) which is quite low but it's mostly fine here
-          as it works when rounding to 2 decimal places. Realistically this should be done according to IEEE 754, which could probably be done in excel or something.
+          Then convert 0.34 to base 2. This process would repeat forever as $0.34=\frac{17}{50}$ and 50 is not a power of 2 so I'm stopping one a reasonable approximation is reached.
           \begin{align*}
              & 0.34\cdot 2 = 0+0.68                                       \\
              & 0.68\cdot 2 = 1+0.36                                       \\
