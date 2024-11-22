@@ -12,6 +12,7 @@
 \usepackage{physics}
 \usepackage{siunitx}
 \usepackage{minted}
+\usepackage{robust-externalize}
 \usepackage[breakable]{tcolorbox}
 \usepackage[inline]{enumitem}
 
@@ -22,6 +23,8 @@
 \pgfplotsset{compat=newest}
 \usetikzlibrary{lindenmayersystems}
 \usetikzlibrary{arrows}
+\robExtConfigure{enable fallback to manual mode} % prints command to run in PDF if shell-escape is not used/forgotten
+\def\mathdefault#1{#1} % Needed in matplotlib 3.8: https://github.com/matplotlib/matplotlib/issues/27907
 
 \definecolor{incolor}{HTML}{303F9F}
 \definecolor{outcolor}{HTML}{D84315}
@@ -50,6 +53,56 @@
    {\mleft. #3 \mright|_{#4}}
    {#3#2|_{#4}}%
 }
+
+\begin{PlaceholderFromCode}{__MY_MATPLOTLIB_START__}
+      import matplotlib.pyplot as plt
+      import matplotlib
+      from matplotlib.pyplot import figure
+      matplotlib.use("pgf")
+      # https://matplotlib.org/stable/users/explain/text/pgf.html
+      matplotlib.rcParams.update({
+        "font.family": "serif",
+        "font.serif": [], # Use LaTeX default serif font.
+        "text.usetex": True, # use inline math for ticks
+        ## You can change the font size of individual items with:
+        # "font.size": 11,
+        # "axes.titlesize": 11,
+        # "legend.fontsize": 11,
+        # "axes.labelsize": 11,
+      })
+      figure(figsize=(__MY_MATPLOTLIB_WIDTH__, __MY_MATPLOTLIB_HEIGHT__))
+      \end{PlaceholderFromCode}
+      
+      \begin{PlaceholderFromCode}{__MY_MATPLOTLIB_END__}
+      # https://stackoverflow.com/a/52587591/4987648
+      plt.savefig(get_filename_from_extension(".pgf"), bbox_inches="tight")
+      \end{PlaceholderFromCode}
+      
+      \robExtConfigure{
+        new preset={my matplotlib pgf}{
+          python,
+          % If you want to include it via a simple input
+          custom include command={\input{\robExtAddCachePathAndName{\robExtFinalHash.pgf}}},
+          % If you also want to cache the tikz code for faster rendering
+          % (otherwise only python -> tikz will be cached, but not tikz -> pdf)
+          % custom include command={\evalPlaceholder{\cacheMe[tikz]{\input{__ROBEXT_OUTPUT_PREFIX__.pgf}}}},
+          set placeholder eval={__LINEWIDTH__}{\lenToCmNoUnit[in]{\linewidth}},
+          add import={__MY_MATPLOTLIB_START__},
+          add to placeholder={__ROBEXT_MAIN_CONTENT__}{__MY_MATPLOTLIB_END__},
+          %% Create a few functions to change the width easily:
+          set size inches/.style 2 args={
+            set placeholder={__MY_MATPLOTLIB_WIDTH__}{#1},
+            set placeholder={__MY_MATPLOTLIB_HEIGHT__}{#2},
+          },
+          set size cm/.style 2 args={
+            set size inches={#1/2.54}{#2/2.54},
+          },
+          set size pc/.style 2 args={
+            set size inches={#1*__LINEWIDTH__}{#2*__LINEWIDTH__},
+          },
+          set size pc={1}{.7}, % default size
+        }
+      }
 
 \title{Physics 2130: Assignment III}
 \author{Jeremy Favro}
@@ -106,7 +159,7 @@ $$\delta=\arctan\left(\frac{2\omega\beta}{\omega_0^2-\omega^2}\right)$$
             ``sufficiently accurate'').
 \end{enumerate}
 \end{problem}
-\begin{soln}
+\begin{soln}~
       \begin{enumerate}[label=(\alph*)]
             \item \begin{align*}
                          & x(t=0)=B\cos\left(-\phi\right)+D\cos\left(-\delta\right)=x_0             \\
@@ -149,12 +202,34 @@ $$\delta=\arctan\left(\frac{2\omega\beta}{\omega_0^2-\omega^2}\right)$$
                   $s(t)$ contributes the oscillation of the transient solution. $\Gamma(t)$ contributes the exponential decay envelope. $x_c(t)$ contributes,
                   being the product of $s(t)$ and $\Gamma(t)$ produces the initial decaying transient solution. $x_p(t)$ contributes the steady-state solution.
 
-            \item Finally, write a new function called \verb|harm_osc_euler_cromer| that receives has input parameters $\omega_0$, $\beta$,
-                  $A$, $\omega$, $x_0$, and the analytical solution $x(t)$. This function should calculate a new $x(t)$, called $x_{EC}(t)$, that uses
-                  the Euler-Cromer method to determine the position of the oscillator as a function of time for the same initial conditions. Additionally, the function should
-                  plot, on the same graph, the solutions $x(t)$ and $x_{EC}(t)$ obtained with the analytical and Euler-Cromer methods, respectively, and the residuals, i.e.,
-                  the difference $x(t)-x_{EC}(t)$. Discuss how you choose a value of $\Delta t$ that gives a sufficiently accurate answer (which means defining
-                  ``sufficiently accurate'').
+            \item \inputminted[breaklines, autogobble]{python3}{./python/q1/q1g.py}
+                  \begin{center}
+                        \includegraphics[scale=0.75]{Figure_4.png}
+                  \end{center}
       \end{enumerate}
+\end{soln}
+\newpage
+
+% PROBLEM 2
+\begin{problem}
+      We want to study now the behaviour of the \textbf{non-linear (physical) pendulum}. The analytical solutions we
+generally get for oscillating systems are derived under the small-angle approximation, which allows us to write
+$\sin(\theta)\approx\theta$. If one drops this hypothesis things change, and the motion now becomes dependent on the amplitude.
+The equation of motion is now:
+$$\frac{d^2\theta}{dt^2}=-\frac{g}{l}\sin\left(\theta\right)-q\frac{d\theta}{dt}+F_d\sin\left(\Omega_Dt\right)$$
+Where the only difference from the linear case is that we now have $\sin\theta$ instead of $\theta$. This equation of motion 
+has no analytical solutions; therefore, we need to solve it numerically. We thus need to write the equations 
+for angular acceleration and velocity and use them, e.g., with the Euler-Cromer method:
+$$\frac{d\omega}{dt}=-\frac{g}{l}\sin\left(\theta\right)-q\frac{d\theta}{dt}+F_d\sin\left(\Omega_Dt\right)$$
+$$\frac{d\theta}{dt}=\omega$$
+\begin{enumerate}[label=(\alph*)]
+      \item Write a python program that calculates numerically $\theta(t)$ using the Euler-Cromer method.
+      \item Write another python program (you can mostly base it on what you wrote in (2a)) that calculates two separate
+      solutions $\theta_1(t)$ and $\theta_2(t)$, where $\theta_1(t)$ starts with an initial angle $\theta_0=10\unit{\degree}$ while $\theta_2(t)$ starts with an ever so
+      slightly different initial angle $\theta_0=10.05\unit{\degree}$.
+      \item In the program you wrote in (2b), add a phase-space plot where you now plot $\omega$ vs. $\theta$.
+\end{enumerate}
+\end{problem}
+\begin{soln}
 \end{soln}
 \end{document}

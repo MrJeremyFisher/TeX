@@ -7,3 +7,9 @@
 *.synctex.gz
 __pycache__/
 _minted-*/
+robustExternalize/
+*-robExt-all-figures.txt
+*-robExt-compile-missing-figures.sh
+*-robExt-tmp-file-you-can-remove.tmp
+robExt-prepare-for-arxiv.py
+robExt-remove-old-figures.py
