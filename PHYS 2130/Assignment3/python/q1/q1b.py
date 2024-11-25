@@ -13,7 +13,6 @@ def harm_osc_params(w_0: float,
     delta = np.arctan2((2*w*beta), (w_0**2-w**2))
 
     # Unknowns
-    print(((beta-(D*w*np.sin(delta)))/(x_0-D*np.cos(delta))))
     phi = np.arctan2(
         ((beta-(D*w*np.sin(delta)))/(x_0-D*np.cos(delta))), 
         w_1)

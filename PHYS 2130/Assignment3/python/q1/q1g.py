@@ -15,7 +15,7 @@ def harm_osc_euler_cromer(w_0: float,
     x_r = q1c.harm_osc_x_pos(w_0, beta, A, w, x_0, t)
     v = np.zeros_like(t)
     for t_i in range(len(t) - 1):
-        a = A*np.cos(w*t[t_i])-2*beta*v[t_i]-(w_0**2)*x[t_i] # Should depend on position, right?
+        a = A*np.cos(w*t[t_i])-2*beta*v[t_i]-(w_0**2)*x[t_i]
 
 
         v[t_i+1] = v[t_i] + a*dt
@@ -26,8 +26,15 @@ def harm_osc_euler_cromer(w_0: float,
     pyplot.xlabel("Time (s)")
     pyplot.ylabel("Position (m)")
     pyplot.legend()
+    pyplot.figure(0)
+
+    pyplot.plot(t, x-x_r, label="Residual (Numerical-Analytical)")
+    print(f"{np.max(x-x_r)}")
+    pyplot.xlabel("Time (s)")
+    pyplot.ylabel("Residual (m)")
+    pyplot.legend()
     pyplot.show()
 
 
-t_vals = np.arange(0, 200, 0.01)
+t_vals = np.arange(0, 200, 1/64)
 harm_osc_euler_cromer(2, 0.05, 1/2, 0.1, 3, t_vals)

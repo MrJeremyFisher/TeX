@@ -212,24 +212,41 @@ $$\delta=\arctan\left(\frac{2\omega\beta}{\omega_0^2-\omega^2}\right)$$
 
 % PROBLEM 2
 \begin{problem}
-      We want to study now the behaviour of the \textbf{non-linear (physical) pendulum}. The analytical solutions we
+We want to study now the behaviour of the \textbf{non-linear (physical) pendulum}. The analytical solutions we
 generally get for oscillating systems are derived under the small-angle approximation, which allows us to write
 $\sin(\theta)\approx\theta$. If one drops this hypothesis things change, and the motion now becomes dependent on the amplitude.
 The equation of motion is now:
 $$\frac{d^2\theta}{dt^2}=-\frac{g}{l}\sin\left(\theta\right)-q\frac{d\theta}{dt}+F_d\sin\left(\Omega_Dt\right)$$
-Where the only difference from the linear case is that we now have $\sin\theta$ instead of $\theta$. This equation of motion 
-has no analytical solutions; therefore, we need to solve it numerically. We thus need to write the equations 
+Where the only difference from the linear case is that we now have $\sin\theta$ instead of $\theta$. This equation of motion
+has no analytical solutions; therefore, we need to solve it numerically. We thus need to write the equations
 for angular acceleration and velocity and use them, e.g., with the Euler-Cromer method:
 $$\frac{d\omega}{dt}=-\frac{g}{l}\sin\left(\theta\right)-q\frac{d\theta}{dt}+F_d\sin\left(\Omega_Dt\right)$$
 $$\frac{d\theta}{dt}=\omega$$
 \begin{enumerate}[label=(\alph*)]
       \item Write a python program that calculates numerically $\theta(t)$ using the Euler-Cromer method.
       \item Write another python program (you can mostly base it on what you wrote in (2a)) that calculates two separate
-      solutions $\theta_1(t)$ and $\theta_2(t)$, where $\theta_1(t)$ starts with an initial angle $\theta_0=10\unit{\degree}$ while $\theta_2(t)$ starts with an ever so
-      slightly different initial angle $\theta_0=10.05\unit{\degree}$.
+            solutions $\theta_1(t)$ and $\theta_2(t)$, where $\theta_1(t)$ starts with an initial angle $\theta_0=10\unit{\degree}$ while $\theta_2(t)$ starts with an ever so
+            slightly different initial angle $\theta_0=10.05\unit{\degree}$.
       \item In the program you wrote in (2b), add a phase-space plot where you now plot $\omega$ vs. $\theta$.
 \end{enumerate}
 \end{problem}
 \begin{soln}
+      \begin{enumerate}[label=(\alph*)]
+            \item \inputminted[breaklines, autogobble]{python3}{./python/q2/q2a.py}
+                  \begin{center}
+                        \includegraphics[scale=0.75]{Figure_5-1.png}
+                        \includegraphics[scale=0.75]{Figure_5-2.png}
+                  \end{center}
+            \item \inputminted[breaklines, autogobble]{python3}{./python/q2/q2b.py}
+                  \begin{center}
+                        \includegraphics[scale=0.75]{Figure_6-1.png}
+                        \includegraphics[scale=0.75]{Figure_6-2.png}
+                  \end{center}
+            \item \inputminted[breaklines, autogobble]{python3}{./python/q2/q2c.py}
+                  \begin{center}
+                        \includegraphics[scale=0.75]{Figure_7-1.png}
+                        \includegraphics[scale=0.75]{Figure_7-2.png}
+                  \end{center}
+      \end{enumerate}
 \end{soln}
 \end{document}

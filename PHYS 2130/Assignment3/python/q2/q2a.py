@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as pyplot
 
 g = 9.8
-t = np.arange(0, 30, 0.1)
+t = np.arange(0, 200, 0.1)
 
 
 def euler_chromer_nonlinear(theta_0: float,
