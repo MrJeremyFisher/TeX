@@ -29,7 +29,6 @@ def harm_osc_euler_cromer(w_0: float,
     pyplot.figure(0)
 
     pyplot.plot(t, x-x_r, label="Residual (Numerical-Analytical)")
-    print(f"{np.max(x-x_r)}")
     pyplot.xlabel("Time (s)")
     pyplot.ylabel("Residual (m)")
     pyplot.legend()
