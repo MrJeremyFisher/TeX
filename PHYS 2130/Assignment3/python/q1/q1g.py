@@ -17,7 +17,6 @@ def harm_osc_euler_cromer(w_0: float,
     for t_i in range(len(t) - 1):
         a = A*np.cos(w*t[t_i])-2*beta*v[t_i]-(w_0**2)*x[t_i]
 
-
         v[t_i+1] = v[t_i] + a*dt
         x[t_i+1] = x[t_i] + v[t_i+1]*dt
 
@@ -35,5 +34,5 @@ def harm_osc_euler_cromer(w_0: float,
     pyplot.show()
 
 
-t_vals = np.arange(0, 200, 1/64)
+t_vals = np.arange(0, 200, 1/128)
 harm_osc_euler_cromer(2, 0.05, 1/2, 0.1, 3, t_vals)

@@ -208,7 +208,10 @@ $$\delta=\arctan\left(\frac{2\omega\beta}{\omega_0^2-\omega^2}\right)$$
                         \includegraphics[scale=0.75]{Figure_4-1.png}
                   \end{center}
                   Note that here I plotted the residuals and numerical-analytical solutions on different graphs due to the difference
-                  in amplitude of each
+                  in amplitude of each. I chose a $\Delta t$ of $\frac{1}{128}\unit{\second}$ as it is the point at which reciprocals of $2^n$ (easily represented in base 2)
+                  begin to show strong (maximum residual $\approx 0.02\unit{\meter}$) predictive power for both the steady state and transient conditions. Some larger values of $\Delta t$
+                  such as $\frac{1}{64}$ result in a lower maximum residual but do not exhibit the same generally high predictive power seen in smaller timesteps. I specifically sought 
+                  residuals $<0.05$ as the given conditions are only specified to at most two digits of accuracy so a result with similar accuracy is ``reasonably'' accurate.
       \end{enumerate}
 \end{soln}
 \newpage
@@ -233,23 +236,32 @@ $$\frac{d\theta}{dt}=\omega$$
       \item In the program you wrote in (2b), add a phase-space plot where you now plot $\omega$ vs. $\theta$.
 \end{enumerate}
 \end{problem}
-\begin{soln}
+\begin{soln}~
       \begin{enumerate}[label=(\alph*)]
             \item \inputminted[breaklines, autogobble]{python3}{./python/q2/q2a.py}
                   \begin{center}
                         \includegraphics[scale=0.75]{Figure_5-1.png}
                         \includegraphics[scale=0.75]{Figure_5-2.png}
                   \end{center}
+                  Here when the driving force is higher we see that the pendulum is rotating repeatedly throughout $2\pi$ radians with variation between
+                  the different $\theta$ values. When the driving force is lower we see an initial difference between the oscillations as a result of the differing
+                  initial conditions, however they each stabilize to a common steady-state after so relatively short interval. 
             \item \inputminted[breaklines, autogobble]{python3}{./python/q2/q2b.py}
                   \begin{center}
                         \includegraphics[scale=0.75]{Figure_6-1.png}
                         \includegraphics[scale=0.75]{Figure_6-2.png}
                   \end{center}
+                  Here we see that when the driving force is high enough to overcome whatever ``opposing'' force is acting on the system even a very slight variation
+                  in initial conditions is sufficient to cause ``chaotic'' behaviour. When the driving force is too weak, we see the opposite case, there is an initial
+                  difference, due to the differing initial conditions which decreases towards a small value of $\Delta \theta$. 
             \item \inputminted[breaklines, autogobble]{python3}{./python/q2/q2c.py}
                   \begin{center}
                         \includegraphics[scale=0.75]{Figure_7-1.png}
                         \includegraphics[scale=0.75]{Figure_7-2.png}
                   \end{center}
+                  As expected from parts a and b, the higher driving force case is able to oscillate with much greater speed as it is driven further than one complete rotation.
+                  In the case of a weaker driving force we see, again, an initial blip where $\omega=0$ and $\theta=10\unit{\degree}$ but the oscillator quickly settles into a steady
+                  state where $\theta$ and $\omega$ oscillate between two values.
       \end{enumerate}
 \end{soln}
 \end{document}
