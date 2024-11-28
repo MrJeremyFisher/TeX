@@ -1,0 +1,184 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{changepage}
+\usepackage{circuitikz}
+\usepackage{minted}
+\usepackage{pgfplots}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage[breakable]{tcolorbox}
+\usepackage[inline]{enumitem}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{soln}{Solution}
+
+\pgfplotsset{compat=newest}
+\usetikzlibrary{lindenmayersystems}
+\usetikzlibrary{arrows}
+
+\definecolor{incolor}{HTML}{303F9F}
+\definecolor{outcolor}{HTML}{D84315}
+\definecolor{cellborder}{HTML}{CFCFCF}
+\definecolor{cellbackground}{HTML}{F7F7F7}
+\newcommand{\eq}{=}
+\usetikzlibrary{positioning, fit, calc}
+\pgfdeclarelayer{background}  
+\pgfsetlayers{background,main}
+
+\makeatletter
+\newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+\makeatother
+\newcommand{\prompt}[4]{
+    \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+}
+
+\newcommand{\thevenin}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (2,0) to[battery1, l_=$V_{Th}\eq#1$] (2,2) 
+      to[resistor, l_=$R_{Th}\eq#2$] (0,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\norton}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (3,0) to[american current source, l_=$I_{N}\eq#1$] (3,2) -- (0,2) (2,0)
+      to[resistor, l=$R_{N}\eq#2$] (2,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\laplace}{\mathcal{L}}
+
+\newcommand{\highlight}[1]{\colorbox{yellow}{$\displaystyle #1$}}
+
+\NewDocumentCommand{\evalat}{sO{\big}mm}{%
+  \IfBooleanTF{#1}
+   {\mleft. #3 \mright|_{#4}}
+   {#3#2|_{#4}}%
+}
+
+\title{Math 2150: Assignment II}
+\author{Jeremy Favro}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\noindent Note: I've kept $p$, $q$, and $r$ throughout my solutions and only substituted the actual numbers in at the end. This is because I find it easier,
+especially when dealing with things that might cancel nicely, to deal with variables rather than the numbers they represent. In my case my
+student number is 0805980 so $p=9$, $q=5$, and $r=22$.
+\\
+% PROBLEM 1
+\begin{problem}~
+\begin{enumerate}[label=(\alph*)]
+  \item Determine $\laplace^{-1}\left\{\frac{\left(s-2\right)}{\left(s^2+1\right)\left(s^2-qs\right)}\right\}$
+  \item Determine $\laplace^{-1}\left\{\frac{2s+1}{\left(s^2+4\right)\left(s^2+q^2\right)}\right\}$
+  \item Determine $\laplace^{-1}\left\{\frac{e^{-2s}}{s^2\left(s-q\right)}\right\}$
+  \item Determine $\laplace\left\{t\sin^2\left(qt\right)\right\}$
+  \item Determine $\laplace\left\{e^{-qt}\sin\left(pt\right)\sin\left(qt\right)\right\}$
+  \item Determine $\laplace\left\{e^{-qt}t\sin\left(t-\frac{\pi}{6}\right)\right\}$
+  \item Determine $\laplace^{-1}\left\{\ln\left(\frac{7+ps}{9+qs}\right)\right\}$
+\end{enumerate}
+\end{problem}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item \begin{align*}
+             & =\laplace^{-1}\left\{\frac{\left(s-2\right)}{s\left(s^2+1\right)\left(s-q\right)}\right\}                                                                                                         \\
+             & =\laplace^{-1}\left\{\frac{1}{\left(s^2+1\right)\left(s-q\right)}\right\}-2\laplace^{-1}\left\{\frac{1}{s\left(s^2+1\right)\left(s-q\right)}\right\}                                              \\
+             & =\laplace^{-1}\left\{\frac{A_1s+B_1}{\left(s^2+1\right)}+\frac{C_1}{\left(s-q\right)}\right\}-2\laplace^{-1}\left\{\frac{A}{s}+\frac{Bs+C}{\left(s^2+1\right)}+\frac{D}{\left(s-q\right)}\right\} \\
+          \end{align*}
+          Which I'll solve seperately and then recombine
+          \begin{align*}
+             & =\laplace^{-1}\left\{\frac{A_1s+B_1}{\left(s^2+1\right)}+\frac{C_1}{\left(s-q\right)}\right\}                                                                                                                                            \\
+             & \Rightarrow A_1s\left(s-q\right)+B_1\left(s-q\right)+C_1\left(s^2+1\right)=1                                                                                                                                                             \\
+             & \Rightarrow s=q \implies C_1\left(q^2+1\right)=1 \implies C_1=\frac{1}{q^2+1}                                                                                                                                                            \\
+             & \Rightarrow s=0 \implies B_1\left(-q\right)+\frac{1}{q^2+1}=1 \implies B_1=\frac{1-\frac{1}{q^2+1}}{-q}                                                                                                                                  \\
+             & \Rightarrow s=1\implies A_1\left(1-q\right)+\frac{\left(1-q\right)\left(1-\frac{1}{q^2+1}\right)}{-q}+\frac{2}{q^2+1}=1\implies A_1=\frac{1-\frac{\left(1-q\right)\left(1-\frac{1}{q^2+1}\right)}{-q}-\frac{2}{q^2+1}}{\left(1-q\right)} \\
+             & \Rightarrow F_1(s)=A_1\cos\left(t\right)+B_1\sin\left(t\right)+C_1e^{qt}                                                                                                                                                                 \\
+          \end{align*}
+          And
+          \begin{align*}
+             & =\laplace^{-1}\left\{\frac{A}{s}+\frac{Bs+C}{\left(s^2+1\right)}+\frac{D}{\left(s-q\right)}\right\}                       \\
+             & \Rightarrow A\left(s^2+1\right)\left(s-q\right) + Bs(s)\left(s-q\right) + C(s)\left(s-q\right) + D(s)\left(s^2+1\right)=1 \\
+             & \Rightarrow s=q \implies D(q)\left(q^2+1\right)=1\implies D=\frac{1}{q\left(q^2+1\right)}                                 \\
+             & \Rightarrow s=0 \implies A\left(-q\right)=1\implies A=\frac{1}{-q}                                                        \\
+             & \Rightarrow A\left(s^2+1\right)\left(s-q\right) + Bs(s)\left(s-q\right) + C(s)\left(s-q\right) + D(s)\left(s^2+1\right)=1 \\
+             & \implies As^3-Aqs^2+As-Aq + Bs^3-Bqs^2 + Cs^2-Cqs + Ds^3+Ds=1                                                             \\
+             & \implies A+B+D=0, \, -Aq-Bq+C=0, \, A-Cq+D=0, \, -Aq=1                                                                    \\
+             & \implies B=\frac{1}{q}-\frac{1}{q\left(q^2+1\right)}, \, C=-1+q\left(\frac{1}{q}-\frac{1}{q\left(q^2+1\right)}\right)     \\
+             & \Rightarrow F_2(s)=A+De^{qt}+C\sin\left(t\right)+B\cos\left(t\right)                                                      \\
+          \end{align*}
+          So,
+          \begin{align*}
+             & F(s)=F_1(s)-2(F_2(s))                                                                                                                                                        \\
+             & =A_1\cos\left(t\right)+B_1\sin\left(t\right)+C_1e^{qt} -2A-2De^{qt}-2C\sin\left(t\right)-2B\cos\left(t\right)                                                                \\
+             & =\left(A_1-2B\right)\cos\left(t\right)+\left(B_1-2C\right)\sin\left(t\right)+\left(C_1-2D\right)e^{qt}-2A                                                                    \\
+             & =
+            \left(\frac{1-\frac{\left(1-q\right)\left(1-\frac{1}{q^2+1}\right)}{-q}-\frac{2}{q^2+1}}{\left(1-q\right)}-2\frac{1}{q}+2\frac{1}{q\left(q^2+1\right)}\right)\cos\left(t\right) \\
+             & +\left(\frac{1-\frac{1}{q^2+1}}{-q}+2-2q\left(\frac{1}{q}-\frac{1}{q\left(q^2+1\right)}\right)\right)\sin\left(t\right)                                                      \\
+             & +\left(\frac{1}{q^2+1}-2\frac{1}{q\left(q^2+1\right)}\right)e^{qt}+\frac{2}{q}                                                                                               \\
+             & = -\frac{11}{26}\cos\left(t\right)-\frac{3}{26}\sin\left(t\right)+\frac{3}{130}e^{5t}+\frac{2}{5}                                                                            \\
+          \end{align*}
+    \item \begin{align*}
+             & =\laplace^{-1}\left\{\frac{2s+1}{\left(s^2+4\right)\left(s^2+q^2\right)}\right\}                                                                            \\
+             & =\laplace^{-1}\left\{\frac{2s}{\left(s^2+4\right)\left(s^2+q^2\right)}\right\}+\laplace^{-1}\left\{\frac{1}{\left(s^2+4\right)\left(s^2+q^2\right)}\right\} \\
+          \end{align*}
+          Which I will again solve seperately and then add
+          \begin{align*}
+             & = \laplace^{-1}\left\{\frac{2s}{\left(s^2+4\right)\left(s^2+q^2\right)}\right\}                        \\
+             & = \laplace^{-1}\left\{\frac{A_1s+B_1}{\left(s^2+4\right)}+\frac{C_1s+D_1}{\left(s^2+q^2\right)}\right\} \\
+             & \Rightarrow \left(A_1s+B_1\right)\left(s^2+q^2\right) + \left(C_1s+D_1\right)\left(s^2+4\right)=2s     \\
+             & \implies A_1s^3+A_1q^2s+B_1s^2+B_1q^2+C_1s^3+4C_1s+D_1s^2+4D_1=2s                                      \\
+             & \implies A_1+C_1=0 \implies A_1=-C_1                                                                   \\
+             & \implies B_1+D_1=0 \implies B_1=-D_1                                                                   \\
+             & \implies A_1q^2+4C_1=2\implies A_1=\frac{2}{q^2-4}\implies C_1=-\frac{2}{q^2-4}                        \\
+             & \implies B_1q^2+4D_1=0\implies B_1,D_1=0                                                               \\
+             & \Rightarrow F_1(s)=A_1\cos\left(2t\right)+C_1\cos\left(qt\right)
+          \end{align*}
+          And
+          \begin{align*}
+             & = \laplace^{-1}\left\{\frac{1}{\left(s^2+4\right)\left(s^2+q^2\right)}\right\}                 \\
+             & = \laplace^{-1}\left\{\frac{As+B}{\left(s^2+4\right)}+\frac{Cs+D}{\left(s^2+q^2\right)}\right\} \\
+             & \Rightarrow \left(As+B\right)\left(s^2+q^2\right) + \left(Cs+D\right)\left(s^2+4\right)=1      \\
+             & \implies As^3+Aq^2s+Bs^2+Bq^2+Cs^3+4Cs+Ds^2+4D=1                                               \\
+             & \implies A+C=0 \implies A=-C                                                                   \\
+             & \implies B+D=0 \implies B=-D                                                                   \\
+             & \implies Aq^2+4C=0\implies A,C=0                                                               \\
+             & \implies Bq^2+4D=1\implies B=\frac{1}{q^2-4}\implies D=-\frac{1}{q^2-4}\\
+             & \Rightarrow \laplace^{-1}\left\{\frac{B}{\left(s^2+4\right)}+\frac{D}{\left(s^2+q^2\right)}\right\} \\
+             & \Rightarrow \frac{B}{2}\laplace^{-1}\left\{\frac{2}{\left(s^2+4\right)}\right\}+\frac{D}{q}\laplace^{-1}\left\{\frac{q}{\left(s^2+q^2\right)}\right\} \\
+             & \Rightarrow F_2(s)=\frac{B}{2}\sin\left(2t\right)+\frac{D}{q}\sin\left(qt\right)
+          \end{align*}
+          So,
+          \begin{align*}
+            & F(s)=F_1(s)+F_2(s)\\
+            & =A_1\cos\left(2t\right)+C_1\cos\left(qt\right)+\frac{B}{2}\sin\left(2t\right)+\frac{D}{q}\sin\left(qt\right)\\
+            & =\frac{2}{q^2-4}\cos\left(2t\right)-\frac{2}{q^2-4}\cos\left(qt\right)+\frac{\frac{1}{q^2-4}}{2}\sin\left(2t\right)+\frac{-\frac{1}{q^2-4}}{q}\sin\left(qt\right)\\
+            & =\frac{2}{21}\cos\left(2t\right)-\frac{2}{21}\cos\left(5t\right)+\frac{1}{42}\sin\left(2t\right)-\frac{1}{105}\sin\left(5t\right)\\
+          \end{align*}
+    \item Here $e^{-2s}$ can be ``eliminated'' using the theorem $$\laplace^{-1}\left\{e^{-\alpha s}F(s)\right\}=f(t-\alpha)\mu(t-\alpha)$$ where $\mu(t)$ is the Heaviside function. 
+    \begin{align*}
+      & \laplace^{-1}\left\{\frac{e^{-2s}}{s^2\left(s-q\right)}\right\}\\
+    \end{align*}
+    \item Determine $\laplace\left\{t\sin^2\left(qt\right)\right\}$
+    \item Determine $\laplace\left\{e^{-qt}\sin\left(pt\right)\sin\left(qt\right)\right\}$
+    \item Determine $\laplace\left\{e^{-qt}t\sin\left(t-\frac{\pi}{6}\right)\right\}$
+    \item Determine $\laplace^{-1}\left\{\ln\left(\frac{7+ps}{9+qs}\right)\right\}$
+  \end{enumerate}
+\end{soln}
+\end{document}
