@@ -73,7 +73,7 @@
    {#3#2|_{#4}}%
 }
 
-\title{Math 2150: Assignment II}
+\title{Math 2150: Assignment III}
 \author{Jeremy Favro}
 \date{\today}
 
@@ -238,7 +238,7 @@ student number is 0805980 so $p=9$, $q=5$, and $r=22$.
              & =\laplacei{\ln\left(7+ps\right)-\ln\left(9+qs\right)}            \\
              & =\laplacei{\ln\left(7+ps\right)}-\laplacei{\ln\left(9+qs\right)}
           \end{align*}
-          Here we can use the theorem $\displaystyle\laplace{t^nf(t)}=\left(-1\right)^{n}\frac{d^nF(s)}{ds^n}\implies f(t)=\frac{\left(-1\right)^{n}}{t^n}\frac{d^nF(s)}{ds^n}$
+          Here we can use the theorem $\displaystyle\laplace{t^nf(t)}=\left(-1\right)^{n}\frac{d^nF(s)}{ds^n}\implies f(t)=\frac{\left(-1\right)^{n}}{t^n}\laplacei{\frac{d^nF(s)}{ds^n}}$
           \begin{align*}
              & =\laplacei{\frac{1}{7+ps}}-\laplacei{\frac{1}{9+qs}}                   \\
              & =\laplacei{\frac{1}{\frac{7}{p}+s}}-\laplacei{\frac{1}{\frac{9}{q}+s}} \\
