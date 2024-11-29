@@ -62,7 +62,8 @@
   \end{center}
 }
 
-\newcommand{\laplace}{\mathcal{L}}
+\newcommand{\laplace}[1]{\mathcal{L}\left\{#1\right\}}
+\newcommand{\laplacei}[1]{\mathcal{L}^{-1}\left\{#1\right\}}
 
 \newcommand{\highlight}[1]{\colorbox{yellow}{$\displaystyle #1$}}
 
@@ -86,34 +87,34 @@ student number is 0805980 so $p=9$, $q=5$, and $r=22$.
 % PROBLEM 1
 \begin{problem}~
 \begin{enumerate}[label=(\alph*)]
-  \item Determine $\laplace^{-1}\left\{\frac{\left(s-2\right)}{\left(s^2+1\right)\left(s^2-qs\right)}\right\}$
-  \item Determine $\laplace^{-1}\left\{\frac{2s+1}{\left(s^2+4\right)\left(s^2+q^2\right)}\right\}$
-  \item Determine $\laplace^{-1}\left\{\frac{e^{-2s}}{s^2\left(s-q\right)}\right\}$
-  \item Determine $\laplace\left\{t\sin^2\left(qt\right)\right\}$
-  \item Determine $\laplace\left\{e^{-qt}\sin\left(pt\right)\sin\left(qt\right)\right\}$
-  \item Determine $\laplace\left\{e^{-qt}t\sin\left(t-\frac{\pi}{6}\right)\right\}$
-  \item Determine $\laplace^{-1}\left\{\ln\left(\frac{7+ps}{9+qs}\right)\right\}$
+  \item Determine $\laplacei{\frac{\left(s-2\right)}{\left(s^2+1\right)\left(s^2-qs\right)}}$
+  \item Determine $\laplacei{\frac{2s+1}{\left(s^2+4\right)\left(s^2+q^2\right)}}$
+  \item Determine $\laplacei{\frac{e^{-2s}}{s^2\left(s-q\right)}}$
+  \item Determine $\laplace{t\sin^2\left(qt\right)}$
+  \item Determine $\laplace{e^{-qt}\sin\left(pt\right)\sin\left(qt\right)}$
+  \item Determine $\laplace{e^{-qt}t\sin\left(t-\frac{\pi}{6}\right)}$
+  \item Determine $\laplacei{\ln\left(\frac{7+ps}{9+qs}\right)}$
 \end{enumerate}
 \end{problem}
 \begin{soln}~
   \begin{enumerate}[label=(\alph*)]
     \item \begin{align*}
-             & =\laplace^{-1}\left\{\frac{\left(s-2\right)}{s\left(s^2+1\right)\left(s-q\right)}\right\}                                                                                                         \\
-             & =\laplace^{-1}\left\{\frac{1}{\left(s^2+1\right)\left(s-q\right)}\right\}-2\laplace^{-1}\left\{\frac{1}{s\left(s^2+1\right)\left(s-q\right)}\right\}                                              \\
-             & =\laplace^{-1}\left\{\frac{A_1s+B_1}{\left(s^2+1\right)}+\frac{C_1}{\left(s-q\right)}\right\}-2\laplace^{-1}\left\{\frac{A}{s}+\frac{Bs+C}{\left(s^2+1\right)}+\frac{D}{\left(s-q\right)}\right\} \\
+             & =\laplacei{\frac{\left(s-2\right)}{s\left(s^2+1\right)\left(s-q\right)}}                                                                                        \\
+             & =\laplacei{\frac{1}{\left(s^2+1\right)\left(s-q\right)}}-2\laplacei{\frac{1}{s\left(s^2+1\right)\left(s-q\right)}}                                              \\
+             & =\laplacei{\frac{A_1s+B_1}{\left(s^2+1\right)}+\frac{C_1}{\left(s-q\right)}}-2\laplacei{\frac{A}{s}+\frac{Bs+C}{\left(s^2+1\right)}+\frac{D}{\left(s-q\right)}} \\
           \end{align*}
           Which I'll solve seperately and then recombine
           \begin{align*}
-             & =\laplace^{-1}\left\{\frac{A_1s+B_1}{\left(s^2+1\right)}+\frac{C_1}{\left(s-q\right)}\right\}                                                                                                                                            \\
+             & =\laplacei{\frac{A_1s+B_1}{\left(s^2+1\right)}+\frac{C_1}{\left(s-q\right)}}                                                                                                                                                             \\
              & \Rightarrow A_1s\left(s-q\right)+B_1\left(s-q\right)+C_1\left(s^2+1\right)=1                                                                                                                                                             \\
              & \Rightarrow s=q \implies C_1\left(q^2+1\right)=1 \implies C_1=\frac{1}{q^2+1}                                                                                                                                                            \\
              & \Rightarrow s=0 \implies B_1\left(-q\right)+\frac{1}{q^2+1}=1 \implies B_1=\frac{1-\frac{1}{q^2+1}}{-q}                                                                                                                                  \\
              & \Rightarrow s=1\implies A_1\left(1-q\right)+\frac{\left(1-q\right)\left(1-\frac{1}{q^2+1}\right)}{-q}+\frac{2}{q^2+1}=1\implies A_1=\frac{1-\frac{\left(1-q\right)\left(1-\frac{1}{q^2+1}\right)}{-q}-\frac{2}{q^2+1}}{\left(1-q\right)} \\
-             & \Rightarrow F_1(s)=A_1\cos\left(t\right)+B_1\sin\left(t\right)+C_1e^{qt}                                                                                                                                                                 \\
+             & \Rightarrow f_1(t)=A_1\cos\left(t\right)+B_1\sin\left(t\right)+C_1e^{qt}                                                                                                                                                                 \\
           \end{align*}
           And
           \begin{align*}
-             & =\laplace^{-1}\left\{\frac{A}{s}+\frac{Bs+C}{\left(s^2+1\right)}+\frac{D}{\left(s-q\right)}\right\}                       \\
+             & =\laplacei{\frac{A}{s}+\frac{Bs+C}{\left(s^2+1\right)}+\frac{D}{\left(s-q\right)}}                                        \\
              & \Rightarrow A\left(s^2+1\right)\left(s-q\right) + Bs(s)\left(s-q\right) + C(s)\left(s-q\right) + D(s)\left(s^2+1\right)=1 \\
              & \Rightarrow s=q \implies D(q)\left(q^2+1\right)=1\implies D=\frac{1}{q\left(q^2+1\right)}                                 \\
              & \Rightarrow s=0 \implies A\left(-q\right)=1\implies A=\frac{1}{-q}                                                        \\
@@ -121,11 +122,11 @@ student number is 0805980 so $p=9$, $q=5$, and $r=22$.
              & \implies As^3-Aqs^2+As-Aq + Bs^3-Bqs^2 + Cs^2-Cqs + Ds^3+Ds=1                                                             \\
              & \implies A+B+D=0, \, -Aq-Bq+C=0, \, A-Cq+D=0, \, -Aq=1                                                                    \\
              & \implies B=\frac{1}{q}-\frac{1}{q\left(q^2+1\right)}, \, C=-1+q\left(\frac{1}{q}-\frac{1}{q\left(q^2+1\right)}\right)     \\
-             & \Rightarrow F_2(s)=A+De^{qt}+C\sin\left(t\right)+B\cos\left(t\right)                                                      \\
+             & \Rightarrow f_2(t)=A+De^{qt}+C\sin\left(t\right)+B\cos\left(t\right)                                                      \\
           \end{align*}
           So,
           \begin{align*}
-             & F(s)=F_1(s)-2(F_2(s))                                                                                                                                                        \\
+             & f(t)=f_1(s)-2(f_2(s))                                                                                                                                                        \\
              & =A_1\cos\left(t\right)+B_1\sin\left(t\right)+C_1e^{qt} -2A-2De^{qt}-2C\sin\left(t\right)-2B\cos\left(t\right)                                                                \\
              & =\left(A_1-2B\right)\cos\left(t\right)+\left(B_1-2C\right)\sin\left(t\right)+\left(C_1-2D\right)e^{qt}-2A                                                                    \\
              & =
@@ -135,50 +136,170 @@ student number is 0805980 so $p=9$, $q=5$, and $r=22$.
              & = -\frac{11}{26}\cos\left(t\right)-\frac{3}{26}\sin\left(t\right)+\frac{3}{130}e^{5t}+\frac{2}{5}                                                                            \\
           \end{align*}
     \item \begin{align*}
-             & =\laplace^{-1}\left\{\frac{2s+1}{\left(s^2+4\right)\left(s^2+q^2\right)}\right\}                                                                            \\
-             & =\laplace^{-1}\left\{\frac{2s}{\left(s^2+4\right)\left(s^2+q^2\right)}\right\}+\laplace^{-1}\left\{\frac{1}{\left(s^2+4\right)\left(s^2+q^2\right)}\right\} \\
+             & =\laplacei{\frac{2s+1}{\left(s^2+4\right)\left(s^2+q^2\right)}}                                                           \\
+             & =\laplacei{\frac{2s}{\left(s^2+4\right)\left(s^2+q^2\right)}}+\laplacei{\frac{1}{\left(s^2+4\right)\left(s^2+q^2\right)}} \\
           \end{align*}
           Which I will again solve seperately and then add
           \begin{align*}
-             & = \laplace^{-1}\left\{\frac{2s}{\left(s^2+4\right)\left(s^2+q^2\right)}\right\}                        \\
-             & = \laplace^{-1}\left\{\frac{A_1s+B_1}{\left(s^2+4\right)}+\frac{C_1s+D_1}{\left(s^2+q^2\right)}\right\} \\
-             & \Rightarrow \left(A_1s+B_1\right)\left(s^2+q^2\right) + \left(C_1s+D_1\right)\left(s^2+4\right)=2s     \\
-             & \implies A_1s^3+A_1q^2s+B_1s^2+B_1q^2+C_1s^3+4C_1s+D_1s^2+4D_1=2s                                      \\
-             & \implies A_1+C_1=0 \implies A_1=-C_1                                                                   \\
-             & \implies B_1+D_1=0 \implies B_1=-D_1                                                                   \\
-             & \implies A_1q^2+4C_1=2\implies A_1=\frac{2}{q^2-4}\implies C_1=-\frac{2}{q^2-4}                        \\
-             & \implies B_1q^2+4D_1=0\implies B_1,D_1=0                                                               \\
-             & \Rightarrow F_1(s)=A_1\cos\left(2t\right)+C_1\cos\left(qt\right)
+             & = \laplacei{\frac{2s}{\left(s^2+4\right)\left(s^2+q^2\right)}}                                     \\
+             & = \laplacei{\frac{A_1s+B_1}{\left(s^2+4\right)}+\frac{C_1s+D_1}{\left(s^2+q^2\right)}}             \\
+             & \Rightarrow \left(A_1s+B_1\right)\left(s^2+q^2\right) + \left(C_1s+D_1\right)\left(s^2+4\right)=2s \\
+             & \implies A_1s^3+A_1q^2s+B_1s^2+B_1q^2+C_1s^3+4C_1s+D_1s^2+4D_1=2s                                  \\
+             & \implies A_1+C_1=0 \implies A_1=-C_1                                                               \\
+             & \implies B_1+D_1=0 \implies B_1=-D_1                                                               \\
+             & \implies A_1q^2+4C_1=2\implies A_1=\frac{2}{q^2-4}\implies C_1=-\frac{2}{q^2-4}                    \\
+             & \implies B_1q^2+4D_1=0\implies B_1,D_1=0                                                           \\
+             & \Rightarrow f_1(t)=A_1\cos\left(2t\right)+C_1\cos\left(qt\right)
           \end{align*}
           And
           \begin{align*}
-             & = \laplace^{-1}\left\{\frac{1}{\left(s^2+4\right)\left(s^2+q^2\right)}\right\}                 \\
-             & = \laplace^{-1}\left\{\frac{As+B}{\left(s^2+4\right)}+\frac{Cs+D}{\left(s^2+q^2\right)}\right\} \\
-             & \Rightarrow \left(As+B\right)\left(s^2+q^2\right) + \left(Cs+D\right)\left(s^2+4\right)=1      \\
-             & \implies As^3+Aq^2s+Bs^2+Bq^2+Cs^3+4Cs+Ds^2+4D=1                                               \\
-             & \implies A+C=0 \implies A=-C                                                                   \\
-             & \implies B+D=0 \implies B=-D                                                                   \\
-             & \implies Aq^2+4C=0\implies A,C=0                                                               \\
-             & \implies Bq^2+4D=1\implies B=\frac{1}{q^2-4}\implies D=-\frac{1}{q^2-4}\\
-             & \Rightarrow \laplace^{-1}\left\{\frac{B}{\left(s^2+4\right)}+\frac{D}{\left(s^2+q^2\right)}\right\} \\
-             & \Rightarrow \frac{B}{2}\laplace^{-1}\left\{\frac{2}{\left(s^2+4\right)}\right\}+\frac{D}{q}\laplace^{-1}\left\{\frac{q}{\left(s^2+q^2\right)}\right\} \\
-             & \Rightarrow F_2(s)=\frac{B}{2}\sin\left(2t\right)+\frac{D}{q}\sin\left(qt\right)
+             & = \laplacei{\frac{1}{\left(s^2+4\right)\left(s^2+q^2\right)}}                                                       \\
+             & = \laplacei{\frac{As+B}{\left(s^2+4\right)}+\frac{Cs+D}{\left(s^2+q^2\right)}}                                      \\
+             & \Rightarrow \left(As+B\right)\left(s^2+q^2\right) + \left(Cs+D\right)\left(s^2+4\right)=1                           \\
+             & \implies As^3+Aq^2s+Bs^2+Bq^2+Cs^3+4Cs+Ds^2+4D=1                                                                    \\
+             & \implies A+C=0 \implies A=-C                                                                                        \\
+             & \implies B+D=0 \implies B=-D                                                                                        \\
+             & \implies Aq^2+4C=0\implies A,C=0                                                                                    \\
+             & \implies Bq^2+4D=1\implies B=\frac{1}{q^2-4}\implies D=-\frac{1}{q^2-4}                                             \\
+             & \Rightarrow \laplacei{\frac{B}{\left(s^2+4\right)}+\frac{D}{\left(s^2+q^2\right)}}                                  \\
+             & \Rightarrow \frac{B}{2}\laplacei{\frac{2}{\left(s^2+4\right)}}+\frac{D}{q}\laplacei{\frac{q}{\left(s^2+q^2\right)}} \\
+             & \Rightarrow f_2(t)=\frac{B}{2}\sin\left(2t\right)+\frac{D}{q}\sin\left(qt\right)
           \end{align*}
           So,
           \begin{align*}
-            & F(s)=F_1(s)+F_2(s)\\
-            & =A_1\cos\left(2t\right)+C_1\cos\left(qt\right)+\frac{B}{2}\sin\left(2t\right)+\frac{D}{q}\sin\left(qt\right)\\
-            & =\frac{2}{q^2-4}\cos\left(2t\right)-\frac{2}{q^2-4}\cos\left(qt\right)+\frac{\frac{1}{q^2-4}}{2}\sin\left(2t\right)+\frac{-\frac{1}{q^2-4}}{q}\sin\left(qt\right)\\
-            & =\frac{2}{21}\cos\left(2t\right)-\frac{2}{21}\cos\left(5t\right)+\frac{1}{42}\sin\left(2t\right)-\frac{1}{105}\sin\left(5t\right)\\
+             & f(t)=f_1(t)+f_2(t)                                                                                                                                                \\
+             & =A_1\cos\left(2t\right)+C_1\cos\left(qt\right)+\frac{B}{2}\sin\left(2t\right)+\frac{D}{q}\sin\left(qt\right)                                                      \\
+             & =\frac{2}{q^2-4}\cos\left(2t\right)-\frac{2}{q^2-4}\cos\left(qt\right)+\frac{\frac{1}{q^2-4}}{2}\sin\left(2t\right)+\frac{-\frac{1}{q^2-4}}{q}\sin\left(qt\right) \\
+             & =\frac{2}{21}\cos\left(2t\right)-\frac{2}{21}\cos\left(5t\right)+\frac{1}{42}\sin\left(2t\right)-\frac{1}{105}\sin\left(5t\right)
           \end{align*}
-    \item Here $e^{-2s}$ can be ``eliminated'' using the theorem $$\laplace^{-1}\left\{e^{-\alpha s}F(s)\right\}=f(t-\alpha)\mu(t-\alpha)$$ where $\mu(t)$ is the Heaviside function. 
-    \begin{align*}
-      & \laplace^{-1}\left\{\frac{e^{-2s}}{s^2\left(s-q\right)}\right\}\\
-    \end{align*}
-    \item Determine $\laplace\left\{t\sin^2\left(qt\right)\right\}$
-    \item Determine $\laplace\left\{e^{-qt}\sin\left(pt\right)\sin\left(qt\right)\right\}$
-    \item Determine $\laplace\left\{e^{-qt}t\sin\left(t-\frac{\pi}{6}\right)\right\}$
-    \item Determine $\laplace^{-1}\left\{\ln\left(\frac{7+ps}{9+qs}\right)\right\}$
+    \item Here $e^{-2s}$ can be ``eliminated'' using the theorem $$\laplacei{e^{-\alpha s}F(s)}=f(t-\alpha)\mu(t-\alpha)$$ where $\mu(t)$ is the Heaviside function.
+          \begin{align*}
+             & =\laplacei{\frac{e^{-2s}}{s^2\left(s-q\right)}}    \\
+             & =\laplacei{\frac{1}{s^2\left(s-q\right)}}\mu(t-2)  \\
+             & =\laplacei{\frac{As+B}{s^2}+\frac{C}{s-q}}\mu(t-2)
+          \end{align*}
+          Then
+          \begin{align*}
+             & Cs^2+As\left(s-q\right)+B\left(s-q\right)=1                                            \\
+             & \Rightarrow s = -q \implies Cq^2=1\implies C=\frac{1}{q^2}                             \\
+             & \Rightarrow s=0 \implies B\left(-q\right)=1 \implies B=\frac{1}{-q}                    \\
+             & \Rightarrow s=1 \implies \frac{1}{q^2}+A\left(1-q\right)-\frac{1}{q}\left(1-q\right)=1 \\
+             & \implies A=\frac{1-\frac{1}{q^2}+\frac{1}{q}\left(1-q\right)}{1-q}
+          \end{align*}
+          Then
+          \begin{align*}
+             & f(t)=A+Bt+Ce^{qt}                                                   \\
+             & =\frac{1-\frac{1}{q^2}+\frac{1}{q}\left(1-q\right)}{1-q}+Bt+Ce^{qt} \\
+             & =-\frac{1}{25}-\frac{1}{5}t+\frac{1}{25}Ce^{5t}
+          \end{align*}
+          So the full solution is $$\left(-\frac{1}{25}-\frac{1}{5}\left(t-2\right)+\frac{1}{25}Ce^{5\left(t-2\right)}\right)\mu(t-2)$$
+    \item Here the $t$ can be ``eliminated'' through the theorem $\displaystyle\laplace{t^nf(t)}=\left(-1\right)^{n}\frac{d^nF(s)}{ds^n}$ so,
+          \begin{align*}
+             & = \laplace{\sin^2\left(qt\right)}                                           \\
+             & F(s)= \frac{2q^2}{s\left(s^2+4q^2\right)} \rightsquigarrow \text{ by table}
+          \end{align*}
+          Now because $n=1$ here we must differentiate $F(s)$ once and switch its sign,
+          \begin{align*}
+             & =-\frac{d}{ds}\left[\frac{2q^2}{s\left(s^2+4q^2\right)}\right] \\
+             & =\frac{2q^2\left(3s^2+4q^2\right)}{s^2\left(s^2+4q^2\right)^2} \\
+             & =\frac{50\left(3s^2+100\right)}{s^2\left(s^2+100\right)^2}
+          \end{align*}
+    \item Here the $e^{-qt}$ can be ``eliminated'' through the theorem $\laplace{f(t)e^{at}}=F(s-a)$ so,
+          \begin{align*}
+             & =\laplace{\sin\left(pt\right)\sin\left(qt\right)}                                           \\
+             & =\frac{1}{2}\laplace{\cos\left(\left(p-q\right)t\right)-\cos\left(\left(p+q\right)t\right)} \\
+             & =\frac{1}{2}\laplace{\cos\left(\left(p-q\right)t\right)-\cos\left(\left(p+q\right)t\right)} \\
+             & =\frac{1}{2}\left[\frac{s}{s^2+\left(p-q\right)^2}-\frac{s}{s^2+\left(p+q\right)^2}\right]
+          \end{align*}
+          Then, applying the shift,
+          \begin{align*}
+             & F(s)=\frac{1}{2}\left[\frac{\left(s+q\right)}{\left(s+q\right)^2+\left(p-q\right)^2}-\frac{\left(s+q\right)}{\left(s+q\right)^2+\left(p+q\right)^2}\right] \\
+             & =\frac{1}{2}\left[\frac{\left(s+5\right)}{\left(s+5\right)^2+16}-\frac{\left(s+5\right)}{\left(s+5\right)^2+196}\right]
+          \end{align*}
+    \item The expression here can be simplified using the two theorems from the previous questions, $\laplace{f(t)e^{at}}=F(s-a)$ and $\displaystyle\laplace{t^nf(t)}=\left(-1\right)^{n}\frac{d^nF(s)}{ds^n}$
+          \begin{align*}
+             & =\laplace{e^{-qt}t\sin\left(t-\frac{\pi}{6}\right)}                                                          \\
+             & =\laplace{\sin\left(t-\frac{\pi}{6}\right)}                                                                  \\
+             & =\laplace{\sin\left(t\right)\cos\left(\frac{\pi}{6}\right)-\sin\left(\frac{\pi}{6}\right)\cos\left(t\right)} \\
+             & =\laplace{\frac{\sqrt{3}}{2}\sin\left(t\right)-\frac{1}{2}\cos\left(t\right)}                                \\
+             & =\frac{\sqrt{3}}{2}\laplace{\sin\left(t\right)}-\frac{1}{2}\laplace{\cos\left(t\right)}                      \\
+             & =\frac{\sqrt{3}}{2\left(s^2+1\right)}-\frac{s}{2\left(s^2+1\right)}                                          \\
+          \end{align*}
+          Then we need to apply the derivative and shift (I don't think order should matter here),
+          \begin{align*}
+             & =-\frac{d}{ds}\left[\frac{\sqrt{3}}{2\left(s^2+1\right)}-\frac{s}{2\left(s^2+1\right)}\right]                \\
+             & =\frac{s^2-2\sqrt{3}s-1}{2\left(s^2+1\right)^2}                                                              \\
+             & \Rightarrow F(s)=\frac{\left(s+q\right)^2-2\sqrt{3}\left(s+q\right)-1}{2\left(\left(s+q\right)^2+1\right)^2} \\
+             & =\frac{\left(s+5\right)^2-2\sqrt{3}\left(s+5\right)-1}{2\left(\left(s+5\right)^2+1\right)^2}
+          \end{align*}
+    \item ~
+          \begin{align*}
+             & =\laplacei{\ln\left(\frac{7+ps}{9+qs}\right)}                    \\
+             & =\laplacei{\ln\left(7+ps\right)-\ln\left(9+qs\right)}            \\
+             & =\laplacei{\ln\left(7+ps\right)}-\laplacei{\ln\left(9+qs\right)}
+          \end{align*}
+          Here we can use the theorem $\displaystyle\laplace{t^nf(t)}=\left(-1\right)^{n}\frac{d^nF(s)}{ds^n}\implies f(t)=\frac{\left(-1\right)^{n}}{t^n}\frac{d^nF(s)}{ds^n}$
+          \begin{align*}
+             & =\laplacei{\frac{1}{7+ps}}-\laplacei{\frac{1}{9+qs}}                   \\
+             & =\laplacei{\frac{1}{\frac{7}{p}+s}}-\laplacei{\frac{1}{\frac{9}{q}+s}} \\
+             & =e^{-\frac{7}{p}t}-e^{-\frac{9}{q}t}                                   \\
+          \end{align*}
+          Then, using the theorem
+          \begin{align*}
+             & =\frac{1}{t}\left[-e^{-\frac{9}{q}t}-e^{-\frac{7}{p}t}\right]     \\
+             & f(t)=\frac{1}{t}\left[-e^{-\frac{9}{5}t}-e^{-\frac{7}{9}t}\right] \\
+          \end{align*}
+  \end{enumerate}
+\end{soln}
+% PROBLEM 2
+\begin{problem}
+Use the \textbf{\underline{Laplace Transform}} method to solve the following initial value problems:
+\begin{enumerate}[label=(\alph*)]
+  \item $\displaystyle y^{\prime\prime}+2qy^\prime+q^2y=t^pe^{-qt}\qquad y(0)=y^\prime(0)=0$
+  \item $\displaystyle y^{\prime\prime}-3qy^\prime+2q^2y=e^{qt}\cos\left(pt\right)\qquad y(0)=y^\prime(0)=0$
+\end{enumerate}
+\end{problem}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item
+          \begin{align*}
+             & \laplace{y^{\prime\prime}+2qy^\prime+q^2y}=\laplace{t^pe^{-qt}}                     \\
+             & \laplace{y^{\prime\prime}}+\laplace{2qy^\prime}+\laplace{q^2y}=\laplace{t^pe^{-qt}} \\
+             & s^2Y(s)+2qsY(s)+q^2Y(s)=\frac{p!}{\left(s+q\right)^{p+1}}                           \\
+             & Y(s)=\frac{p!}{\left(s^2+2qs+q^2\right)\left(s+q\right)^{p+1}}
+          \end{align*}
+          Then
+          \begin{align*}
+             & y(t)=\laplacei{\frac{p!}{\left(s^2+2qs+q^2\right)\left(s+q\right)^{p+1}}}        \\
+             & =p!\laplacei{\frac{1}{\left(s+q\right)^2\left(s+q\right)^{p+1}}}                 \\
+             & =p!\laplacei{\frac{1}{\left(s+q\right)^{p+3}}}                                   \\
+             & =p!e^{-qt}\laplacei{\frac{1}{s^{p+3}}}                                           \\
+             & =\frac{p!e^{-qt}}{\left(p+2\right)!}\laplacei{\frac{\left(p+2\right)!}{s^{p+3}}} \\
+             & =\frac{p!e^{-qt}}{\left(p+2\right)!}t^{p+2}                                      \\
+             & =\frac{e^{-qt}}{\left(p+1\right)\left(p+2\right)}t^{p+2}                         \\
+             & =\frac{e^{-5t}}{110}t^{11}
+          \end{align*}
+    \item
+          \begin{align*}
+             & \laplace{y^{\prime\prime}-3qy^\prime+2q^2y}=\laplace{e^{qt}\cos\left(pt\right)}                     \\
+             & \laplace{y^{\prime\prime}}-\laplace{3qy^\prime}+\laplace{2q^2y}=\laplace{e^{qt}\cos\left(pt\right)} \\
+             & Y(s)\left(s^2-3qs+2q^2\right)=\frac{\left(s-q\right)}{\left(s-q\right)^2+k^2}                       \\
+             & Y(s)=\frac{\left(s-q\right)}{\left(s^2-3qs+2q^2\right)\left(\left(s-q\right)^2+p^2\right)}
+          \end{align*}
+          Then,
+          \begin{align*}
+             & = \laplacei{\frac{1}{\left(s-2q\right)\left(\left(s-q\right)^2+p^2\right)}}     \\
+             & = \laplacei{\frac{A}{s-2q}+\frac{Bs+C}{s^2-2qs+q^2+p^2}} \\
+             & \Rightarrow A\left(s^2-2qs+q^2+p^2\right)+Bs\left(s-2q\right)+C\left(s-2q\right)=1                  \\
+             & \Rightarrow s=2q \implies A\left(q^2+p^2\right)=1 \implies A=\frac{1}{q^2+p^2}  \\
+             & \Rightarrow s=0 \implies 1+C\left(-2q\right)=1 \implies C=0  \\
+             & \Rightarrow s=1 \implies \frac{1}{q^2+p^2}\left(1-2q+q^2+p^2\right)+B\left(1-2q\right)=1 \implies B=\frac{1-\frac{1}{q^2+p^2}\left(1-2q+q^2+p^2\right)}{\left(1-2q\right)}  \\
+             & = \laplacei{\frac{A}{s-2q}+\frac{Bs}{\left(s-q\right)^2+p^2}}\\
+             & = \laplacei{\frac{A}{s-2q}+\frac{B\left(s-q\right)}{\left(s-q\right)^2+p^2}+\frac{Bq}{\left(s-q\right)^2+p^2}}\\
+             & = Ae^{2qt}+Be^{qt}\cos\left(pt\right)+\frac{Bq}{p}e^{qt}\sin\left(pt\right)\\
+             & = \frac{1}{106}e^{10t}-\frac{1}{106}e^{5t}\cos\left(9t\right)-\frac{5}{954}e^{5t}\sin\left(9t\right)
+          \end{align*}
+
   \end{enumerate}
 \end{soln}
 \end{document}
