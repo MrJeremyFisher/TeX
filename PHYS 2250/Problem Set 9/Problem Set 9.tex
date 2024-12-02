@@ -1,0 +1,129 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{changepage}
+\usepackage{circuitikz}
+\usepackage{pgfplots}
+\usepackage{physics}
+\usepackage{hyperref}
+\usepackage{siunitx}
+\usepackage[breakable]{tcolorbox}
+\usepackage[inline]{enumitem}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{soln}{Solution}
+
+\pgfplotsset{compat=newest}
+\usetikzlibrary{lindenmayersystems}
+\usetikzlibrary{arrows}
+\usetikzlibrary{calc}
+
+\definecolor{incolor}{HTML}{303F9F}
+\definecolor{outcolor}{HTML}{D84315}
+\definecolor{cellborder}{HTML}{CFCFCF}
+\definecolor{cellbackground}{HTML}{F7F7F7}
+\newcommand{\eq}{=}
+\usetikzlibrary{positioning, fit, calc}
+\pgfdeclarelayer{background}  
+\pgfsetlayers{background,main}
+
+\makeatletter
+\newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+\makeatother
+\newcommand{\prompt}[4]{
+    \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+}
+
+\newcommand{\thevenin}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (2,0) to[battery1, l_=$V_{Th}\eq#1$] (2,2) 
+      to[resistor, l_=$R_{Th}\eq#2$] (0,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\norton}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (3,0) to[american current source, l_=$I_{N}\eq#1$] (3,2) -- (0,2) (2,0)
+      to[resistor, l=$R_{N}\eq#2$] (2,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\highlight}[1]{\colorbox{yellow}{$\displaystyle #1$}}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+    }
+
+\NewDocumentCommand{\evalat}{sO{\big}mm}{%
+  \IfBooleanTF{#1}
+   {\mleft. #3 \mright|_{#4}}
+   {#3#2|_{#4}}%
+}
+
+\title{Physics 2250: Problem Set IX}
+\author{Jeremy Favro}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+% PROBLEM 1
+\begin{problem} Determine both the DC impedance and the impedance at a frequency of $f=1\unit{\kilo\hertz}$ of the circuits shown below.\\
+\begin{center}
+  \begin{enumerate*}[label=(\alph*)]
+    \item
+    \begin{circuitikz}[scale=1.5]
+            \draw (0,0) to[resistor, l_=$R\eq1\unit{\kilo\ohm}$, name=R] ++(1.5,0)
+            to[inductor, l=$L\eq50\unit{\milli\henry}$] ++(1.5,0) ($(R.right) + (0.2,0)$) coordinate(D)
+            (R.left) ++(-0.1,0) -- ++(0,0.5) coordinate(base) to[capacitor, l=$C\eq200\unit{\nano\farad}$, name=C] (base -| D) -- (D)
+            ;
+          \end{circuitikz}
+    \item
+    \begin{circuitikz}[scale=1.5]
+            \draw (0,0) to[resistor, l_=$R\eq1\unit{\kilo\ohm}$, name=R] ++(1.5,0)
+            to[capacitor, l=$C\eq200\unit{\nano\farad}$, name=C] ++(1.5,0) ($(R.right) + (0.2,0)$) coordinate(D)
+            (R.left) ++(-0.1,0) -- ++(0,0.5) coordinate(base) to[inductor, l=$L\eq50\unit{\milli\henry}$] (base -| D) -- (D)
+            ;
+          \end{circuitikz}
+  \end{enumerate*}
+\end{center}
+\end{problem}
+\begin{soln} ~
+  \begin{enumerate}[label=(\alph*)]
+    \item \begin{align*}
+      & Z = \left(\frac{1}{R}+j\omega C\right)^{-1}+j\omega L\\
+      & = \frac{R}{1+j\omega CR}+j\omega L\\
+      & = \frac{R+\left(j\omega L\right)\left(1+j\omega CR\right)}{1+j\omega CR} \\
+      & = \frac{R\left(1-j\omega CR\right)+\left(j\omega L\right)\left(1+\left(\omega CR\right)^2\right)}{1+\left(\omega CR\right)^2} \\
+      & = \frac{R-j\omega CR^2+j\omega L+j\omega L\left(\omega CR\right)^2}{1+\left(\omega CR\right)^2} \\
+      & = \frac{R}{1+\left(\omega CR\right)^2}+\frac{-\omega CR^2+\omega L+\omega L\left(\omega CR\right)^2}{1+\left(\omega CR\right)^2}j \\
+    \end{align*}
+    Which means that the DC impedance ($\omega=0$) is just $R$, and impedance with a frequency of $1\unit{\kilo\hertz}$
+    is $\frac{12500}{13}-\frac{1850}{13}j$
+    \item \begin{align*}
+      
+    \end{align*}
+  \end{enumerate}
+\end{soln}
+\end{document}
