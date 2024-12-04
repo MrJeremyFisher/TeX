@@ -3,15 +3,22 @@
 \usepackage{amsmath,amsthm,amssymb}
 \usepackage{graphicx,lipsum}
 \usepackage{enumitem}
+\usepackage{xcolor}
 \newcommand{\PRLsep}{\noindent\makebox[\linewidth]{\resizebox{0.3333\linewidth}{1pt}{$\bullet$}}\bigskip}
 \newcommand\longdiv[2]{%
 $\strut#1$\kern.25em\smash{\raise.3ex\hbox{$\big)$}}$\mkern-8mu
         \overline{\enspace\strut#2}$}
 \usepackage{mdframed}
 \usepackage{cancel}
+
+\newcommand{\laplace}[1]{\mathcal{L}\left\{#1\right\}}
+\newcommand{\laplacei}[1]{\mathcal{L}^{-1}\left\{#1\right\}}
+
+\newcommand{\highlight}[1]{\colorbox{yellow}{$\displaystyle #1$}}
+
 \title{ODE Cheat Sheet}
 \author{Jeremy Favro}
-\date{\today\\Revision 1}
+\date{\today\\Revision 3}
 
 \begin{document}
 
@@ -49,15 +56,61 @@ In cases where something looks exact but $\frac{\partial M}{\partial y}\neq\frac
 If each term of the ODE is of equal order (e.g. the right hand side can be expressed as a function of only $\frac{y}{x}$) we can substitute 
 $y=ux\implies dy=udx+xdu$. This should result in a seperable equation.
 \subsection*{Bernoulli}
-If we have an equation of the form $\frac{dy}{dx}+P(x)y=Q(x)y^n$ we divide by $y^n$ and substitute $u=y^1-n\implies \frac{dy}{dx}=\frac{dy}{du}\frac{du}{dx}$. This should result in a linear equation.
+If we have an equation of the form $\frac{dy}{dx}+P(x)y=Q(x)y^n$ we divide by $y^n$ and substitute $u=y^{1-n}\implies \frac{dy}{dx}=\frac{dy}{du}\frac{du}{dx}$ (you should know what $\frac{dy}{du}$ is here). This should result in a linear equation.
 \subsection*{Linear Substituion}
 An ODE of the form $\frac{dy}{dx}=f(Ax+By+C), \, B\neq 0$ can be solved by
 \begin{align*}
-        &u = Ax+By+C \\
-        &\Rightarrow \frac{du}{dx}=A+B\frac{dy}{dx}\\
-        &\Rightarrow \frac{dy}{dx}=(\frac{du}{dx}-A)\frac{1}{B}\\
+         & u = Ax+By+C                                            \\
+         & \Rightarrow \frac{du}{dx}=A+B\frac{dy}{dx}             \\
+         & \Rightarrow \frac{dy}{dx}=(\frac{du}{dx}-A)\frac{1}{B} \\
 \end{align*}
 
+\section*{Solution Techniques $n=2$}
+\subsection*{Reduction of Order}
+If you solve a second order ODE and obtain a single solution $y_1$, $y_2=y_1\int \frac{e^{-\int P(x)dx}}{y_1^2}dx$ where $P(x)$ is found in $y^{\prime\prime}+P(x)y^{\prime}+Q(x)y=g(x)$
+\subsection*{Constant Coefficients}
+An equation of the form $ay^{\prime\prime}+by^{\prime}+cy=g(x)$ can be solved through the characteristic equation obtained by substituting $y=e^{mt}$ and solving for $m$.
+This gives a solution of the form $y_h=C_1e^{m_1t}+C_2e^{m_2t}$.
+\subsection*{Undetermined Coefficients}
+To obtain the particular solution of $ay^{\prime\prime}+by^{\prime}+cy=g(x)$ we try 
+$
+        \begin{array}{|c|}
+                g(x)                                                                  \\ 
+                \hline
+                Ce^{\alpha x}                                                         \\
+                C_nx^n+\dots+C_1x+C_0                                                 \\
+                C\cos\left(\beta x\right), \quad C\sin\left(\beta x\right)            \\
+                \left(C_nx^n+\dots+C_1x+C_0\right)e^{\alpha x}                        \\
+                \hline
+                y_p(x)                                                                \\
+                x^s\left(Ae^{\alpha x}\right)                                         \\
+                x^s\left(A_nx^n+\dots+A_1x+A_0\right)                                 \\
+                x^s\left(A\cos\left(\beta x\right)+A_1\sin\left(\beta x\right)\right) \\
+                x^s\left(A_nx^n+\dots+A_1x+A_0\right)e^{\alpha x}                     
+        \end{array}
+$
+\subsection*{Variation of Parameters}
+For $y^{\prime\prime}+P(x)y^{\prime}+Q(x)y=g(x)$ if you have the homogeneous solutions $y_1(x)$ and $y_2(x)$, the particular solution $y_p(x)=u_1(x)y_1(x)+u_2(x)y_2(x)$ where
+$$u_1(x)=-\int\frac{g(x)y_2(x)}{W\left[y_1, y_2\right]}dx$$
+$$u_2(x)=\int\frac{g(x)y_1(x)}{W\left[y_1, y_2\right]}dx$$
+where $W\left[y_1, y_2\right]$ is the Wronskian, 
+$$\begin{vmatrix}
+                y_1          & y_2          \\ 
+                y_1^{\prime} & y_2^{\prime} \\
+        \end{vmatrix}$$
+\subsection*{Cauchy-Euler}
+An equation of the form $ax^2y^{\prime\prime}+bxy^{\prime}+cy=g(x)$ can be solved through the characteristic equation $am^2+\highlight{(b-a)}m+c=0$ obtained by substituting $y=x^{mt}$ and solving for $m$. 
+In the case where $m$ is complex here you end up with trig functions of logarithms.
+\subsection*{Laplace Transform}
+If $f(t)$ has period $T$ and is piecewise continuous on $[0,T]$ then $\laplace{f(t)}=\frac{\int_{0}^{T}e^{-st}f(t)dt}{1-e^{sT}}$
+\subsection*{Properties of the Laplace Transform}
+$\laplace{f_1+f_2}=\laplace{f_1}+\laplace{f_2}$
+$\laplace{cf_1}=c\laplace{f_1}$
+$\laplace{e^{at}f(t)}=F(s-a)$
+$\laplace{f^\prime(t)}=s\laplace{f(t)}-f(0)$
+$\laplace{f^{\prime\prime}(t)}=s^2\laplace{f(t)}-sf(0)-f^\prime(0)$
+$\laplace{t^nf(t)}=(-1)^n\frac{d^nF(s)}{ds^n}\implies f(t)=\frac{\left(-1\right)^{n}}{t^n}\laplacei{\frac{d^nF(s)}{ds^n}}$
+\subsection*{Solving IVPs with Laplace Transforms}
 \section*{Applications}
 \subsection*{Newton's Cooling}
 $$\frac{dT}{dt}=k(T-T_m)\implies T(t)=T_m+Ce^{kt}$$ where $T$ is the temperature of an object, $T_m$ the temperature of the medium in which the object sits, and $k$ some cooling constant determined by initial/boundary conditions.
