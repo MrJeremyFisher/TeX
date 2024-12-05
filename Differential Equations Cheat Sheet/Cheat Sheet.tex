@@ -110,7 +110,16 @@ $\laplace{e^{at}f(t)}=F(s-a)$
 $\laplace{f^\prime(t)}=s\laplace{f(t)}-f(0)$
 $\laplace{f^{\prime\prime}(t)}=s^2\laplace{f(t)}-sf(0)-f^\prime(0)$
 $\laplace{t^nf(t)}=(-1)^n\frac{d^nF(s)}{ds^n}\implies f(t)=\frac{\left(-1\right)^{n}}{t^n}\laplacei{\frac{d^nF(s)}{ds^n}}$
-\subsection*{Solving IVPs with Laplace Transforms}
+$\laplace{f(t-a)\mu(t-a)}=e^{-as}F(s)$
+$\laplacei{e^{-as}F(s)}=f(t-a)\mu(t-a)$
+\subsection*{Solving Discontinuous IVPs with Laplace Transforms}
+For some ODE $ay^{\prime\prime}+by^{\prime}+cy=g(t)$ $\laplace{g(t)\mu(t-a)}=e^{-as}\laplace{g(t+a)}$
+$$\mu(t-a)=
+        \begin{cases} 
+                0 & t<a  \\
+                1 & t>a
+        \end{cases}
+$$
 \section*{Applications}
 \subsection*{Newton's Cooling}
 $$\frac{dT}{dt}=k(T-T_m)\implies T(t)=T_m+Ce^{kt}$$ where $T$ is the temperature of an object, $T_m$ the temperature of the medium in which the object sits, and $k$ some cooling constant determined by initial/boundary conditions.

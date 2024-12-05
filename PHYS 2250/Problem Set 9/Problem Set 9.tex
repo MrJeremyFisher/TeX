@@ -65,6 +65,8 @@
 
 \newcommand{\highlight}[1]{\colorbox{yellow}{$\displaystyle #1$}}
 
+\newcommand{\ti}[1]{\widetilde{#1}}
+
 \hypersetup{
     colorlinks=true,
     linkcolor=blue,
@@ -85,7 +87,6 @@
 \date{\today}
 
 \begin{document}
-
 \maketitle
 
 % PROBLEM 1
@@ -136,8 +137,8 @@
 % PROBLEM 2
 \begin{problem} A purely sinusoidal voltage of $V_s(t)$ of amplitude $10\unit{\volt}$ and frequency $\omega=300\unit{\radian\per\second}$ is applied in the circuit shown below.
 \begin{enumerate}[label=(\alph*)]
-  \item Find the equivalent circuit impedance, $\tilde{Z}_{tot}$
-  \item Find the total circuit current, $\tilde{I}(t)$
+  \item Find the equivalent circuit impedance, $\ti{Z}_{tot}$
+  \item Find the total circuit current, $\ti{I}(t)$
   \item Find the average power expended in the circuit, and compare this to the DC power expended in the circuit (i.e. the power expended when powered by a simple $10\unit{\volt}$ battery)
 \end{enumerate}
 \begin{center}
@@ -164,12 +165,12 @@
           In phasor notation this is $\sqrt{10.4632^2+15.5367^2}e^{i\arctan\left(\frac{15.5367}{10.4632}\right)}=18.7315e^{0.9782j}$
     \item $V_s(t)$ in phasor notation is $10e^{300tj}$
           \begin{align*}
-             & \tilde{I}(t)=\frac{V_s(t)}{\tilde{Z}_{tot}}         \\
-             & \tilde{I}(t)=\frac{10e^{300tj}}{18.7315e^{0.9782j}} \\
-             & \tilde{I}(t)=0.5339e^{(300t-0.9782)j}               \\
+             & \ti{I}(t)=\frac{\ti{V}_s(t)}{\ti{Z}_{tot}}       \\
+             & \ti{I}(t)=\frac{10e^{300tj}}{18.7315e^{0.9782j}} \\
+             & \ti{I}(t)=0.5339e^{(300t-0.9782)j}               \\
           \end{align*}
     \item \begin{align*}
-             & \langle P \rangle = \frac{1}{2}\Re\left[V(t)\tilde{I}^*(t)\right]      \\
+             & \langle P \rangle = \frac{1}{2}\Re\left[\ti{V}_s(t)\ti{I}^*(t)\right]  \\
              & = \frac{1}{2}\Re\left[10e^{300tj}\cdot0.5339e^{-j(300t-0.9782)}\right] \\
              & = \frac{1}{2}\Re\left[5.339e^{0.9782j}\right]                          \\
              & = 2.6695\Re\left[\cos(0.9782)+j\sin(0.9782)\right]                     \\
@@ -186,7 +187,7 @@ values of $C=500\unit{\nano\farad}$, $R=1\unit{\kilo\ohm}$, $R_1=100\unit{\ohm}$
 \begin{center}
   \begin{enumerate*}[label=(\alph*)]
     \item \begin{circuitikz}[scale=2]
-            \draw (0,0) node[ground]{} to[american voltage source, l=$V_i$, invert] ++(0,0.75) to[resistor, l=$R$] ++(1,0) coordinate(J1)
+            \draw (0,0) node[ground]{} to[sV, l=$V_i$] ++(0,0.75) to[resistor, l=$R$] ++(1,0) coordinate(J1)
             to[capacitor, l=$C$] ++(0,-.75) node[ground]{}
             (J1) node[op amp, anchor=+](A){A}
             (A.-) to[resistor, l_=$R_1$] ++(-1,0) node[ground]{}
@@ -194,7 +195,7 @@ values of $C=500\unit{\nano\farad}$, $R=1\unit{\kilo\ohm}$, $R_1=100\unit{\ohm}$
             ;
           \end{circuitikz}
     \item \begin{circuitikz}[scale=2]
-            \draw (0,0) node[ground]{} to[american voltage source, l=$V_i$, invert] ++(0,0.75) to[capacitor, l_=$C$] ++(1,0) coordinate(J1)
+            \draw (0,0) node[ground]{} to[sV, l=$V_i$] ++(0,0.75) to[capacitor, l_=$C$] ++(1,0) coordinate(J1)
             to[resistor, l=$R$] ++(0,-.75) node[ground]{}
             (J1) node[op amp, anchor=+](A){A}
             (A.-) to[resistor, l_=$R_1$] ++(-1,0) node[ground]{}
@@ -212,25 +213,189 @@ For each filter:
           \item The magnitude of the output relative to the input, $\left|\frac{V_o}{V_i}\right|$.
           \item The phase difference between the output and input, $\Delta\phi_{V_o-V_i}$
         \end{enumerate}
-  \item Use any software of your choice to plot $\left|\frac{V_o}{V_i}\right|$ and $\Delta\phi_{V_o-V_i}$ for frequencies up to $\omega=2\unit{\mega\hertz}$. 
-  Make sure to annotate your plots with proper and legible labels. Plot $\left|\frac{V_o}{V_i}\right|$ on a log-log scale and $\Delta\phi_{V_o-V_i}$ on a linear-log scale.
+  \item Use any software of your choice to plot $\left|\frac{V_o}{V_i}\right|$ and $\Delta\phi_{V_o-V_i}$ for frequencies up to $\omega=2\unit{\mega\hertz}$.
+        Make sure to annotate your plots with proper and legible labels. Plot $\left|\frac{V_o}{V_i}\right|$ on a log-log scale and $\Delta\phi_{V_o-V_i}$ on a linear-log scale.
   \item Find the (exact or approximate) frequency and phase difference at which $\left|\frac{V_o}{V_i}\right|=1$
 \end{enumerate}
 \end{problem}
 \begin{soln}~
   \begin{enumerate}[label=(\alph*)]
     \item At $\omega=0$ in filter (a) the capacitor acts like an open meaning that the op-amp is in a non-inverting configuration where $V_o=\left(1+\frac{R_2}{R_1}\right)V_i=101V_i$.
-    As $\omega\to\infty$ in filter (a) the capacitor acts like a wire, meaning the op-amp does nothing so $V_o=0$. So, filter (a) is a low pass filter with some gain. 
-    In filter (b) at $\omega=0$ the capacitor acts like an open, dropping all of $V_i$, meaning that $V_o=0$. As $\omega\to\infty$ the capacitor acts like a wire meaning that
-    the op-amp is in a non-inverting configuration where $V_o=\left(1+\frac{R_2}{R_1}\right)V_i=101V_i$. So, filter (b) is a high pass filter with some gain.
-    \item   \begin{enumerate}[label=\roman*.]
-            \item The output voltage in terms of the input voltage, $V_o(V_i)$.
-            \item The magnitude of the output relative to the input, $\left|\frac{V_o}{V_i}\right|$.
-            \item The phase difference between the output and input, $\Delta\phi_{V_o-V_i}$
+          As $\omega\to\infty$ in filter (a) the capacitor acts like a wire, meaning the op-amp does nothing so $V_o=0$. So, filter (a) is a low pass filter with some gain.
+          In filter (b) at $\omega=0$ the capacitor acts like an open, dropping all of $V_i$, meaning that $V_o=0$. As $\omega\to\infty$ the capacitor acts like a wire meaning that
+          the op-amp is in a non-inverting configuration where $V_o=\left(1+\frac{R_2}{R_1}\right)V_i=101V_i$. So, filter (b) is a high pass filter with some gain.
+    \item I'm separating this into one part per circuit so it doesn't get super cluttered.
+          \begin{enumerate}[label=\roman*(a).]
+            \item Treating circuit (a) as a two stage circuit where the amplifier is a separate multiplier of 101 makes this conceptually much easier for me.
+                  To do this, I'll analyze the circuit below, finding $V_o^\prime(V_i)$ and then just multiply $V_o^\prime$ by 101 to get $V_o$\\
+                  \begin{center}
+                    \begin{circuitikz}[scale=2]
+                      \draw (0,0) node[ground]{} to[sV, l=$V_i$] ++(0,0.75) to[resistor, l=$R$] ++(1,0) coordinate(J1)
+                      to[capacitor, l=$C$] ++(0,-.75) -- (0,0)
+                      (J1) [-o] -- ++(0.25,0) node[right]{$V_o^\prime$} % Wow I wish I figured out [-o] earlier lol
+                      ;
+                    \end{circuitikz}
+                  \end{center}
+                  We're trying to find the voltage dropped across the capacitor here which is given by $V_o^\prime=\ti{I}(t)\ti{Z}_C$.
+                  Here $\displaystyle\ti{I}(t)=\frac{\ti{V}_i(t)}{\ti{Z}_R+\ti{Z}_C}$ so
+                  \begin{align*}
+                     & V_o^\prime=\frac{\ti{V}_i(t)\ti{Z}_C}{\ti{Z}_R+\ti{Z}_C}                                                                             \\
+                     & =\frac{\ti{V}_i(t)\left(-\frac{j}{\omega C}\right)}{R-\frac{j}{\omega C}}                                                            \\
+                     & =\frac{\ti{V}_i(t)\left[(\omega C)^{-2}-R(\omega C)^{-1}j\right]}{R^2+(\omega C)^{-2}}                                               \\
+                     & =\frac{\ti{V}_i(t)(\omega C)^{-2}}{R^2+(\omega C)^{-2}}-\frac{\ti{V}_i(t)R(\omega C)^{-1}}{R^2+(\omega C)^{-2}}j                     \\
+                     & \therefore V_o= 101\ti{V}_i(t)\left[\frac{(\omega C)^{-2}}{R^2+(\omega C)^{-2}}-\frac{R(\omega C)^{-1}}{R^2+(\omega C)^{-2}}j\right]
+                  \end{align*}
+            \item \begin{align*}
+                     & =101\left|\cancel{\ti{V}_i(t)}\frac{\displaystyle\left[\frac{(\omega C)^{-2}}{R^2+(\omega C)^{-2}}-\frac{R(\omega C)^{-1}}{R^2+(\omega C)^{-2}}j\right]}{\cancel{\ti{V}_i(t)}}\right| \\
+                     & =101\sqrt{\left(\frac{(\omega C)^{-2}}{R^2+(\omega C)^{-2}}\right)^2+\left(\frac{R(\omega C)^{-1}}{R^2+(\omega C)^{-2}}\right)^2}                                                     \\
+                     & =\frac{101}{R^2+(\omega C)^{-2}}\sqrt{(\omega C)^{-4}+R^2(\omega C)^{-2}}                                                                                                             \\
+                     & =\frac{101}{(\omega C)\left(R^2+(\omega C)^{-2}\right)}\sqrt{\frac{1}{(\omega C)^2}+R^2}                                                                                              \\
+                     & =\frac{101\sqrt{1+R^2(\omega C)^2}}{(\omega C)^2\left(R^2+(\omega C)^{-2}\right)}                                                                                                     \\
+                  \end{align*}
+            \item \begin{align*}
+                     & \Delta\phi_{V_o-V_i}=\arctan\left(\frac{\Im\left[\frac{\ti{V}_o(t)}{\ti{V}_i(t)}\right]}{\Re\left[\frac{\ti{V}_o(t)}{\ti{V}_i(t)}\right]}\right)                                                                                                                           \\
+                     & =\arctan\left(\frac{\Im\displaystyle\left[\frac{(\omega C)^{-2}}{R^2+(\omega C)^{-2}}-\frac{R(\omega C)^{-1}}{R^2+(\omega C)^{-2}}j\right]}{\Re\displaystyle\left[\frac{(\omega C)^{-2}}{R^2+(\omega C)^{-2}}-\frac{R(\omega C)^{-1}}{R^2+(\omega C)^{-2}}j\right]}\right) \\
+                     & =\arctan\left(\frac{-\frac{R(\omega C)^{-1}}{R^2+(\omega C)^{-2}}}{\frac{(\omega C)^{-2}}{R^2+(\omega C)^{-2}}}\right)                                                                                                                                                     \\
+                     & =\arctan\left(-R\omega C\right)                                                                                                                                                                                                                                            \\
+                  \end{align*}
           \end{enumerate}
-    \item Use any software of your choice to plot $\left|\frac{V_o}{V_i}\right|$ and $\Delta\phi_{V_o-V_i}$ for frequencies up to $\omega=2\unit{\mega\hertz}$. 
-    Make sure to annotate your plots with proper and legible labels. Plot $\left|\frac{V_o}{V_i}\right|$ on a log-log scale and $\Delta\phi_{V_o-V_i}$ on a linear-log scale.
-    \item Find the (exact or approximate) frequency and phase difference at which $\left|\frac{V_o}{V_i}\right|=1$
+          \newpage
+          \begin{enumerate}[label=\roman*(b).]
+            \item Treating circuit (b) as a two stage circuit where the amplifier is a separate multiplier of 101 makes this conceptually much easier for me.
+                  To do this, I'll analyze the circuit below, finding $V_o^\prime(V_i)$ and then just multiply $V_o^\prime$ by 101 to get $V_o$\\
+                  \begin{center}
+                    \begin{circuitikz}[scale=2]
+                      \draw (0,0) node[ground]{} to[sV, l=$V_i$] ++(0,0.75) to[capacitor, l=$C$] ++(1,0) coordinate(J1)
+                      to[resistor, l=$R$] ++(0,-.75) -- (0,0)
+                      (J1) [-o] -- ++(0.25,0) node[right]{$V_o^\prime$} % Wow I wish I figured out [-o] earlier lol
+                      ;
+                    \end{circuitikz}
+                  \end{center}
+                  We're trying to find the voltage dropped across the capacitor here which is given by $V_o^\prime=\ti{I}(t)\ti{Z}_R$.
+                  Here $\displaystyle\ti{I}(t)=\frac{\ti{V}_i(t)}{\ti{Z}_R+\ti{Z}_C}$ so
+                  \begin{align*}
+                     & V_o^\prime=\frac{\ti{V}_i(t)\ti{Z}_R}{\ti{Z}_R+\ti{Z}_C}                                                                \\
+                     & V_o^\prime=\frac{\ti{V}_i(t)R}{R-j(\omega C)^{-1}}                                                                      \\
+                     & V_o^\prime=\ti{V}_i(t)\frac{R^2-jR(\omega C)^{-1}}{R^2+(\omega C)^{-2}}                                                 \\
+                     & V_o^\prime=\ti{V}_i(t)\left[\frac{R^2}{R^2+(\omega C)^{-2}}-\frac{R(\omega C)^{-1}}{R^2+(\omega C)^{-2}}j\right]        \\
+                     & \therefore V_o=101\ti{V}_i(t)\left[\frac{R^2}{R^2+(\omega C)^{-2}}-\frac{R(\omega C)^{-1}}{R^2+(\omega C)^{-2}}j\right]
+                  \end{align*}
+            \item \begin{align*}
+                     & =101\left|\frac{R^2}{R^2+(\omega C)^{-2}}-\frac{R(\omega C)^{-1}}{R^2+(\omega C)^{-2}}j\right|       \\
+                     & =\frac{101}{R^2+(\omega C)^{-2}}\sqrt{\left(R^2\right)^2+\left(R(\omega C)^{-1}\right)^2}            \\
+                     & =\frac{101}{R^2+(\omega C)^{-2}}\sqrt{\frac{R^4(\omega C)^{-2}+R^2(\omega C)^{-2}}{(\omega C)^{-2}}} \\
+                     & =\frac{101R\sqrt{1+R^2}}{R^2+(\omega C)^{-2}}                                                        \\
+                  \end{align*}
+            \item \begin{align*}
+                     & \Delta\phi_{V_o-V_i}=\arctan\left(\frac{\Im\left[\frac{\ti{V}_o(t)}{\ti{V}_i(t)}\right]}{\Re\left[\frac{\ti{V}_o(t)}{\ti{V}_i(t)}\right]}\right) \\
+                     & =\arctan\left(\frac{\displaystyle -\frac{R(\omega C)^{-1}}{R^2+(\omega C)^{-2}}}{\displaystyle\frac{R^2}{R^2+(\omega C)^{-2}}}\right)            \\
+                     & =\arctan\left(-\frac{1}{R\omega C}\right)                                                                                                        \\
+                  \end{align*}
+          \end{enumerate}
+          \newpage
+    \item Plotted with TikZ
+          \begin{center}
+            \begin{tikzpicture}[scale = 1]
+              \begin{axis}[
+                  xmode=log,
+                  ymode=log,
+                  xmin=1,
+                  xmax=2000000,
+                  ylabel style={rotate=-90},
+                  xlabel={$\omega$ ($\unit{\hertz}$? $\unit{\radian\per\second}$??)},
+                  ylabel={~~~~~~~~~~~~$\displaystyle\left|\frac{V_o}{V_i}\right|$}, % Gross.
+                  xtick pos=bottom,
+                  ytick pos=left,
+                  width=11cm,
+                  height=7cm
+                ]
+                \addplot[thick,red,domain=1:2000000] (\x,{(101*sqrt(1+(1000^(2))*(\x*500*10^(-9))^2))/(((\x*500*10^(-9))^(2))*((1000^2)+(\x*500*10^(-9))^(-2)))});
+              \end{axis}
+              \node[align=center] (title) at (4.5,6.3) {$\displaystyle\left|\frac{V_o}{V_i}\right|$ as a function of frequency for an active low-pass filter \\ (circuit (a))};
+            \end{tikzpicture}
+
+            \begin{tikzpicture}
+              \begin{axis}[
+                  xmode=log,
+                  xmin=1,
+                  xmax=2000000,
+                  ylabel style={rotate=-90},
+                  xlabel={$\omega$ ($\unit{\hertz}$? $\unit{\radian\per\second}$??)},
+                  ylabel={$\Delta\phi_{V_o-V_i}\, (\unit{\radian})$},
+                  xtick pos=bottom,
+                  ytick pos=left,
+                  width=11cm,
+                  height=7cm,
+                  ytick={
+                      0, -pi/8, -pi/4, (-3*pi)/8, -pi/2
+                    },
+                  yticklabels={
+                      $0$, $-\frac{\pi}{8}$, $-\frac{\pi}{4}$, $-\frac{3\pi}{8}$, $-\frac{\pi}{2}$
+                    }
+                ]
+                \addplot[thick,red,domain=1:2000000] (\x,{pi/180*atan(-1000*\x*500*10^(-9))});
+              \end{axis}
+              \node[align=center] (title) at (4.5,6.3) {$\Delta\phi_{V_o-V_i}$ as a function of frequency for an active low-pass filter \\ (circuit (a))};
+            \end{tikzpicture}
+          \end{center}
+
+          \begin{center}
+            \begin{tikzpicture}[scale = 1]
+              \begin{axis}[
+                  xmode=log,
+                  ymode=log,
+                  xmin=1,
+                  xmax=2000000,
+                  ylabel style={rotate=-90},
+                  xlabel={$\omega$ ($\unit{\hertz}$? $\unit{\radian\per\second}$??)},
+                  ylabel={~~~~~~~~~~~~$\displaystyle\left|\frac{V_o}{V_i}\right|$}, % Gross.
+                  xtick pos=bottom,
+                  ytick pos=left,
+                  width=11cm,
+                  height=7cm
+                ]
+                \addplot[thick,red,domain=1:2000000] (\x,{(101*1000*sqrt(1+(1000^2)))/((1000^2)+(\x*500*10^(-9))^(-2))});
+              \end{axis}
+              \node[align=center] (title) at (4.5,6.3) {$\displaystyle\left|\frac{V_o}{V_i}\right|$ as a function of frequency for an active high-pass filter \\ (circuit (b))};
+            \end{tikzpicture}
+
+            \begin{tikzpicture}
+              \begin{axis}[
+                  xmode=log,
+                  xmin=1,
+                  xmax=2000000,
+                  ylabel style={rotate=-90},
+                  xlabel={$\omega$ ($\unit{\hertz}$? $\unit{\radian\per\second}$??)},
+                  ylabel={$\Delta\phi_{V_o-V_i}\, (\unit{\radian})$},
+                  xtick pos=bottom,
+                  ytick pos=left,
+                  width=11cm,
+                  height=7cm,
+                  ytick={
+                      0, -pi/8, -pi/4, (-3*pi)/8, -pi/2
+                    },
+                  yticklabels={
+                      $0$, $-\frac{\pi}{8}$, $-\frac{\pi}{4}$, $-\frac{3\pi}{8}$, $-\frac{\pi}{2}$
+                    }
+                ]
+                \addplot[thick,red,domain=1:2000000] (\x,{pi/180*atan((-1000*\x*500*10^(-9))^(-1))});
+              \end{axis}
+              \node[align=center] (title) at (4.5,6.3) {$\Delta\phi_{V_o-V_i}$ as a function of frequency for an active high-pass filter \\ (circuit (b))};
+            \end{tikzpicture}
+          \end{center}
+    \item For circuit (a)
+          \begin{align*}
+             & 1=\frac{101\sqrt{1+R^2(\omega C)^2}}{(\omega C)^2\left(R^2+(\omega C)^{-2}\right)} \\
+             & (\omega C)^2R^2+1=101\sqrt{1+R^2(\omega C)^2}                                      \\
+             & \frac{(\omega C)^2R^2+1}{\sqrt{1+R^2(\omega C)^2} }=101                            \\
+             & \omega=\sqrt{\frac{101^2-1}{(RC)^2}}=201990whatevertheunitofthegraphaboveis
+          \end{align*}
+          For circuit (b)
+          \begin{align*}
+             & 1=\frac{101R\sqrt{1+R^2}}{R^2+(\omega C)^{-2}}      \\
+             & R^2+(\omega C)^{-2}=101R\sqrt{1+R^2}                \\
+             & \omega=\sqrt{\frac{1}{101RC^2\sqrt{1+R^2}-(RC)^2}}\approx200 \\
+          \end{align*}
   \end{enumerate}
 \end{soln}
 \end{document}
