@@ -75,6 +75,7 @@ This gives a solution of the form $y_h=C_1e^{m_1t}+C_2e^{m_2t}$.
 To obtain the particular solution of $ay^{\prime\prime}+by^{\prime}+cy=g(x)$ we try 
 $
         \begin{array}{|c|}
+                \hline
                 g(x)                                                                  \\ 
                 \hline
                 Ce^{\alpha x}                                                         \\
@@ -83,6 +84,7 @@ $
                 \left(C_nx^n+\dots+C_1x+C_0\right)e^{\alpha x}                        \\
                 \hline
                 y_p(x)                                                                \\
+                \hline
                 x^s\left(Ae^{\alpha x}\right)                                         \\
                 x^s\left(A_nx^n+\dots+A_1x+A_0\right)                                 \\
                 x^s\left(A\cos\left(\beta x\right)+A_1\sin\left(\beta x\right)\right) \\
@@ -127,5 +129,31 @@ $C$ comes about as a result of solving the ODE and can also be determined using 
 \subsection*{Circuit Theory}
 $$V_{Resistor}=RI=R\frac{dQ}{dt}$$
 $$V_{Inductor}=L\frac{dI}{dt}=L\frac{d^2Q}{dt^2}$$
-$$V_{Capacitor}=\frac{Q}{C}=L\frac{d^2Q}{dt^2}$$
+$$V_{Capacitor}=\frac{Q}{C}$$
+\section*{Miscellaneous}
+\subsection*{Partial Fractions}
+$\frac{px+q}{(x-a)(x-b)}\to\frac{A}{x-a}+\frac{B}{x-b}$\\
+$\frac{px+q}{(x-a)^2}\to\frac{A}{x-a}+\frac{B}{(x-a)^2}$\\
+$\frac{px^2+qx+r}{(x-a)(x-b)(x-c)}\to\frac{A}{x-a}+\frac{B}{x-b}+\frac{C}{x-c}$\\
+$\frac{px^2+qx+r}{(x-a)^2(x-b)}\to\frac{A}{x-a}+\frac{B}{(x-a)^2}+\frac{C}{x-c}$\\
+$\frac{px^2+qx+r}{(x-a)(x^2-bx+c)}\to\frac{A}{x-a}+\frac{B}{(x^2-bx+c)}$
+\subsection*{Systems}
+$x^\prime=
+\begin{pmatrix}
+        x^\prime \\
+        y^\prime
+\end{pmatrix}=
+\begin{pmatrix}
+        a & b \\
+        c & d \\
+\end{pmatrix}
+\begin{pmatrix}
+        x\\
+        y\\
+\end{pmatrix}=Ax$
+Then guess that $x=e^{\lambda t}\implies A\vec{v}=\lambda \vec{v}$.
+To solve for eigenvalues find $det\left(A-\lambda I\right)=0$.
+Then solve for eigenvectors $\vec{v_n}$ for each $\lambda_n$ with $\left(A-\lambda_n I\right)\vec{v_n}=0$.
+For real, distinct eigenvector-value pairs write $y(t)=C_1e^{\lambda_1 t}\vec{v_1}+C_2e^{\lambda_2 t}\vec{v_2}$.
+For a repeated eigenvalue write $y(t)=C_1e^{\lambda_1 t}\vec{v_1}+C_2e^{\lambda_1 t}(\vec{v_2}+t\vec{v_1})$ where $A\vec{v_2}-\lambda_1\vec{v_2}=\vec{v_1}$
 \end{document}
