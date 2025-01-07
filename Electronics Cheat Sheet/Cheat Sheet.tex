@@ -40,10 +40,12 @@
   \end{center}
 }
 
+\newcommand{\ti}[1]{\widetilde{#1}}
+
 % Title
 \title{Electronics Cheat Sheet}
 \author{Jeremy Favro}
-\date{\today\\Revision 1}
+\date{\today\\Revision 2}
 
 \begin{document}
 
@@ -70,7 +72,7 @@ $V_C=\frac{Q}{C}$\\
 \subsection*{Diode}
 \begin{circuitikz}[scale=0.5]
   \pgfextra{\ctikzset{bipoles/resistor/width=.4,
-  bipoles/resistor/height=.15}}
+      bipoles/resistor/height=.15}}
   % PN Contact
   \draw[fill=black!15, draw=black, line width = 0.2mm] (-3.5,0) rectangle (-2.5,1);
   \draw[line width = 0.2mm] (-2.5,0) rectangle (-1.5,1);
@@ -83,8 +85,17 @@ $V_C=\frac{Q}{C}$\\
   % Diode
   \draw (1,0.5) node[left] {A} to[diode] (3,0.5) node[right] {C};
   \draw [-{Triangle[round]}] (1.5,-0.5) -- (2.5,-0.5) node[pos=0.5,below] {$I$};		
-  
-  \end{circuitikz}
+\end{circuitikz}
+
+\subsection*{SCR}
+SCRs act like normal diodes when off and do not conduct when reverse biased. When forward biased the device has two states,
+one where there is a very high resistance and therefore little current and another where there is very little reistance in which the
+SCR acts like a conventional diode. An SCR is switched from the above ``off'' state to an ``on'' state by applying a gate voltage 
+$V_G>V_{trig}$ and only drops back to the off state when $V_G<V_{trig}$ \textbf{and} the current drops below some known holding current (very small)
+
+\subsection*{Triac}
+The triac is kind of like an SCR for both parts of an AC wave. It is triggered with $\left|V_G\right|>V_{trig}$ and stays on until the voltage drops
+and $I_{through}<\left|V_{hold}\right|$
 
 \section*{Op-Amps}
 \subsection*{Inverting Amplifier}
@@ -93,7 +104,7 @@ $V_C=\frac{Q}{C}$\\
   \pgfextra{\ctikzset{bipoles/resistor/width=.4,
       bipoles/resistor/height=.15}}
   node[op amp, scale=0.5](A){A} % (a -| b) takes the y of a and the x of b!
-  (A.-) to[resistor, l_=$R_i$] ++(-1,0) node[left]{$V_i$} 
+  (A.-) to[resistor, l_=$R_i$] ++(-1,0) node[left]{$V_i$}
   (A.+) node[ground]{}
   (A.-) -- ++(0,0.5) coordinate(RF) to[resistor, l=$R_f$]  (RF -| A.out) -- (A.out) node[right]{$V_o=-\frac{R_f}{R_i}V_i$}
   ;
@@ -139,8 +150,8 @@ $V_o=-R_f\left(\frac{V_1}{R_1}+\frac{V_2}{R_2}+\frac{V_3}{R_3}\right)$
   \pgfextra{\ctikzset{bipoles/resistor/width=.4,
       bipoles/resistor/height=.15}}
   node[op amp, scale=0.5](A){A} % (a -| b) takes the y of a and the x of b!
-  (A.-) to[resistor, l_=$R_1$] ++(-1,0) node[left]{$V_1$} 
-  (A.+) to[resistor, l=$R_2$] ++(-1,0) node[left]{$V_2$} 
+  (A.-) to[resistor, l_=$R_1$] ++(-1,0) node[left]{$V_1$}
+  (A.+) to[resistor, l=$R_2$] ++(-1,0) node[left]{$V_2$}
   (A.-) -- ++(0,0.5) coordinate(RF) to[resistor, l=$R_f$]  (RF -| A.out) -- (A.out) node[right]{$V_o=\frac{R_f}{R_i}\left(V_2-V_1\right)$}
   (A.+) node[ground]{}
   ;
@@ -151,7 +162,7 @@ $V_o=-R_f\left(\frac{V_1}{R_1}+\frac{V_2}{R_2}+\frac{V_3}{R_3}\right)$
   \pgfextra{\ctikzset{bipoles/resistor/width=.4,
       bipoles/resistor/height=.15, capacitors/scale=0.5}}
   node[op amp, scale=0.5](A){A} % (a -| b) takes the y of a and the x of b!
-  (A.-) to[resistor, l_=$R_i$] ++(-1,0) node[left]{$V_i$} 
+  (A.-) to[resistor, l_=$R_i$] ++(-1,0) node[left]{$V_i$}
   (A.-) -- ++(0,0.5) coordinate(RF) to[capacitor, l=$C$]  (RF -| A.out) -- (A.out) node[right]{$V_o$}
   (A.+) node[ground]{}
   ;
@@ -163,9 +174,52 @@ $V_o=-\displaystyle\frac{1}{R_iC}\int_{0}^{t} V_i \, dt+V_o(t=0)$
   \pgfextra{\ctikzset{bipoles/resistor/width=.4,
       bipoles/resistor/height=.15, capacitors/scale=0.5}}
   node[op amp, scale=0.5](A){A} % (a -| b) takes the y of a and the x of b!
-  (A.-) to[capacitor, l_=$C$] ++(-1,0) node[left]{$V_i$} 
+  (A.-) to[capacitor, l_=$C$] ++(-1,0) node[left]{$V_i$}
   (A.-) -- ++(0,0.5) coordinate(RF) to[resistor, l=$R_f$]  (RF -| A.out) -- (A.out) node[right]{$V_o=-RC\frac{dV_i}{dt}$}
   (A.+) node[ground]{}
   ;
 \end{circuitikz}
+
+\section*{Transistors}
+$\beta=\frac{I_C}{I_B}\implies I_C=\beta I_B\implies I_E=\left(\beta+1\right)I_B$
+
+$$
+  \begin{array}{|c|c|c|}
+    \hline
+    V & NPN & PNP     \\ 
+    \hline
+    E<B<C & Active & Reverse \\
+    E<B>C & Saturation & Cutoff \\
+    E>B<C & Cutoff & Saturation \\
+    E>B>C & Reverse & Active \\
+    \hline
+  \end{array}
+$$
+\section*{Logic}
+$\cdot\implies AND$\\
+$+\implies OR$\\
+$\oplus \implies XOR \text{ (either !both)}$ \\
+$A+(AB)=A,\, A(A+B)=A$\\
+$\overline{(A+A)}=\overline{(AA)}=\overline{A}$\\
+$\overline{(A+B)}=\overline{A}\cdot\overline{B}$\\
+$\overline{(AB)}=\overline{A}+\overline{B}$\\
+\section*{Binary}
+$1011_2=1\cdot2^3+0\cdot2^2+1\cdot2^1+1\cdot2^0$ (note: leading digit read first), decimals are just done with negative powers of 2
+$11_{10}\to x_2$ is done by repeatedly dividing by 2 and taking note of the remainders, then reading them backwards
+$11/2=5R1 \to 5/2=2R1 \to 2/2=1R0 \to 1/2=0R1\implies 1011$\\
+$0.34_{10}\to x_2$ here you multiply by two repeatedly, taking note of when you roll over to $1.n$, then reading the result forwards. If
+the number you are trying to convert when expressed as a fraction does not have a denominator of $2^n$ then the number cannot fully be represented,
+so stop at some point.
+$0.34\cdot2=0+0.68\to 0.68\cdot2=1+0.36\to 0.36\cdot2=0+0.72 \to 0.72\cdot2=1+0.44\implies 0.34_{10}\approx0.0101$
+\section*{Complex Numbers and AC circuits}
+$a+bj$ can be represented as $\sqrt{a^2+b^2}e^{j\arctan{\frac{b}{a}}}$\\
+Given two signals their phase difference is $\arctan\left[\displaystyle\frac{\Im\left[\frac{\ti{V}_2}{\ti{V}_1}\right]}{\Re\left[\frac{\ti{V}_2}{\ti{V}_1}\right]}\right]$\\
+$\ti{Z}_R=R$, $\ti{Z}_C=\frac{1}{j\omega C}$, $\ti{Z_L}=j\omega L$\\
+$\langle P\rangle=\frac{1}{2}\Re\left[\ti{V}^*(t)\ti{I}(t)\right]=\frac{1}{2}\Re\left[\ti{V}(t)\ti{I}^*(t)\right]
+=\frac{1}{2}\ti{I}^*(t)\ti{I}(t)\Re\left[\ti{Z}\right]=\frac{1}{2}\frac{\ti{V}^*(t)\ti{V}(t)}{\Re\left[\ti{Z}\right]}$\\
+Impedance adds like resistance\\
+Power gain in $\unit{\decibel}$ is $10\log_{10}\left|\frac{P_{out}}{P_{in}}\right|$ and in voltage $20\log_{10}\left|\frac{V_{out}}{V_{in}}\right|$\\
+Cutoff is when $\left|\frac{V_{out}}{V_{in}}\right|=\frac{1}{\sqrt{2}}$
+\section*{Transducers}
+Thermocouples operate with ``hot'' (measured) and ``cold'' (reference) junctions. The measured voltage of a thermocouple is given by $V_{meas}=V_{hot}-V_{cold}$
 \end{document}
