@@ -8,7 +8,7 @@
 \usepackage{changepage}
 \usepackage{circuitikz}
 \usepackage{pgfplots}
-\usepackage{physics}
+%\usepackage{physics}
 \usepackage{hyperref}
 \usepackage{siunitx}
 \usepackage[breakable]{tcolorbox}
@@ -31,6 +31,8 @@
 \usetikzlibrary{positioning, fit, calc}
 \pgfdeclarelayer{background}  
 \pgfsetlayers{background,main}
+\DeclareSIUnit[number-unit-product = {\,}]\calorie{cal}
+\DeclareSIUnit[number-unit-product = {\,}]\atmosphere{atm}
 
 \makeatletter
 \newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
@@ -91,58 +93,80 @@
 
 % PROBLEM 1
 \begin{problem}
-At what wavelength does the human body emit the maximum electromagnetic radiation? Use Wien's law from Exercise 14 and assume a skin
-temperature of 70$\unit{\degree}\mathrm{F}$.
+  An ideal gas undergoes the following reversible cycle:
+  % \begin{tikzpicture}
+  %   \tikzstyle{block} = [rectangle, text centered, draw=black, fill=orange!30]
+  %   \node (i) [block] {$(P_1,V_1)$};
+  %   \node (ii) [block, below right of=i, xshift=0.75cm]{$(P_1,V_2)$};
+  %   \node (iii) [block, below left of=ii, xshift=-0.75cm]{$(P_2,V_2)$};
+  %   \node (iv) [block, above left of=iii]{$(P_2,V_1)$};
+  % \end{tikzpicture}
+  \begin{enumerate}[label=(\roman*)]
+    \item an isobaric expansion from the state (P1,V1) to the state (P1,V2)
+    \item an isochoric reduction in pressure to the state (P2,V2)
+    \item an isobaric reduction in volume to the state (P2,V1)
+    \item an isochoric increase in pressure back to the original state (P1,V1)
+  \end{enumerate}
+  \begin{enumerate}[label=(\alph*)]
+    \item What work is done on the gas in this cycle?
+    \item If P1 = 3.0 atm, P2 = 1.0 atm, V1 = 1.0 L and V2 = 2.0 L, how much work is done on the gas in traversing the cycle 100 times?
+  \end{enumerate}
 \end{problem}
 \begin{soln}
 \end{soln}
 
 % PROBLEM 2
 \begin{problem}
-With light of wavelength $520\unit{\nano\meter}$, photoelectrons are ejected from a metal surface with a maximum speed of $\SI{1.78d5}{\meter\per\second}$.
-\begin{enumerate}[label=(\alph*)]
-  \item What wavelength would be neededto give a maximum speed of $\SI{4.81d5}{\meter\per\second}$?
-  \item Can you guess what metal it is?
-\end{enumerate}
+A hypothetical substance has an isothermal compressibility $\kappa = \frac{a}{v}$ and volume expansion coefficient $\beta=\frac{2bT}{v}$, 
+where $a$ and $b$ are constants and $v$ is the molar volume. Show that the equation of state is $$v-bT^2+aP=\mathrm{constant}$$
 \end{problem}
 \begin{soln}
 \end{soln}
 
 % PROBLEM 3
 \begin{problem}
-When a beam of monoenergetic electrons is directed at a tungsten target, X-rays are produced with wavelengths no shorter than
-$0.062\unit{\nano\meter}$. How fast are the electrons in the beam moving?
+  Researchers from the Universities of Maryland and Vermont found that adults' daily energy needs at rest (their resting metabolic rate, RMR) 
+  is closely related to the mass of their bones \& muscles \& organs. By selecting any person from this data set, find:
+  \begin{enumerate}[label=(\alph*)]
+    \item Their total bone/muscle/organs mass and their RMR in $\unit{\kilo\calorie\per\day}$.
+    \item Their minimum daily energy needs written in $\unit{\joule}$, in $\unit{\kilo\joule}$, and in $\unit{\mega\joule}$.
+    \item Their heat output at rest in watts (to high accuracy all energy we use at rest ends up emitted as heat).
+  \end{enumerate}
 \end{problem}
 \begin{soln}
 \end{soln}
 
 % PROBLEM 4
 \begin{problem}
-A $0.057\unit{\nano\meter}$ X-ray photon ``bounces off'' an initially stationary electron and scatters with a wavelength of $0.061\unit{\nano\meter}$. Find the directions of scatter of
-\begin{enumerate}[label=(\alph*)]
-  \item The photon.
-  \item The electron.
-\end{enumerate}
+  A gas is contained in a cylinder fitted with a frictionless piston and is taken from state a to state b along the path acb shown in Figure 3.8.
+  $80\unit{\joule}$ of heat flows into the system, and the system does $30\unit{\joule}$ of work.
+  \begin{enumerate}[label=(\alph*)]
+    \item If instead the work done by the gas system is only $10\unit{\joule}$ along adb, how much heat flows into the system?
+    \item When the system is returned from b to a along the curved path, the work done on the system is $20\unit{\joule}$. What is the heat transfer?
+    \item If $U_a = 0$ and $U_d = 40\unit{\joule}$, find the heat absorbed in the processes ad and db.
+  \end{enumerate}
 \end{problem}
 \begin{soln}
 \end{soln}
 
 % PROBLEM 5
 \begin{problem}
-The setup depicted in Figure 6 is used in a diffraction experiment using X-rays of $0.26\unit{\nano\meter}m$ wavelength. Constructive interference is noticed
-at angles of $23.0\unit{\degree}$ and $51.4\unit{\degree}$, but none between. What is the spacing $d$ of atomic planes?
+  You have a pure metal that is unknown except for the fact that it happens to be among those listed in Table 3.1. A $36.7\unit{\gram}$ piece of this metal
+  at $50.0\unit{\celsius}$ is placed in a calorimeter containing $150\unit{\gram}$ of water, initially at $10\unit{\celsius}$. The final equilibrium temperature in the calorimeter is $2.0\unit{\celsius}$. 
+  What is the metal?
 \end{problem}
 \begin{soln}
 \end{soln}
 
 % PROBLEM 6
 \begin{problem}
-The average kinetic energy of a particle at temperature $T$ is $\frac{3}{2}k_BT$.
-\begin{enumerate}[label=(\alph*)]
-  \item What is the wavelength of a room-temperature ($22\unit{\degreeCelsius}$) electron?
-  \item Of a room-temperature proton?
-  \item In what circumstances should each behave as a wave?
-\end{enumerate}
+  A gas with adiabatic exponent $\gamma$ is compressed adiabatically from an initial state $(P_i, V_i)$ to final state $(P_f, V_f)$. 
+  \begin{enumerate}[label=(\alph*)]
+    \item Show that the work done in this process is $W=\displaystyle\frac{P_iV_i}{\gamma-1}\left[\left(\frac{V_i}{V_f}\right)^{\gamma-1}-1\right]$
+    \item Evaluate the result numerically for one mole of helium gas initially at $P=1.0\unit{\atmosphere}$ and $T=300\unit{\kelvin}$ compressed to half its initial volume. 
+    \item Compute the work done in an isothermal compression from the same initial point to half the initial volume. 
+    Explain the difference between the numerical results for work done in adiabatic and isothermal compression.
+  \end{enumerate}
 \end{problem}
 \begin{soln}
 \end{soln}

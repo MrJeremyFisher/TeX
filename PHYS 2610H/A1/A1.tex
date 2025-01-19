@@ -8,7 +8,7 @@
 \usepackage{changepage}
 \usepackage{circuitikz}
 \usepackage{pgfplots}
-\usepackage{physics}
+%\usepackage{physics}
 \usepackage{hyperref}
 \usepackage{siunitx}
 \usepackage[breakable]{tcolorbox}
@@ -95,17 +95,32 @@ At what wavelength does the human body emit the maximum electromagnetic radiatio
 temperature of 70$\unit{\degree}\mathrm{F}$.
 \end{problem}
 \begin{soln}
+  By Wien's law, $\lambda_{max}T=\alpha$ where $\alpha=\qty{2.898d-3}{\meter\kelvin}$. Here $T=\qty{294.261}{\kelvin}$ so $\lambda_{max}=\frac{\alpha}{T}\approx10\unit{\micro\meter}$
 \end{soln}
 
 % PROBLEM 2
 \begin{problem}
-With light of wavelength $520\unit{\nano\meter}$, photoelectrons are ejected from a metal surface with a maximum speed of $\SI{1.78d5}{\meter\per\second}$.
+With light of wavelength $520\unit{\nano\meter}$, photoelectrons are ejected from a metal surface with a maximum speed of $\qty{1.78d5}{\meter\per\second}$.
 \begin{enumerate}[label=(\alph*)]
-  \item What wavelength would be neededto give a maximum speed of $\SI{4.81d5}{\meter\per\second}$?
+  \item What wavelength would be needed to give a maximum speed of $\qty{4.81d5}{\meter\per\second}$?
   \item Can you guess what metal it is?
 \end{enumerate}
 \end{problem}
 \begin{soln}
+  ~\begin{enumerate}[label=(\alph*)]
+    \item Here we first need to determine the work function, $\phi$, of the surface. Using equation 1.2 from the formula sheet,
+    \begin{align*}
+      & E_{kmax}=\frac{1}{2}m_ev^2=hf-\phi\\
+      & E_{kmax}=\frac{hc}{\lambda}-\frac{1}{2}m_ev^2=\phi
+    \end{align*}
+    Then the required wavelength for $v^\prime=\qty{4.81d5}{\meter\per\second}$ will be proportional to the base kinetic energy of those electrons and the work function energy
+    \begin{align*}
+      & \frac{1}{2}m_e\left(v^\prime\right)^2+\phi=\frac{hc}{\lambda^\prime} \\
+      & \frac{hc}{\frac{1}{2}m_e\left(v^\prime\right)^2+\phi}=\lambda^\prime \\
+      & \frac{2hc}{m_e\left[\left(v^\prime\right)^2-v^2\right]+\frac{2hc}{\lambda}}=\lambda^\prime=420\unit{\nano\meter}
+    \end{align*}
+    \item Going by table 1 from the textbook with $\phi=\frac{hc}{\lambda}-\frac{1}{2}m_ev^2\approx2.3\unit{\electronvolt}$ the metal is probably sodium.
+  \end{enumerate}
 \end{soln}
 
 % PROBLEM 3
@@ -113,7 +128,8 @@ With light of wavelength $520\unit{\nano\meter}$, photoelectrons are ejected fro
 When a beam of monoenergetic electrons is directed at a tungsten target, X-rays are produced with wavelengths no shorter than
 $0.062\unit{\nano\meter}$. How fast are the electrons in the beam moving?
 \end{problem}
-\begin{soln}
+\begin{soln} This is probably wrong. If it's moving that fast idk if $1/2mv^2$ holds.
+  $\lambda_{min}=0.062\unit{\nano\meter}\implies E=\frac{hc}{\lambda}=\frac{1}{2}m_ev^2\implies\sqrt{\frac{2hc}{m_e\lambda}}=v=\qty{84000000}{\meter\per\second}$
 \end{soln}
 
 % PROBLEM 4
@@ -124,15 +140,38 @@ A $0.057\unit{\nano\meter}$ X-ray photon ``bounces off'' an initially stationary
   \item The electron.
 \end{enumerate}
 \end{problem}
-\begin{soln}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item Using equation 1.3 from the formula sheet,
+  \begin{align*}
+    & \lambda^\prime-\lambda=\frac{h}{m_ec}\left(1-\cos(\theta)\right)\\
+    & \theta=\arccos\left(1-\frac{\Delta\lambda m_e c}{h}\right)\approx2.3\unit{\radian}\\
+  \end{align*}
+    \item Using equations 4 and 5 from the textbook,
+    \begin{align*}
+      & \frac{h\left(\lambda^\prime-\lambda\cos\theta\right)}{\lambda\lambda^\prime}=\gamma_um_eu\cos\phi
+    \end{align*}
+    and
+    \begin{align*}
+      & \frac{h\sin\theta}{\lambda^\prime}=\gamma_um_eu\sin\phi
+    \end{align*}
+    then,
+    \begin{align*}
+      & \frac{\frac{h\sin\theta}{\lambda^\prime}}{\frac{h\left(\lambda^\prime-\lambda\cos\theta\right)}{\lambda\lambda^\prime}}=\frac{\gamma_um_eu\sin\phi}{\gamma_um_eu\cos\phi} \\
+      & \phi=\arctan\left(\frac{\frac{h\sin\theta}{\lambda^\prime}}{\frac{h\left(\lambda^\prime-\lambda\cos\theta\right)}{\lambda\lambda^\prime}}\right)=\arctan\left(\frac{\lambda\sin\theta}{\lambda^\prime-\lambda\cos\theta} \right)=0.4\unit{\radian}
+    \end{align*}
+  \end{enumerate}
+
+
 \end{soln}
 
 % PROBLEM 5
 \begin{problem}
-The setup depicted in Figure 6 is used in a diffraction experiment using X-rays of $0.26\unit{\nano\meter}m$ wavelength. Constructive interference is noticed
-at angles of $23.0\unit{\degree}$ and $51.4\unit{\degree}$, but none between. What is the spacing $d$ of atomic planes?
+The setup depicted in Figure 6 is used in a diffraction experiment using X-rays of $0.26\unit{\nano\meter}$ wavelength. Constructive interference is noticed
+at angles of $23\unit{\degree}$ and $51.4\unit{\degree}$, but none between. What is the spacing $d$ of atomic planes?
 \end{problem}
 \begin{soln}
+  Using equation 1.4 from the formula sheet, $\frac{m\lambda}{2\sin\theta}=d$. Here, $m=1$, $\lambda=0.26\unit{\nano\meter}$ and $\theta=\frac{23\pi}{180}\unit{\radian}$ so $d\approx330\unit{\pico\meter}$
 \end{soln}
 
 % PROBLEM 6
@@ -145,5 +184,16 @@ The average kinetic energy of a particle at temperature $T$ is $\frac{3}{2}k_BT$
 \end{enumerate}
 \end{problem}
 \begin{soln}
+  $E=\frac{3}{2}k_BT\approx\qty{6d-4}{\joule}$
+  \begin{enumerate}[label=(\alph*)]
+    \item Knowing that $\lambda=\frac{h}{p}$,
+    \begin{align*}
+      & E=\frac{1}{2}m_ev^2\\
+      & \implies \sqrt{\frac{2E}{m_e}}=v\\
+      & \implies \frac{h}{m_e\sqrt{\frac{2E}{m_e}}}=\frac{h}{\sqrt{2m_eE}}=\lambda\approx6.3\unit{\nano\meter}
+    \end{align*}
+    \item We can use the same derived equation as in part (a), $\displaystyle\frac{h}{\sqrt{2m_eE}}=\lambda\approx15\unit{\nano\meter}$
+    \item In what circumstances should each behave as a wave?
+  \end{enumerate}
 \end{soln}
 \end{document}
