@@ -93,80 +93,113 @@
 
 % PROBLEM 1
 \begin{problem}
-  An ideal gas undergoes the following reversible cycle:
-  % \begin{tikzpicture}
-  %   \tikzstyle{block} = [rectangle, text centered, draw=black, fill=orange!30]
-  %   \node (i) [block] {$(P_1,V_1)$};
-  %   \node (ii) [block, below right of=i, xshift=0.75cm]{$(P_1,V_2)$};
-  %   \node (iii) [block, below left of=ii, xshift=-0.75cm]{$(P_2,V_2)$};
-  %   \node (iv) [block, above left of=iii]{$(P_2,V_1)$};
-  % \end{tikzpicture}
-  \begin{enumerate}[label=(\roman*)]
-    \item an isobaric expansion from the state (P1,V1) to the state (P1,V2)
-    \item an isochoric reduction in pressure to the state (P2,V2)
-    \item an isobaric reduction in volume to the state (P2,V1)
-    \item an isochoric increase in pressure back to the original state (P1,V1)
-  \end{enumerate}
-  \begin{enumerate}[label=(\alph*)]
-    \item What work is done on the gas in this cycle?
-    \item If P1 = 3.0 atm, P2 = 1.0 atm, V1 = 1.0 L and V2 = 2.0 L, how much work is done on the gas in traversing the cycle 100 times?
-  \end{enumerate}
+An ideal gas undergoes the following reversible cycle:
+
+\begin{enumerate}[label=(\roman*)]
+  \item an isobaric expansion from the state (P1,V1) to the state (P1,V2)
+  \item an isochoric reduction in pressure to the state (P2,V2)
+  \item an isobaric reduction in volume to the state (P2,V1)
+  \item an isochoric increase in pressure back to the original state (P1,V1)
+\end{enumerate}
+\begin{enumerate}[label=(\alph*)]
+  \item What work is done on the gas in this cycle?
+  \item If $P_1 = 3.0\unit{\atmosphere}$, $P_2 = 1.0\unit{\atmosphere}$, $V_1 = 1.0\unit{\liter}$ and $V_2 = 2.0\unit{\liter}$, how much work is done on the gas in traversing the cycle 100 times?
+\end{enumerate}
 \end{problem}
-\begin{soln}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item ~\\
+    \begin{center}
+      \begin{tikzpicture}
+        \tikzstyle{block} = [rectangle, text centered, draw=black, fill=orange!30]
+        \node (i) [block] {$(P_1,V_1)$};
+        \node (ii) [block, right of=i, xshift=2cm]{$(P_1,V_2)$};
+        \node (iii) [block, right of=ii, xshift=2cm]{$(P_2,V_2)$};
+        \node (iv) [block, right of=iii, xshift=2cm]{$(P_2,V_1)$};
+        \draw[->] (i) -- node[below, yshift=-0.25cm] {$W=-P(V_2-V_1)$} node[above] {Isobaric} (ii);
+        \draw[->] (ii) -- node[above] {$W=0$} node[below] {Isochoric} (iii);
+        \draw[->] (iii) -- node[below, yshift=-0.25cm] {$W=-P(V_1-V_2)$} node[above] {Isobaric} (iv);
+        \draw[->] (iv.east) -| ++(0.25,1.25) -| node[xshift=5.46cm, above] {$W=0$} node[xshift=5.46cm, below] {Isochoric} ([xshift=-0.25cm]i.west) -- (i.west);
+      \end{tikzpicture}
+    \end{center}
+    One cycle of work is therefore $-P_1(V_2-V_1)-P_2(V_1-V_2)$
+    \item One hundred cycles of work is $100\left[\left(P_2-P_1\right)(V_2-V_1)\right]=\qty{-2.03d4}{\joule}$
+  \end{enumerate}
 \end{soln}
 
 % PROBLEM 2
 \begin{problem}
-A hypothetical substance has an isothermal compressibility $\kappa = \frac{a}{v}$ and volume expansion coefficient $\beta=\frac{2bT}{v}$, 
+A hypothetical substance has an isothermal compressibility $\kappa = \frac{a}{v}$ and volume expansion coefficient $\beta=\frac{2bT}{v}$,
 where $a$ and $b$ are constants and $v$ is the molar volume. Show that the equation of state is $$v-bT^2+aP=\mathrm{constant}$$
 \end{problem}
 \begin{soln}
+  \begin{align*}
+    & \beta=\frac{1}{V}\left(\frac{\partial V}{\partial T}\right)_P=\frac{2bT}{v}\\
+    & \frac{1}{V}\left(\frac{\partial V}{\partial T}\right)_P=\frac{2bnT}{V}\\
+    & \left(\frac{\partial V}{\partial T}\right)_P=2bnT
+  \end{align*}
+  \begin{align*}
+    & -V\left(\frac{\partial P}{\partial V}\right)_T=\frac{1}{\kappa}\\
+    & -V\left(\frac{\partial P}{\partial V}\right)_T=\frac{V}{na}\\
+    & -\left(\frac{\partial P}{\partial V}\right)_T=\frac{1}{na}\\
+  \end{align*}
 \end{soln}
 
 % PROBLEM 3
 \begin{problem}
-  Researchers from the Universities of Maryland and Vermont found that adults' daily energy needs at rest (their resting metabolic rate, RMR) 
-  is closely related to the mass of their bones \& muscles \& organs. By selecting any person from this data set, find:
-  \begin{enumerate}[label=(\alph*)]
-    \item Their total bone/muscle/organs mass and their RMR in $\unit{\kilo\calorie\per\day}$.
-    \item Their minimum daily energy needs written in $\unit{\joule}$, in $\unit{\kilo\joule}$, and in $\unit{\mega\joule}$.
-    \item Their heat output at rest in watts (to high accuracy all energy we use at rest ends up emitted as heat).
-  \end{enumerate}
+Researchers from the Universities of Maryland and Vermont found that adults' daily energy needs at rest (their resting metabolic rate, RMR)
+is closely related to the mass of their bones \& muscles \& organs. By selecting any person from this data set, find:
+\begin{enumerate}[label=(\alph*)]
+  \item Their total bone/muscle/organs mass and their RMR in $\unit{\kilo\calorie\per\day}$.
+  \item Their minimum daily energy needs written in $\unit{\joule}$, in $\unit{\kilo\joule}$, and in $\unit{\mega\joule}$.
+  \item Their heat output at rest in watts (to high accuracy all energy we use at rest ends up emitted as heat).
+\end{enumerate}
 \end{problem}
-\begin{soln}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item There are a few individuals at around $\qty{1500}{\kilo\calorie\per\day}$ and $60\unit{\kilo\gram}$ so I will work with an ideal individual
+    at exactly these values.
+    \item $\qty{1500}{\kilo\calorie\per\day}=6276000\unit{\joule}=6276\unit{\kilo\joule}=6.276\unit{\mega\joule}$
+    \item $\displaystyle\frac{6276000\unit{\joule}}{86400\unit{\second}}=72.64\unit{\watt}$
+  \end{enumerate}
 \end{soln}
 
 % PROBLEM 4
 \begin{problem}
-  A gas is contained in a cylinder fitted with a frictionless piston and is taken from state a to state b along the path acb shown in Figure 3.8.
-  $80\unit{\joule}$ of heat flows into the system, and the system does $30\unit{\joule}$ of work.
+A gas is contained in a cylinder fitted with a frictionless piston and is taken from state a to state b along the path acb shown in Figure 3.8.
+$80\unit{\joule}$ of heat flows into the system, and the system does $30\unit{\joule}$ of work.
+\begin{enumerate}[label=(\alph*)]
+  \item If instead the work done by the gas system is only $10\unit{\joule}$ along adb, how much heat flows into the system?
+  \item When the system is returned from b to a along the curved path, the work done on the system is $20\unit{\joule}$. What is the heat transfer?
+  \item If $U_a = 0$ and $U_d = 40\unit{\joule}$, find the heat absorbed in the processes ad and db.
+\end{enumerate}
+\end{problem}
+\begin{soln}~
   \begin{enumerate}[label=(\alph*)]
-    \item If instead the work done by the gas system is only $10\unit{\joule}$ along adb, how much heat flows into the system?
-    \item When the system is returned from b to a along the curved path, the work done on the system is $20\unit{\joule}$. What is the heat transfer?
+    \item Net system energy must be conserved so if work decreases by $20\unit{\joule}$ heat must increase by $20\unit{\joule}$ meaning that the new heat flow must be $110\unit{\joule}$
+    \item By the same logic as above, the heat transfer is $100\unit{\joule}$
     \item If $U_a = 0$ and $U_d = 40\unit{\joule}$, find the heat absorbed in the processes ad and db.
   \end{enumerate}
-\end{problem}
-\begin{soln}
 \end{soln}
 
 % PROBLEM 5
 \begin{problem}
-  You have a pure metal that is unknown except for the fact that it happens to be among those listed in Table 3.1. A $36.7\unit{\gram}$ piece of this metal
-  at $50.0\unit{\celsius}$ is placed in a calorimeter containing $150\unit{\gram}$ of water, initially at $10\unit{\celsius}$. The final equilibrium temperature in the calorimeter is $2.0\unit{\celsius}$. 
-  What is the metal?
+You have a pure metal that is unknown except for the fact that it happens to be among those listed in Table 3.1. A $36.7\unit{\gram}$ piece of this metal
+at $50.0\unit{\celsius}$ is placed in a calorimeter containing $150\unit{\gram}$ of water, initially at $10\unit{\celsius}$. The final equilibrium temperature in the calorimeter is $2.0\unit{\celsius}$.
+What is the metal?
 \end{problem}
 \begin{soln}
 \end{soln}
 
 % PROBLEM 6
 \begin{problem}
-  A gas with adiabatic exponent $\gamma$ is compressed adiabatically from an initial state $(P_i, V_i)$ to final state $(P_f, V_f)$. 
-  \begin{enumerate}[label=(\alph*)]
-    \item Show that the work done in this process is $W=\displaystyle\frac{P_iV_i}{\gamma-1}\left[\left(\frac{V_i}{V_f}\right)^{\gamma-1}-1\right]$
-    \item Evaluate the result numerically for one mole of helium gas initially at $P=1.0\unit{\atmosphere}$ and $T=300\unit{\kelvin}$ compressed to half its initial volume. 
-    \item Compute the work done in an isothermal compression from the same initial point to half the initial volume. 
-    Explain the difference between the numerical results for work done in adiabatic and isothermal compression.
-  \end{enumerate}
+A gas with adiabatic exponent $\gamma$ is compressed adiabatically from an initial state $(P_i, V_i)$ to final state $(P_f, V_f)$.
+\begin{enumerate}[label=(\alph*)]
+  \item Show that the work done in this process is $W=\displaystyle\frac{P_iV_i}{\gamma-1}\left[\left(\frac{V_i}{V_f}\right)^{\gamma-1}-1\right]$
+  \item Evaluate the result numerically for one mole of helium gas initially at $P=1.0\unit{\atmosphere}$ and $T=300\unit{\kelvin}$ compressed to half its initial volume.
+  \item Compute the work done in an isothermal compression from the same initial point to half the initial volume.
+        Explain the difference between the numerical results for work done in adiabatic and isothermal compression.
+\end{enumerate}
 \end{problem}
 \begin{soln}
 \end{soln}
