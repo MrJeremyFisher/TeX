@@ -109,20 +109,20 @@ An ideal gas undergoes the following reversible cycle:
 \begin{soln}~
   \begin{enumerate}[label=(\alph*)]
     \item ~\\
-    \begin{center}
-      \begin{tikzpicture}
-        \tikzstyle{block} = [rectangle, text centered, draw=black, fill=orange!30]
-        \node (i) [block] {$(P_1,V_1)$};
-        \node (ii) [block, right of=i, xshift=2cm]{$(P_1,V_2)$};
-        \node (iii) [block, right of=ii, xshift=2cm]{$(P_2,V_2)$};
-        \node (iv) [block, right of=iii, xshift=2cm]{$(P_2,V_1)$};
-        \draw[->] (i) -- node[below, yshift=-0.25cm] {$W=-P(V_2-V_1)$} node[above] {Isobaric} (ii);
-        \draw[->] (ii) -- node[above] {$W=0$} node[below] {Isochoric} (iii);
-        \draw[->] (iii) -- node[below, yshift=-0.25cm] {$W=-P(V_1-V_2)$} node[above] {Isobaric} (iv);
-        \draw[->] (iv.east) -| ++(0.25,1.25) -| node[xshift=5.46cm, above] {$W=0$} node[xshift=5.46cm, below] {Isochoric} ([xshift=-0.25cm]i.west) -- (i.west);
-      \end{tikzpicture}
-    \end{center}
-    One cycle of work is therefore $-P_1(V_2-V_1)-P_2(V_1-V_2)$
+          \begin{center}
+            \begin{tikzpicture}
+              \tikzstyle{block} = [rectangle, text centered, draw=black, fill=orange!30]
+              \node (i) [block] {$(P_1,V_1)$};
+              \node (ii) [block, right of=i, xshift=2cm]{$(P_1,V_2)$};
+              \node (iii) [block, right of=ii, xshift=2cm]{$(P_2,V_2)$};
+              \node (iv) [block, right of=iii, xshift=2cm]{$(P_2,V_1)$};
+              \draw[->] (i) -- node[below, yshift=-0.25cm] {$W=-P(V_2-V_1)$} node[above] {Isobaric} (ii);
+              \draw[->] (ii) -- node[above] {$W=0$} node[below] {Isochoric} (iii);
+              \draw[->] (iii) -- node[below, yshift=-0.25cm] {$W=-P(V_1-V_2)$} node[above] {Isobaric} (iv);
+              \draw[->] (iv.east) -| ++(0.25,1.25) -| node[xshift=5.46cm, above] {$W=0$} node[xshift=5.46cm, below] {Isochoric} ([xshift=-0.25cm]i.west) -- (i.west);
+            \end{tikzpicture}
+          \end{center}
+          One cycle of work is therefore $-P_1(V_2-V_1)-P_2(V_1-V_2)$
     \item One hundred cycles of work is $100\left[\left(P_2-P_1\right)(V_2-V_1)\right]=\qty{-2.03d4}{\joule}$
   \end{enumerate}
 \end{soln}
@@ -133,16 +133,6 @@ A hypothetical substance has an isothermal compressibility $\kappa = \frac{a}{v}
 where $a$ and $b$ are constants and $v$ is the molar volume. Show that the equation of state is $$v-bT^2+aP=\mathrm{constant}$$
 \end{problem}
 \begin{soln}
-  \begin{align*}
-    & \beta=\frac{1}{V}\left(\frac{\partial V}{\partial T}\right)_P=\frac{2bT}{v}\\
-    & \frac{1}{V}\left(\frac{\partial V}{\partial T}\right)_P=\frac{2bnT}{V}\\
-    & \left(\frac{\partial V}{\partial T}\right)_P=2bnT
-  \end{align*}
-  \begin{align*}
-    & -V\left(\frac{\partial P}{\partial V}\right)_T=\frac{1}{\kappa}\\
-    & -V\left(\frac{\partial P}{\partial V}\right)_T=\frac{V}{na}\\
-    & -\left(\frac{\partial P}{\partial V}\right)_T=\frac{1}{na}\\
-  \end{align*}
 \end{soln}
 
 % PROBLEM 3
@@ -158,7 +148,7 @@ is closely related to the mass of their bones \& muscles \& organs. By selecting
 \begin{soln}~
   \begin{enumerate}[label=(\alph*)]
     \item There are a few individuals at around $\qty{1500}{\kilo\calorie\per\day}$ and $60\unit{\kilo\gram}$ so I will work with an ideal individual
-    at exactly these values.
+          at exactly these values.
     \item $\qty{1500}{\kilo\calorie\per\day}=6276000\unit{\joule}=6276\unit{\kilo\joule}=6.276\unit{\mega\joule}$
     \item $\displaystyle\frac{6276000\unit{\joule}}{86400\unit{\second}}=72.64\unit{\watt}$
   \end{enumerate}
@@ -176,19 +166,27 @@ $80\unit{\joule}$ of heat flows into the system, and the system does $30\unit{\j
 \end{problem}
 \begin{soln}~
   \begin{enumerate}[label=(\alph*)]
-    \item Net system energy must be conserved so if work decreases by $20\unit{\joule}$ heat must increase by $20\unit{\joule}$ meaning that the new heat flow must be $110\unit{\joule}$
-    \item By the same logic as above, the heat transfer is $100\unit{\joule}$
-    \item If $U_a = 0$ and $U_d = 40\unit{\joule}$, find the heat absorbed in the processes ad and db.
+    \item Net system energy must be conserved so if work \textbf{done by the system} decreases by $20\unit{\joule}$ heat \textbf{into the system} must decrease by $20\unit{\joule}$ meaning that the new heat flow must be $60\unit{\joule}$
+    \item We've kept the change in energy of the system as $50\unit{\joule}$ by the first law of thermodynamics for the first two processes. Because work is path-independent, the change in energy along
+          the curved path is the same as the change in energy along acb but with reversed sign as we are going backwards. So, $\Delta U=-50\unit{\joule}=Q+20\unit{\joule}\implies Q=-70\unit{\joule}$.
+    \item For ad, $\Delta U =40\unit{\joule}$, then for db we know that the total change must be $50\unit{\joule}$ in process ab, so $50\unit{\joule}=40\unit{\joule}+\Delta U_{db}\implies \Delta U_{db}=10\unit{\joule}$
   \end{enumerate}
 \end{soln}
 
 % PROBLEM 5
 \begin{problem}
 You have a pure metal that is unknown except for the fact that it happens to be among those listed in Table 3.1. A $36.7\unit{\gram}$ piece of this metal
-at $50.0\unit{\celsius}$ is placed in a calorimeter containing $150\unit{\gram}$ of water, initially at $10\unit{\celsius}$. The final equilibrium temperature in the calorimeter is $2.0\unit{\celsius}$.
+at $50.0\unit{\celsius}$ is placed in a calorimeter containing $150\unit{\gram}$ of water, initially at $10\unit{\celsius}$. The final equilibrium temperature in the calorimeter is $12.0\unit{\celsius}$.
 What is the metal?
 \end{problem}
 \begin{soln}
+  Heat is the same between the water and the metal at equilibrium because they are in (presumably) perfect thermal contact so, with subscript m denoting metal and w denoting water,
+  \begin{align*}
+     & m_mc_m\Delta T_m=m_wc_w\Delta T_w                            \\
+     & c_m=\frac{m_wc_w\Delta T_w}{m_m\Delta T_m}\approx-900\unit{\joule} \\
+  \end{align*}
+  So, according to the table this metal is likely aluminum. I am not sure about the sign but it is kind of irrelevant I think, mostly because logically if it takes $-900\unit{\joule}$ ($\unit{\joule\per{\kilogram\celsius}}$, really) to cool
+  something it will logically take $900\unit{\joule}$ to heat it up.
 \end{soln}
 
 % PROBLEM 6
