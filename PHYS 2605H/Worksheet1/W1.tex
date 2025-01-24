@@ -92,42 +92,52 @@
 \maketitle
 
 % PROBLEM 1
-\begin{problem}
+\begin{problem}~
   \begin{enumerate}[label=(\alph*)]
     \item If X choses to measure $X_3$, in (3,1), what would be the classical states in each of the occupied states?
     \item Give examples for per position states in the figure?
     \item Are the states entangled? Why do you think so?
   \end{enumerate}
 \end{problem}
-\begin{soln}
+\begin{soln}~
   \begin{enumerate}[label=(\alph*)]
-    \item (3,1) collapses to $X_3$
-    (3,3) collapses to $O_2$
-    (1,1) collapses to $X_1$
+    \item (3,1) collapses to $X_3$\\
+    (3,3) collapses to $O_2$\\
+    (1,1) collapses to $X_1$\\
     (1,2) collapses to $O_4$
-    \item $X_1$ is entangled with $O_2$
-    $O_2$ is entangled with $X_3$
-    $X_3$ is entangled with $O_4$
+    \item $X_1$ is entangled with $O_2$\\
+    $O_2$ is entangled with $X_3$\\
+    $X_3$ is entangled with $O_4$\\
     $O_4$ is entangled with $X_1$
-    \item Yes because collapsing any state will result in the collapse of all other states.
+    \item Yes, every state is entangled because collapsing any state will result in the collapse of all other states.
   \end{enumerate}
 \end{soln}
 
 % PROBLEM 2
-\begin{problem}
+\begin{problem}~
   \begin{enumerate}[label=(\alph*)]
     \item X will win. Regardless of how O plays (2,1) is guaranteed to be X.
     \item Not really, you could force a tie by measuring $O_8$ in (3,2).
   \end{enumerate}
 \end{problem}
-\begin{soln}
+\begin{soln}~
 \end{soln}
 
 % PROBLEM 2
 \begin{problem}
   Provide the game log which leads to following result or something similar.
 \end{problem}
-\begin{soln}
-  
+\begin{soln} Filling in the grid in a spiral starting from (1,1) we get: \\
+Cyclic loop occurs!!\\
+Block\_1 collapsed (Measure)\\
+Block\_2 collapsed ( X2 : [1 → 2] )\\
+Block\_3 collapsed ( O3 : [2 → 3] )\\
+Block\_6 collapsed ( X4 : [3 → 6] )\\
+Block\_9 collapsed ( O5 : [6 → 9] )\\
+Block\_8 collapsed ( X6 : [9 → 8] )\\
+Block\_7 collapsed ( O7 : [8 → 7] )\\
+Block\_4 collapsed ( X8 : [7 → 4] )\\
+Block\_5 collapsed ( O9 : [4 → 5] )\\
+Game Over !!
 \end{soln}
 \end{document}

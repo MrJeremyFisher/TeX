@@ -8,7 +8,7 @@
 \usepackage{changepage}
 \usepackage{circuitikz}
 \usepackage{pgfplots}
-%\usepackage{physics}
+\usepackage{physics}
 \usepackage{hyperref}
 \usepackage{siunitx}
 \usepackage[breakable]{tcolorbox}
@@ -33,6 +33,7 @@
 \pgfsetlayers{background,main}
 \DeclareSIUnit[number-unit-product = {\,}]\calorie{cal}
 \DeclareSIUnit[number-unit-product = {\,}]\atmosphere{atm}
+\AtBeginDocument{\RenewCommandCopy\qty\SI}
 
 \makeatletter
 \newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
@@ -68,15 +69,6 @@
 \newcommand{\highlight}[1]{\colorbox{yellow}{$\displaystyle #1$}}
 
 \newcommand{\ti}[1]{\widetilde{#1}}
-
-\hypersetup{
-    colorlinks=true,
-    linkcolor=blue,
-    filecolor=magenta,      
-    urlcolor=cyan,
-    pdftitle={Overleaf Example},
-    pdfpagemode=FullScreen,
-    }
 
 \NewDocumentCommand{\evalat}{sO{\big}mm}{%
   \IfBooleanTF{#1}
@@ -133,6 +125,16 @@ A hypothetical substance has an isothermal compressibility $\kappa = \frac{a}{v}
 where $a$ and $b$ are constants and $v$ is the molar volume. Show that the equation of state is $$v-bT^2+aP=\mathrm{constant}$$
 \end{problem}
 \begin{soln}
+  From equations 2.1 and 2.2 on the forumla sheet, $\displaystyle\beta=\frac{1}{V}\frac{\partial V}{\partial T}_P=\frac{2bT}{v}$ and
+  $\displaystyle\kappa=-\frac{1}{V}\frac{\partial V}{\partial P}_T=\frac{a}{v}$ then,
+  \begin{align*}
+     & dV=\frac{\partial V}{\partial T}dT+\frac{\partial V}{\partial P}dP\rightsquigarrow\mathrm{ (chain\,rule)} \\
+     & dV=\frac{2bVT}{v}dT-\frac{Va}{v}dP=2bnTdT-andP                                                            \\
+     & V=bnT^2-anP+C                                                                                             \\
+     & \frac{V}{n}=v=bT^2-aP+C                                                                                   \\
+     & C=aP-bT^2+v=v-bT^2+aP                                                                                     \\
+  \end{align*}
+  Note that $C$ changes a bit here sign wise and gets divided by $n$ but it remains constant so I have left it as $C$.
 \end{soln}
 
 % PROBLEM 3
@@ -166,7 +168,7 @@ $80\unit{\joule}$ of heat flows into the system, and the system does $30\unit{\j
 \end{problem}
 \begin{soln}~
   \begin{enumerate}[label=(\alph*)]
-    \item Net system energy must be conserved so if work \textbf{done by the system} decreases by $20\unit{\joule}$ heat \textbf{into the system} must decrease by $20\unit{\joule}$ meaning that the new heat flow must be $60\unit{\joule}$
+    \item Net system energy change must be conserved so if work \textbf{done by the system} decreases by $20\unit{\joule}$ heat \textbf{into the system} must decrease by $20\unit{\joule}$ meaning that the new heat flow must be $60\unit{\joule}$
     \item We've kept the change in energy of the system as $50\unit{\joule}$ by the first law of thermodynamics for the first two processes. Because work is path-independent, the change in energy along
           the curved path is the same as the change in energy along acb but with reversed sign as we are going backwards. So, $\Delta U=-50\unit{\joule}=Q+20\unit{\joule}\implies Q=-70\unit{\joule}$.
     \item For ad, $\Delta U =40\unit{\joule}$, then for db we know that the total change must be $50\unit{\joule}$ in process ab, so $50\unit{\joule}=40\unit{\joule}+\Delta U_{db}\implies \Delta U_{db}=10\unit{\joule}$
@@ -182,7 +184,7 @@ What is the metal?
 \begin{soln}
   Heat is the same between the water and the metal at equilibrium because they are in (presumably) perfect thermal contact so, with subscript m denoting metal and w denoting water,
   \begin{align*}
-     & m_mc_m\Delta T_m=m_wc_w\Delta T_w                            \\
+     & m_mc_m\Delta T_m=m_wc_w\Delta T_w                                  \\
      & c_m=\frac{m_wc_w\Delta T_w}{m_m\Delta T_m}\approx-900\unit{\joule} \\
   \end{align*}
   So, according to the table this metal is likely aluminum. I am not sure about the sign but it is kind of irrelevant I think, mostly because logically if it takes $-900\unit{\joule}$ ($\unit{\joule\per{\kilogram\celsius}}$, really) to cool
@@ -199,6 +201,30 @@ A gas with adiabatic exponent $\gamma$ is compressed adiabatically from an initi
         Explain the difference between the numerical results for work done in adiabatic and isothermal compression.
 \end{enumerate}
 \end{problem}
-\begin{soln}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item Starting with $dW=-PdV$ we can recognize that because this process is adiabatic $\displaystyle P=\frac{P_iV_i^\gamma}{V^\gamma}\left(=\frac{P_fV_f^\gamma}{V^\gamma}\right)$
+          \begin{align*}
+             & dW=-PdV                                                                                                                    \\
+             & W=-\int_{V_i}^{V_f}\frac{P_iV_i^\gamma}{V^\gamma}\,dV\rightsquigarrow V_n^\gamma \text{ is constant}                       \\
+             & W=-P_iV_i^\gamma\int_{V_i}^{V_f}V^{-\gamma}\,dV                                                                            \\
+             & W=-\frac{P_iV_i^\gamma}{1-\gamma} \eval{V^{1-\gamma}}_{V_i}^{V_f} \rightsquigarrow \text{ assume } \gamma\neq1             \\
+             & W=-\frac{P_iV_i^\gamma}{1-\gamma} \left[V_f^{1-\gamma}-V_i^{1-\gamma}\right]                                               \\
+             & W=\frac{P_iV_i^{\cancel{\gamma}} V_i^{1-\cancel{\gamma}}}{\gamma-1} \left[\left(\frac{V_f}{V_i}\right)^{1-\gamma}-1\right] \\
+             & W=\frac{P_iV_i}{\gamma-1} \left[\left(\frac{V_i}{V_f}\right)^{\gamma-1}-1\right]                                           \\
+          \end{align*}
+    \item $\gamma=1.66$ for approximately room temperature Helium\footnote{White, Frank M. (1998). Appendix A. Fluid Mechanics (4th ed.) (pp. 769-773). McGraw Hill.}
+          \begin{align*}
+             & V=\frac{nRT}{P}\implies W=\frac{nRT}{\gamma-1} \left[2^{\gamma-1}-1\right]=2192\unit{\joule} \\
+          \end{align*}
+    \item $dW=-PdV$ and $\displaystyle P=\frac{nRT}{V}=\frac{RT}{V}$ so
+          \begin{align*}
+             & W=-RT\int_{V_i}^{V_f}\frac{1}{V}dV                                                                      \\
+             & =-RT\left[\ln V_f - \ln V_i\right]                                                                      \\
+             & =-RT\ln\left(\frac{V_f}{V_i}\right)=-RT\ln\left(\frac{V_i}{2V_i}\right)=RT\ln 2\approx1729\unit{\joule}
+          \end{align*}
+          Because $\Delta U$ is the same for an adiabat as it is for an isotherm, $\Delta U = Q+W$ holds for both. In the case of an adiabat, $Q=0$ by definition so $W$ increases 
+          (compared to an isotherm between the same two states) to ``take up the slack''. 
+  \end{enumerate}
 \end{soln}
 \end{document}

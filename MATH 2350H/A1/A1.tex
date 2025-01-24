@@ -1,0 +1,165 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{changepage}
+\usepackage{circuitikz}
+\usepackage{pgfplots}
+\usepackage{physics}
+\usepackage{hyperref}
+\usepackage{siunitx}
+\usepackage[breakable]{tcolorbox}
+\usepackage[inline]{enumitem}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{soln}{Solution}
+
+\pgfplotsset{compat=newest}
+\usetikzlibrary{lindenmayersystems}
+\usetikzlibrary{arrows}
+\usetikzlibrary{calc}
+
+\definecolor{incolor}{HTML}{303F9F}
+\definecolor{outcolor}{HTML}{D84315}
+\definecolor{cellborder}{HTML}{CFCFCF}
+\definecolor{cellbackground}{HTML}{F7F7F7}
+\newcommand{\eq}{=}
+\usetikzlibrary{positioning, fit, calc}
+\pgfdeclarelayer{background}  
+\pgfsetlayers{background,main}
+\DeclareSIUnit[number-unit-product = {\,}]\calorie{cal}
+\DeclareSIUnit[number-unit-product = {\,}]\atmosphere{atm}
+\AtBeginDocument{\RenewCommandCopy\qty\SI}
+
+\makeatletter
+\newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+\makeatother
+\newcommand{\prompt}[4]{
+    \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+}
+
+\newcommand{\thevenin}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (2,0) to[battery1, l_=$V_{Th}\eq#1$] (2,2) 
+      to[resistor, l_=$R_{Th}\eq#2$] (0,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\norton}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (3,0) to[american current source, l_=$I_{N}\eq#1$] (3,2) -- (0,2) (2,0)
+      to[resistor, l=$R_{N}\eq#2$] (2,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\highlight}[1]{\colorbox{yellow}{$\displaystyle #1$}}
+
+\newcommand{\ti}[1]{\widetilde{#1}}
+
+\NewDocumentCommand{\evalat}{sO{\big}mm}{%
+  \IfBooleanTF{#1}
+   {\mleft. #3 \mright|_{#4}}
+   {#3#2|_{#4}}%
+}
+
+\title{Math 2350H: Assignment I}
+\author{Jeremy Favro}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+% PROBLEM 1
+\begin{problem}
+Demonstrate that there does not exist $\lambda \in \mathbb{C}$ such that
+$$\lambda\left(2-3i, 5+4i, -6+i\right) = \left(12-5i, 7+22i, -32-9i\right)$$
+\end{problem}
+\begin{soln}
+  Let $\lambda=a+bi$ then
+  \begin{align*}
+     & \lambda\left(2-3i, 5+4i, -6+i\right) = \left(12-5i, 7+22i, -32-9i\right)                    \\
+     & \implies (2a+3b)+(-3a+2b)i=12-5i\wedge (5a-4b)+(4a+5b)i=7+22i\wedge(-6a-1b)+(1a-6b)i=-32-9i
+  \end{align*}
+  Here the determinant of the matrix of the coefficients of $i$ is
+  $$  \begin{vmatrix}
+      -3 & 2  & -5 \\
+      4  & 5  & 2  \\
+      1  & -6 & -9
+    \end{vmatrix}=-3(5\cdot(-9)-22\cdot(-6))+(-1)2(4\cdot(-9)-1\cdot22)-5(4\cdot(-6)-1\cdot5)=0$$
+  so there exist no $a,b$ which satisfy all three coefficients of $i$ and therefore there exists no $\lambda$ that satisfies the original equation.
+\end{soln}
+
+
+
+% PROBLEM 2
+\begin{problem}
+Let $V=\mathbb{R}^2$. If $(x_1, x_2)$ and $(y_1, y_2)$ are elements of $V$ , and $\alpha\in\mathbb{R}$, define
+$$(x_1, x_2) + (y_1, y_2) = (x_1 + y_1, x_2y_2),$$ and $$\alpha\cdot(x_1, x_2) = (\alpha x_1, x_2).$$
+Is $V$ a vector space over $\mathbb{R}$ with these operations? Justify your answer.
+\end{problem}
+\begin{soln} For $V$ to be a vector space over $\mathbb{R}$ with these operations the following must hold $\forall(x_1,y_1)\in V$, $\alpha\in\mathbb{R}$:
+  \begin{enumerate}[label=(\roman*)]
+    \item $+$ must be commutative and associative
+    \item $\cdot$ must be associative
+    \item $0\in V$
+    \item There must exist a multiplicative identity for scalar multiplication
+    \item There must exist an additive inverse
+    \item The additive and multiplicative distributive law must hold
+  \end{enumerate}
+  \begin{enumerate}[label=(\roman*)]
+    \item Commutativity: Let $(x_1, x_2), (y_1, y_2)\in V$. \\
+          Given that $(x_1, x_2) + (y_1, y_2) = (x_1 + y_1, x_2y_2)$,
+          \begin{align*}
+             & (y_1, y_2) + (x_1, x_2) = (y_1 + x_1, y_2x_2) \, (\text{by definition})                   \\
+             & (y_1, y_2) + (x_1, x_2) = (x_1 + y_1, x_2y_2) \, (\text{by commutativity in } \mathbb{R})
+          \end{align*}
+          Associativity: Let $(x_1, x_2), (y_1, y_2), (z_1, z_2)\in V$. \\
+          Given that $(x_1, x_2) + ((y_1, y_2) + (z_1, z_2)) = (x_1, x_2) + (y_1 + z_1, y_2z_2) =(x_1 + y_1 + z_1, x_2y_2z_2)$
+          \begin{align*}
+             & =((x_1, x_2) + (y_1, y_2)) + (z_1, z_2)                                                \\
+             & =(x_1 + y_1, x_2y_2) + (z_1, z_2) \, (\text{by definition})                            \\
+             & =(z_1, z_2) + (x_1 + y_1, x_2y_2) \, (\text{by previously demonstrated commutativity}) \\
+             & =(z_1 + x_1 + y_1, z_2x_2y_2)                                                          \\
+             & =(x_1 + y_1 + z_1 , x_2y_2z_2) \, (\text{by commutativity in } \mathbb{R})             \\
+          \end{align*}
+    \item Associativity: Let $(x_1, x_2)\in V$ and $\alpha,\beta\in\mathbb{R}$\\
+          Given that, by definition, $(\alpha\cdot\beta)\cdot(x_1, x_2)=(\alpha\cdot\beta\cdot x_1, x_2)$
+          \begin{align*}
+             & =\alpha\cdot(\beta\cdot(x_1, x_2)) \\
+             & =\alpha\cdot(\beta\cdot x_1, x_2)  \\
+             & =(\alpha\cdot\beta\cdot x_1, x_2)  \\
+          \end{align*}
+
+
+    \item Let $(x_1, x_2)\in V$
+          \begin{align*}
+             & = (x_1, x_2) + (0,1)  \\
+             & = (x_1+0, x_2\cdot 1) \\
+             & = (x_1, x_2)
+          \end{align*}
+    \item Let $(x_1, x_2)\in V$
+    \begin{align*}
+      & = 1\cdot(x_1, x_2)  \\
+      & = (1\cdot x_1, x_2) \\
+      & = (x_1, x_2)
+   \end{align*}
+    \item There must exist an additive inverse
+    \item The additive and multiplicative distributive law must hold
+  \end{enumerate}
+\end{soln}
+
+\end{document}
