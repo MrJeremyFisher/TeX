@@ -1,0 +1,147 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{changepage}
+\usepackage{circuitikz}
+\usepackage{pgfplots}
+\usepackage{physics}
+\usepackage{hyperref}
+\usepackage{siunitx}
+\usepackage[breakable]{tcolorbox}
+\usepackage[inline]{enumitem}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{soln}{Solution}
+
+\pgfplotsset{compat=newest}
+\usetikzlibrary{lindenmayersystems}
+\usetikzlibrary{arrows}
+\usetikzlibrary{calc}
+
+\definecolor{incolor}{HTML}{303F9F}
+\definecolor{outcolor}{HTML}{D84315}
+\definecolor{cellborder}{HTML}{CFCFCF}
+\definecolor{cellbackground}{HTML}{F7F7F7}
+\newcommand{\eq}{=}
+\usetikzlibrary{positioning, fit, calc}
+\pgfdeclarelayer{background}  
+\pgfsetlayers{background,main}
+
+\makeatletter
+\newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+\makeatother
+\newcommand{\prompt}[4]{
+    \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+}
+
+\newcommand{\thevenin}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (2,0) to[battery1, l_=$V_{Th}\eq#1$] (2,2) 
+      to[resistor, l_=$R_{Th}\eq#2$] (0,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\norton}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (3,0) to[american current source, l_=$I_{N}\eq#1$] (3,2) -- (0,2) (2,0)
+      to[resistor, l=$R_{N}\eq#2$] (2,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\highlight}[1]{\colorbox{yellow}{$\displaystyle #1$}}
+
+\newcommand{\ti}[1]{\widetilde{#1}}
+
+\title{Math 2120H: Assignment II}
+\author{Jeremy Favro}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+% PROBLEM 1
+\begin{problem} Find the given limits.
+$$\lim_{t \to \pi} \left[\left(\sin\frac{t}{2}\right)\mathbf{i}+\left(\cos\frac{2t}{3}\right)\mathbf{j}+\left(\tan\frac{5t}{4}\right)\mathbf{k}\right]$$
+\end{problem}
+\begin{soln}
+  By the component-wise law for limits of vector-valued functions this limit is equivalent to the sum of each of its component limits along their respective unit vectors,
+  \begin{align*}
+    = & \lim_{t \to \pi}\left(\sin\frac{t}{2}\right)\mathbf{i}+\lim_{t \to \pi}\left(\cos\frac{2t}{3}\right)\mathbf{j}+\lim_{t \to \pi}\left(\tan\frac{5t}{4}\right)\mathbf{k} \\
+    = & 1\mathbf{i}-\frac{1}{2}\mathbf{j}+1\mathbf{k}
+  \end{align*}
+\end{soln}
+
+% PROBLEM 2
+\begin{problem} Below $\mathbf{r}(t)$ is the position of a particle in space at time t. Find the particle's velocity and acceleration vectors.
+Then find the particle's speed at the given value of $t$.
+$$\mathbf{r}(t)=(t+1)\mathbf{i}+(t^2-1)\mathbf{j}+2t\mathbf{k}, \qquad t=1$$
+\end{problem}
+\begin{soln}
+  \begin{align*}
+    \eval{\mathbf{v}(t)}_{t=1}= & \eval{\frac{d}{dt}\mathbf{r}(t)}_{t=1}=\eval{\frac{d}{dt}(t+1)}_{t=1}\mathbf{i}+\eval{\frac{d}{dt}(t^2-1)}_{t=1}\mathbf{j}+\eval{\frac{d}{dt}(2t)}_{t=1}\mathbf{k} \\
+    =                           & \eval{1}_{t=1}\mathbf{i}+\eval{2t}_{t=1}\mathbf{j}+\eval{2}_{t=1}\mathbf{k}                                                                                        \\
+    =                           & \mathbf{i}+2\mathbf{j}+2\mathbf{k} \implies \text{speed}=\sqrt{1^2+2^2+2^2}=3
+  \end{align*}
+  then,
+  \begin{align*}
+    \eval{\mathbf{a}(t)}_{t=1}= & \eval{\frac{d}{dt}\mathbf{v}(t)}_{t=1}=\eval{\frac{d}{dt}}_{t=1}\mathbf{i}+\eval{\frac{d}{dt}2t}_{t=1}\mathbf{j}+\eval{\frac{d}{dt}2}_{t=1}\mathbf{k} \\
+    =                           & \eval{0}_{t=1}\mathbf{i}+\eval{\frac{d}{dt}2}_{t=1}\mathbf{j}+\eval{0}_{t=1}\mathbf{k}                                                                \\
+    =                           & 0\mathbf{i}+2\mathbf{j}+0\mathbf{k}
+  \end{align*}
+\end{soln}
+\newpage
+
+% PROBLEM 3
+\begin{problem} Evaluate the integrals.
+\begin{enumerate}[label=(\alph*)]
+  \item $$\int_{0}^{1} t^3\mathbf{i}+7\mathbf{j}+(t+1)\mathbf{k} \,dt$$
+  \item $$\int_{1}^{4} \frac{1}{t}\mathbf{i}+\frac{1}{5-t}\mathbf{j}+\frac{1}{2t}\mathbf{k} \,dt$$
+\end{enumerate}
+\end{problem}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item \begin{align*}
+            = & \int_{0}^{1} t^3\mathbf{i}+7\mathbf{j}+(t+1)\mathbf{k} \,dt                                                 \\
+            = & \int_{0}^{1} t^3\,dt\mathbf{i}+\int_{0}^{1}7\,dt\mathbf{j}+\int_{0}^{1}(t+1)\,dt\mathbf{k}                  \\
+            = & \eval{\frac{t^4}{4}}_{0}^{1}\mathbf{i}+\eval{7t}_{0}^{1}\mathbf{j}+\eval{\frac{t^2}{2}+t}_{0}^{1}\mathbf{k} \\
+            = & \frac{1}{4}\mathbf{i}+7\mathbf{j}+\frac{3}{2}\mathbf{k}
+          \end{align*}
+    \item \begin{align*}
+            = & \int_{1}^{4} \frac{1}{t}\mathbf{i}+\frac{1}{5-t}\mathbf{j}+\frac{1}{2t}\mathbf{k} \,dt                                    \\
+            = & \int_{1}^{4} \frac{1}{t}\,dt\mathbf{i}+\int_{1}^{4} \frac{1}{5-t}\,dt\mathbf{j}+\int_{1}^{4} \frac{1}{2t}\,dt\mathbf{k}   \\
+            = & \eval{\ln(t)}_{1}^{4}\mathbf{i}-\eval{\ln\left(5-t\right)}_{1}^{4}\mathbf{j}+\eval{2\ln\left(2t\right)}_{1}^{4}\mathbf{k} \\
+            = & \ln(4)\mathbf{i}+\ln(4)\mathbf{j}+\ln(16)\mathbf{k}
+          \end{align*}
+  \end{enumerate}
+\end{soln}
+
+% PROBLEM 4
+\begin{problem} Solve the initial value problem.
+$$\mathbf{r}^\prime(t)=(t^3+4t)\mathbf{i}+t\mathbf{j}+2t^2\mathbf{k},\qquad\mathbf{r}(0)=\mathbf{i}+\mathbf{j}$$
+\end{problem}
+\begin{soln}
+  \begin{align*}
+    \mathbf{r}(t) = & \int (t^3+4t)\mathbf{i}+t\mathbf{j}+2t^2\mathbf{k} \,dt\\
+    = & \int (t^3+4t)\,dt\mathbf{i}+\int t\,dt\mathbf{j}+\int 2t^2\,dt\mathbf{k} \\
+    = & \left(\frac{t^4}{4}+2t^2\right)\mathbf{i}+\frac{t^2}{2}\mathbf{j}+\frac{2t^3}{3}\mathbf{k}+\mathbf{C}\rightsquigarrow \mathbf{r}(t=0)=\mathbf{i}+\mathbf{j}\\
+    \implies \mathbf{i}+\mathbf{j} = & \left(\frac{0^4}{4}+2\cdot0^2\right)\mathbf{i}+\frac{0^2}{2}\mathbf{j}+\frac{2\cdot0^3}{3}\mathbf{k}+\mathbf{C} \\
+    = & \,0\mathbf{i}+0\mathbf{j}+0\mathbf{k}+\mathbf{C}\implies\mathbf{C}=\mathbf{i}+\mathbf{j} \\
+    &\therefore \mathbf{r}(t) \left(\frac{t^4}{4}+2t^2 + 1\right)\mathbf{i}+\left(\frac{t^2}{2}+1\right)\mathbf{j}+\frac{2t^3}{3}\mathbf{k}
+  \end{align*}
+\end{soln}
+\end{document}
