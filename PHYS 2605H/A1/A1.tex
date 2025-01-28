@@ -93,8 +93,8 @@
 \begin{soln}
   \item $\frac{5+3i}{1+5i}=\frac{5+3i}{1+5i}\frac{1-5i}{1-5i}=\frac{10}{13}-\frac{11}{13}i\approx\frac{\sqrt{221}}{13}e^{-0.83i}$
   \item Consider the product of two complex numbers (1+3i) and (5+4i). Find the complex conjugate in two ways:
-        (i) Take the complex conjugates before and after the
-        multiplication and show that they are the same. \textbf{what does this mean?? why is there only (i)??}
+  (i) Take the complex conjugates before and after the
+  multiplication and show that they are the same. \textbf{what does this mean?? why is there only (i)??}
 \end{soln}
 
 % PROBLEM 2
@@ -181,7 +181,18 @@
             2-4i  & -2-i
           \end{bmatrix}
         $$
-  \item Can the matrices in (c) be Hermitian? Why?
+  \item Can the following matrices be Hermitian? Why?
+        $$
+          \begin{bmatrix}
+            0 & -i \\
+            i & 0
+          \end{bmatrix}\qquad\qquad\qquad
+          \frac{1}{5}\begin{bmatrix}
+            1   & 2-i  & 3-i  \\
+            2+i & 3    & 1+2i \\
+            3+i & 1-2i & 7
+          \end{bmatrix}
+        $$
 \end{enumerate}
 \end{problem}
 \begin{soln}~
@@ -232,17 +243,136 @@
               -10-10i & 5+20i
             \end{bmatrix}\neq I_2 \therefore \text{not unitary}
           $$
-    \item The first matrix, $\begin{bmatrix}
-      1   & 1-i \\
-      1+i & 4
-    \end{bmatrix}$, is Hermitian as $$\begin{bmatrix}
-      1   & 1-i \\
-      1+i & 4
-    \end{bmatrix}^\dagger=\begin{bmatrix}
-      1   & 1-i  \\
-      1+i & 4
-    \end{bmatrix}$$
-    The second matrix is not Hermitian as it does not satisfy $A^\dagger=A$
+    \item Both matrices are, by inspection, Hermitian as both are square and have mirrored-conjugate non-diagonal elements which means $A=A^\dagger$.
+  \end{enumerate}
+\end{soln}
+
+% PROBLEM 4
+\begin{problem} Find the eigenvalues and eigenvectors of
+\begin{enumerate}[label=(\alph*)]
+  \item $$\begin{bmatrix}
+            0 & i \\
+            1 & 0
+          \end{bmatrix}$$
+  \item $$\begin{bmatrix}
+            0 & i \\
+            i & 0
+          \end{bmatrix}$$
+\end{enumerate}
+\end{problem}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item Eigenvalues:
+          \begin{align*}
+            0 =      & \,\det(A-\lambda I) \\
+            =        &
+            \det(\begin{bmatrix}
+                     0 & i \\
+                     1 & 0
+                   \end{bmatrix}
+            -
+            \begin{bmatrix}
+                \lambda & 0       \\
+                0       & \lambda
+              \end{bmatrix})
+            =
+            \begin{vmatrix}
+              -\lambda & i        \\
+              1        & -\lambda
+            \end{vmatrix}            \\
+            =        & \lambda^2-i         \\
+            \implies & \lambda=\pm\sqrt{i}
+          \end{align*}
+          Eigenvectors:
+          \begin{align*}
+            \begin{bmatrix}
+              -\sqrt{i} & i         & 0 \\
+              1         & -\sqrt{i} & 0
+            \end{bmatrix}\sim
+            \begin{bmatrix}
+              -1 & \sqrt{i}  & 0 \\
+              1  & -\sqrt{i} & 0
+            \end{bmatrix}\sim
+            \begin{bmatrix}
+              -1 & \sqrt{i} & 0 \\
+              0  & 0        & 0
+            \end{bmatrix}
+            \implies & \vec{v}_1=\begin{bmatrix}
+                                   \sqrt{i} \\
+                                   1
+                                 \end{bmatrix} \\
+            \begin{bmatrix}
+              \sqrt{i} & i        & 0 \\
+              1        & \sqrt{i} & 0
+            \end{bmatrix}\sim
+            \begin{bmatrix}
+              1 & \sqrt{i}  & 0 \\
+              1 & -\sqrt{i} & 0
+            \end{bmatrix}\sim
+            \begin{bmatrix}
+              1 & \sqrt{i} & 0 \\
+              0 & 0        & 0
+            \end{bmatrix}
+            \implies & \vec{v}_2=\begin{bmatrix}
+                                   -\sqrt{i} \\
+                                   1
+                                 \end{bmatrix}
+          \end{align*}
+
+    \item Eigenvalues:
+          \begin{align*}
+            0 =      & \det(\begin{bmatrix}
+                              0 & i \\
+                              i & 0
+                            \end{bmatrix}
+            -
+            \begin{bmatrix}
+              \lambda & 0       \\
+              0       & \lambda
+            \end{bmatrix})
+            =
+            \begin{vmatrix}
+              -\lambda & i        \\
+              i        & -\lambda
+            \end{vmatrix}            \\
+            =        & \lambda^2+1         \\
+            \implies & \lambda=\pm i
+          \end{align*}
+          Eigenvectors
+          \begin{align*}
+            \begin{bmatrix}
+              -i & i  & 0 \\
+              i  & -i & 0
+            \end{bmatrix}\sim
+            \begin{bmatrix}
+              -1 & 1  & 0 \\
+              1  & -1 & 0
+            \end{bmatrix}\sim
+            \begin{bmatrix}
+              -1 & 1 & 0 \\
+              0  & 0 & 0
+            \end{bmatrix}
+            \implies & \vec{v}_1=\begin{bmatrix}
+                                   1 \\
+                                   1
+                                 \end{bmatrix} \\
+            \begin{bmatrix}
+              i & i & 0 \\
+              i & i & 0
+            \end{bmatrix}\sim
+            \begin{bmatrix}
+              1 & 1 & 0 \\
+              1 & 1 & 0
+            \end{bmatrix}\sim
+            \begin{bmatrix}
+              1 & 1 & 0 \\
+              0 & 0 & 0
+            \end{bmatrix}
+            \implies & \vec{v}_2=\begin{bmatrix}
+                                   -1 \\
+                                   1
+                                 \end{bmatrix}
+          \end{align*}
   \end{enumerate}
 \end{soln}
 \end{document}
