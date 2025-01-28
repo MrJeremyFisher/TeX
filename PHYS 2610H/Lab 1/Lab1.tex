@@ -115,7 +115,7 @@ Present these values rounded appropriately and with the correct units.
 Derive your experimental charge to mass ratio using the slope from the previous question. Show your values and calculation.
 \end{problem}
 \begin{soln}
-  $$\frac{e}{m}=\frac{125V_{acc}}{32}\left(\frac{R_{coil}}{\mu_0N}\cdot\frac{1}{slope}\right)^2=\frac{125\cdot194.1\unit{\volt}}{32}\left(\frac{0.158\unit{\meter}}{130\mu_0}\cdot\frac{1}{(7.09\pm0.39)\unit{\centi\meter\ampere}}\right)^2\approx\qty{1.41d11}{\coulomb\per\kilo\gram}$$
+  $$\frac{e}{m}=\frac{125V_{acc}}{32}\left(\frac{R_{coil}}{\mu_0N}\cdot\frac{1}{slope}\right)^2=\frac{125\cdot194.1\unit{\volt}}{32}\left(\frac{0.158\unit{\meter}}{130\mu_0}\cdot\frac{1}{7.09\unit{\centi\meter\ampere}}\right)^2\approx\qty{1.41d11}{\coulomb\per\kilo\gram}$$
 \end{soln}
 
 % PROBLEM 8
@@ -123,39 +123,45 @@ Derive your experimental charge to mass ratio using the slope from the previous 
 Derive the uncertainty in your charge-to-mass ratio using the uncertainty in the slope. This is a brief error propagation calculation. Show your work.
 \end{problem}
 \begin{soln}
-By the given error propagation formula the uncertainty of $f=\frac{e}{m}$ is
-\begin{align*}
-  & =\sqrt{\left(\frac{\partial f}{\partial slope}\right)^2\delta slope+\left(\frac{\partial f}{\partial V_{acc}}\right)^2\delta V_{acc}+}\\
-  & =\frac{\partial f}{\partial slope}\sqrt{\delta slope}\\
-  & =\frac{125V_{acc}}{16}\left(\frac{R_{coil}}{\mu_0N}\right)^2\cdot\frac{1}{slope^3}\sqrt{\delta slope}=
-\end{align*}
+  $$\frac{\partial \frac{e}{m}}{\partial V}=\frac{125}{32}\left(\frac{R}{\mu_0Ns}\right)^2,\qquad \frac{\partial \frac{e}{m}}{\partial s}=-\frac{125}{16}\left(\frac{R}{\mu_0N}\right)^2s^{-3}$$
+  So,
+  \begin{align*}
+     & =\sqrt{\left(\frac{125}{32}\left(\frac{R}{\mu_0Ns}\right)^2\cdot 0.1\unit{\volt}\right)^2+\left(-\frac{125}{16}\left(\frac{R}{\mu_0N}\right)^2s^{-3}\cdot\qty{3.9d-3}{\meter}\right)^2}                                                                                               \\
+     & =\sqrt{\left(\frac{125}{32}\left(\frac{0.158\unit{\meter}}{\mu_0\cdot130\cdot0.0709\unit{\meter}}\right)^2\cdot 0.1\unit{\volt}\right)^2+\left(-\frac{125}{16}\left(\frac{0.158\unit{\meter}}{\mu_0\cdot130}\right)^2\cdot0.0709^{-3}\unit{\meter}\cdot\qty{3.9d-3}{\meter}\right)^2} \\
+     & \approx\qty{3.98}{\coulomb\per\kilo\gram}
+  \end{align*}
+  Which gives a percent uncertainty of $\displaystyle\frac{3.98}{14.1}\cdot100\approx28.23\%$.
 \end{soln}
+\newpage
 
 % PROBLEM 9
 \begin{problem}
 How does your experimental charge-to-mass ratio compare with the reference value? Explain, using the uncertainty calculated in the previous question.
 \end{problem}
 \begin{soln}
- 
+Using the value reccommended by NIST\footnote{Mohr, P. , Tiesinga, E. , Newell, D. and Taylor, B. (2024), Codata Internationally Recommended 2022 Values of the Fundamental Physical Constants, Codata Internationally Recommended 2022 Values of the Fundamental Physical Constants, [online], https://tsapps.nist.gov/publication/get\_pdf.cfm?pub\_id=958002, https://physics.nist.gov/constants (Accessed January 28, 2025) }
+ we get a percentage error of 
+ $$\left\lvert \frac{\qty{1.41d11}{\coulomb\per\kilo\gram}-\qty{1.758 820 008 38d11}{\coulomb\per\kilo\gram}}{\qty{1.758 820 008 38d11}{\coulomb\per\kilo\gram}}\cdot100\right\rvert\approx 19.83\%$$
+Because the measurement uncertainty, $28.23\%$, is greater than the error our measured value agrees with the reference value within uncertainty. Woohoo!
 \end{soln}
 
 % PROBLEM 10
 \begin{problem}
-  Say that we miss step 6 of the lab manual and forget to rotate the globe and align the electron beam to be parallel with the Helmholtz coils. 
-  Specifically, say that there is an angle $\theta$ between the beam and the coil axis (i.e. the $x$-axis) when viewed from above.
-  Note that the ruler and mirror used to measure $r_{circ}$ is aligned with the coil axis. Will this have an effect on the $\frac{e}{m}$ ratio we calculate? 
-  If so, would you expect it to be larger, smaller, or randomly distributed around the reference value? What about the uncertainty in $\frac{e}{m}$? 
-  Explain your reasoning, showing any calculations and sketches.
+Say that we miss step 6 of the lab manual and forget to rotate the globe and align the electron beam to be parallel with the Helmholtz coils.
+Specifically, say that there is an angle $\theta$ between the beam and the coil axis (i.e. the $x$-axis) when viewed from above.
+Note that the ruler and mirror used to measure $r_{circ}$ is aligned with the coil axis. Will this have an effect on the $\frac{e}{m}$ ratio we calculate?
+If so, would you expect it to be larger, smaller, or randomly distributed around the reference value? What about the uncertainty in $\frac{e}{m}$?
+Explain your reasoning, showing any calculations and sketches.
 \end{problem}
 \begin{soln}
-Because the force on the electron is given by 
-$$e\vec{v}\times \vec{B}=e\left\lVert \vec{v}\right\rVert\left\lVert \vec{B}\right\rVert\sin\theta$$
-then,
-\begin{align*}
-  &F=ma=\frac{mv^2}{r_{circ}}evB\sin\theta\\
-  &r_{circ}=\frac{1}{\sin\theta}\cdot\frac{mv}{eB}\\
-\end{align*}
-so changing $\theta$ will have a constant factor effect on the radius of $\csc\theta$. Knowing that $-1\leq\csc\theta\leq-1$ for $0\leq\theta\leq2\pi$ 
-we should expect that any $\theta\neq\frac{\pi}{2}$ will cause an increase in the (magnitude) of the radius of the circle and therefore a (magnitude) increase in the $\frac{e}{m}$ ratio.
+  Because the force on the electron is given by
+  $$e\vec{v}\times \vec{B}=e\left\lVert \vec{v}\right\rVert\left\lVert \vec{B}\right\rVert\sin\theta$$
+  then,
+  \begin{align*}
+     & F=ma=\frac{mv^2}{r_{circ}}evB\sin\theta         \\
+     & r_{circ}=\frac{1}{\sin\theta}\cdot\frac{mv}{eB} \\
+  \end{align*}
+  so changing $\theta$ will have a constant factor effect on the radius of $\csc\theta$. Knowing that $-1\leq\csc\theta\leq-1$ for $0\leq\theta\leq2\pi$
+  we should expect that any $\theta\neq\frac{\pi}{2}$ will cause an increase in the (magnitude) of the radius of the circle and therefore a (magnitude) increase in the $\frac{e}{m}$ ratio.
 \end{soln}
 \end{document}

@@ -103,8 +103,6 @@ $$\lambda\left(2-3i, 5+4i, -6+i\right) = \left(12-5i, 7+22i, -32-9i\right)$$
   so there exist no $a,b$ which satisfy all three coefficients of $i$ and therefore there exists no $\lambda$ that satisfies the original equation.
 \end{soln}
 
-
-
 % PROBLEM 2
 \begin{problem}
 Let $V=\mathbb{R}^2$. If $(x_1, x_2)$ and $(y_1, y_2)$ are elements of $V$ , and $\alpha\in\mathbb{R}$, define
@@ -124,42 +122,190 @@ Is $V$ a vector space over $\mathbb{R}$ with these operations? Justify your answ
     \item Commutativity: Let $(x_1, x_2), (y_1, y_2)\in V$. \\
           Given that $(x_1, x_2) + (y_1, y_2) = (x_1 + y_1, x_2y_2)$,
           \begin{align*}
-             & (y_1, y_2) + (x_1, x_2) = (y_1 + x_1, y_2x_2) \, (\text{by definition})                   \\
-             & (y_1, y_2) + (x_1, x_2) = (x_1 + y_1, x_2y_2) \, (\text{by commutativity in } \mathbb{R})
+             & (y_1, y_2) + (x_1, x_2) = (y_1 + x_1, y_2x_2) \, (\text{by definition})                                                                       \\
+             & (y_1, y_2) + (x_1, x_2) = (x_1 + y_1, x_2y_2) \, (\text{by commutativity in } \mathbb{R}) \therefore + \text{ under } V \text{is commutative}
           \end{align*}
           Associativity: Let $(x_1, x_2), (y_1, y_2), (z_1, z_2)\in V$. \\
           Given that $(x_1, x_2) + ((y_1, y_2) + (z_1, z_2)) = (x_1, x_2) + (y_1 + z_1, y_2z_2) =(x_1 + y_1 + z_1, x_2y_2z_2)$
           \begin{align*}
-             & =((x_1, x_2) + (y_1, y_2)) + (z_1, z_2)                                                \\
-             & =(x_1 + y_1, x_2y_2) + (z_1, z_2) \, (\text{by definition})                            \\
-             & =(z_1, z_2) + (x_1 + y_1, x_2y_2) \, (\text{by previously demonstrated commutativity}) \\
-             & =(z_1 + x_1 + y_1, z_2x_2y_2)                                                          \\
-             & =(x_1 + y_1 + z_1 , x_2y_2z_2) \, (\text{by commutativity in } \mathbb{R})             \\
+             & =((x_1, x_2) + (y_1, y_2)) + (z_1, z_2)                                                                                        \\
+             & =(x_1 + y_1, x_2y_2) + (z_1, z_2) \, (\text{by definition})                                                                    \\
+             & =(z_1, z_2) + (x_1 + y_1, x_2y_2) \, (\text{by previously demonstrated commutativity})                                         \\
+             & =(z_1 + x_1 + y_1, z_2x_2y_2)                                                                                                  \\
+             & =(x_1 + y_1 + z_1 , x_2y_2z_2) \, (\text{by commutativity in } \mathbb{R}) \therefore + \text{ under } V \text{is associative}
           \end{align*}
     \item Associativity: Let $(x_1, x_2)\in V$ and $\alpha,\beta\in\mathbb{R}$\\
           Given that, by definition, $(\alpha\cdot\beta)\cdot(x_1, x_2)=(\alpha\cdot\beta\cdot x_1, x_2)$
           \begin{align*}
-             & =\alpha\cdot(\beta\cdot(x_1, x_2)) \\
-             & =\alpha\cdot(\beta\cdot x_1, x_2)  \\
-             & =(\alpha\cdot\beta\cdot x_1, x_2)  \\
+             & =\alpha\cdot(\beta\cdot(x_1, x_2))                                                         \\
+             & =\alpha\cdot(\beta\cdot x_1, x_2)                                                          \\
+             & =(\alpha\cdot\beta\cdot x_1, x_2)  \therefore \cdot \text{ under } V \text{is associative}
           \end{align*}
-
-
     \item Let $(x_1, x_2)\in V$
           \begin{align*}
-             & = (x_1, x_2) + (0,1)  \\
-             & = (x_1+0, x_2\cdot 1) \\
-             & = (x_1, x_2)
+             & = (x_1, x_2) + (0,1) \, (\text{by handwaving})  \\
+             & = (x_1+0, x_2\cdot 1) \, (\text{by definition}) \\
+             & = (x_1, x_2) \therefore (0,1)=0_V
           \end{align*}
     \item Let $(x_1, x_2)\in V$
-    \begin{align*}
-      & = 1\cdot(x_1, x_2)  \\
-      & = (1\cdot x_1, x_2) \\
-      & = (x_1, x_2)
-   \end{align*}
-    \item There must exist an additive inverse
-    \item The additive and multiplicative distributive law must hold
+          \begin{align*}
+             & = 1\cdot(x_1, x_2)                                               \\
+             & = (1\cdot x_1, x_2) \, (\text{by definition})                    \\
+             & = (x_1, x_2) \therefore 1 \text{ is the multiplicative identity}
+          \end{align*}
+    \item Let $v,v^\prime\in V$. We are looking to show that $v+v^\prime=0_V$. By handwaving suppose that the additive inverse exists and is $v^\prime=\left(-x_1, \frac{1}{y_1}\right)$ then,
+          \begin{align*}
+             & v+v^\prime = (x_1,y_1)+\left(-x_1,\frac{1}{y_1}\right)                                                                                                  \\
+             & = \left(x_1-x_1,y_1\frac{1}{y_1}\right) \text{ by definition}                                                                                           \\
+             & = (0,1) \therefore\text{by rules for addition and multiplication under } \mathbb{R},\, \left(-x_1, \frac{1}{y_1}\right) \text{ is the additive inverse}
+          \end{align*}
+    \item Additive:
+          Let $v_1,v_2\in V$, $\alpha\in\mathbb{R}$
+          \begin{align*}
+             & = \alpha(v_1+v_2)                                    \\
+             & = \alpha((x_1,y_1)+(x_2,y_2))                        \\
+             & = \alpha((x_1+x_2,y_1y_2)) \, (\text{by definition}) \\
+             & = (\alpha(x_1+x_2),y_1y_2) \, (\text{by definition})
+          \end{align*}
+          Then,
+          \begin{align*}
+             & = \alpha v_1+\alpha v_2                                                   \\
+             & = \alpha(x_1,y_1)+\alpha(x_2,y_2)                                         \\
+             & = (\alpha x_1,y_1)+(\alpha x_2,y_2) \, (\text{by definition})             \\
+             & = (\alpha x_1+\alpha x_2,y_1y_2) \, (\text{by definition} )               \\
+             & = (\alpha(x_1+ x_2),y_1y_2) \therefore \text{ the distributive law holds}
+          \end{align*}
+          Multiplicative:
+          Let $v\in V$, $\alpha,\beta\in\mathbb{R}$
+          \begin{align*}
+             & = \alpha v+\beta v                                             \\
+             & = (\alpha x_1, y_1)+(\beta x_1, y_1) \, (\text{by definition}) \\
+             & = (\alpha x_1+\beta x_1, y_1y_1) \, (\text{by definition})     \\
+             & = ((\alpha +\beta)x_1, y_1y_1)
+          \end{align*}
+          Then,
+          \begin{align*}
+             & = (\alpha+\beta)v                                                                   \\
+             & = ((\alpha+\beta)x_1, y_1)\, (\text{by definition} )                                \\
+             & = (\alpha x_1+\beta x_1, y_1) \therefore \text{ the distributive law does not hold}
+          \end{align*}
+          $\therefore V$ is not a vector space over $\mathbb{R}$ with the given operations.
   \end{enumerate}
 \end{soln}
 
+% PROBLEM 3
+\begin{problem}
+Let $V=\mathbb{R}^2$. If $(x_1,y_1)$ and $(x_2,y_2)$ are elements of $V$, and $\alpha\in\mathbb{R}$, define
+$$(x_1,y_1)+(x_2,y_2)=(x_1+2x_2, y_1+3y_2),$$
+and
+$$\alpha\cdot(x_1,y_1) = (\alpha x_1,\alpha y_1).$$
+Is $V$ a vector space over $\mathbb{R}$ with these operations? Justify your answer.
+\end{problem}
+\begin{soln}
+  Nicely, this one fails on the first one I checked, additive commutativity:
+  Let $(x_1, x_2), (y_1, y_2)\in V$. \\
+  Given that $(x_1, x_2) + (y_1, y_2) = (x_1+2x_2, y_1+3y_2)$,
+  \begin{align*}
+     & (y_1, y_2) + (x_1, x_2) = (x_2+2x_1, y_2+3y_1) \therefore + \text{ is not commutative} \\
+  \end{align*}
+  $\therefore V$ is not a vector space over $\mathbb{R}$ with the given operations.
+\end{soln}
+
+% PROBLEM 4
+\begin{problem}
+Which of the following sets are subspaces of $\mathbb{R}^3$ under the usual operations of addition and scalar multiplication in $\mathbb{R}^3$.
+\begin{enumerate}[label=(\alph*)]
+  \item $\displaystyle W_1 = \left\{(x_1, x_2, x_3) \in\mathbb{R}^3|x_1= x_2 \text{ and } x_3=-x_2\right\}.$
+  \item $\displaystyle W_2 = \left\{(x_1, x_2, x_3) \in\mathbb{R}^3|x_1-4x_2-x_3=0\right\}.$
+  \item $\displaystyle W_3 = \left\{(x_1, x_2, x_3) \in\mathbb{R}^3|5x_1^2-3x_2^2+6x_3^2=0\right\}.$
+\end{enumerate}
+\end{problem}
+\begin{soln}
+The subspace criterion state that a non-empty subset $S$ is a subspace of $V$ (with scalars $F$) iff $\forall v_1,v_2\in S,\alpha\in F$
+\begin{enumerate}[label=(\roman*)]
+  \item $0_V\in S$
+  \item $v_1+v_2\in S$
+  \item $\alpha v_1\in S$
+\end{enumerate}
+Now,
+\begin{enumerate}[label=(\alph*)]
+  \item \begin{enumerate}[label=(\roman*)]
+    \item $0_{\mathbb{R}^3}\in W_1$ because $x_1=0\implies x_2=0\implies x_3=0$
+    \item Let $v_1,v_2\in W_1$,
+    \begin{align*}
+      & = v_1+v_2\\
+      & = (x_1,x_2,x_3)+(y_1,y_2,y_3)\\
+      & = (x_2,x_2,-x_2)+(y_2,y_2,-y_2)\,(\text{by definition})\\
+      & = (x_2+y_2,x_2+y_2,-x_2-y_2)
+    \end{align*}
+    Then, by the definition of $W_1$ addition here is closed as $x_2+y_2=x_2+y_2$ and $-(x_2+y_2)=-x_2-y_2$
+    \item Let $v_1\in W_1$, $\alpha\in\mathbb{R}$,
+    \begin{align*}
+      & = \alpha v_1\\
+      & = \alpha(x_1,x_2,x_3)\\
+      & = (\alpha x_1,\alpha x_2,\alpha x_3)\\
+      & = (\alpha x_2,\alpha x_2,-\alpha x_2)
+    \end{align*}
+    Which satisfies the definition of $W_1$ so $W_1$ is a subspace of $\mathbb{R}^3$ as it satisfies the subspace criterion.
+  \end{enumerate}
+  \item \begin{enumerate}[label=(\roman*)]
+    \item $0_{\mathbb{R}^3}\in W_2$ because $x_1=x_2=x_3=0\implies 0-4\cdot0-0=0$
+    \item Let $v_1,v_2\in W_2$,
+    \begin{align*}
+      & = v_1+v_2\\
+      & = (x_1,x_2,x_3)+(y_1,y_2,y_3)\\
+      & = (x_1+y_1,x_2+y_2,x_3+y_3)
+    \end{align*}
+    For this to be in $W_2$ it must satisfy the requirement $(x_1+y_1)-4(x_2+y_2)-(x_3+y_3)=0$,
+    \begin{align*}
+      & = (x_1+y_1)-4(x_2+y_2)-(x_3+y_3) \\
+      & = x_1+y_1-4x_2-4y_2-x_3-y_3 \\
+      & = (x_1-4x_2-x_3)+(y_1-4y_2-y_3) \\
+      & = (0)+(0)=0 \, (v_1,v_2\in W_2)
+    \end{align*}
+    So this set is closed under addition.
+    \item Let $v_1\in W_2$, $\alpha\in\mathbb{R}$,
+    \begin{align*}
+      & = \alpha v_1\\
+      & = (\alpha x_1,\alpha x_2,\alpha x_3)\\
+    \end{align*}
+    Then, again, we must satisfy $\alpha x_1-4\alpha x_2-\alpha x_3=0$,
+    \begin{align*}
+      & = \alpha x_1-4\alpha x_2-\alpha x_3 \\
+      & = \alpha(x_1-4 x_2- x_3) \\
+      & = \alpha(0)=0
+    \end{align*}
+    So $W_2$ is a subspace of $\mathbb{R}^3$ as it satisfies the subspace criterion.
+  \end{enumerate}
+  \item \begin{enumerate}[label=(\roman*)]
+    \item $0_{\mathbb{R}^3}\in W_3$ because $x_1=x_2=x_3=0\implies 5\cdot0^2-3\cdot0^2+6\cdot0^2=0$
+    \item Let $v_1,v_2\in W_2$,
+    \begin{align*}
+      & = v_1+v_2\\
+      & = (x_1,x_2,x_3)+(y_1,y_2,y_3)\\
+      & = (x_1+y_1,x_2+y_2,x_3+y_3)
+    \end{align*}
+    For this to be in $W_2$ it must satisfy the requirement $(x_1+y_1)-4(x_2+y_2)-(x_3+y_3)=0$,
+    \begin{align*}
+      & = (x_1+y_1)-4(x_2+y_2)-(x_3+y_3) \\
+      & = x_1+y_1-4x_2-4y_2-x_3-y_3 \\
+      & = (x_1-4x_2-x_3)+(y_1-4y_2-y_3) \\
+      & = (0)+(0)=0 \, (v_1,v_2\in W_2)
+    \end{align*}
+    So this set is closed under addition.
+    \item Let $v_1\in W_2$, $\alpha\in\mathbb{R}$,
+    \begin{align*}
+      & = \alpha v_1\\
+      & = (\alpha x_1,\alpha x_2,\alpha x_3)\\
+    \end{align*}
+    Then, again, we must satisfy $\alpha x_1-4\alpha x_2-\alpha x_3=0$,
+    \begin{align*}
+      & = \alpha x_1-4\alpha x_2-\alpha x_3 \\
+      & = \alpha(x_1-4 x_2- x_3) \\
+      & = \alpha(0)=0
+    \end{align*}
+    So $W_2$ is a subspace of $\mathbb{R}^3$ as it satisfies the subspace criterion.
+  \end{enumerate}
+\end{enumerate}
+\end{soln}
 \end{document}
