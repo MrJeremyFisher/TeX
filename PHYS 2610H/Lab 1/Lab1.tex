@@ -83,20 +83,20 @@ Provide a caption explaining what the graph is showing. Comment whether the data
 and whether there are outliers that make sense to omit (might make sense to put this in the caption).
 \end{problem}
 \begin{soln}~\\
-  % \begin{center}
-  % \begin{tikzpicture}
-  %   \begin{axis}[
-  %       ylabel=$r_{circ}(\unit{\centi\meter})$,
-  %       xlabel=$I_{coil}(\unit{\ampere})$,
-  %       legend pos=south east
-  %     ]
-  %     \addplot table [x=Iinv, y=rad, col sep=comma, only marks] {data.csv};
-  %     \addplot [domain=0.36:1.1,samples=2] ({\x}, {7.08816896702972*\x-0.34285578093019});
-  %     \addlegendentry{Data}
-  %     \addlegendentry{$\frac{7.09}{I_{coil}}-0.34$, $R^2\approx0.98$}
-  %   \end{axis}
-  % \end{tikzpicture}
-  % \end{center}
+  \begin{center}
+  \begin{tikzpicture}
+    \begin{axis}[
+        ylabel=$r_{circ}(\unit{\centi\meter})$,
+        xlabel=$I_{coil}(\unit{\ampere})$,
+        legend pos=south east
+      ]
+      \addplot table [x=Iinv, y=rad, col sep=comma, only marks] {data.csv};
+      \addplot [domain=0.36:1.1,samples=2] ({\x}, {7.08816896702972*\x-0.34285578093019});
+      \addlegendentry{Data}
+      \addlegendentry{$\frac{7.09}{I_{coil}}-0.34$, $R^2\approx0.98$}
+    \end{axis}
+  \end{tikzpicture}
+  \end{center}
   As demonstrated by the calculated (via LINEST in LibreOffice Calc) coefficient of determination, $R^2$, the data is highly linear. The point at $(I_{coil},r_{circ})=(0.39, 2.95)$ may be worth removing as an
   outlier but until I figure out a method to quantify how far off it is I will not further comment on it.
 \end{soln}
