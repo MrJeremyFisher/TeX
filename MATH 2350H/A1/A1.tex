@@ -221,91 +221,80 @@ Which of the following sets are subspaces of $\mathbb{R}^3$ under the usual oper
 \end{enumerate}
 \end{problem}
 \begin{soln}
-The subspace criterion state that a non-empty subset $S$ is a subspace of $V$ (with scalars $F$) iff $\forall v_1,v_2\in S,\alpha\in F$
-\begin{enumerate}[label=(\roman*)]
-  \item $0_V\in S$
-  \item $v_1+v_2\in S$
-  \item $\alpha v_1\in S$
-\end{enumerate}
-Now,
-\begin{enumerate}[label=(\alph*)]
-  \item \begin{enumerate}[label=(\roman*)]
-    \item $0_{\mathbb{R}^3}\in W_1$ because $x_1=0\implies x_2=0\implies x_3=0$
-    \item Let $v_1,v_2\in W_1$,
-    \begin{align*}
-      & = v_1+v_2\\
-      & = (x_1,x_2,x_3)+(y_1,y_2,y_3)\\
-      & = (x_2,x_2,-x_2)+(y_2,y_2,-y_2)\,(\text{by definition})\\
-      & = (x_2+y_2,x_2+y_2,-x_2-y_2)
-    \end{align*}
-    Then, by the definition of $W_1$ addition here is closed as $x_2+y_2=x_2+y_2$ and $-(x_2+y_2)=-x_2-y_2$
-    \item Let $v_1\in W_1$, $\alpha\in\mathbb{R}$,
-    \begin{align*}
-      & = \alpha v_1\\
-      & = \alpha(x_1,x_2,x_3)\\
-      & = (\alpha x_1,\alpha x_2,\alpha x_3)\\
-      & = (\alpha x_2,\alpha x_2,-\alpha x_2)
-    \end{align*}
-    Which satisfies the definition of $W_1$ so $W_1$ is a subspace of $\mathbb{R}^3$ as it satisfies the subspace criterion.
+  The subspace criterion state that a non-empty subset $S$ is a subspace of $V$ (with scalars $F$) iff $\forall v_1,v_2\in S,\alpha\in F$
+  \begin{enumerate}[label=(\roman*)]
+    \item $0_V\in S$
+    \item $v_1+v_2\in S$
+    \item $\alpha v_1\in S$
   \end{enumerate}
-  \item \begin{enumerate}[label=(\roman*)]
-    \item $0_{\mathbb{R}^3}\in W_2$ because $x_1=x_2=x_3=0\implies 0-4\cdot0-0=0$
-    \item Let $v_1,v_2\in W_2$,
-    \begin{align*}
-      & = v_1+v_2\\
-      & = (x_1,x_2,x_3)+(y_1,y_2,y_3)\\
-      & = (x_1+y_1,x_2+y_2,x_3+y_3)
-    \end{align*}
-    For this to be in $W_2$ it must satisfy the requirement $(x_1+y_1)-4(x_2+y_2)-(x_3+y_3)=0$,
-    \begin{align*}
-      & = (x_1+y_1)-4(x_2+y_2)-(x_3+y_3) \\
-      & = x_1+y_1-4x_2-4y_2-x_3-y_3 \\
-      & = (x_1-4x_2-x_3)+(y_1-4y_2-y_3) \\
-      & = (0)+(0)=0 \, (v_1,v_2\in W_2)
-    \end{align*}
-    So this set is closed under addition.
-    \item Let $v_1\in W_2$, $\alpha\in\mathbb{R}$,
-    \begin{align*}
-      & = \alpha v_1\\
-      & = (\alpha x_1,\alpha x_2,\alpha x_3)\\
-    \end{align*}
-    Then, again, we must satisfy $\alpha x_1-4\alpha x_2-\alpha x_3=0$,
-    \begin{align*}
-      & = \alpha x_1-4\alpha x_2-\alpha x_3 \\
-      & = \alpha(x_1-4 x_2- x_3) \\
-      & = \alpha(0)=0
-    \end{align*}
-    So $W_2$ is a subspace of $\mathbb{R}^3$ as it satisfies the subspace criterion.
+  Now,
+  \begin{enumerate}[label=(\alph*)]
+    \item \begin{enumerate}[label=(\roman*)]
+            \item $0_{\mathbb{R}^3}\in W_1$ because $x_1=0\implies x_2=0\implies x_3=0$
+            \item Let $v_1,v_2\in W_1$,
+                  \begin{align*}
+                     & = v_1+v_2                                               \\
+                     & = (x_1,x_2,x_3)+(y_1,y_2,y_3)                           \\
+                     & = (x_2,x_2,-x_2)+(y_2,y_2,-y_2)\,(\text{by definition}) \\
+                     & = (x_2+y_2,x_2+y_2,-x_2-y_2)
+                  \end{align*}
+                  Then, by the definition of $W_1$ addition here is closed as $x_2+y_2=x_2+y_2$ and $-(x_2+y_2)=-x_2-y_2$
+            \item Let $v_1\in W_1$, $\alpha\in\mathbb{R}$,
+                  \begin{align*}
+                     & = \alpha v_1                          \\
+                     & = \alpha(x_1,x_2,x_3)                 \\
+                     & = (\alpha x_1,\alpha x_2,\alpha x_3)  \\
+                     & = (\alpha x_2,\alpha x_2,-\alpha x_2)
+                  \end{align*}
+                  Which satisfies the definition of $W_1$ so $W_1$ is a subspace of $\mathbb{R}^3$ as it satisfies the subspace criterion.
+          \end{enumerate}
+    \item \begin{enumerate}[label=(\roman*)]
+            \item $0_{\mathbb{R}^3}\in W_2$ because $x_1=x_2=x_3=0\implies 0-4\cdot0-0=0$
+            \item Let $v_1,v_2\in W_2$,
+                  \begin{align*}
+                     & = v_1+v_2                     \\
+                     & = (x_1,x_2,x_3)+(y_1,y_2,y_3) \\
+                     & = (x_1+y_1,x_2+y_2,x_3+y_3)
+                  \end{align*}
+                  For this to be in $W_2$ it must satisfy the requirement $(x_1+y_1)-4(x_2+y_2)-(x_3+y_3)=0$,
+                  \begin{align*}
+                     & = (x_1+y_1)-4(x_2+y_2)-(x_3+y_3) \\
+                     & = x_1+y_1-4x_2-4y_2-x_3-y_3      \\
+                     & = (x_1-4x_2-x_3)+(y_1-4y_2-y_3)  \\
+                     & = (0)+(0)=0 \, (v_1,v_2\in W_2)
+                  \end{align*}
+                  So this set is closed under addition.
+            \item Let $v_1\in W_2$, $\alpha\in\mathbb{R}$,
+                  \begin{align*}
+                     & = \alpha v_1                         \\
+                     & = (\alpha x_1,\alpha x_2,\alpha x_3) \\
+                  \end{align*}
+                  Then, again, we must satisfy $\alpha x_1-4\alpha x_2-\alpha x_3=0$,
+                  \begin{align*}
+                     & = \alpha x_1-4\alpha x_2-\alpha x_3 \\
+                     & = \alpha(x_1-4 x_2- x_3)            \\
+                     & = \alpha(0)=0
+                  \end{align*}
+                  So $W_2$ is a subspace of $\mathbb{R}^3$ as it satisfies the subspace criterion.
+          \end{enumerate}
+    \item \begin{enumerate}[label=(\roman*)]
+            \item $0_{\mathbb{R}^3}\in W_3$ because $x_1=x_2=x_3=0\implies 5\cdot0^2-3\cdot0^2+6\cdot0^2=0$
+            \item Let $v_1,v_2\in W_2$,
+                  \begin{align*}
+                     & = v_1+v_2                     \\
+                     & = (x_1,x_2,x_3)+(y_1,y_2,y_3) \\
+                     & = (x_1+y_1,x_2+y_2,x_3+y_3)
+                  \end{align*}
+                  For this to be in $W_3$ it must satisfy the requirement $5(x_1+y_1)^2-3(x_2+y_2)^2+6(x_3+y_3)^2=0$,
+                  \begin{align*}
+                     & = 5(x_1+y_1)^2-3(x_2+y_2)^2+6(x_3+y_3)^2                                  \\
+                     & = 5(x_1^2+2x_1y_1+y_1^2)-3(x_2^2+2x_2y_2+y_2^2)+6(x_3^2+2x_3y_3+y_3^2)    \\
+                     & = 5x_1^2+10x_1y_1+5y_1^2-3x_2^2-6x_2y_2-3y_2^2+6x_3^2+12x_3y_3+6y_3^2     \\
+                     & = (5x_1^2-3x_2^2+6x_3^2)+(5y_1^2-3y_2^2+6y_3^2)+10x_1y_1-6x_2y_2+12x_3y_3 \\
+                     & = 10x_1y_1-6x_2y_2+12x_3y_3 
+                  \end{align*}
+                  Which is not necessarily equal to 0 (e.g. $v_1=v_2=(1,1,1)$) so this set is not closed under addition and therefore not a subspace of $\mathbb{R}^3$.
+          \end{enumerate}
   \end{enumerate}
-  \item \begin{enumerate}[label=(\roman*)]
-    \item $0_{\mathbb{R}^3}\in W_3$ because $x_1=x_2=x_3=0\implies 5\cdot0^2-3\cdot0^2+6\cdot0^2=0$
-    \item Let $v_1,v_2\in W_2$,
-    \begin{align*}
-      & = v_1+v_2\\
-      & = (x_1,x_2,x_3)+(y_1,y_2,y_3)\\
-      & = (x_1+y_1,x_2+y_2,x_3+y_3)
-    \end{align*}
-    For this to be in $W_2$ it must satisfy the requirement $(x_1+y_1)-4(x_2+y_2)-(x_3+y_3)=0$,
-    \begin{align*}
-      & = (x_1+y_1)-4(x_2+y_2)-(x_3+y_3) \\
-      & = x_1+y_1-4x_2-4y_2-x_3-y_3 \\
-      & = (x_1-4x_2-x_3)+(y_1-4y_2-y_3) \\
-      & = (0)+(0)=0 \, (v_1,v_2\in W_2)
-    \end{align*}
-    So this set is closed under addition.
-    \item Let $v_1\in W_2$, $\alpha\in\mathbb{R}$,
-    \begin{align*}
-      & = \alpha v_1\\
-      & = (\alpha x_1,\alpha x_2,\alpha x_3)\\
-    \end{align*}
-    Then, again, we must satisfy $\alpha x_1-4\alpha x_2-\alpha x_3=0$,
-    \begin{align*}
-      & = \alpha x_1-4\alpha x_2-\alpha x_3 \\
-      & = \alpha(x_1-4 x_2- x_3) \\
-      & = \alpha(0)=0
-    \end{align*}
-    So $W_2$ is a subspace of $\mathbb{R}^3$ as it satisfies the subspace criterion.
-  \end{enumerate}
-\end{enumerate}
 \end{soln}
 \end{document}

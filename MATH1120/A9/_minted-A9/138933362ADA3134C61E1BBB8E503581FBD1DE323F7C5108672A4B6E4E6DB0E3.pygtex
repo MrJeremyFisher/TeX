@@ -1,3 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{n}{limit}\PYG{p}{(}\PYG{n+nb}{sum}\PYG{p}{(}\PYG{l+m+mi}{3}\PYG{o}{\PYGZca{}}\PYG{n}{n}\PYG{o}{/}\PYG{n}{n}\PYG{o}{\PYGZca{}}\PYG{n}{n}\PYG{p}{,} \PYG{n}{n}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{k}\PYG{p}{),} \PYG{n}{k}\PYG{p}{,} \PYG{o}{+}\PYG{n}{Infinity}\PYG{p}{)}
-\end{Verbatim}
