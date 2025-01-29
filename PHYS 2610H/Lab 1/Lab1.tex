@@ -84,21 +84,22 @@ and whether there are outliers that make sense to omit (might make sense to put 
 \end{problem}
 \begin{soln}~\\
   \begin{center}
-  \begin{tikzpicture}
-    \begin{axis}[
-        ylabel=$r_{circ}(\unit{\centi\meter})$,
-        xlabel=$I_{coil}(\unit{\ampere})$,
-        legend pos=south east
-      ]
-      \addplot table [x=Iinv, y=rad, col sep=comma, only marks] {data.csv};
-      \addplot [domain=0.36:1.1,samples=2] ({\x}, {7.08816896702972*\x-0.34285578093019});
-      \addlegendentry{Data}
-      \addlegendentry{$\frac{7.09}{I_{coil}}-0.34$, $R^2\approx0.98$}
-    \end{axis}
-  \end{tikzpicture}
+    \begin{tikzpicture}
+      \begin{axis}[
+          title=Helmholtz coil current vs. electron beam radius in an $\frac{e}{m}$ ratio experiment,
+          ylabel=$r_{circ}(\unit{\centi\meter})$,
+          xlabel=$I_{coil}(\unit{\ampere})$,
+          legend pos=south east
+        ]
+        \addplot table [x=Iinv, y=rad, col sep=comma, only marks] {data.csv};
+        \addplot [domain=0.36:1.1,samples=2] ({\x}, {7.08816896702972*\x-0.34285578093019});
+        \addlegendentry{Data}
+        \addlegendentry{$\frac{7.09}{I_{coil}}-0.34$, $R^2\approx0.98$}
+      \end{axis}
+    \end{tikzpicture}
   \end{center}
   As demonstrated by the calculated (via LINEST in LibreOffice Calc) coefficient of determination, $R^2$, the data is highly linear. The point at $(I_{coil},r_{circ})=(0.39, 2.95)$ may be worth removing as an
-  outlier but until I figure out a method to quantify how far off it is I will not further comment on it.
+  outlier as its removal increases $R^2$ to $\approx 0.994$ and decreases slope uncertainty to $\approx 0.21$.
 \end{soln}
 
 % PROBLEM 6
@@ -117,6 +118,7 @@ Derive your experimental charge to mass ratio using the slope from the previous 
 \begin{soln}
   $$\frac{e}{m}=\frac{125V_{acc}}{32}\left(\frac{R_{coil}}{\mu_0N}\cdot\frac{1}{slope}\right)^2=\frac{125\cdot194.1\unit{\volt}}{32}\left(\frac{0.158\unit{\meter}}{130\mu_0}\cdot\frac{1}{7.09\unit{\centi\meter\ampere}}\right)^2\approx\qty{1.41d11}{\coulomb\per\kilo\gram}$$
 \end{soln}
+\newpage
 
 % PROBLEM 8
 \begin{problem}
@@ -128,21 +130,20 @@ Derive the uncertainty in your charge-to-mass ratio using the uncertainty in the
   \begin{align*}
      & =\sqrt{\left(\frac{125}{32}\left(\frac{R}{\mu_0Ns}\right)^2\cdot 0.1\unit{\volt}\right)^2+\left(-\frac{125}{16}\left(\frac{R}{\mu_0N}\right)^2s^{-3}\cdot\qty{3.9d-3}{\meter}\right)^2}                                                                                               \\
      & =\sqrt{\left(\frac{125}{32}\left(\frac{0.158\unit{\meter}}{\mu_0\cdot130\cdot0.0709\unit{\meter}}\right)^2\cdot 0.1\unit{\volt}\right)^2+\left(-\frac{125}{16}\left(\frac{0.158\unit{\meter}}{\mu_0\cdot130}\right)^2\cdot0.0709^{-3}\unit{\meter}\cdot\qty{3.9d-3}{\meter}\right)^2} \\
-     & \approx\qty{3.98}{\coulomb\per\kilo\gram}
+     & \approx\qty{3.98d10}{\coulomb\per\kilo\gram}
   \end{align*}
   Which gives a percent uncertainty of $\displaystyle\frac{3.98}{14.1}\cdot100\approx28.23\%$.
 \end{soln}
-\newpage
 
 % PROBLEM 9
 \begin{problem}
 How does your experimental charge-to-mass ratio compare with the reference value? Explain, using the uncertainty calculated in the previous question.
 \end{problem}
 \begin{soln}
-Using the value reccommended by NIST\footnote{Mohr, P. , Tiesinga, E. , Newell, D. and Taylor, B. (2024), Codata Internationally Recommended 2022 Values of the Fundamental Physical Constants, Codata Internationally Recommended 2022 Values of the Fundamental Physical Constants, [online], https://tsapps.nist.gov/publication/get\_pdf.cfm?pub\_id=958002, https://physics.nist.gov/constants (Accessed January 28, 2025) }
- we get a percentage error of 
- $$\left\lvert \frac{\qty{1.41d11}{\coulomb\per\kilo\gram}-\qty{1.758 820 008 38d11}{\coulomb\per\kilo\gram}}{\qty{1.758 820 008 38d11}{\coulomb\per\kilo\gram}}\cdot100\right\rvert\approx 19.83\%$$
-Because the measurement uncertainty, $28.23\%$, is greater than the error our measured value agrees with the reference value within uncertainty. Woohoo!
+  Using the value reccommended by NIST\footnote{Mohr, P. , Tiesinga, E. , Newell, D. and Taylor, B. (2024), Codata Internationally Recommended 2022 Values of the Fundamental Physical Constants, Codata Internationally Recommended 2022 Values of the Fundamental Physical Constants, [online], https://tsapps.nist.gov/publication/get\_pdf.cfm?pub\_id=958002, https://physics.nist.gov/constants (Accessed January 28, 2025) }
+  we get a percentage error of
+  $$\left\lvert \frac{\qty{1.41d11}{\coulomb\per\kilo\gram}-\qty{1.758 820 008 38d11}{\coulomb\per\kilo\gram}}{\qty{1.758 820 008 38d11}{\coulomb\per\kilo\gram}}\cdot100\right\rvert\approx 19.83\%$$
+  Because the measurement uncertainty, $28.23\%$, is greater than the error our measured value agrees with the reference value within uncertainty. Woohoo!
 \end{soln}
 
 % PROBLEM 10
@@ -162,6 +163,6 @@ Explain your reasoning, showing any calculations and sketches.
      & r_{circ}=\frac{1}{\sin\theta}\cdot\frac{mv}{eB} \\
   \end{align*}
   so changing $\theta$ will have a constant factor effect on the radius of $\csc\theta$. Knowing that $-1\leq\csc\theta\leq-1$ for $0\leq\theta\leq2\pi$
-  we should expect that any $\theta\neq\frac{\pi}{2}$ will cause an increase in the (magnitude) of the radius of the circle and therefore a (magnitude) increase in the $\frac{e}{m}$ ratio.
+  we should expect that any $\theta\neq\frac{\pi}{2}$ will cause an increase in the (magnitude) of the radius of the circle and therefore a (magnitude) decrease in the $\frac{e}{m}$ ratio.
 \end{soln}
 \end{document}
