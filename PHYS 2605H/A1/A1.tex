@@ -86,15 +86,25 @@
 \begin{enumerate}[label=(\alph*)]
   \item Find the real part and imaginary of the complex number $\frac{5+3i}{1+5i}$ and express your answer in polar form.
   \item Consider the product of two complex numbers (1+3i) and (5+4i). Find the complex conjugate in two ways:
-        (i) Take the complex conjugates before and after the
-        multiplication and show that they are the same. \textbf{what does this mean?? why is there only (i)??}
+        (i) Take the complex conjugates before and after the multiplication and show that they are the same.
 \end{enumerate}
 \end{problem}
 \begin{soln}
-  \item $\frac{5+3i}{1+5i}=\frac{5+3i}{1+5i}\frac{1-5i}{1-5i}=\frac{10}{13}-\frac{11}{13}i\approx\frac{\sqrt{221}}{13}e^{-0.83i}$
-  \item Consider the product of two complex numbers (1+3i) and (5+4i). Find the complex conjugate in two ways:
-  (i) Take the complex conjugates before and after the
-  multiplication and show that they are the same. \textbf{what does this mean?? why is there only (i)??}
+  \begin{enumerate}[label=(\alph*)]
+    \item $\frac{5+3i}{1+5i}=\frac{5+3i}{1+5i}\frac{1-5i}{1-5i}=\frac{10}{13}-\frac{11}{13}i\approx\frac{\sqrt{221}}{13}e^{-0.83i}$
+    \item \begin{align*}
+      & = (1+3i)^*\cdot(5+4i)^* \\
+      & = (1-3i)\cdot(5-4i) \\
+      & = -7-19i\\
+    \end{align*}
+    Then,
+    \begin{align*}
+      & = ((1+3i)\cdot(5+4i))^*\\
+      & = (-7+19i)^* \\
+      & = -7-19i\\
+    \end{align*}
+    So conjugates are distributive over multiplication.
+  \end{enumerate}
 \end{soln}
 
 % PROBLEM 2
