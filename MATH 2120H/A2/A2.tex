@@ -107,6 +107,27 @@ $$\mathbf{r}(t)=(t+1)\mathbf{i}+(t^2-1)\mathbf{j}+2t\mathbf{k}, \qquad t=1$$
 \newpage
 
 % PROBLEM 3
+\begin{problem} Below $\mathbf{r}(t)$ is the position of a particle in space at time t. Find the angle
+between the velocity and acceleration vectors at time $t = 0$.
+$$\mathbf{r}(t)=(3t+1)\mathbf{i}+\sqrt{3}t\mathbf{j}+t^2\mathbf{k}$$
+\end{problem}
+\begin{soln}
+  \begin{align*}
+    \eval{\mathbf{v}(t)}_{t=0}= & \eval{\frac{d}{dt}\mathbf{r}(t)}_{t=0}=\eval{\frac{d}{dt}(3t+1)}_{t=0}\mathbf{i}+\eval{\frac{d}{dt}(\sqrt{3}t)}_{t=0}\mathbf{j}+\eval{\frac{d}{dt}(t^2)}_{t=0}\mathbf{k} \\
+    =                           & \eval{3}_{t=0}\mathbf{i}+\eval{\sqrt{3}}_{t=0}\mathbf{j}+\eval{2t}_{t=0}\mathbf{k}                                                                                      \\
+    =                           & 3\mathbf{i}+\sqrt3\mathbf{j}+0\mathbf{k}
+  \end{align*}
+  then,
+  \begin{align*}
+    \eval{\mathbf{a}(t)}_{t=0}= & \eval{\frac{d}{dt}\mathbf{v}(t)}_{t=0}=\eval{\frac{d}{dt}(3)}_{t=0}\mathbf{i}+\eval{\frac{d}{dt}(\sqrt{3})}_{t=0}\mathbf{j}+\eval{\frac{d}{dt}(2t)}_{t=0}\mathbf{k} \\
+    =                           & \eval{0}_{t=0}\mathbf{i}+\eval{0}_{t=0}\mathbf{j}+\eval{2}_{t=0}\mathbf{k}                                                                              \\
+    =                           & 0\mathbf{i}+0\mathbf{j}+2\mathbf{k}
+  \end{align*}
+  Because these vectors are purely in the $xy$ plane and purely along $z$ they are orthogonal and therefore, by definition, have an angle
+  of $\frac{\pi}{2}\unit{\radian}$ between them.
+\end{soln}
+
+% PROBLEM 4
 \begin{problem} Evaluate the integrals.
 \begin{enumerate}[label=(\alph*)]
   \item $$\int_{0}^{1} t^3\mathbf{i}+7\mathbf{j}+(t+1)\mathbf{k} \,dt$$
@@ -130,18 +151,18 @@ $$\mathbf{r}(t)=(t+1)\mathbf{i}+(t^2-1)\mathbf{j}+2t\mathbf{k}, \qquad t=1$$
   \end{enumerate}
 \end{soln}
 
-% PROBLEM 4
+% PROBLEM 5
 \begin{problem} Solve the initial value problem.
 $$\mathbf{r}^\prime(t)=(t^3+4t)\mathbf{i}+t\mathbf{j}+2t^2\mathbf{k},\qquad\mathbf{r}(0)=\mathbf{i}+\mathbf{j}$$
 \end{problem}
 \begin{soln}
   \begin{align*}
-    \mathbf{r}(t) = & \int (t^3+4t)\mathbf{i}+t\mathbf{j}+2t^2\mathbf{k} \,dt\\
-    = & \int (t^3+4t)\,dt\mathbf{i}+\int t\,dt\mathbf{j}+\int 2t^2\,dt\mathbf{k} \\
-    = & \left(\frac{t^4}{4}+2t^2\right)\mathbf{i}+\frac{t^2}{2}\mathbf{j}+\frac{2t^3}{3}\mathbf{k}+\mathbf{C}\rightsquigarrow \mathbf{r}(t=0)=\mathbf{i}+\mathbf{j}\\
-    \implies \mathbf{i}+\mathbf{j} = & \left(\frac{0^4}{4}+2\cdot0^2\right)\mathbf{i}+\frac{0^2}{2}\mathbf{j}+\frac{2\cdot0^3}{3}\mathbf{k}+\mathbf{C} \\
-    = & \,0\mathbf{i}+0\mathbf{j}+0\mathbf{k}+\mathbf{C}\implies\mathbf{C}=\mathbf{i}+\mathbf{j} \\
-    &\therefore \mathbf{r}(t)=\left(\frac{t^4}{4}+2t^2 + 1\right)\mathbf{i}+\left(\frac{t^2}{2}+1\right)\mathbf{j}+\frac{2t^3}{3}\mathbf{k}
+    \mathbf{r}(t) =                  & \int (t^3+4t)\mathbf{i}+t\mathbf{j}+2t^2\mathbf{k} \,dt                                                                                                     \\
+    =                                & \int (t^3+4t)\,dt\mathbf{i}+\int t\,dt\mathbf{j}+\int 2t^2\,dt\mathbf{k}                                                                                    \\
+    =                                & \left(\frac{t^4}{4}+2t^2\right)\mathbf{i}+\frac{t^2}{2}\mathbf{j}+\frac{2t^3}{3}\mathbf{k}+\mathbf{C}\rightsquigarrow \mathbf{r}(t=0)=\mathbf{i}+\mathbf{j} \\
+    \implies \mathbf{i}+\mathbf{j} = & \left(\frac{0^4}{4}+2\cdot0^2\right)\mathbf{i}+\frac{0^2}{2}\mathbf{j}+\frac{2\cdot0^3}{3}\mathbf{k}+\mathbf{C}                                             \\
+    =                                & \,0\mathbf{i}+0\mathbf{j}+0\mathbf{k}+\mathbf{C}\implies\mathbf{C}=\mathbf{i}+\mathbf{j}                                                                    \\
+                                     & \therefore \mathbf{r}(t)=\left(\frac{t^4}{4}+2t^2 + 1\right)\mathbf{i}+\left(\frac{t^2}{2}+1\right)\mathbf{j}+\frac{2t^3}{3}\mathbf{k}
   \end{align*}
 \end{soln}
 \end{document}
