@@ -90,7 +90,22 @@ respectively.
   \item Find the net work done by the gas in all four cylinders of the engine over one cycle (you may use the relevant expression for work from either p. 44 or p. 77 of the textbook).
 \end{enumerate}
 \end{problem}
-\begin{soln}
+\begin{soln} ~
+  \begin{enumerate}[label=(\alph*)]
+    \item Here the adiabats are along $\overrightarrow{ab}$ and $\overrightarrow{cd}$. For an adiabat $P_iV_i^\gamma=P_fV_f^\gamma$ holds.
+    \begin{align*}
+      & (7V_1)^\gamma\cdot\qty{1}{\atmosphere}=V_1^\gamma\cdot\qty{15.25}{\atmosphere}\\
+      & V_1^\gamma\cdot\qty{1544734.579}{\pascal}=V_1^\gamma\cdot\qty{1545206.25}{\pascal}
+    \end{align*}
+    Which is approximately adiabatic. For $\overrightarrow{cd}$
+    \begin{align*}
+      & V_1^\gamma\cdot\qty{30.50}{\atmosphere}=(7V_1)^\gamma\cdot\qty{2}{\atmosphere}\\
+      & V_1^\gamma\cdot\qty{3090412.5}{\pascal}=V_1^\gamma\cdot\qty{3089469.158}{\pascal}
+    \end{align*}
+    Which is also approximately adiabatic.
+    \item The volume difference between compression and expansion \textbf{for a single cylinder} is $7V_1-V_1=6V_1$ so $4\cdot6V_1=\qty{2.4}{\liter}\implies V_1=\qty{0.1}{\liter}=\qty{1d-4}{\meter\cubed}$
+    \item Find the net work done by the gas in all four cylinders of the engine over one cycle (you may use the relevant expression for work from either p. 44 or p. 77 of the textbook).
+  \end{enumerate}
 \end{soln}
 
 % PROBLEM 2
@@ -100,6 +115,9 @@ rejects $\qty{5.07d7}{\joule}$ at $\qty{200}{\kelvin}$, and delivers $\qty{16.7}
 Would you advise investing money in this project?
 \end{problem}
 \begin{soln}
+  A Carnot engine operating in this environment has $\eta=1-\frac{T_2}{T_1}=1-\frac{\qty{200}{\kelvin}}{\qty{400}{\kelvin}}=0.5$ and this engine has efficiency
+  $\eta=1-\frac{\qty{5.07d7}{\joule}}{\qty{1.1d8}{\joule}}\approx0.54$. As the efficiency of a ``real'' engine cannot exceed that of a Carnot engine I would not
+  reccomend investing in this project.
 \end{soln}
 
 % PROBLEM 3
