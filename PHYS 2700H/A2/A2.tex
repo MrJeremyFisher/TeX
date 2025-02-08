@@ -92,21 +92,32 @@ respectively.
 \end{problem}
 \begin{soln} ~
   \begin{enumerate}[label=(\alph*)]
-    \item Here the adiabats are along $\overrightarrow{ab}$ and $\overrightarrow{cd}$. For an adiabat $P_iV_i^\gamma=P_fV_f^\gamma$ holds.
-    \begin{align*}
-      & (7V_1)^\gamma\cdot\qty{1}{\atmosphere}=V_1^\gamma\cdot\qty{15.25}{\atmosphere}\\
-      & V_1^\gamma\cdot\qty{1544734.579}{\pascal}=V_1^\gamma\cdot\qty{1545206.25}{\pascal}
-    \end{align*}
-    Which is approximately adiabatic. For $\overrightarrow{cd}$
-    \begin{align*}
-      & V_1^\gamma\cdot\qty{30.50}{\atmosphere}=(7V_1)^\gamma\cdot\qty{2}{\atmosphere}\\
-      & V_1^\gamma\cdot\qty{3090412.5}{\pascal}=V_1^\gamma\cdot\qty{3089469.158}{\pascal}
-    \end{align*}
-    Which is also approximately adiabatic.
+    \item Here the adiabats are along $\overrightarrow{ab}$ and $\overrightarrow{cd}$. For an adiabat $P_iV_i^\gamma=P_fV_f^\gamma$ holds so
+          \begin{align*}
+             & (7V_1)^\gamma\cdot\qty{1}{\atmosphere}=V_1^\gamma\cdot\qty{15.25}{\atmosphere}     \\
+             & V_1^\gamma\cdot\qty{1544734.579}{\pascal}=V_1^\gamma\cdot\qty{1545206.25}{\pascal}
+          \end{align*}
+          Which is approximately adiabatic. For $\overrightarrow{cd}$
+          \begin{align*}
+             & V_1^\gamma\cdot\qty{30.50}{\atmosphere}=(7V_1)^\gamma\cdot\qty{2}{\atmosphere}    \\
+             & V_1^\gamma\cdot\qty{3090412.5}{\pascal}=V_1^\gamma\cdot\qty{3089469.158}{\pascal}
+          \end{align*}
+          Which is also approximately adiabatic.
     \item The volume difference between compression and expansion \textbf{for a single cylinder} is $7V_1-V_1=6V_1$ so $4\cdot6V_1=\qty{2.4}{\liter}\implies V_1=\qty{0.1}{\liter}=\qty{1d-4}{\meter\cubed}$
-    \item Find the net work done by the gas in all four cylinders of the engine over one cycle (you may use the relevant expression for work from either p. 44 or p. 77 of the textbook).
+    \item This formula gives work done on the gas, so we must flip the sign to determine work done by the gas
+          \begin{align*}
+            W_{\overrightarrow{ab}}= & -\frac{P_iV_i}{\gamma-1} \left[\left(\frac{V_i}{V_f}\right)^{\gamma-1}-1\right]                                                                                                 \\
+            =                        & -\frac{\qty{7d-4}{\meter\cubed}\cdot\qty{101325}{\pascal}}{\frac{7}{5}-1} \left[\left(\frac{\qty{7d-4}{\meter\cubed}}{\qty{1d-4}{\meter\cubed}}\right)^{\frac{7}{5}-1}-1\right] \\
+            \approx                  & \qty{-208.9}{\joule}
+          \end{align*}
+          \begin{align*}
+            W_{\overrightarrow{cd}}= & -\frac{\qty{1d-4}{\meter\cubed}\cdot\qty{3090412.5}{\pascal}}{\frac{7}{5}-1} \left[\left(\frac{\qty{1d-4}{\meter\cubed}}{\qty{7d-4}{\meter\cubed}}\right)^{\frac{7}{5}-1}-1\right] \\
+            \approx                  & \,\qty{417.9}{\joule}                                                                                                                                                                \\
+          \end{align*}
+          Net work is $W_{net}=\qty{417.9}{\joule}-\qty{208.9}{\joule}=\qty{209}{\joule}$ \textbf{Does this need to be quadrupled??}
   \end{enumerate}
 \end{soln}
+\newpage
 
 % PROBLEM 2
 \begin{problem}
@@ -122,7 +133,7 @@ Would you advise investing money in this project?
 
 % PROBLEM 3
 \begin{problem}
-Suppose a house requires 4.3 GJ of heating in a winter month. The
+Suppose a house requires $\qty{4.3}{\giga\joule}$ of heating in a winter month. The
 utility company charges \$0.14 per $\unit{\kilo\watt\hour}$.
 \begin{enumerate}[label=(\alph*)]
   \item Find the cost savings of using a heat pump versus a 95\%-efficient natural gas furnace. Assume
@@ -131,6 +142,11 @@ utility company charges \$0.14 per $\unit{\kilo\watt\hour}$.
 \end{enumerate}
 \end{problem}
 \begin{soln}
+  \begin{enumerate}[label=(\alph*)]
+    \item Find the cost savings of using a heat pump versus a 95\%-efficient natural gas furnace. Assume
+          a Carnot heat pump with average temperatures of $\qty{20}{\degreeCelsius}$ indoors and $\qty{0}{\degreeCelsius}$ outdoors.
+    \item Repeat part (a) using a more realistic coefficient of performance of 4.0 for the heat pump.
+  \end{enumerate}
 \end{soln}
 
 % PROBLEM 4
