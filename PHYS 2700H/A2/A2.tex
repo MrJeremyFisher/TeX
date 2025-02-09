@@ -112,9 +112,9 @@ respectively.
           \end{align*}
           \begin{align*}
             W_{\overrightarrow{cd}}= & -\frac{\qty{1d-4}{\meter\cubed}\cdot\qty{3090412.5}{\pascal}}{\frac{7}{5}-1} \left[\left(\frac{\qty{1d-4}{\meter\cubed}}{\qty{7d-4}{\meter\cubed}}\right)^{\frac{7}{5}-1}-1\right] \\
-            \approx                  & \,\qty{417.9}{\joule}                                                                                                                                                                \\
+            \approx                  & \,\qty{417.9}{\joule}                                                                                                                                                              \\
           \end{align*}
-          Net work is $W_{net}=\qty{417.9}{\joule}-\qty{208.9}{\joule}=\qty{209}{\joule}$ \textbf{Does this need to be quadrupled??}
+          Net work for one cylinder is $W_{net}=\qty{417.9}{\joule}-\qty{208.9}{\joule}=\qty{209}{\joule}$. This means that net work in all four cylinders (in lock-step e.g. not on a camshaft, I think) is $\qty{836}{\joule}$
   \end{enumerate}
 \end{soln}
 \newpage
@@ -141,21 +141,35 @@ utility company charges \$0.14 per $\unit{\kilo\watt\hour}$.
   \item Repeat part (a) using a more realistic coefficient of performance of 4.0 for the heat pump.
 \end{enumerate}
 \end{problem}
-\begin{soln}
+\begin{soln}~
   \begin{enumerate}[label=(\alph*)]
-    \item Find the cost savings of using a heat pump versus a 95\%-efficient natural gas furnace. Assume
-          a Carnot heat pump with average temperatures of $\qty{20}{\degreeCelsius}$ indoors and $\qty{0}{\degreeCelsius}$ outdoors.
-    \item Repeat part (a) using a more realistic coefficient of performance of 4.0 for the heat pump.
+    \item $\eta_{furn}=0.95=\frac{W_{furn}}{Q_1}\implies 0.95Q_1=W_{furn}=\qty{4.085d9}{\joule}$ and $\eta_c=1-\frac{T_2}{T_1}=\frac{W_{HP}}{Q_1}=COP_{HP}^{-1}=14.6575$ which means $14.6575=\frac{Q_1}{W_{HP}}\implies W_{HP}=\frac{Q_1}{14.6575}\approx\qty{0.2933d9}{\joule}$
+          so $\Delta W=W_{furn}-W_{HP}\approx\qty{3.792d9}{\joule}\approx\qty{1027.778}{\kilo\watt\hour}\approx143.89\$$. Note that this seems very high but this is an ideal heat pump working in decent conditions
+          so it could be ``realistic''.
+    \item The work done by the furnace stays the same so we end up with $\Delta W=W_{furn}-W_{HP}=W_{furn}-\frac{Q_1}{COP_{HP}}=\qty{3.01}{\joule}= 836.\overline{1}\approx 117.06\$$ which also seems quite high for a heat pump now operating with an apparently
+    more realistic $COP$. Maybe the authors of this problem are just very out of touch.
   \end{enumerate}
 \end{soln}
 
 % PROBLEM 4
 \begin{problem}
-A hypothetical engine, with an ideal gas as the working substance,
-operates in the cycle shown in Figure 4.17. Show that the efficiency of
-the engine is
+A hypothetical engine, with an ideal gas as the working substance, operates in the cycle shown in Figure 4.17. Show that the efficiency of the engine is
 $$\eta=1-\frac{1}{\gamma}\left(\frac{1-\frac{P_3}{P_1}}{1-\frac{V_1}{V_3}}\right)$$
 \end{problem}
 \begin{soln}
+  Here we know that $Q_1=nC_P\Delta T_{12}$ and $Q_2=nC_V\Delta T_{23}$ and heat across the adiabat is by definition zero. Then,
+  \begin{align*}
+    Q_1= & \, nC_P\left[T_2-T_1\right]=nC_P\left[\frac{P_1V_3}{nR}-\frac{P_1V_1}{nR}\right]=\frac{C_PP_1}{R}\left[V_3-V_1\right]
+  \end{align*}
+  And
+  \begin{align*}
+    Q_2= & \, nC_V\left[T_3-T_2\right]=nC_V\left[\frac{P_3V_3}{nR}-\frac{P_1V_3}{nR}\right]=\frac{C_VV_3}{R}\left[P_3-P_1\right]
+  \end{align*}
+  Then we know that $W=Q_1+Q_2$ because this is a cycle with $\Delta U=0$ and $\eta=\frac{W}{Q_1}=\frac{Q_1+Q_2}{Q_1}=1+\frac{Q_2}{Q_1}$ so,
+  \begin{align*}
+    \eta= & \,1+\frac{Q_2}{Q_1}=1+\frac{\frac{C_VV_3}{R}\left[P_3-P_1\right]}{\frac{C_PP_1}{R}\left[V_3-V_1\right]}=1+\frac{R}{C_PP_1}\frac{C_VV_3}{R}\frac{\left[P_3-P_1\right]}{\left[V_3-V_1\right]}                                                                                                      \\
+    =     & \,1+\frac{1}{\gamma}\frac{V_3}{P_1}\frac{\left[P_3-P_1\right]}{\left[V_3-V_1\right]}=1+\frac{1}{\gamma}\frac{\left[\frac{P_3}{P_1}-\frac{P_1}{P_1}\right]}{\left[\frac{V_3}{V_3}-\frac{V_1}{V_3}\right]}=1+\frac{1}{\gamma}\frac{\left[\frac{P_3}{P_1}-1\right]}{\left[1-\frac{V_1}{V_3}\right]} \\
+    =     & \,1-\frac{1}{\gamma}\frac{\left[1-\frac{P_3}{P_1}\right]}{\left[1-\frac{V_1}{V_3}\right]}
+  \end{align*}
 \end{soln}
 \end{document}

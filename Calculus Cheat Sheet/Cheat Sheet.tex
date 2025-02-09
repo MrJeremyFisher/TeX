@@ -25,11 +25,6 @@ $ \lim\limits_{x\to a}[cf(x)]=c\lim\limits_{x\to a}[f(x)] $
 $ \lim\limits_{x\to a}[f(x) \pm g(x)]=\lim\limits_{x\to a}[f(x)] \pm \lim\limits_{x\to a}[g(x)] $
 $ \lim\limits_{x\to a}[f(x)g(x)]=\lim\limits_{x\to a}[f(x)]\lim\limits_{x\to a}[g(x)] $
 $ \lim\limits_{x\to a}\left[\frac{f(x)}{g(x)}\right]=\frac{\lim\limits_{x\to a}[f(x)]}{\lim\limits_{x\to a}[g(x)]}, \lim\limits_{x\to a}[g(x)] \neq 0 $
-\subsection*{Squeeze Theorem}
-The squeeze theorem is a method for solving complex limits, such as $\lim\limits_{x\to 0}{x^4}\sin {\frac{1}{x}}$. You are essentially trying to find two bounding functions,
-such that if $f(x)$ is the function you are trying to find the limit for, $h(x) \leq f(x)$ and $f(x) \leq g(x)$ ($h(x) \leq f(x) \leq g(x)$).
-If you find these two bounding functions, $h(x)$ \& $g(x)$ and their limits at some number $a$ agree, then the limit of $f(x)$ at $a$ will be equal to the limits of $h(x)$ \& $g(x)$ at $a$.
-Formally, for some limit $\lim\limits_{x\to a}f(x)$, if you find two functions such that $h(x) \leq f(x) \leq g(x)$, and $\lim\limits_{x\to a}h(x)=\lim\limits_{x\to a}g(x)$, then $\lim\limits_{x\to a}h(x)=\lim\limits_{x\to a}g(x)=\lim\limits_{x\to a}f(x)$.
 \subsection*{Evaluation Techniques}
 
 \subsubsection*{Basics}
@@ -46,23 +41,27 @@ $ \lim\limits_{x\to -\infty}\left[\frac{3x^2-4}{5x-2x^2}\right]=\lim\limits_{x\t
 $ \frac{3-0}{0-2} = -\frac{3}{2} $
 \section*{Derivatives}
 \subsection*{Definition}
-$$ \frac{d}{dx}f(x) = f^{\prime}(x) = \lim\limits_{h\to 0}\frac{f(x+h)-f(x)}{h}$$.
+$ \frac{d}{dx}f(x) = f^{\prime}(x) = \lim\limits_{h\to 0}\frac{f(x+h)-f(x)}{h}$.
 \subsection*{Techniques}
 
 \subsubsection*{Sum Rule}
-$$ \frac{d}{dx}(f(x) \pm g(x))=f^{\prime}(x) \pm g^{\prime}(x) $$
+$ \frac{d}{dx}(f(x) \pm g(x))=f^{\prime}(x) \pm g^{\prime}(x) $
 
 \subsubsection*{Product Rule}
-$$ \frac{d}{dx}(f(x)g(x))=f^{\prime}(x)g(x)+f(x)g^{\prime}(x) $$
+$ \frac{d}{dx}(f(x)g(x))=f^{\prime}(x)g(x)+f(x)g^{\prime}(x) $
 
 \subsubsection*{Quotient Rule}
-$$ \frac{d}{dx}\left(\frac{f(x)}{g(x)}\right)=\frac{f^{\prime}(x)g(x)-f(x)g^{\prime}(x)}{[g(x)]^2} $$
+$ \frac{d}{dx}\left(\frac{f(x)}{g(x)}\right)=\frac{f^{\prime}(x)g(x)-f(x)g^{\prime}(x)}{[g(x)]^2} $
 
 \subsubsection*{Power Rule}
-$$ \frac{d}{dx}(x^n)=nx^{n-1} $$
+$ \frac{d}{dx}(x^n)=nx^{n-1} $
 
 \subsubsection*{Chain Rule}
-$$ \frac{d}{dx}(f(g(x)))=f^{\prime}(g(x))g^{\prime}(x) $$
+$ \frac{d}{dx}(f(g(x)))=f^{\prime}(g(x))g^{\prime}(x) $
+
+\subsubsection*{Parametric}
+$\frac{dy}{dx}=\frac{dy/dt}{dx/dt}$ recurse $y$ for $n$th derivative\\
+$(x,y)+(x^\prime,y^\prime)t$ for parametric tangent
 
 \subsection*{Common Derivatives}
 $ \frac{d}{dx}(x)=1                                                                                      $
@@ -94,26 +93,18 @@ $ \frac{d}{dx}(\cos [{f(x)}])=-f^{\prime}(x)\sin[{f(x)}]    $
 $ \frac{d}{dx}(\tan [{f(x)}])=f^{\prime}(x)\sec ^{2}[{f(x)}]    $
 $ \text{Trig derivatives, same old same old}$
 $ \frac{d}{dx}(f(x)^{g(x)})=\frac{g(x)f^{\prime}(x)}{f(x)}+\ln{[f(x)]}g^{\prime}(x)   $
-
-\subsection*{Implicit Derivation}
-Remember $y = y(x)$ here, so products/quotients of $x$ and $y$ will use
-the product/quotient rule and derivatives of $y$ will use the chain rule. The “trick” is to differentiate as normal
-and every time you differentiate a y you tack on a $y^{\prime}$ (from the chain rule). Then solve for $y^{\prime}$, probably by factoring.
-
 \section*{Integrals}
 
 \subsection*{Definition}
 The integral of some function $f(x)$ is a function $f^{\star}(x)$ s.t. $f^{\star\prime}(x)=f(x)$. \textbf{Don't forget your constant!}
-$$ \int_{a}^{b} f(x) \,dx = \int_{a}^{c} f(x) \,dx + \int_{c}^{b} f(x) \,dx $$
-$$ \int_{a}^{b} cf(x) \,dx = c\int_{a}^{b} f(x) \,dx $$
 The integral can be done using the Right Riemann Sum:
 $\int_{a}^{b} f(x) \,dx = \lim\limits_{n\to \infty}\sum_{i=1}^{n}\left[\frac{b-a}{n}\cdot f(a+i\cdot\frac{b-a}{n})\right]$
 
 \subsection*{U-Substitution}
-$ \displaystyle \int_{a}^{b} f(g(x)) \cdot g^{\prime} \,dx = \int_{g(a)}^{g(b)} f(u) \,dx $. Using U-Substitution, $u=g(x)$ and $du=g^{\prime}(x)dx$ ($dx=\frac{du}{g^{\prime}}$). The limits, $a$ and $b$ are just dropped when using indefinite integrals.
+$ \int_{a}^{b} f(g(x)) \cdot g^{\prime} \,dx = \int_{g(a)}^{g(b)} f(u) \,dx $. Using U-Substitution, $u=g(x)$ and $du=g^{\prime}(x)dx$ ($dx=\frac{du}{g^{\prime}}$).
 
 \subsection*{Integration By Parts}
-$ \displaystyle \int u(x)v^{\prime}(x) \,dx = u(x)v(x) - \int u^{\prime}(x)v(x) \,dx $ and $ \displaystyle \int_{a}^{b} u(x)v^{\prime}(x) \,dx = uv\vert_{a}^{b} - \int_{a}^{b} u^{\prime}(x)v(x) \,dx$.
+$\int u(x)v^{\prime}(x) \,dx = u(x)v(x) - \int u^{\prime}(x)v(x) \,dx $ and $ \int_{a}^{b} u(x)v^{\prime}(x) \,dx = uv\vert_{a}^{b} - \int_{a}^{b} u^{\prime}(x)v(x) \,dx$.
 
 \subsection*{Common Integrals}
 $ \int x^n \,dx = \frac{1}{n+1}x^{n+1} + C $ \\
@@ -169,6 +160,7 @@ $\hat{x} = \frac{\int xf(x) \,dx}{\int f(x) \,dx}$ \&
 $\hat{y} = \frac{\int yf(y) \,dy}{\int f(y) \,dy}$
 \subsubsection*{Arc Length}
 $L = \int_{a}^{b} \sqrt{1+[f^{\prime}(x)]^2} \,dx$
+$L = \int_{a}^{b} \sqrt{[f^{\prime}(t)]^2+[g^{\prime}(t)]^2+[h^{\prime}(t)]^2} \,dt$ for parametric. Area is just this times $2\pi x$ or $y$ for opposite of axis.
 \subsubsection*{Volume} Use the variable parallel to the axis of revolution.
 $V = \int_{a}^{b} A(x) \,dx$ where $A(x)$ is a function which gives the area
 of one ``slice'' of the solid. Slices are generally circular and may have holes in them, area
@@ -232,9 +224,9 @@ its representation is given by $$\sum_{n=0}^{\infty}\frac{\frac{d^n}{dx^n}f(a)}{
 If there exists some function $f(x)$ whose Taylor Series is defined as $T_n(x)$ then the remainder term is
 defined as $R_n(x)=f(x)-T_n(x)$, which is how ``far off'' the Taylor Series $T_n(x)$ is from the function $f(x)$
 for some $n$.
-\subsubsection*{Manipulating Taylor Series}
-If we do something (integrating, differentiating, muliplying, etc\dots) to a function, then doing the same to its
-Taylor Series results in the Taylor Series for the new function. Ex, $f(x)\to f_k(x)$ by integrating, then
-$\int T_n(x) \,dx= T_{nk}(x)$ where $T_n(x)$ is the Taylor Series for $f(x)$ and $T_{nk}(x)$ is the Taylor Series for 
-our new function, created by integrating $f(x)$, $f_k(x)$
+\section*{Tidbits}
+$\vec{v}$ here is the velocity vector (duh)\\
+Unit tangent vector $\vec{T}=\frac{\vec{v}}{\left|\vec{v}\right|}$\\
+Curvature $\kappa=\left|\frac{d\vec{T}}{d\vec{s}}\right|=\frac{1}{\left|\vec{v}\right|}\left|\frac{d\vec{T}}{dt}\right|$\\
+Normal vector $\vec{N}=\frac{1}{\kappa}\frac{d\vec{T}}{ds}=\frac{d\vec{T}/dt}{\left|d\vec{T}/dt\right|}$ 
 \end{document}
