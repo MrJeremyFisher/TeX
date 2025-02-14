@@ -13,3 +13,4 @@ robustExternalize/
 *-robExt-tmp-file-you-can-remove.tmp
 robExt-prepare-for-arxiv.py
 robExt-remove-old-figures.py
+.~lock.*.ods#
