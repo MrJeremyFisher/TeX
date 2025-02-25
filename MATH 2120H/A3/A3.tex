@@ -1,0 +1,183 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{changepage}
+\usepackage{circuitikz}
+\usepackage{pgfplots}
+\usepackage{physics}
+\usepackage{hyperref}
+\usepackage{siunitx}
+\usepackage[breakable]{tcolorbox}
+\usepackage[inline]{enumitem}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{soln}{Solution}
+
+\pgfplotsset{compat=newest}
+\usetikzlibrary{lindenmayersystems}
+\usetikzlibrary{arrows}
+\usetikzlibrary{calc}
+
+\definecolor{incolor}{HTML}{303F9F}
+\definecolor{outcolor}{HTML}{D84315}
+\definecolor{cellborder}{HTML}{CFCFCF}
+\definecolor{cellbackground}{HTML}{F7F7F7}
+\newcommand{\eq}{=}
+\newcommand{\ui}{\mathbf{i}}
+\newcommand{\uj}{\mathbf{j}}
+\newcommand{\uk}{\mathbf{k}}
+\usetikzlibrary{positioning, fit, calc}
+\pgfdeclarelayer{background}  
+\pgfsetlayers{background,main}
+
+\makeatletter
+\newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+\makeatother
+\newcommand{\prompt}[4]{
+    \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+}
+
+\newcommand{\thevenin}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (2,0) to[battery1, l_=$V_{Th}\eq#1$] (2,2) 
+      to[resistor, l_=$R_{Th}\eq#2$] (0,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\norton}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (3,0) to[american current source, l_=$I_{N}\eq#1$] (3,2) -- (0,2) (2,0)
+      to[resistor, l=$R_{N}\eq#2$] (2,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\highlight}[1]{\colorbox{yellow}{$\displaystyle #1$}}
+
+\newcommand{\ti}[1]{\widetilde{#1}}
+
+\title{Math 2120H: Assignment III}
+\author{Jeremy Favro (0805980) \\ Trent University, Peterborough, ON, Canada}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+% PROBLEM 1
+\begin{problem}
+Find the unit tangent vector $\mathbf{T}$, the principle normal vector $\mathbf{N}$ and the curvature $\kappa$ for the curves below
+\begin{enumerate}[label=(\alph*)]
+  \item $$\mathbf{r}(t)=\left(\cos{t}+t\sin{t}\right)\ui+\left(\sin{t}-t\cos{t}\right)\uj,\qquad t>0$$
+  \item $$\mathbf{r}(t)=\left(e^t\cos{t}\right)\ui+\left(e^t\sin{t}\right)\uj+2\uk$$
+\end{enumerate}
+\end{problem}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item By the formula $\mathbf{T}=\frac{d\mathbf{r}}{dt}/\left|\frac{d\mathbf{r}}{dt}\right|$, $\mathbf{N}=\frac{d\mathbf{T}}{dt}/\left|\frac{d\mathbf{T}}{dt}\right|$,
+          $\kappa=\left|\frac{d\mathbf{T}}{dt}\right|/\left|\frac{d\mathbf{r}}{dt}\right|$ so,
+          \begin{align*}
+            \mathbf{T} & =\frac{d\mathbf{r}}{dt}/\left|\frac{d\mathbf{r}}{dt}\right|                                                                                                                                                   \\
+                       & = \left[\left(\cos{t}+t\sin{t}\right)^\prime\ui+\left(\sin{t}-t\cos{t}\right)^\prime\uj\right]/\sqrt{\left[\left(\cos{t}+t\sin{t}\right)^\prime\right]^2+\left[\left(\sin{t}-t\cos{t}\right)^\prime\right]^2} \\
+                       & = \left[\left(-\sin t+\sin t +t\cos t\right)\ui+\left(\cos t -\cos t +t\sin t\right)\uj\right]/t\qquad(t>0)                                                                                                   \\
+                       & = \left[\cancel{t}\cos t\ui+\cancel{t}\sin t\uj\right]/\cancel{t}=\cos (t)\ui+\sin (t)\uj
+          \end{align*}
+          and
+          \begin{align*}
+            \mathbf{N} & =\frac{d\mathbf{T}}{dt}/\left|\frac{d\mathbf{T}}{dt}\right|                                  \\
+                       & =\left[-\sin (t)\ui+\cos (t)\uj\right]/\sqrt{\sin^2 (t)+\cos^2 (t)}=-\sin (t)\ui+\cos (t)\uj
+          \end{align*}
+          and
+          \begin{align*}
+            \kappa & = \left|\frac{d\mathbf{T}}{dt}\right|/\left|\frac{d\mathbf{r}}{dt}\right| \\
+                   & = \frac{1}{t}
+          \end{align*}
+    \item Again by the given formulae,
+          \begin{align*}
+            \mathbf{T} & =\left[\left(e^t\cos{t}-e^t\sin{t}\right)\ui+\left(e^t\sin{t}+e^t\cos{t}\right)\uj+0\uk\right]/(e^t\sqrt{2}) \\
+                       & =\frac{1}{\sqrt{2}}\left[\left(\cos{t}-\sin{t}\right)\ui+\left(\sin{t}+\cos{t}\right)\uj\right]
+          \end{align*}
+          and
+          \begin{align*}
+            \mathbf{N} & =\frac{1}{\sqrt{2}}\left[\left(-\cos{t}-\sin{t}\right)\ui+\left(-\sin{t}+\cos{t}\right)\uj\right]/\frac{1}{\sqrt{2}}\sqrt{\left(-\cos{t}-\sin{t}\right)^2+\left(-\sin{t}+\cos{t}\right)^2} \\
+                       & =\left[\left(-\cos{t}-\sin{t}\right)\ui+\left(-\sin{t}+\cos{t}\right)\uj\right]/\sqrt{\cos^2{t}+2\sin{t}\cos{t}+\sin^2{t}+\cos^2{t}-2\sin{t}\cos{t}+\sin^2{t}}                             \\
+                       & =\left[\left(-\cos{t}-\sin{t}\right)\ui+\left(-\sin{t}+\cos{t}\right)\uj\right]/\sqrt{2\cos^2{t}+2\sin^2{t}}                                                                               \\
+                       & =\frac{1}{\sqrt{2}}\left[\left(-\cos{t}-\sin{t}\right)\ui+\left(-\sin{t}+\cos{t}\right)\uj\right]
+          \end{align*}
+          and
+          \begin{align*}
+            \kappa & = \frac{e^{-t}}{\sqrt{2}}
+          \end{align*}
+  \end{enumerate}
+\end{soln}
+
+% PROBLEM 2
+\begin{problem}
+Find the curvature of the parabola $y = 4x^2$ when $x = 1$
+\end{problem}
+\begin{soln}
+  We can parametrize $y$ using the natural parametrization $x=t\implies y=4t^2$ which gives us $\mathbf{r}(t)=t\ui+4t^2\uj$. We can then apply the formula to find $\kappa=\left|\frac{d\mathbf{T}}{dt}\right|/\left|\frac{d\mathbf{r}}{dt}\right|$,
+  \begin{align*}
+    \frac{d\mathbf{r}}{dt}                       & =1\ui+8t\uj     \\
+    \implies \left|\frac{d\mathbf{r}}{dt}\right| & =\sqrt{64t^2+1}
+  \end{align*}
+  then,
+  \begin{align*}
+    \mathbf{T}                                   & =\frac{d\mathbf{r}}{dt}/\left|\frac{d\mathbf{r}}{dt}\right|                                                                  \\
+                                                 & =\frac{1}{\sqrt{64t^2+1}}\ui+\frac{8t}{\sqrt{64t^2+1}}\uj                                                                    \\
+    \implies \frac{d\mathbf{T}}{dt}              & =-64t\left(64t^2+1\right)^{-\frac{3}{2}}\ui+8\left(64t^2+1\right)^{-\frac{3}{2}}\uj                                          \\
+    \implies \left|\frac{d\mathbf{T}}{dt}\right| & =\sqrt{\left[-64t\left(64t^2+1\right)^{-\frac{3}{2}}\right]^2+\left[8\left(64t^2+1\right)^{-\frac{3}{2}}\right]^2}           \\
+                                                 & =\sqrt{4096t^2\left(64t^2+1\right)^{-3}+64\left(64t^2+1\right)^{-3}}                                                         \\
+                                                 & =\left(64t^2+1\right)^{-\frac{3}{2}}\sqrt{4096t^2+64}=8\left(64t^2+1\right)^{-\frac{3}{2}}\left(64t^2+1\right)^{\frac{1}{2}} \\
+                                                 & =\frac{8}{\left(64t^2+1\right)}
+  \end{align*}
+  so,
+  \begin{align*}
+    \kappa= & \left|\frac{d\mathbf{T}}{dt}\right|/\left|\frac{d\mathbf{r}}{dt}\right|                            \\
+    =       & 8\left(64t^2+1\right)^{-1}\left(64t^2+1\right)^{-\frac{1}{2}}=8\left(64t^2+1\right)^{-\frac{3}{2}}
+  \end{align*}
+  So the curvature $\kappa$ at $t=1$ is $\displaystyle\frac{8}{65^{\frac{3}{2}}}\approx0.0153$
+\end{soln}
+\newpage
+
+% PROBLEM 3
+\begin{problem}
+Write the acceleration vector $\mathbf{a}$ in the form $\mathbf{a} = a_T \mathbf{T} + a_N \mathbf{N}$ at the given value of $t$ without finding $\mathbf{T}$ and $\mathbf{N}$.
+$$\mathbf{r}(t)=t^2\ui+\left(t+\frac{1}{3}t^3\right)\uj+\left(t-\frac{1}{3}t^3 \right)\uk,\qquad t=0$$
+\end{problem}
+\begin{soln}
+  We define $\displaystyle a_T=\frac{d\left|\frac{d\mathbf{r}}{dt}\right|}{dt}\implies a_N=\sqrt{\left|\mathbf{a}\right|^2-a_T^2}$ (because $a_N$ and $a_T$ are scalars). So,
+  \begin{align*}
+    a_T & =\frac{d\left|\frac{d\mathbf{r}}{dt}\right|}{dt}                   \\
+        & =\frac{d}{dt}\sqrt{4t^2+\left(1+t^2\right)^2+\left(1-t^2\right)^2} \\
+        & =\frac{d}{dt}\sqrt{4t^2+\left(1+t^2\right)^2+\left(1-t^2\right)^2} \\
+        & =\frac{6t}{\sqrt{4t^2+\left(1+t^2\right)^2+\left(1-t^2\right)^2}}  \\
+        & =0\qquad (\text{at } t=0)                                          \\
+  \end{align*}
+  then,
+  \begin{align*}
+    \mathbf{a}                       & =2\ui+2t\uj-2t\uk \\
+    \implies \left|\mathbf{a}\right| & =\sqrt{4+8t^2}
+  \end{align*}
+  so,
+  \begin{align*}
+    a_N & =\sqrt{4+8t^2-\frac{6t}{\sqrt{4t^2+\left(1+t^2\right)^2+\left(1-t^2\right)^2}}}                         \\
+        & =\sqrt{4+\cancelto{0}{8t^2}-\cancelto{0}{\frac{36t^2}{4t^2+\left(1+t^2\right)^2+\left(1-t^2\right)^2}}} \\
+        & =2\qquad (\text{at } t=0)
+  \end{align*}
+  So $\mathbf{a} = 0\cdot\mathbf{T} + 2\cdot\mathbf{N}$.
+\end{soln}
+\end{document}
