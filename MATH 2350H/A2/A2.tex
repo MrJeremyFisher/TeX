@@ -93,14 +93,14 @@ Let $T\in\mathcal{L}(V)$. Prove that $T^2=T_0$ iff $\mathrm{range}\,T\subseteq\m
              & \mathrm{range}\,T\subseteq\mathrm{null}\,T \\
     \implies & T=T_0                                      \\
     \implies & T(v\in V)=0_V                              \\
-    \implies & T(T(v))=T^2=0_V\, (T:V\mapsto V)               \\
+    \implies & T(T(v))=T^2=0_V\, (T:V\mapsto V)           \\
     \implies & T^2=T_0
   \end{align*}
   In the other direction assuming
   \begin{align*}
-             & T^2=T_0          \\
-    \implies & T(T(v\in V))=0_V \\
-    \implies & T(v^\prime \in V)=0_V \, (T:V\mapsto V)\\
+             & T^2=T_0                                    \\
+    \implies & T(T(v\in V))=0_V                           \\
+    \implies & T(v^\prime \in V)=0_V \, (T:V\mapsto V)    \\
     \implies & \mathrm{range}\,T\subseteq\mathrm{null}\,T
   \end{align*}
   $\therefore T^2=T_0\iff \mathrm{range}\,T\subseteq\mathrm{null}\,T$
@@ -116,8 +116,24 @@ Let $U$, $V$, $W$ be vector spaces over field $F$, and let $S\in\mathcal{L}(U,V)
   \item Give an example showing that if $T\circ S$ is surjective then $S$ need not be surjective.
 \end{enumerate}
 \end{problem}
-\begin{soln}
-
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item Under the assumption that $T\circ S$ is injective we start by assuming, by way of contradiction, that
+          $S$ is \textit{not} injective. This means
+          $$\exists a,b\in U,\, a\neq b \text{ such that } S(a)=S(b)$$
+          Because $S\circ T$ is valid it follows that
+          $$T(S(a))=T(S(b))$$
+          However we assumed that $T\circ S$ is injective but because $a\neq b$ here the composition is not injective, a contradiction.
+          Therefore, to avoid said contradiction, $S$ must be injective.
+    \item For $T:\mathbb{R}^2\mapsto \mathbb{R}$ such that $T(x,y)=x$ and $S:\mathbb{R}\mapsto\mathbb{R}^2$ such that $S(x)=(x,0)$.
+          Here $T$ is not injective as $(1,1)$ and $(1,2)$ both map to $1$. $S$ is injective by inspection as any $x$ will generate a unique
+          $(x,0)$. The composition $T\circ S: \mathbb{R}\mapsto \mathbb{R}^2$ gives $T(S(x))=x$ which is injective as any input $x$ will map to itself, which is unique.
+    \item Under the assumption that $T\circ S$ is surjective we are guaranteed that for all
+          $b\in W\exists a\in U$ such that $T(S(a))=b$ (every element of the co-domain maps to one element of the domain).
+          Because we know that $S(u\in U)\in V$ we can denote $S(a)=c\in V$ now $T(c)$ is surjective by our initial assumption which means
+          that $T$ itself is surjective.
+    \item Give an example showing that if $T\circ S$ is surjective then $S$ need not be surjective.
+  \end{enumerate}
 \end{soln}
 
 % PROBLEM 3
@@ -158,14 +174,15 @@ are called the \textit{Lagrange polynomials} associated to $x_0,x_1,\dots,x_n$.
           a basis for $\mathcal{P}_n(\mathbb{R})$.
     \item Again using the fact that $p_i(x_i)=1$ it is evident that $y_ip_i(x_i)=y_i$ and so because we
           are also guaranteed that $p_i(x_j)=0$ for $i\neq j$ $\sum_{i=0}^{n}y_ip_i(x_i)$ will be $y_i$ at all corresponding $x_i$ because only a single polynomial
-          in the sum will be nonzero at that point.
+          in the sum will be nonzero at that point. Uniqueness is guaranteed here due to the uniqueness of linear combinations.
     \item From part (c) we simply sum all of the polynomials found in part (a) and multiply them by the given $y$-coordinate
           \begin{align*}
              & =4\cdot\frac{x^3-2x^2-3x}{-160}+1\cdot\frac{x^3+2x^2-15x}{16}+2\cdot\left(\frac{x^3+3x^2-13x}{-15}+1\right)-3\cdot\frac{x^3+6x^2+5x}{96} \\
              & =\frac{-61x^3-198x^2+343x}{480}+2                                                                                                        \\
           \end{align*}
-    \item Suppose $g\in \mathcal{P}_n(\mathbb{R})$ and $g(r_i) = 0$ for $n + 1$ distinct scalars $r_0,r_1,\dots,r_n$.
-          Use the results above to show that $g$ is the zero polynomial. This shows that a nonzero polynomial of degree $n$ cannot have more than $n$ distinct roots.
+    \item Because the Lagrange polynomials associated with $r_0,r_1,\dots,r_n$ form a basis for $\mathcal{P}_n(\mathbb{R})$ we can express $g(x)$ as a
+          linear combination of these polynomials, $g(x)=\sum_{j=0}^{n}c_jp_j(x)$, which will have all zero terms except one when evaluating at $x=r_j$, but this point is
+          zero by our definition of $g(x)$ which implies that $c_j=0$ therefore $g(x)$ is a linear combination of $n$ zeros, e.g. the zero polynomial $g(x)=0$.
   \end{enumerate}
 \end{soln}
 \end{document}
