@@ -105,6 +105,7 @@ Let $T\in\mathcal{L}(V)$. Prove that $T^2=T_0$ iff $\mathrm{range}\,T\subseteq\m
   \end{align*}
   $\therefore T^2=T_0\iff \mathrm{range}\,T\subseteq\mathrm{null}\,T$
 \end{soln}
+\newpage
 
 % PROBLEM 2
 \begin{problem}
@@ -129,12 +130,18 @@ Let $U$, $V$, $W$ be vector spaces over field $F$, and let $S\in\mathcal{L}(U,V)
           Here $T$ is not injective as $(1,1)$ and $(1,2)$ both map to $1$. $S$ is injective by inspection as any $x$ will generate a unique
           $(x,0)$. The composition $T\circ S: \mathbb{R}\mapsto \mathbb{R}^2$ gives $T(S(x))=x$ which is injective as any input $x$ will map to itself, which is unique.
     \item Under the assumption that $T\circ S$ is surjective we are guaranteed that for all
-          $b\in W\exists a\in U$ such that $T(S(a))=b$ (every element of the co-domain maps to one element of the domain).
-          Because we know that $S(u\in U)\in V$ we can denote $S(a)=c\in V$ now $T(c)$ is surjective by our initial assumption which means
+          $b\in W\exists a\in U$ such that $T(S(a))=b$ (every element of the co-domain maps to at least one element of the domain).
+          Because we know that $S(a)\in V$ we can denote $S(a)=c\in V$ now $T(c)$ is surjective by our initial assumption which means
           that $T$ itself is surjective.
-    \item Give an example showing that if $T\circ S$ is surjective then $S$ need not be surjective.
+    \item For $S:\mathbb{R}\mapsto\mathbb{R}^3$ such that $S(x)=(x,x,x)$ and $T:\mathbb{R}^3\mapsto \mathbb{R}$ such that $T(x,y,z)=x$ $S$ is not surjective as
+          $\mathrm{range}\,S=\mathrm{span}\begin{pmatrix}
+              1 \\
+              1 \\
+              1
+            \end{pmatrix} \neq \mathbb{R}^3$ whereas $T$ is surjective as $\mathrm{range}\,T=\mathrm{span}(1)=\mathbb{R}$. The entire map is surjective as it is the identity map.
   \end{enumerate}
 \end{soln}
+\newpage
 
 % PROBLEM 3
 \begin{problem}

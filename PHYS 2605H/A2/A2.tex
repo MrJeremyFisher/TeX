@@ -1,0 +1,508 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{changepage}
+\usepackage{circuitikz}
+\usepackage{pgfplots}
+\usepackage{physics}
+\usepackage{hyperref}
+\usepackage{siunitx}
+\usepackage[breakable]{tcolorbox}
+\usepackage[inline]{enumitem}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{soln}{Solution}
+
+\pgfplotsset{compat=newest}
+\usetikzlibrary{arrows, angles, calc, quotes}
+
+\definecolor{incolor}{HTML}{303F9F}
+\definecolor{outcolor}{HTML}{D84315}
+\definecolor{cellborder}{HTML}{CFCFCF}
+\definecolor{cellbackground}{HTML}{F7F7F7}
+\newcommand{\eq}{=}
+\usetikzlibrary{positioning, fit, calc}
+\pgfdeclarelayer{background}  
+\pgfsetlayers{background,main}
+\DeclareSIUnit[number-unit-product = {\,}]\calorie{cal}
+\DeclareSIUnit[number-unit-product = {\,}]\atmosphere{atm}
+\AtBeginDocument{\RenewCommandCopy\qty\SI}
+
+\makeatletter
+\newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+\makeatother
+\newcommand{\prompt}[4]{
+    \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+}
+
+\newcommand{\thevenin}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (2,0) to[battery1, l_=$V_{Th}\eq#1$] (2,2) 
+      to[resistor, l_=$R_{Th}\eq#2$] (0,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\norton}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (3,0) to[american current source, l_=$I_{N}\eq#1$] (3,2) -- (0,2) (2,0)
+      to[resistor, l=$R_{N}\eq#2$] (2,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\highlight}[1]{\colorbox{yellow}{$\displaystyle #1$}}
+
+\newcommand{\ti}[1]{\widetilde{#1}}
+
+\NewDocumentCommand{\evalat}{sO{\big}mm}{%
+  \IfBooleanTF{#1}
+   {\mleft. #3 \mright|_{#4}}
+   {#3#2|_{#4}}%
+}
+
+\title{Physics 2605H: Assignment II}
+\author{Jeremy Favro \\ Trent University, Peterborough, ON, Canada}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+% PROBLEM 1
+\begin{problem} Two vectors are represented as
+$$
+  \ket{\psi}=\begin{pmatrix}
+    3+4i \\
+    4+3i
+  \end{pmatrix},\qquad
+  \ket{\phi}=\begin{pmatrix}
+    2+i \\
+    1+2i
+  \end{pmatrix}
+$$
+\begin{enumerate}[label=(\alph*)]
+  \item Find their scalar product, $\braket{\phi}{\psi}$
+  \item Find the products \begin{enumerate}[label=(\roman*)]
+          \item $\ket{\phi}\bra{\psi}$
+          \item $\ket{\psi}\bra{\phi}$
+        \end{enumerate}
+  \item Do (i) and (ii) commute?
+  \item Find \begin{enumerate} [label=(\roman*)]
+          \item The inner product of $\ket{\psi}$
+          \item The inner product of $\ket{\phi}$
+          \item The outer product of $\ket{\phi}$
+          \item The outer product of $\ket{\psi}$
+        \end{enumerate}
+\end{enumerate}
+\end{problem}
+\begin{soln} ~
+  \begin{enumerate}[label=(\alph*)]
+    \item \begin{align*}
+            \braket{\phi}{\psi} & = \braket{\phi}{\psi} = \ket{\phi}^\dagger \ket{\psi} \\
+                                & = \begin{pmatrix}
+                                      2-i & 1-2i
+                                    \end{pmatrix}
+            \begin{pmatrix}
+              3+4i \\
+              4+3i
+            \end{pmatrix}                                                              \\
+                                & = 20
+          \end{align*}
+    \item Find the products \begin{enumerate}[label=(\roman*)]
+            \item $\bra{\psi}=\ket{\psi}^\dagger=\begin{pmatrix}
+                      3-4i & 4-3i
+                    \end{pmatrix}$ So,
+                  \begin{align*}
+                    \ket{\phi}\bra{\psi} & =
+                    \begin{pmatrix}
+                      2+i \\
+                      1+2i
+                    \end{pmatrix}
+                    \begin{pmatrix}
+                      3-4i & 4-3i
+                    \end{pmatrix}              \\
+                                         & =
+                    \begin{pmatrix}
+                      (2+i)(3-4i)  & (2+i)(4-3i)  \\
+                      (1+2i)(3-4i) & (1+2i)(4-3i) \\
+                    \end{pmatrix} \\
+                                         & =
+                    \begin{pmatrix}
+                      10-5i & 11-2i \\
+                      11+2i & 10+5i \\
+                    \end{pmatrix}
+                  \end{align*}
+            \item \begin{align*}
+                    \ket{\psi}\bra{\phi} & =
+                    \begin{pmatrix}
+                      3+4i \\
+                      4+3i
+                    \end{pmatrix}
+                    \begin{pmatrix}
+                      2-i & 1-2i
+                    \end{pmatrix}             \\
+                                         & =
+                    \begin{pmatrix}
+                      (2-i)(3+4i) & (1-2i)(4+3i) \\
+                      (2-i)(3+4i) & (1-2i)(4+3i) \\
+                    \end{pmatrix} \\
+                                         & =
+                    \begin{pmatrix}
+                      10+5i & 11-2i \\
+                      11+2i & 10-5i \\
+                    \end{pmatrix}
+                  \end{align*}
+          \end{enumerate}
+    \item I'm not quite sure what this is asking as this isn't an area where commutativity can be defined. They aren't equal but they also aren't the commuted
+          forms of each other.
+    \item Find \begin{enumerate} [label=(\roman*)]
+            \item \begin{align*}
+                    \braket{\psi}{\psi} & =
+                    \begin{pmatrix}
+                      3-4i & 4-3i
+                    \end{pmatrix}
+                    \begin{pmatrix}
+                      3+4i \\
+                      4+3i
+                    \end{pmatrix}             \\
+                                        & = 50
+                  \end{align*}
+            \item \begin{align*}
+                    \braket{\phi}{\phi} & =
+                    \begin{pmatrix}
+                      2-i & 1-2i
+                    \end{pmatrix}
+                    \begin{pmatrix}
+                      2+i \\
+                      1+2i
+                    \end{pmatrix}             \\
+                                        & = 10
+                  \end{align*}
+            \item \begin{align*}
+                    \ket{\phi}\bra{\phi} & =
+                    \begin{pmatrix}
+                      2+i \\
+                      1+2i
+                    \end{pmatrix}
+                    \begin{pmatrix}
+                      2-i & 1-2i
+                    \end{pmatrix}                           \\
+                                         & =
+                    \begin{pmatrix}
+                      \left|2+i\right|^2 & (2+i)(1-2i)         \\
+                      (2-i)(1+2i)        & \left|1+2i\right|^2
+                    \end{pmatrix} \\
+                                         & =
+                    \begin{pmatrix}
+                      5    & 4-3i \\
+                      4+3i & 5
+                    \end{pmatrix}
+                  \end{align*}
+            \item \begin{align*}
+                    \ket{\psi}\bra{\psi} & =
+                    \begin{pmatrix}
+                      3+4i \\
+                      4+3i
+                    \end{pmatrix}
+                    \begin{pmatrix}
+                      3-4i & 4-3i
+                    \end{pmatrix}                            \\
+                                         & =
+                    \begin{pmatrix}
+                      \left|3+4i\right|^2 & (3+4i)(4-3i)        \\
+                      (3-4i)(4+3i)        & \left|4+3i\right|^2
+                    \end{pmatrix} \\
+                                         & =
+                    \begin{pmatrix}
+                      25    & 24+7i \\
+                      24-7i & 25
+                    \end{pmatrix}
+                  \end{align*}
+          \end{enumerate}
+  \end{enumerate}
+\end{soln}
+\newpage
+
+% PROBLEM 2
+\begin{problem}~
+\begin{enumerate}[label=(\alph*)]
+  \item Using the results from 1(d), normalize $\ket{\psi}$ and $\ket{\phi}$ so that they belong to Hilbert space. Here write about what is Hilbert space.
+  \item Identify which of the following belong to Hilbert space and state why?
+        \begin{enumerate}[label=(\roman*)]
+          \item $\ket{\psi}=\frac{1}{\sqrt{3}}\ket{0}+\sqrt{\frac{2}{3}}\ket{1}$
+          \item $\ket{\psi}=\frac{4}{5}\ket{+}+\frac{3}{5}\ket{-}$
+        \end{enumerate}
+\end{enumerate}
+\end{problem}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item Because a Hilbert space is a collection of orthonormal vectors (and these vectors are already orthogonal) we need to multiply them by the inverse of their inner product.
+          So $\ket{\psi}_H=\frac{1}{5\sqrt{2}}\begin{pmatrix}
+              3+4i \\
+              4+3i
+            \end{pmatrix}$ and $\ket{\phi}_H=\frac{1}{\sqrt{10}}\begin{pmatrix}
+              2+i \\
+              1+2i
+            \end{pmatrix}$
+    \item Identify which of the following belong to Hilbert space and state why?
+          \begin{enumerate}[label=(\roman*)]
+            \item Because this is already in an orthonormal basis we only have to care about the magnitude of the vector which is (by inspection ;)) 1.
+                  So this vector belongs to a vector space.
+            \item Again this is an orthonormal basis so all we care about is if $\braket{\phi}{\phi}=1$,
+                  \begin{align*}
+                    \braket{\phi}{\phi} & =
+                    \frac{1}{2}
+                    \begin{pmatrix}
+                      \frac{7}{5} & \frac{1}{5}
+                    \end{pmatrix}
+                    \begin{pmatrix}
+                      \frac{7}{5} \\
+                      \frac{1}{5}
+                    \end{pmatrix}            \\
+                                        & = 1
+                  \end{align*}
+          \end{enumerate}
+          So this vector is also part of a Hilbert space.
+  \end{enumerate}
+\end{soln}
+
+% PROBLEM 3
+\begin{problem}~
+\begin{enumerate}[label=(\alph*)]
+  \item Would $\ket{0}$ and $\ket{+}$ together satisfy the criteria for a valid basis? Why?
+  \item Review Stern and Gerlach Apparatus measurements from worksheet \#2. To measure
+        the difference between an electron in a spin state $\ket{+}$ and $\ket{-}$, which of the following
+        one could use? Explain.
+        \begin{enumerate}[label=(\Roman*)]
+          \item A horizontal SGA.
+          \item A vertical SGA.
+          \item A $\qty{45}{\degree}$ diagonal SGA.
+        \end{enumerate}
+\end{enumerate}
+\end{problem}
+\begin{soln} ~
+  \begin{enumerate}[label=(\alph*)]
+    \item Yes because they are both linearly independent (by inspection) and a spanning set as the matrix
+          $$\begin{pmatrix}
+              1 & \frac{1}{\sqrt{2}} \\
+              0 & \frac{1}{\sqrt{2}}
+            \end{pmatrix}$$
+          has dimension 2 which implies that the vectors span $\mathbb{R}^2$.
+    \item Because spin states are presented in basis $\ket{\uparrow}=\frac{1}{\sqrt{2}}\left(\ket{+}+\ket{-}\right)$ and
+          $\ket{\downarrow}=\frac{1}{\sqrt{2}}\left(\ket{+}-\ket{-}\right)$ changing to basis $\ket{+}$ and $\ket{-}$ means we would need an angle such that
+          $\sin(\theta)=\cos(\theta)=\frac{1}{\sqrt{2}}\implies\theta=\frac{\pi}{4}\unit{\radian}=\qty{45}{\degree}$.
+  \end{enumerate}
+\end{soln}
+\newpage
+
+% PROBLEM 4
+\begin{problem}~
+\begin{enumerate}[label=(\alph*)]
+  \item Using the link given, obtain the mathematical form of a qubit with $\theta=\frac{2\pi}{3}$ and $\phi\frac{3\pi}{2}$
+  \item Also find the corresponding orthonormal state for the state of qubit in (a).
+  \item Show that the inner products of the two states lead to 1.
+  \item Find their outer product.
+\end{enumerate}
+\end{problem}
+\begin{soln} ~
+  \begin{enumerate}[label=(\alph*)]
+    \item $\ket{\psi}=\cos\left(\frac{\pi}{3}\right)\ket{\uparrow}+e^{i\frac{3\pi}{2}}\sin\left(\frac{\pi}{3}\right)\ket{\downarrow}=
+            \frac{1}{2}\ket{\uparrow}-\frac{1}{2}\ket{\downarrow}$
+    \item $\ket{\psi}=\begin{pmatrix}
+              \frac{1}{\sqrt{2}} \\
+              0
+            \end{pmatrix}-\begin{pmatrix}
+              0 \\
+              \frac{1}{\sqrt{2}}
+            \end{pmatrix}$ so the vector is already orthonormal (as expected as we used the Bloch sphere to create it).
+    \item $\left[\begin{pmatrix}
+                \frac{1}{\sqrt{2}} & 0
+              \end{pmatrix}-\begin{pmatrix}
+                0 & \frac{1}{\sqrt{2}}
+              \end{pmatrix}\right]
+            \left[\begin{pmatrix}
+                \frac{1}{\sqrt{2}} \\
+                0
+              \end{pmatrix}-\begin{pmatrix}
+                0 \\
+                \frac{1}{\sqrt{2}}
+              \end{pmatrix}\right]=\frac{1}{2}+\frac{1}{2}=1$
+    \item $
+            \ket{\psi}\bra{\psi}  = \frac{1}{2}
+            \begin{pmatrix}
+              1 \\
+              -1
+            \end{pmatrix}
+            \begin{pmatrix}
+              1 & -1
+            \end{pmatrix}
+            = \frac{1}{2}\begin{pmatrix}
+              1  & -1 \\
+              -1 & 1
+            \end{pmatrix}
+          $
+  \end{enumerate}
+\end{soln}
+
+% PROBLEM 5
+\begin{problem}~
+\begin{center}
+  \begin{circuitikz}
+    \draw node[ieeestd xor port](T){}
+    (T.in 1) node[left]{$x$}
+    (T.in 2) node[left]{$y$}
+    (T.out) node[right]{$o$};
+  \end{circuitikz}
+\end{center}
+\begin{enumerate}[label=(\alph*)]
+  \item The figure shows two input XOR gate. Tabulate the outputs when, the inputs or (0,1), (1,0), (1,1), and (0,1) \textbf{assuming typo}
+  \item Compare the functionality of XOR gate with AND gate and OR gate.
+  \item Which gate is called as the Universal gate and why?
+\end{enumerate}
+\end{problem}
+\begin{soln} ~
+  \begin{enumerate}[label=(\alph*)]
+    \item\begin{displaymath}
+      \begin{array}{|c c|c|}
+        x & y & o \\
+        \hline
+        0 & 1 & 1 \\
+        1 & 0 & 1 \\
+        1 & 1 & 0 \\
+        0 & 0 & 0
+      \end{array}
+    \end{displaymath}
+    \item Exclusive or (XOR) is either but not both, AND is both, OR is either.
+          \begin{displaymath}
+            \begin{array}{|c c|c|c|c|}
+              x & y & XOR & AND & OR \\
+              \hline
+              0 & 1 & 1   & 0   & 1  \\
+              1 & 0 & 1   & 0   & 1  \\
+              1 & 1 & 0   & 1   & 1  \\
+              0 & 0 & 0   & 0   & 0
+            \end{array}
+          \end{displaymath}
+    \item NAND and NOR gates are sometimes called ``universal'' gates as any other gate can be constructed from some number of either.
+  \end{enumerate}
+\end{soln}
+\newpage
+
+% PROBLEM 6
+\begin{problem}~
+\begin{enumerate}[label=(\alph*)]
+  \item Use matrix multiplication to show how applying an $\hat{X}$ gate flips:
+        \begin{enumerate}[label=(\roman*)]
+          \item A qubit in the $\ket{0}$ state
+          \item A qubit in the general state $\ket{\psi}=\alpha\ket{0}+\beta\ket{1}$
+        \end{enumerate}
+  \item Use matrix multiplication to show how applying the $\hat{Z}$ gate to $\ket{+}$ changes it to
+        $\ket{-}$
+  \item Show that Hadamard gate is unitary and hence reversible.
+\end{enumerate}
+\end{problem}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item Use matrix multiplication to show how applying an X gate flips:
+          \begin{enumerate}[label=(\roman*)]
+            \item \begin{align*}
+                    \hat{X}\ket{0} & =
+                    \begin{pmatrix}
+                      0 & 1 \\
+                      1 & 0
+                    \end{pmatrix}
+                    \begin{pmatrix}
+                      1 \\
+                      0
+                    \end{pmatrix}             \\
+                                   & =
+                    \begin{pmatrix}
+                      (1)(0)+(1)(0) \\
+                      (1)(1)+(0)(0)
+                    \end{pmatrix}
+                                   & = \ket{1}
+                  \end{align*}
+            \item \begin{align*}
+                    \hat{X}\ket{\psi} & = \hat{X}\alpha\ket{0}+\hat{X}\beta\ket{1}                                                                        \\
+                                      & = \alpha\hat{X}\ket{0}+\beta\hat{X}\ket{1} \rightsquigarrow \text{ skipping as I'm in a rush and this is trivial} \\
+                                      & = \alpha\ket{1}+\beta\ket{0}
+                  \end{align*}
+          \end{enumerate}
+    \item \begin{align*}
+            \hat{Z}\ket{+} & =
+            \frac{1}{\sqrt{2}}
+            \begin{pmatrix}
+              1 & 0  \\
+              0 & -1
+            \end{pmatrix}
+            \begin{pmatrix}
+              1 \\
+              1
+            \end{pmatrix}             \\
+                           & =
+            \frac{1}{\sqrt{2}}
+            \begin{pmatrix}
+              (1)(1)+(1)(0) \\
+              (1)(0)+(1)(-1)
+            \end{pmatrix}             \\
+                           & = \ket{-}
+          \end{align*}
+    \item \begin{align*}
+            \hat{H}\hat{H} & =
+            \frac{1}{2}
+            \begin{pmatrix}
+              1 & 1  \\
+              1 & -1
+            \end{pmatrix}
+            \begin{pmatrix}
+              1 & 1  \\
+              1 & -1
+            \end{pmatrix}                    \\
+                           & =
+            \frac{1}{2}
+            \begin{pmatrix}
+              (1)(1)+(1)(1)  & (1)(1) +(1)(-1)  \\
+              (1)(1)+(-1)(1) & (1)(1) +(-1)(-1)
+            \end{pmatrix} \\
+                           & =
+            \begin{pmatrix}
+              1 & 0 \\
+              0 & 1
+            \end{pmatrix}                    \\
+                           & = I
+          \end{align*}
+  \end{enumerate}
+\end{soln}
+
+% PROBLEM 7
+\begin{problem}
+$\ket{\psi}=\frac{4}{5}\ket{+}+\frac{3}{5}\ket{-}$ is measured in basis $\left\{\ket{0},\ket{1}\right\}$
+\begin{enumerate}[label=(\alph*)]
+  \item Perform the necessary basis change for the given state.
+  \item What is the probability that the particle is in $\ket{1}$ state?
+\end{enumerate}
+\end{problem}
+\begin{soln}
+  $\ket{\psi}=\frac{4}{5}\ket{+}+\frac{3}{5}\ket{-}$ is measured in basis $\left\{\ket{0},\ket{1}\right\}$
+  \begin{enumerate}[label=(\alph*)]
+    \item \begin{align*}
+             & = \frac{4}{5}\frac{1}{\sqrt{2}}\left(\ket{0}+\ket{1}\right)+\frac{3}{5}\frac{1}{\sqrt{2}}\left(\ket{0}-\ket{1}\right) \\
+             & = \frac{7\sqrt{2}}{10}\ket{0}+\frac{\sqrt{2}}{10}\ket{1}
+          \end{align*}
+    \item $P(\ket{1})=\left(\frac{\sqrt{2}}{10}\right)^2=\frac{1}{50}=0.02$
+  \end{enumerate}
+\end{soln}
+\end{document}
