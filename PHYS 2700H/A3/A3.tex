@@ -67,8 +67,8 @@
 }
 
 \newcommand{\highlight}[1]{\colorbox{yellow}{$\displaystyle #1$}}
-
 \newcommand{\ti}[1]{\widetilde{#1}}
+\newcommand{\dbar}{d\hspace*{-0.08em}\bar{}\hspace*{0.1em}}
 
 \title{Physics 2700H: Assignment III}
 \author{Jeremy Favro (0805980) \\ Trent University, Peterborough, ON, Canada}
@@ -91,10 +91,10 @@ After the mixture has reached equilibrium, how much has entropy changed. (Assume
   \end{align*}
   Which means that $\Delta Q_C=836400=-Q_H$. To determine entropy change,
   \begin{align*}
-    dS                & = \frac{dQ}{T}                   \\
-    \implies \Delta S & =\int_{T_i}^{T_f}\frac{1}{T}\,dQ
+    dS                & = \frac{\dbar Q}{T}                   \\
+    \implies \Delta S & =\int_{T_i}^{T_f}\frac{1}{T}\,\dbar Q
   \end{align*}
-  Where $Q=mc\Delta T\implies dQ=mcdT$ so
+  Where $Q=mc\Delta T\implies \dbar Q=mcdT$ so
   \begin{align*}
     \Delta S & =mc\int_{T_i}^{T_f}\frac{1}{T}\,dT \\
              & =mc\ln\left(\frac{T_f}{T_i}\right)
@@ -217,7 +217,7 @@ sentence per point why this is so.
 \begin{problem}
 One mole of helium gas is initially at $P_0=\qty{1.0}{\atmosphere}$ and $T_0=\qty{273}{\kelvin}$.
 \begin{enumerate}[label=(\alph*)]
-  \item Compute the entropy change if the gas is heated at constant pressure to temperaturFe $\qty{400}{\kelvin}$.
+  \item Compute the entropy change if the gas is heated at constant pressure to temperature $\qty{400}{\kelvin}$.
   \item Starting again from the initial state $(P_0, T_0)$, what is the entropy change if
         the gas expands isothermally to twice its original volume?
 \end{enumerate}
@@ -225,7 +225,7 @@ One mole of helium gas is initially at $P_0=\qty{1.0}{\atmosphere}$ and $T_0=\qt
 \begin{soln}~
   \begin{enumerate}[label=(\alph*)]
     \item \begin{align*}
-            \Delta S & = \int_{T_i}^{T_f}\frac{1}{T}\,dQ    \\
+            \Delta S & = \int_{T_i}^{T_f}\frac{1}{T}\,\dbar Q    \\
                      & = \int_{T_i}^{T_f}\frac{nC_P}{T}\,dT
           \end{align*}
           Where $C_P=C_V+nR$ where $C_V$ for an ideal monatomic gas is $\frac{3}{2}R$ so for one mole we have,
@@ -235,9 +235,9 @@ One mole of helium gas is initially at $P_0=\qty{1.0}{\atmosphere}$ and $T_0=\qt
           \end{align*}
     \item Again,
           \begin{align*}
-            \Delta S & = \int_{V_i}^{2V_i}\frac{1}{T}\,dQ
+            \Delta S & = \int_{V_i}^{2V_i}\frac{1}{T}\,\dbar Q
           \end{align*}
-          Here we use the first law, $dU=dQ+dW$ where $dU$ is zero as $T$ is held constant and $dW=-PdV$ so $dQ=PdV$ so,
+          Here we use the first law, $dU=\dbar Q+\dbar W$ where $dU$ is zero as $T$ is held constant and $\dbar W=-PdV\implies \dbar Q=PdV$ so,
           \begin{align*}
             \Delta S & = \int_{V_i}^{2V_i}\frac{P}{T}\,dV                                      \\
                      & = \int_{V_i}^{2V_i}\frac{nR\cancel{T}}{V\cancel{T}}\,dV                 \\
