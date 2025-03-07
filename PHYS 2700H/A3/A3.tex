@@ -110,15 +110,14 @@ After the mixture has reached equilibrium, how much has entropy changed. (Assume
 The July 2023 Veritasium video about entropy, https://www.youtube.com/watch?v=DxL2HoqLbyA,
 introduces a Carnot engine within the first six minutes of the video. Draw on a $PV$ diagram the cycle for
 this engine, with the bottom-right-most point labelled (a), and continue the cycle to points (b), (c) and
-(d). Identify which timestamps in the video correspond to the four points (a)… (d) and explain using a
+(d). Identify which timestamps in the video correspond to the four points (a)\dots(d) and explain using a
 sentence per point why this is so.
 \end{problem}
 \begin{soln}~
-  % PV diagram - Carnot cycle
   \begin{center}
     \begin{tikzpicture}[scale=2]
-      \usetikzlibrary{arrows.meta} % to control arrow size
-      \tikzset{>={Latex[length=4,width=4]}} % for LaTeX arrow head
+      \usetikzlibrary{arrows.meta}
+      \tikzset{>={Latex[length=4,width=4]}}
       \usetikzlibrary{calc,decorations.markings,arrows.meta}
       \colorlet{mylightblue}{blue!20}
       \colorlet{myblue}{blue!80!black}
@@ -128,11 +127,10 @@ sentence per point why this is so.
       \colorlet{mydarkred}{red!60!black}
       \colorlet{mydarkgreen}{green!30!black}
 
-      \def\N{40} % number of plot samples
+      \def\N{40}
       \def\xmax{3}
       \def\ymax{2.5}
 
-      %\tikzstyle{midarr}=[decoration={markings,mark=at position 0.5 with {\arrow{stealth}}},postaction={decorate}]
       \tikzset{
         midarr/.style={decoration={markings,mark=at position #1 with {\arrow{stealth}}},postaction={decorate}},
         midarr/.default=0.5
@@ -159,16 +157,6 @@ sentence per point why this is so.
       \coordinate (C) at ({\xC},{\isotherm{\xC}{\Tc}});
       \coordinate (D) at ({\xD},{\isotherm{\xD}{\Tc}});
 
-      %\clip (-0.1*\xmax,-0.12*\ymax) rectangle (1.05*\xmax,1.1*\ymax);
-
-      % % WORK
-      % \fill[mylightblue,samples=\N]
-      % plot[domain={\xA:\xB}] (\x,\isotherm{\x}{\Th}) --
-      % plot[domain={\xB:\xC}] (\x,\adiabatic{\x}{\Cc}) --
-      % plot[domain={\xC:\xD}] (\x,\isotherm{\x}{\Tc}) --
-      % plot[domain={\xD:\xA}] (\x,\adiabatic{\x}{\Ch});
-      % \node[blue,scale=.9] at ($(B)!.5!(D)$) {$W$};
-
       % ADIABATIC & ISOTHERMIC TRANSFORMATIONS
       \draw[myred,thick,midarr=.60,domain={\xA:\xB},samples=\N]
       plot (\x,\isotherm{\x}{\Th}); % hot
@@ -181,10 +169,10 @@ sentence per point why this is so.
 
       % POINTS
       \fill[mydarkblue]
-      (A) circle(0.05) node[above,scale=.8] {(a)}
-      (B) circle(0.05) node[above right,scale=.8] {(b)}
-      (C) circle(0.05) node[right,scale=.8] {(c)}
-      (D) circle(0.05) node[below left,scale=.8] {(d)};
+      (A) circle(0.05) node[above,scale=.8] {(c)}
+      (B) circle(0.05) node[above right,scale=.8] {(d)}
+      (C) circle(0.05) node[right,scale=.8] {(a)}
+      (D) circle(0.05) node[below left,scale=.8] {(b)};
 
       % HEAT
       \draw[>={LaTeX[width=6,length=4]},->,line width=2,mydarkred]
@@ -202,12 +190,12 @@ sentence per point why this is so.
 
     \end{tikzpicture}
     \begin{enumerate}[label=(\alph*)]
+      \item 5:03 the cold block is brought into contact and the piston begins to move downwards with heat moving into the cold block, pressure increasing, and volume
+            decreasing.
+      \item 5:12 the cold block is removed and the gas continues to be compressed, now isothermally, pressure increases, and volume decreases.
       \item 4:41 is when the hot block is brought into contact with the heat ``aperture'' and heat flows into the gas
             increasing temperature, pressure, and thereby driving an increase in volume.
       \item 4:53 the hot block is removed but the piston continues to climb and so volume increases and pressure decreases along an isotherm.
-      \item 5:03 the cold block is brought into contact and the piston begins to move downwards with heat moving into the cold block, pressure increasing, and volume
-            decreasing.
-      \item 5:12 the cold block is removed and the has continues to be compressed, isothermally, meaning pressure increases and volume decreases.
     \end{enumerate}
   \end{center}
 \end{soln}
@@ -225,7 +213,7 @@ One mole of helium gas is initially at $P_0=\qty{1.0}{\atmosphere}$ and $T_0=\qt
 \begin{soln}~
   \begin{enumerate}[label=(\alph*)]
     \item \begin{align*}
-            \Delta S & = \int_{T_i}^{T_f}\frac{1}{T}\,\dbar Q    \\
+            \Delta S & = \int_{T_i}^{T_f}\frac{1}{T}\,\dbar Q \\
                      & = \int_{T_i}^{T_f}\frac{nC_P}{T}\,dT
           \end{align*}
           Where $C_P=C_V+nR$ where $C_V$ for an ideal monatomic gas is $\frac{3}{2}R$ so for one mole we have,

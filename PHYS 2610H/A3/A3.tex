@@ -81,8 +81,8 @@ A $\qty{50}{\electronvolt}$ electron is trapped between electrostatic walls $\qt
 How far does its wave function extend beyond the walls?
 \end{problem}
 \begin{soln}
-The penetration depth, given in the text as equation 24, is 
-$$\delta=\frac{\hbar}{\sqrt{2m_e\left(U_0-E\right)}}=\frac{\hbar}{\sqrt{2m_e\left(\qty{200}{\electronvolt}-\qty{50}{\electronvolt}\right)\cdot\qty{1.602d-19}{\joule\per\electronvolt}}}\approx\qty{1.59d-11}{\meter}$$
+  The penetration depth, given in the text as equation 24, is
+  $$\delta=\frac{\hbar}{\sqrt{2m_e\left(U_0-E\right)}}=\frac{\hbar}{\sqrt{2m_e\left(\qty{200}{\electronvolt}-\qty{50}{\electronvolt}\right)\cdot\qty{1.602d-19}{\joule\per\electronvolt}}}\approx\qty{1.59d-11}{\meter}$$
 \end{soln}
 
 % PROBLEM 2
@@ -92,17 +92,21 @@ oscillator of spring constant $\qty{480}{\newton\per\meter}$ and with effective 
 If it were in its ground vibrational state, what wavelength photon would be just right to bump this molecule up to its next-higher vibrational energy state?
 \end{problem}
 \begin{soln}
-
+  The energy of a quantum harmonic oscillator at state $n$ is given by $E=\left(\frac{1}{2}+n\right)\hbar\sqrt{\frac{\kappa}{m}}$ here $\kappa=\qty{480}{\newton\per\meter}$.
+  $\Delta E$ for this situation is then $\left(\frac{1}{2}+1-\frac{1}{2}-0\right)\hbar\sqrt{\frac{\kappa}{m}}=\hbar\sqrt{\frac{\kappa}{m_e+m_p}}$ then the wavelength is given by
+  $\frac{hc}{E}=\lambda\approx\qty{3.52}{\micro\meter}$
 \end{soln}
 
 % PROBLEM 3
 \begin{problem}
-  Calculate the reflection probability for a 5 eV
-  electron encountering a step in which the potential
-  drops by 2 eV.
+Calculate the reflection probability for a $\qty{5}{\electronvolt}$ electron encountering a step in which the potential drops by $\qty{2}{\electronvolt}$.
 \end{problem}
 \begin{soln}
-
+  Reflection probability is given by
+  $$\left(\frac{\sqrt{E}-\sqrt{E-U_0}}{\sqrt{E}+\sqrt{E-U_0}}\right)^2$$
+  where $E$ is the energy of the particle and $U_0$ the energy of the step. For a potential drop
+  $U_0$ will be negative provided we set zero so that (in this case) $U_0$ is $\qty{2}{\electronvolt}$ below zero potential. So the probability is
+  $$\left(\frac{\sqrt{\qty{5}{\electronvolt}}-\sqrt{\qty{5}{\electronvolt}+\qty{2}{\electronvolt}}}{\sqrt{\qty{5}{\electronvolt}}+\sqrt{\qty{5}{\electronvolt}+\qty{2}{\electronvolt}}}\right)^2\approx0.704\%$$
 \end{soln}
 
 % PROBLEM 4
@@ -118,15 +122,38 @@ $$\psi_{inc}(x)=e^{ikx}$$
         reflected probability density to the incident probability density is 1.
 \end{enumerate}
 \end{problem}
-\begin{soln}
-
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item Here I'll skip a few steps because they are direct from the text and say that because of the condition requiring that the incident, reflected, and transmitted wavefunctions
+          must be continuous and so must there first derivatives we obtain that before the step $\psi(x)=Ae^{ikx}+Be^{-ikx}$ and ``inside'' the step $\psi(x)=Ce^{-\alpha x}$ which gives us that
+          $A+B=C$ and $ik(A-B)=-\alpha C$. Here $A$ is the amplitude of the incident wave, $B$ that of the reflected wave, and $C$ that of the transmitted wave. Now, by the requirement that
+          total probability never exceeds 1 we assume that the incident wave is normalized so $A=1$. So,
+          $$1+B=C\implies ik(1-B)=-\alpha \left(1+B\right)\implies B=\frac{-\alpha-ik}{\alpha-ik}$$
+          which we then substitute the given values for $\alpha$ and $k$ into,
+          \begin{align*}
+            B & =\frac{-\frac{\sqrt{\cancel{2m}\left(U_0-E\right)}}{\cancel{\hbar}}-i\frac{\sqrt{\cancel{2m}E}}{\cancel{\hbar}}}{\frac{\sqrt{\cancel{2m}\left(U_0-E\right)}}{\cancel{\hbar}}-i\frac{\sqrt{\cancel{2m}E}}{\cancel{\hbar}}} \\
+              & =\frac{-\sqrt{\frac{5}{4}E-E}-i\sqrt{E}}{\sqrt{\frac{5}{4}E-E}-i\sqrt{E}}                                                                                                                                                 \\
+              & =\frac{-\frac{1}{2}-i}{\frac{1}{2}-i}                                                                                                                                                                                     \\
+              & =\frac{3}{5}-\frac{4}{5}i
+          \end{align*}
+          And $C=1+B=\frac{8}{5}-\frac{4}{5}i$
+    \item \begin{align*}
+            R & =\frac{AA^*}{BB^*}                                                                    \\
+              & =\frac{1}{\left(\frac{3}{5}-\frac{4}{5}i\right)\left(\frac{3}{5}+\frac{4}{5}i\right)} \\
+              & =\frac{1}{\frac{9}{25}+\frac{16}{25}}=1
+          \end{align*}
+  \end{enumerate}
 \end{soln}
 
 % PROBLEM 5
 \begin{problem}
-What fraction of a beam of $\qty{50}{\electronvolt}$ electrons would get through a $\qty{50}{volt}$, $\qty{1}{\nano\meter}$ wide electrostatic barrier?
+What fraction of a beam of $\qty{50}{\electronvolt}$ electrons would get through a $\qty{200}{\volt}$, $\qty{1}{\nano\meter}$ wide electrostatic barrier?
 \end{problem}
 \begin{soln}
-
+  The transmission probability $T$ for electrons of energy $E$ for potential step of height $U_0$ and ``width'' $L$ is given by
+  $$T+\frac{4\left(E/U_0\right)\left(1-E/U_0\right)}{\sinh^2\left(\sqrt{2m\left(U_0-E\right)}\cdot L/\hbar\right)+4\left(E/U_0\right)\left(1-E/U_0\right)}$$
+  here we have $U_0=\qty{200}{\electronvolt}$ as an $\unit{\electronvolt}$ is defined as the change in potential energy experienced by an electron across $\qty{1}{\volt}$.
+  This yields $T\approx\qty{9.55d-55}{}$ which means that 1 in $\qty{9.55d55}{}$ electrons would make it through the barrier. Note that this answer is a bit far from what is given
+  in the back of the book as I used the constants pre-programmed into my calculator to perform the calculation which I assume are more accurate than those used in the book's answers section.
 \end{soln}
 \end{document}
