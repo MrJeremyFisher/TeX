@@ -1,0 +1,609 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{changepage}
+\usepackage{circuitikz}
+\usepackage{pgfplots}
+\usepackage{physics}
+\usepackage{hyperref}
+\usepackage{siunitx}
+\usepackage[breakable]{tcolorbox}
+\usepackage[inline]{enumitem}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{soln}{Solution}
+
+\pgfplotsset{compat=newest}
+\usetikzlibrary{lindenmayersystems}
+\usetikzlibrary{arrows}
+\usetikzlibrary{calc}
+
+\definecolor{incolor}{HTML}{303F9F}
+\definecolor{outcolor}{HTML}{D84315}
+\definecolor{cellborder}{HTML}{CFCFCF}
+\definecolor{cellbackground}{HTML}{F7F7F7}
+\newcommand{\eq}{=}
+\usetikzlibrary{positioning, fit, calc}
+\pgfdeclarelayer{background}  
+\pgfsetlayers{background,main}
+\DeclareSIUnit[number-unit-product = {\,}]\calorie{cal}
+\DeclareSIUnit[number-unit-product = {\,}]\atmosphere{atm}
+\AtBeginDocument{\RenewCommandCopy\qty\SI}
+
+\makeatletter
+\newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+\makeatother
+\newcommand{\prompt}[4]{
+    \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+}
+
+\newcommand{\thevenin}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (2,0) to[battery1, l_=$V_{Th}\eq#1$] (2,2) 
+      to[resistor, l_=$R_{Th}\eq#2$] (0,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\norton}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (3,0) to[american current source, l_=$I_{N}\eq#1$] (3,2) -- (0,2) (2,0)
+      to[resistor, l=$R_{N}\eq#2$] (2,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\highlight}[1]{\colorbox{yellow}{$\displaystyle #1$}}
+
+\newcommand{\ti}[1]{\widetilde{#1}}
+
+\NewDocumentCommand{\evalat}{sO{\big}mm}{%
+  \IfBooleanTF{#1}
+   {\mleft. #3 \mright|_{#4}}
+   {#3#2|_{#4}}%
+}
+
+\title{Math 2350H: Assignment III}
+\author{Jeremy Favro (0805980) \\ Trent University, Peterborough, ON, Canada}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+% PROBLEM 1
+\begin{problem}
+Let $T:\mathcal{P}_3(\mathbb{R})\to\mathcal{M}_{2\cross2}(\mathbb{R})$ be the linear transformation given by
+$$T(a+bx+cx^2+dx^3)=\begin{pmatrix}
+    3a + 7b - 2c - 5d  & 8a + 14b - 2c - 11d  \\
+    -4a - 8b + 2c + 6d & 12a + 22b - 4c - 17d
+  \end{pmatrix}$$
+\begin{enumerate}[label=(\alph*)]
+  \item Find the matrix representation $\left[T\right]_\beta^\gamma$ for bases
+        $$\beta = \left\{1, x, x^2, x^3\right\},\qquad
+          \gamma=\left\{
+          \begin{pmatrix}
+            1 & 0 \\
+            0 & 0
+          \end{pmatrix},
+          \begin{pmatrix}
+            0 & 1 \\
+            0 & 0
+          \end{pmatrix},
+          \begin{pmatrix}
+            0 & 0 \\
+            1 & 0
+          \end{pmatrix},
+          \begin{pmatrix}
+            0 & 0 \\
+            0 & 1
+          \end{pmatrix}
+          \right\}.$$
+  \item Find the matrix representation $\left[T\right]_\mathcal{B}^\mathcal{C}$ for bases
+        $$\mathcal{B}=\left\{1 + x - x^2 + 2x^3, -1 + 2x + 2x^3, 2 + x - 2x^2 + 3x^3, 1 + x + 2x^3\right\},$$
+        $$
+          \mathcal{C}=\left\{
+          \begin{pmatrix}
+            1  & 1 \\
+            -1 & 2
+          \end{pmatrix},
+          \begin{pmatrix}
+            -1 & 2 \\
+            0  & 2
+          \end{pmatrix},
+          \begin{pmatrix}
+            2  & 1 \\
+            -2 & 3
+          \end{pmatrix},
+          \begin{pmatrix}
+            1 & 1 \\
+            0 & 2
+          \end{pmatrix}
+          \right\}
+          .$$
+  \item Let $p(x)=3-x+2x^2-5x^3$. Find $\left[p(x)\right]_\beta$ and $\left[p(x)\right]_\mathcal{B}$.
+  \item Find the image of $p(x)$ under $T$ in the following three ways:
+        \begin{enumerate}[label=(\roman*)]
+          \item By computing $T(p(x))$ directly
+          \item By computing $\left[T\right]_\beta^\gamma\left[p(x)\right]_\beta=\left[T(p(x))\right]_\gamma$
+          \item By computing $\left[T\right]_\mathcal{B}^\mathcal{C}\left[p(x)\right]_\mathcal{B}=\left[T(p(x))\right]_\mathcal{C}$
+        \end{enumerate}
+  \item Compute the matrix representations $\left[I\right]_\beta^\mathcal{B}$ and $\left[I\right]^\beta_\mathcal{B}$, where $I$ is the identity map
+        on $\mathcal{P}_3\left(\mathbb{R}\right)$. Show that $\left(\left[I\right]_\beta^\mathcal{B}\right)^{-1}=\left[I\right]^\beta_\mathcal{B}$
+  \item Compute the matrix product $\left[I\right]_\beta^\mathcal{B}\left[p(x)\right]_\beta$. What do we notice about the result?
+\end{enumerate}
+\end{problem}
+\newpage
+
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item Here we start by applying $T$ to each element of the input basis, $\beta$, and expressing the result as a linear combination of vectors in the output basis, $\gamma$,
+          \begin{align*}
+            T(1)   & =\begin{pmatrix}
+                        3  & 8  \\
+                        -4 & 12
+                      \end{pmatrix} = 3\gamma_1+8\gamma_2-4\gamma_3+12\gamma_4 \rightsquigarrow (\text{treating $\gamma$ as ordered}) \\
+            T(x)   & =\begin{pmatrix}
+                        7  & 14 \\
+                        -8 & 22
+                      \end{pmatrix} = 7\gamma_1+14\gamma_2-8\gamma_3+22\gamma_4                                                       \\
+            T(x^2) & =\begin{pmatrix}
+                        -2 & -2 \\
+                        2  & -4
+                      \end{pmatrix} = -2\gamma_1-2\gamma_2+2\gamma_3-4\gamma_4                                                        \\
+            T(x^3) & =\begin{pmatrix}
+                        -5 & -11 \\
+                        6  & -17
+                      \end{pmatrix} = -5\gamma_1-11\gamma_2+6\gamma_3-17\gamma_4
+          \end{align*}
+          These linear combinations give us the columns of
+          $$\left[T\right]_\beta^\gamma=\begin{pmatrix}
+              3  & 7  & -2 & -5    \\
+              8  & 14 & -2 & -11 & \\
+              -4 & -8 & 2  & 6     \\
+              12 & 22 & -4 & -17
+            \end{pmatrix}$$
+    \item Applying the same process as in part (a) (again treating $\mathcal{C}$ as ordered),
+          \begin{align*}
+            T(1+x-x^2+2x^3)  & =\begin{pmatrix}
+                                  2  & 2 \\
+                                  -2 & 4
+                                \end{pmatrix} =2\mathcal{C}_1+0\mathcal{C}_2+0\mathcal{C}_3+0\mathcal{C}_4 \\
+            T(-1+2x+2x^3)    & =\begin{pmatrix}
+                                  1 & -2 \\
+                                  0 & -2
+                                \end{pmatrix} =0\mathcal{C}_1-1\mathcal{C}_2+0\mathcal{C}_3+0\mathcal{C}_4 \\
+            T(2+x-2x^2+2x^3) & =\begin{pmatrix}
+                                  2  & 1 \\
+                                  -2 & 3
+                                \end{pmatrix} =0\mathcal{C}_1+0\mathcal{C}_2+1\mathcal{C}_3+0\mathcal{C}_4 \\
+            T(1+x+2x^3)      & =\begin{pmatrix}
+                                  0 & 0 \\
+                                  0 & 0
+                                \end{pmatrix} =0\mathcal{C}_1+0\mathcal{C}_2+0\mathcal{C}_3+0\mathcal{C}_4
+          \end{align*}
+          $$\implies\left[T\right]_\mathcal{B}^\mathcal{C}=\begin{pmatrix}
+              2 & 0  & 0 & 0 \\
+              0 & -1 & 0 & 0 \\
+              0 & 0  & 1 & 0 \\
+              0 & 0  & 0 & 0
+            \end{pmatrix}$$
+    \item Again we represent $p(x)$ as a linear combination where the coefficients give us the columns of the matrix representation.
+          For $\left[p(x)\right]_\beta$ we get $p(x)=3\cdot1-1\cdot x+2\cdot x^2-5\cdot x^3\implies \left[p(x)\right]_\beta=\begin{pmatrix}
+              3  \\
+              -1 \\
+              2  \\
+              -5
+            \end{pmatrix}$. Then for $\left[p(x)\right]_\mathcal{B}$ we have a less obvious solution (obtained by row-reduction of the associated matrix) of
+          $p(x)=32\mathcal{B}_1-7\mathcal{B}_2-17\mathcal{B}_3-2\mathcal{B}_4\implies \left[p(x)\right]_\mathcal{B}=\begin{pmatrix}
+              32  \\
+              -7  \\
+              -17 \\
+              -2
+            \end{pmatrix}$
+
+    \item Find the image of $p(x)$ under $T$ in the following three ways:
+          \begin{enumerate}[label=(\roman*)]
+            \item $T(p(x))=T(3-x+2x^2-5x^3)=\begin{pmatrix}
+                      23  & 61 \\
+                      -30 & 91
+                    \end{pmatrix}$
+            \item \begin{align*}
+                    \left[T\right]_\beta^\gamma\left[p(x)\right]_\beta
+                     & =\begin{pmatrix}
+                          3  & 7  & -2 & -5    \\
+                          8  & 14 & -2 & -11 & \\
+                          -4 & -8 & 2  & 6     \\
+                          12 & 22 & -4 & -17
+                        \end{pmatrix}\begin{pmatrix}
+                                       3  \\
+                                       -1 \\
+                                       2  \\
+                                       -5
+                                     \end{pmatrix}                       \\
+                     & =\begin{pmatrix}
+                          3\cdot 3+7\cdot (-1)+(-2)\cdot 2+(-5)^2          \\
+                          8\cdot 3+14\cdot (-1)+(-2)\cdot 2+(-11)\cdot(-5) \\
+                          -4\cdot 3+(-8)\cdot (-1)+2\cdot 2+6\cdot(-5)     \\
+                          12\cdot 3+22\cdot (-1)+(-4)\cdot 2+(-17)\cdot (-5)
+                        \end{pmatrix} \\
+                     & =\begin{pmatrix}
+                          23  \\
+                          -49 \\
+                          -30 \\
+                          91
+                        \end{pmatrix}                                    \\
+                  \end{align*}
+            \item \begin{align*}
+                    \left[T\right]_\mathcal{B}^\mathcal{C}
+                    \left[p(x)\right]_\mathcal{B} & =\begin{pmatrix}
+                                                       2 & 0  & 0 & 0 \\
+                                                       0 & -1 & 0 & 0 \\
+                                                       0 & 0  & 1 & 0 \\
+                                                       0 & 0  & 0 & 0
+                                                     \end{pmatrix}\begin{pmatrix}
+                                                                    32  \\
+                                                                    -7  \\
+                                                                    -17 \\
+                                                                    -2
+                                                                  \end{pmatrix} \\
+                                                  & = \begin{pmatrix}
+                                                        64  \\
+                                                        7   \\
+                                                        -17 \\
+                                                        0
+                                                      \end{pmatrix}
+                  \end{align*}
+          \end{enumerate}
+    \item For $\left[I\right]_\beta^\mathcal{B}$,
+          \begin{align*}
+            I(1)   & =1\cdot 1 + 0\cdot x + 0\cdot x^2 + 0\cdot x^3 \\
+            I(x)   & =0\cdot 1 + 1\cdot x + 0\cdot x^2 + 0\cdot x^3 \\
+            I(x^2) & =0\cdot 1 + 0\cdot x + 1\cdot x^2 + 0\cdot x^3 \\
+            I(x^3) & =0\cdot 1 + 0\cdot x + 0\cdot x^2 + 1\cdot x^3
+          \end{align*}
+          solving the associated matrices for coefficients of the elements of $\mathcal{B}$ yields
+          $$\left[I\right]_\beta^\mathcal{B}=\begin{pmatrix}
+              4  & 8  & -1 & -6 \\
+              1  & 1  & 0  & -1 \\
+              -2 & -4 & 0  & 3  \\
+              0  & -1 & 1  & 1
+            \end{pmatrix}.$$
+          Then for $\left[I\right]^\beta_\mathcal{B}$,
+          \begin{align*}
+            I(1 + x - x^2 + 2x^3)  & =1\cdot 1 + 1\cdot x - 1\cdot x^2 + 2\cdot x^3  \\
+            I(-1 + 2x + 2x^3)      & =-1\cdot 1 + 2\cdot x + 0\cdot x^2 + 2\cdot x^3 \\
+            I(2 + x - 2x^2 + 3x^3) & =2\cdot 1 + 1\cdot x - 2\cdot x^2 + 3\cdot x^3  \\
+            I(1 + x + 2x^3)        & =1\cdot 1 + 1\cdot x + 0\cdot x^2 + 2\cdot x^3
+          \end{align*}
+          which yields
+          $$\left[I\right]^\beta_\mathcal{B}=
+            \begin{pmatrix}
+              1  & -1 & 2  & 1 \\
+              1  & 2  & 1  & 1 \\
+              -1 & 0  & -2 & 0 \\
+              2  & 2  & 3  & 2
+            \end{pmatrix}.$$
+          To find $\left(\left[I\right]_\beta^\mathcal{B}\right)^{-1}$ we work the matrix $\left[\left[I\right]_\beta^\mathcal{B}\,|\,I \right]$ to
+          $\left[I\,|\left(\left[I\right]_\beta^\mathcal{B}\right)^{-1}\right]$ which \textbf{TYPESET THIS :(}
+    \item $\left[I\right]_\beta^\mathcal{B}\left[p(x)\right]_\beta=\begin{pmatrix}
+              1  & -1 & 2  & 1 \\
+              1  & 2  & 1  & 1 \\
+              -1 & 0  & -2 & 0 \\
+              2  & 2  & 3  & 2
+            \end{pmatrix}\begin{pmatrix}
+              3  \\
+              -1 \\
+              2  \\
+              -5
+            \end{pmatrix}=
+            \begin{pmatrix}
+              32  \\
+              -7  \\
+              -17 \\
+              -2
+            \end{pmatrix}=\left[p(x)\right]_\mathcal{B}$
+  \end{enumerate}
+\end{soln}
+
+% PROBLEM 2
+\begin{problem}
+If $\beta$ and $\gamma$ are two bases for a finite dimensional vector space $V$,
+and $I$ is the identity map on $V$, the matrix $\left[I\right]_\gamma^\beta$ is \emph{called a change of basis matrix}
+(\emph{or change of coordinates matrix}). It is always invertible because $I$ is invertible.
+\begin{enumerate}
+  \item Let $S\in \mathcal{L}(V)$. Show that
+        $$\left[S\right]_\gamma=\left(\left[I\right]_\gamma^\beta\right)^{-1}\left[S\right]_\beta\left[I\right]_\gamma^\beta$$
+        by using the properties (given in class) which relate matrix multiplication and composition of linear maps
+  \item Let $T\in\mathcal{L}(\mathcal{M}_{2\cross 2}(\mathbb{R}))$ be the map given by
+        $$T\begin{pmatrix}
+            a & b \\
+            c & d
+          \end{pmatrix}=
+          \begin{pmatrix}
+            -17a+11b+8c-11d & -57a+35b+24c-33d \\
+            -14a+10b+6c-10d & -41a+25b+16c-23d
+          \end{pmatrix}.$$
+        Find the matrix representations $\left[T\right]_\beta$ and $\left[T\right]_\gamma$ for bases
+        $$\beta=\left\{\begin{pmatrix}
+            1 & 0 \\
+            0 & 0
+          \end{pmatrix},
+          \begin{pmatrix}
+            0 & 1 \\
+            0 & 0
+          \end{pmatrix},
+          \begin{pmatrix}
+            0 & 0 \\
+            1 & 0
+          \end{pmatrix},
+          \begin{pmatrix}
+            0 & 0 \\
+            0 & 1
+          \end{pmatrix}\right\},$$
+        $$\gamma=
+          \left\{\begin{pmatrix}
+            0 & 1 \\
+            0 & 1
+          \end{pmatrix},
+          \begin{pmatrix}
+            1 & 1 \\
+            1 & 0
+          \end{pmatrix},
+          \begin{pmatrix}
+            1 & 3 \\
+            2 & 3
+          \end{pmatrix},
+          \begin{pmatrix}
+            2 & 6 \\
+            1 & 4
+          \end{pmatrix}\right\}.$$
+  \item Find the change of basis matrix $\left[I\right]_\gamma^\beta$ and use it to verify what was shown in part (a) using the matrices computed in part (b).
+\end{enumerate}
+\end{problem}
+\begin{soln}~
+  \begin{enumerate}
+    \item $$\left(\left[I\right]_\gamma^\beta\right)^{-1}\left[S\right]_\beta\left[I\right]_\gamma^\beta
+            = \left[I\right]_\beta^\gamma\left[S\right]_\beta^\beta\left[I\right]_\gamma^\beta$$
+          Because each of these are matrix representations of linear maps and composition of linear maps in matrix form is matrix multiplication the above expression can be
+          re-written as
+          $$I_{\beta\gamma}(S(I_{\gamma\beta}))$$
+          which maps per $\gamma\to\beta\to\beta\to\gamma$, however the $\gamma\to\beta$ and $\beta\to\gamma$ steps are done using identity maps which do not change the
+          mapped vector and can be removed from the expression yielding
+          $$\left[I\right]_\beta^\gamma\left[S\right]_\beta^\beta\left[I\right]_\gamma^\beta\implies I_{\beta\gamma}(S(I_{\gamma\beta}))=S\implies\left[S\right]_\gamma.$$
+    \item For $\left[T\right]_\beta$,
+          \begin{align*}
+            T(\beta_1) & =\begin{pmatrix}
+                            -17 & -57 \\
+                            -14 & -41
+                          \end{pmatrix}=-17\beta_1-57\beta_2-14\beta_3-41\beta_4 \\
+            T(\beta_2) & =\begin{pmatrix}
+                            11 & 35 \\
+                            10 & 25
+                          \end{pmatrix}=11\beta_1+35\beta_2+10\beta_3+25\beta_4  \\
+            T(\beta_3) & =\begin{pmatrix}
+                            8 & 24 \\
+                            6 & 16
+                          \end{pmatrix}=8\beta_1+24\beta_2+6\beta_3+16\beta_4    \\
+            T(\beta_4) & =\begin{pmatrix}
+                            -11 & -33 \\
+                            -10 & -23
+                          \end{pmatrix}=-11\beta_1-33\beta_2-10\beta_3-23\beta_4
+          \end{align*}
+          so,
+          $$\left[T\right]_\beta=\begin{pmatrix}
+              -17 & 11 & 8  & -11 \\
+              -57 & 35 & 24 & -33 \\
+              -14 & 10 & 6  & -10 \\
+              -41 & 25 & 16 & -23
+            \end{pmatrix}.$$
+          Then for $\left[T\right]_\gamma$ we get
+          \begin{align*}
+            T(\gamma_1) & =\begin{pmatrix}
+                             0 & 2 \\
+                             0 & 2
+                           \end{pmatrix}=2\gamma_1+0\gamma_2+0\gamma_3+0\gamma_4 \\
+            T(\gamma_2) & =\begin{pmatrix}
+                             2 & 2 \\
+                             2 & 0
+                           \end{pmatrix}=0\gamma_1+2\gamma_2+0\gamma_3+0\gamma_4 \\
+            T(\gamma_3) & =\begin{pmatrix}
+                             -1 & -3 \\
+                             -2 & -3
+                           \end{pmatrix}=0\gamma_1+0\gamma_2-1\gamma_3+0\gamma_4 \\
+            T(\gamma_4) & =\begin{pmatrix}
+                             -4 & -12 \\
+                             -2 & -8
+                           \end{pmatrix}=0\gamma_1+0\gamma_2+0\gamma_3-2\gamma_4
+          \end{align*}
+          so,
+          $$\left[T\right]_\gamma=\begin{pmatrix}
+              2 & 0 & 0  & 0  \\
+              0 & 2 & 0  & 0  \\
+              0 & 0 & -1 & 0  \\
+              0 & 0 & 0  & -2
+            \end{pmatrix}.$$
+    \item Applying $I$ to the input basis,
+          \begin{align*}
+            I(\gamma_1) & =\gamma_1=0\beta_1+1\beta_2+0\beta_3+1\beta_4 \\
+            I(\gamma_2) & =\gamma_1=1\beta_1+1\beta_2+1\beta_3+0\beta_4 \\
+            I(\gamma_3) & =\gamma_1=1\beta_1+3\beta_2+2\beta_3+3\beta_4 \\
+            I(\gamma_4) & =\gamma_1=2\beta_1+6\beta_2+1\beta_3+4\beta_4
+          \end{align*}
+          so $\left[I\right]_\gamma^\beta=\begin{pmatrix}
+              0 & 1 & 1 & 2 \\
+              1 & 1 & 3 & 6 \\
+              0 & 1 & 2 & 1 \\
+              1 & 0 & 3 & 4
+            \end{pmatrix}$. Now,
+          \begin{align*}
+             & = \left(\left[I\right]_\gamma^\beta\right)^{-1}\left[T\right]_\beta\left[I\right]_\gamma^\beta \\
+             & = \begin{pmatrix}
+                   0 & 1 & 1 & 2 \\
+                   1 & 1 & 3 & 6 \\
+                   0 & 1 & 2 & 1 \\
+                   1 & 0 & 3 & 4
+                 \end{pmatrix}^{-1}
+            \begin{pmatrix}
+              -17 & 11 & 8  & -11 \\
+              -57 & 35 & 24 & -33 \\
+              -14 & 10 & 6  & -10 \\
+              -41 & 25 & 16 & -23
+            \end{pmatrix}
+            \begin{pmatrix}
+              0 & 1 & 1 & 2 \\
+              1 & 1 & 3 & 6 \\
+              0 & 1 & 2 & 1 \\
+              1 & 0 & 3 & 4
+            \end{pmatrix}                                                                                    \\
+             & =
+            \begin{pmatrix}
+              -11 & 7  & 4  & -6 \\
+              -4  & 3  & 2  & -3 \\
+              1   & -1 & 0  & 1  \\
+              2   & -1 & -1 & 1
+            \end{pmatrix}
+            \begin{pmatrix}
+              -17 & 11 & 8  & -11 \\
+              -57 & 35 & 24 & -33 \\
+              -14 & 10 & 6  & -10 \\
+              -41 & 25 & 16 & -23
+            \end{pmatrix}
+            \begin{pmatrix}
+              0 & 1 & 1 & 2 \\
+              1 & 1 & 3 & 6 \\
+              0 & 1 & 2 & 1 \\
+              1 & 0 & 3 & 4
+            \end{pmatrix}                                                                                    \\
+             & =
+            \begin{pmatrix}
+              -22 & 14 & 8 & -12 \\
+              -8  & 6  & 4 & -6  \\
+              -1  & 1  & 0 & -1  \\
+              -4  & 2  & 2 & -2
+            \end{pmatrix}
+            \begin{pmatrix}
+              0 & 1 & 1 & 2 \\
+              1 & 1 & 3 & 6 \\
+              0 & 1 & 2 & 1 \\
+              1 & 0 & 3 & 4
+            \end{pmatrix}                                                                                    \\
+             & =
+            \begin{pmatrix}
+              2 & 0 & 0  & 0 \\
+              0 & 2 & 0  & 0 \\
+              0 & 0 & -1 & 0 \\
+              0 & 0 & 0  & 2
+            \end{pmatrix}=\left[T\right]_\gamma                                                               \\
+          \end{align*}
+  \end{enumerate}
+\end{soln}
+\newpage
+
+% PROBLEM 3 
+\begin{problem}
+Let $T:\mathcal{P}_3(\mathbb{R})\to\mathcal{M}_{2\cross 2}(\mathbb{R})$ be the linear transformation given by
+$$T(a+bx+cx^2+dx^3)=\begin{pmatrix}
+    a+b & a-2c \\
+    d   & b-d
+  \end{pmatrix}$$
+\begin{enumerate}[label=(\alph*)]
+  \item Find the null space of $T$.
+  \item Show that $T$ is invertible without giving an explicit inverse.
+  \item Find the matrix representation $\left[T\right]_\beta^\gamma$ for bases
+        $$\beta=\left\{1,x,x^2,x^3\right\},\qquad \gamma=\left\{
+          \begin{pmatrix}
+            1 & 0 \\
+            0 & 0
+          \end{pmatrix},
+          \begin{pmatrix}
+            0 & 1 \\
+            0 & 0
+          \end{pmatrix},
+          \begin{pmatrix}
+            0 & 0 \\
+            1 & 0
+          \end{pmatrix},
+          \begin{pmatrix}
+            0 & 0 \\
+            0 & 1
+          \end{pmatrix}
+          \right\}.$$
+  \item Compute $\left(\left[T\right]_\beta^\gamma\right)^{-1}$ and use this to find an expression for $T^{-1}$; i.e. find $T^{-1}\begin{pmatrix}
+            a & b \\
+            c & d
+          \end{pmatrix}$.
+  \item Consider the $2\cross 2$ identity matrix
+        $$I_2=\begin{pmatrix}
+            1 & 0 \\
+            0 & 1
+          \end{pmatrix}$$
+        Find its pre-image in $\mathcal{P}_3(\mathbb{R})$ under $T$ in two ways:
+        \begin{enumerate}[label=(\roman*)]
+          \item By computing $T^{-1}(I_2)$ is the result from (d)
+          \item By first finding $\left[I_2\right]\gamma$, then computing $\left(\left[T\right]_\beta^\gamma\right)^{-1}\left[I_2\right]_\gamma$.
+        \end{enumerate}
+\end{enumerate}
+\end{problem}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item $\text{null}\,T$ is all $p(x)=a+bx+cx^2+dx^3\in \mathcal{P}_3(\mathbb{R})$ such that $a+b=a-2c=d=b-d=0$ which has only the trivial solution,
+          $a=b=c=d=0$ so $\text{null}\,T=\left\{0\right\}$.
+    \item Because $\text{range}\, T=\mathcal{M}_{2\cross 2}(\mathbb{R})$ and $\text{null}\,T=\left\{0\right\}$ we are guaranteed that $T$ is both invertible and
+          bijective.
+    \item Applying $T$ to the elements of $\beta$,
+          \begin{align*}
+            T(1)   & =\begin{pmatrix}
+                        1 & 1 \\
+                        0 & 0
+                      \end{pmatrix}=\gamma_1+\gamma_2+0\gamma_3+0\gamma_4   \\
+            T(x)   & =\begin{pmatrix}
+                        1 & 0 \\
+                        0 & 1
+                      \end{pmatrix}=1\gamma_1+0\gamma_2+0\gamma_3+1\gamma_4 \\
+            T(x^2) & =\begin{pmatrix}
+                        0 & -2 \\
+                        0 & 0
+                      \end{pmatrix}=0\gamma_1-2\gamma_2+0\gamma_3+0\gamma_4 \\
+            T(x^3) & =\begin{pmatrix}
+                        0 & 0  \\
+                        1 & -1
+                      \end{pmatrix}=0\gamma_1+0\gamma_2+1\gamma_3-1\gamma_4 \\
+          \end{align*}
+          so,
+          $$\left[T\right]_\beta^\gamma=\begin{pmatrix}
+              1 & 1 & 0  & 0  \\
+              1 & 0 & -2 & 0  \\
+              0 & 0 & 0  & 1  \\
+              0 & 1 & 0  & -1
+            \end{pmatrix}
+          $$
+    \item Compute $\left(\left[T\right]_\beta^\gamma\right)^{-1}$ and use this to find an expression for $T^{-1}$; i.e. find $T^{-1}\begin{pmatrix}
+              a & b \\
+              c & d
+            \end{pmatrix}$.
+    \item Consider the $2\cross 2$ identity matrix
+          $$I_2=\begin{pmatrix}
+              1 & 0 \\
+              0 & 1
+            \end{pmatrix}$$
+          Find its pre-image in $\mathcal{P}_3(\mathbb{R})$ under $T$ in two ways:
+          \begin{enumerate}[label=(\roman*)]
+            \item By computing $T^{-1}(I_2)$ is the result from (d)
+            \item By first finding $\left[I_2\right]\gamma$, then computing $\left(\left[T\right]_\beta^\gamma\right)^{-1}\left[I_2\right]_\gamma$.
+          \end{enumerate}
+  \end{enumerate}
+\end{soln}
+\end{document}
