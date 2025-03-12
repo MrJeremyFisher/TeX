@@ -5,6 +5,7 @@
 \usepackage{xcolor}
 \usepackage{lipsum}
 \usepackage{cancel}
+\usepackage{pdflscape}
 \usepackage{graphicx}
 \usepackage{changepage}
 \usepackage{circuitikz}
@@ -82,13 +83,40 @@ Layla Scrimgeour-Brown (0766619)
 \begin{abstract}
 \end{abstract}
 \section{Introduction}
-\lipsum[1]\cite{codata}
+Spectroscopy is a useful tool in many fields. A visible light spectrometer---such as the one employed in this experiment---can be used to determine the composition of an object by measuring emission or absorption of
+specific wavelengths of photons by that object.
+
+This experiment seeks to employ a digital visible light spectrometer to verify calculated values for electron energy level transitions in a helium atom,
+determine the active ``ingredient'' \textbf{REPHRASE} in unknown visible light emitters, and determine a method to resolve merged spectral lines for energy
+level transitions with similar emitted photons.
 \section{Theory}
-\lipsum[2]
+Electrons in orbit around atomic nuclei exist in specific, quantized, energy levels and may only move between these levels when a ``hole'' \textbf{REWORK}
+is available for them to do so. In order to ``jump'' up to a higher energy level an electron must be given energy, usually by a photon, who's energy is given by
+$$E=\frac{hc}{\lambda}$$ where $h$ is Planck's constant\cite{codata}, $c$ the speed of light in the medium through which the photon moves, and $\lambda$ the
+wavelength of the photon. Electrons may also decay to a lower energy level, emitting the energy lost in that process as a photon of energy given by the difference in energy
+between the final and initial energy levels.
+
+The spectrometer employed in this experiment records the number of these emitted photons for a given wavelength by separating\dots
 \section{Methods}
 \lipsum[3-5]
 \section{Discussion}
-\lipsum[6-9]
+\subsection{Helium Spectrum}
+\begin{figure}
+  \begin{tikzpicture}
+    \begin{axis}[
+        ymode=log,
+        width=\columnwidth,
+      ]
+      \addplot table [col sep=comma,
+          header=false,
+          x index=0,
+          y index=1,
+          mark=none] {He/He_VIS_100_0.1nm_250um_350-750-PROCESSED.csv};
+    \end{axis}
+    \label{figure-1}
+  \end{tikzpicture}
+  \caption{Helium spectrum}
+\end{figure}
 \subsection{Sources of error}
 \lipsum[10]
 \section{Conclusion}
@@ -100,5 +128,20 @@ Layla Scrimgeour-Brown (0766619)
 \section{Appendix}
 \lipsum[12]
 \subsection{Figures}
-blahblahblah
+\begin{landscape}
+  \begin{tikzpicture}
+    \begin{axis}[
+        ymode=log,
+        width=1.33*\textwidth,
+        height=\textheight
+      ]
+      \addplot table [col sep=comma,
+          header=false,
+          x index=0,
+          y index=1,
+          mark=none] {He/He_VIS_100_0.1nm_250um_350-750-PROCESSED.csv};
+    \end{axis}
+    \label{figure-1-large}
+  \end{tikzpicture}
+\end{landscape}
 \end{document}
