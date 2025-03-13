@@ -25,6 +25,7 @@
 \usetikzlibrary{lindenmayersystems}
 \usetikzlibrary{arrows}
 \usetikzlibrary{calc}
+\usetikzlibrary{plotmarks}
 
 \definecolor{incolor}{HTML}{303F9F}
 \definecolor{outcolor}{HTML}{D84315}
@@ -101,21 +102,166 @@ The spectrometer employed in this experiment records the number of these emitted
 \lipsum[3-5]
 \section{Discussion}
 \subsection{Helium Spectrum}
+% \begin{figure}
+%   \begin{tikzpicture}[define rgb/.code={\definecolor{mycolor}{RGB}{#1}},
+%       rgb color/.style={define rgb={#1},mycolor}]
+%     \begin{axis}[
+%         ymode=log,
+%         width=\columnwidth,
+%         axis background/.style={fill=black!60},
+%         xmin=350,
+%         xmax=750
+%       ]
+%       \addplot table [col sep=comma,
+%           header=false,
+%           x index=0,
+%           y index=1,
+%           mark=none
+%         ] {He/He_VIS_100_0.1nm_250um_350-750-PROCESSED.csv};
+%       \draw[rgb color={124, 0, 149}] (392.233771,0.01) -- (392.233771,0.7);
+%       \draw[rgb color={0, 255, 97}] (504.922999,0.01) -- (504.922999,0.7);
+%       \draw[rgb color={129, 0, 165}] (396.573604,0.01) -- (396.573604,0.7);
+%       \draw[rgb color={0, 255, 135}] (501.705800,0.01) -- (501.705800,0.7);
+%       \draw[rgb color={179, 0, 0}] (728.119994,0.01) -- (728.119994,0.7);
+%       \draw[rgb color={17, 0, 255}] (438.788943,0.01) -- (438.788943,0.7);
+%       \draw[rgb color={0, 255, 234}] (492.319811,0.01) -- (492.319811,0.7);
+%       \draw[rgb color={234, 0, 0}] (668.002672,0.01) -- (668.002672,0.7);
+%       \draw[rgb color={123, 0, 226}] (412.201154,0.01) --(412.201154,0.7);
+%       \draw[rgb color={0, 174, 255}] (471.453491,0.01) -- (471.453491,0.7);
+%       \draw[rgb color={131, 0, 188}] (706.514060,0.01) -- (706.514060,0.7);
+%       \draw[rgb color={118, 0, 132}] (388.983974,0.01) -- (388.983974,0.7);
+%       \draw[rgb color={131, 0, 188}] (402.608906,0.01) -- (402.608906,0.7);
+%       \draw[rgb color={0, 53, 255}] (447.287203,0.01) -- (447.287203,0.7);
+%       \draw[rgb color={255, 233, 0}] (587.716721,0.01) -- (587.716721,0.7); % Yuck
+%     \end{axis}
+%     \label{helium-spectrum-1}
+%   \end{tikzpicture}
+%   \caption{Helium lamp spectrum. Coloured lines denote predicted values. See appendix for full size and overlay. Generated with TikZ}
+% \end{figure}
+\begin{table}[ht!]
+  \centering%
+  \begin{tabular}{p{0.2\columnwidth}p{0.1\columnwidth}p{0.2\columnwidth}p{0.06\columnwidth}p{0.1\columnwidth}}
+    \toprule
+    Assigned Transition         & Pred. wavelength, $\lambda_p (\unit{\nano\meter})$ & Obs. wavelength, $\lambda_o (\unit{\nano\meter})$ & \% Diff & Comments        \\
+    \midrule
+    $1s0s{}^1\!S$ $1s3p{}^1\!P$ & $392$                                              & 0                                                 & 0       & `'              \\
+    \hline
+    $1s0s{}^3\!S$ $1s3p{}^3\!P$ & $412$                                              & 0                                                 & 0       & `'              \\
+    \hline
+    $1s1s{}^1\!S$ $1s3p{}^1\!P$ & $505$                                              & $505\pm1.7$                                       & 0.337   & Extremely faint \\
+    \hline
+    $1s1s{}^3\!S$ $1s3p{}^3\!P$ & $471$                                              & $471\pm0.6$                                       & 0.127   & `'              \\
+    \hline
+    $1s2s{}^1\!S$ $1s1p{}^1\!P$ & $397$                                              & 0                                                 & 0       & `'              \\
+    \hline
+    $1s2s{}^1\!S$ $1s2p{}^1\!P$ & $502$                                              & $502\pm1.6$                                       & 0.319   & `'              \\
+    \hline
+    $1s2s{}^3\!S$ $1s3p{}^3\!P$ & $707$                                              & $707\pm1.5$                                       & 0.212   & `'              \\
+    \hline
+    $1s3s{}^1\!P$ $1s0p{}^1\!D$ & $439$                                              & 0                                                 & 0       & `'              \\
+    \hline
+    $1s3s{}^1\!P$ $1s1p{}^1\!D$ & $492$                                              & $492\pm1.6$                                       & 0.325   & `'              \\
+    \hline
+    $1s3s{}^1\!P$ $1s2p{}^1\!D$ & $668$                                              & $668\pm1.8$                                       & 0.269   & `'              \\
+    \hline
+    $1s3s{}^1\!S$ $1s3p{}^1\!P$ & $728$                                              & $728\pm1.5$                                       & 0.206   & `'              \\
+    \hline
+    $1s3s{}^3\!P$ $1s0p{}^3\!D$ & $403$                                              & 0                                                 & 0       & `'              \\
+    \hline
+    $1s3s{}^3\!P$ $1s1p{}^3\!D$ & $447$                                              & $447\pm1.6$                                       & 0.358   & `'              \\
+    \hline
+    $1s3s{}^3\!P$ $1s2p{}^3\!D$ & $588$                                              & $588\pm1.5$                                       & 0.255   & `'              \\
+    \hline
+    $1s3s{}^3\!S$ $1s2p{}^3\!P$ & $389$                                              & $389\pm1.4 $                                      & 0.360   & `'              \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+% \begin{figure}
+%   \begin{tikzpicture}
+%     \begin{axis}[
+%         ymode=log,
+%         width=\columnwidth,
+%         xmin=350,
+%         xmax=750
+%       ]
+%       \addplot table [col sep=comma,
+%           header=false,
+%           x index=0,
+%           y index=1,
+%           mark=none
+%         ] {Phi/Phi_VIS_100_0.1nm_250um_350-750-PROCESSED.csv};
+%     \end{axis}
+%     \label{phi-spectrum-1}
+%   \end{tikzpicture}
+%   \caption{$\phi$ lamp spectrum. See appendix for full size and overlay.}
+% \end{figure}
+% \begin{figure}
+%   \begin{tikzpicture}
+%     \begin{axis}[
+%         ymode=log,
+%         width=\columnwidth,
+%         xmin=350,
+%         xmax=750
+%       ]
+%       \addplot table [col sep=comma,
+%           header=false,
+%           x index=0,
+%           y index=1,
+%           mark=none
+%         ] {Psi/Psi_VIS_100_1nm_250um_350-750-PROCESSED.csv};
+%     \end{axis}
+%     \label{psi-spectrum-1}
+%   \end{tikzpicture}
+%   \caption{$\psi$ lamp spectrum. See appendix for full size and overlay.}
+% \end{figure}
 \begin{figure}
   \begin{tikzpicture}
     \begin{axis}[
         ymode=log,
         width=\columnwidth,
+        xmin=587,
+        xmax=591,
+        legend pos=south west
       ]
       \addplot table [col sep=comma,
           header=false,
           x index=0,
           y index=1,
-          mark=none] {He/He_VIS_100_0.1nm_250um_350-750-PROCESSED.csv};
+          mark=none
+        ] {Psi/Doublets/Psi_VIS_100_0.02nm_0um_587-591-PROCESSED.csv};
+      \addplot table [col sep=comma,
+          header=false,
+          x index=0,
+          y index=1,
+          mark=none
+        ] {Psi/Doublets/Psi_VIS_100_0.02nm_5um_588-590.5-PROCESSED.csv};
+      \addplot table [col sep=comma,
+          header=false,
+          x index=0,
+          y index=1,
+          mark=none
+        ] {Psi/Doublets/Psi_VIS_100_0.02nm_10um_588-590.5-PROCESSED.csv};
+      \addplot table [col sep=comma,
+          header=false,
+          x index=0,
+          y index=1,
+          mark=none
+        ] {Psi/Doublets/Psi_VIS_100_0.02nm_50um_588-590.5-PROCESSED.csv};
+      \addplot[green] table [col sep=comma,
+          header=false,
+          x index=0,
+          y index=1,
+          mark=none
+        ] {Psi/Doublets/Psi_VIS_100_0.02nm_250um_588-590.5-PROCESSED.csv};
+      \addlegendentry{$0\unit{\micro\meter}$}
+      \addlegendentry{$5\unit{\micro\meter}$}
+      \addlegendentry{$10\unit{\micro\meter}$}
+      \addlegendentry{$50\unit{\micro\meter}$}
+      \addlegendentry{$250\unit{\micro\meter}$}
     \end{axis}
-    \label{figure-1}
+    \label{psi-spectrum-1}
   \end{tikzpicture}
-  \caption{Helium spectrum}
+  \caption{$\psi$ lamp spectrum focused on yellow doublet. Note significantly decreased intensity for a $0\unit{\micro\meter}$ slit width requiring semilog scale. See appendix for full size.}
 \end{figure}
 \subsection{Sources of error}
 \lipsum[10]
@@ -129,19 +275,107 @@ The spectrometer employed in this experiment records the number of these emitted
 \lipsum[12]
 \subsection{Figures}
 \begin{landscape}
-  \begin{tikzpicture}
-    \begin{axis}[
-        ymode=log,
-        width=1.33*\textwidth,
-        height=\textheight
-      ]
-      \addplot table [col sep=comma,
-          header=false,
-          x index=0,
-          y index=1,
-          mark=none] {He/He_VIS_100_0.1nm_250um_350-750-PROCESSED.csv};
-    \end{axis}
-    \label{figure-1-large}
-  \end{tikzpicture}
+  \begin{figure}
+    \begin{tikzpicture}[define rgb/.code={\definecolor{mycolor}{RGB}{#1}},
+        rgb color/.style={define rgb={#1},mycolor}]
+      \begin{axis}[
+          ymode=log,
+          width=1.33*\textwidth,
+          height=\textheight,
+          axis background/.style={fill=black!60},
+          xmin=350,
+          xmax=750
+        ]
+        \addplot table [col sep=comma,
+            header=false,
+            x index=0,
+            y index=1,
+            mark=none,
+            blue] {He/He_VIS_100_0.1nm_250um_350-750-PROCESSED.csv};
+        \addplot table [col sep=comma,
+            header=false,
+            x index=0,
+            y index=1,
+            mark=none
+          ] {Phi/Phi_VIS_100_0.1nm_250um_350-750-PROCESSED.csv};
+        \addplot table [col sep=comma,
+            header=false,
+            x index=0,
+            y index=1,
+            mark=none
+          ] {Psi/Psi_VIS_100_1nm_250um_350-750-PROCESSED.csv};
+        \draw[rgb color={124, 0, 149}] (392.233771,0.01) -- (392.233771,0.7);
+        \draw[rgb color={0, 255, 97}] (504.922999,0.01) -- (504.922999,0.7);
+        \draw[rgb color={129, 0, 165}] (396.573604,0.01) -- (396.573604,0.7);
+        \draw[rgb color={0, 255, 135}] (501.705800,0.01) -- (501.705800,0.7);
+        \draw[rgb color={179, 0, 0}] (728.119994,0.01) -- (728.119994,0.7);
+        \draw[rgb color={17, 0, 255}] (438.788943,0.01) -- (438.788943,0.7);
+        \draw[rgb color={0, 255, 234}] (492.319811,0.01) -- (492.319811,0.7);
+        \draw[rgb color={234, 0, 0}] (668.002672,0.01) -- (668.002672,0.7);
+        \draw[rgb color={123, 0, 226}] (412.201154,0.01) --(412.201154,0.7);
+        \draw[rgb color={0, 174, 255}] (471.453491,0.01) -- (471.453491,0.7);
+        \draw[rgb color={131, 0, 188}] (706.514060,0.01) -- (706.514060,0.7);
+        \draw[rgb color={118, 0, 132}] (388.983974,0.01) -- (388.983974,0.7);
+        \draw[rgb color={131, 0, 188}] (402.608906,0.01) -- (402.608906,0.7);
+        \draw[rgb color={0, 53, 255}] (447.287203,0.01) -- (447.287203,0.7);
+        \draw[rgb color={255, 233, 0}] (587.716721,0.01) -- (587.716721,0.7); % Yuck
+      \end{axis}
+      \label{figure-1-large}
+    \end{tikzpicture}
+    \caption{Helium spectrum. Coloured lines denote predicted values. See appendix for full size. Generated with TikZ}
+  \end{figure}
+\end{landscape}
+\newpage
+\begin{landscape}
+  \begin{figure}
+    \begin{tikzpicture}
+      \begin{axis}[
+          ymode=log,
+          width=\columnwidth,
+          height=\textheight,
+          xmin=588,
+          xmax=590.5,
+          legend pos=south west
+        ]
+        \addplot table [col sep=comma,
+            header=false,
+            x index=0,
+            y index=1,
+            mark=none
+          ] {Psi/Doublets/Psi_VIS_100_0.02nm_0um_587-591-PROCESSED.csv};
+        \addplot table [col sep=comma,
+            header=false,
+            x index=0,
+            y index=1,
+            mark=none
+          ] {Psi/Doublets/Psi_VIS_100_0.02nm_5um_588-590.5-PROCESSED.csv};
+        \addplot table [col sep=comma,
+            header=false,
+            x index=0,
+            y index=1,
+            mark=none
+          ] {Psi/Doublets/Psi_VIS_100_0.02nm_10um_588-590.5-PROCESSED.csv};
+        \addplot table [col sep=comma,
+            header=false,
+            x index=0,
+            y index=1,
+            mark=none
+          ] {Psi/Doublets/Psi_VIS_100_0.02nm_50um_588-590.5-PROCESSED.csv};
+        \addplot[green] table [col sep=comma,
+            header=false,
+            x index=0,
+            y index=1,
+            mark=none
+          ] {Psi/Doublets/Psi_VIS_100_0.02nm_250um_588-590.5-PROCESSED.csv};
+        \addlegendentry{$0\unit{\micro\meter}$}
+        \addlegendentry{$5\unit{\micro\meter}$}
+        \addlegendentry{$10\unit{\micro\meter}$}
+        \addlegendentry{$50\unit{\micro\meter}$}
+        \addlegendentry{$250\unit{\micro\meter}$}
+      \end{axis}
+      \label{psi-spectrum-1}
+    \end{tikzpicture}
+    \caption{$\psi$ lamp spectrum focused on yellow doublet. Note significantly decreased intensity for a $0\unit{\micro\meter}$ slit width requiring semilog scale. See appendix for full size.}
+  \end{figure}
 \end{landscape}
 \end{document}
