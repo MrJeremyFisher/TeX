@@ -1,4 +1,3 @@
-import collections
 import pandas as pd
 
 S1 = [1.9663, 1.9094, 1.66277, 1.84869]

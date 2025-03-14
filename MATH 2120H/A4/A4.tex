@@ -79,9 +79,14 @@
 
 % PROBLEM 1
 \begin{problem}
-Evaluate $\int_C(xy+y+z)$ along the curve $\mathbf{r}(t)=2t\ui+t\uj+(2-2t)\uk,\,0\leq t\leq 1$.
+Evaluate $\int_C(xy+y+z)\,ds$ along the curve $\mathbf{r}(t)=2t\ui+t\uj+(2-2t)\uk,\,0\leq t\leq 1$.
 \end{problem}
 \begin{soln}
+  \begin{align*}
+    \int_C(xy+y+z)\,ds & =\int_0^1\left[(2t)(t)+t+2-2t\right]\left|2\ui+1\uj+(2-2t)\uk\right|\,dt \\
+                       & =\int_0^1\left[(2t)(t)+t+2-2t\right]\left|2\ui+1\uj-2\uk\right|\,dt      \\
+                       & =\int_0^1 \left[2t^2-t+2\right]\sqrt{9}\,dt=\frac{13}{2}
+  \end{align*}
 \end{soln}
 
 % PROBLEM 2
@@ -89,13 +94,25 @@ Evaluate $\int_C(xy+y+z)$ along the curve $\mathbf{r}(t)=2t\ui+t\uj+(2-2t)\uk,\,
 Find the mass of a thin wire lying along the curve $\mathbf{r}(t)=(\sqrt{2})t\ui+(\sqrt{2})t\uj+(4-t^2)\uk,\,0\leq t\leq 1$, if the density is $\delta=3t$.
 \end{problem}
 \begin{soln}
+  The mass of an object with a continuous density function is given by $\int_C\delta(x,y,z)\,ds$ so,
+  \begin{align*}
+    \int_C\delta(x,y,z)\,ds & =\int_0^1 3t\left|(\sqrt{2})\ui+(\sqrt{2})\uj-2t\uk\right|\,dt \\
+                            & =\int_0^1 3t\sqrt{2+2+4t^2}\,dt                                \\
+                            & =\int_1^2 3t\sqrt{4+4t^2}\,dt                                  \\
+                            & =3\int_0^1 \sqrt{u}\,du=2^{5/2}-2
+  \end{align*}
 \end{soln}
 
 % PROBLEM 3
 \begin{problem}
-Find the line integral of $F = 3y\ui + 2x\uj + 4z\uk$ over the path $\mathbf(t) = t\ui + t^2\uj +t^4\uk,\,0 \leq t \leq 1$.
+Find the line integral of $F = 3y\ui + 2x\uj + 4z\uk$ over the path $\mathbf{r}(t) = t\ui + t^2\uj + t^4\uk,\,0 \leq t \leq 1$.
 \end{problem}
 \begin{soln}
+  \begin{align*}
+     & =\int_0^1F(\mathbf{r}(t))\mathbf{r}^\prime(t)\,dt                                      \\
+     & =\int_0^1 \left[3t^2\ui + 2t\uj + 4t^4\uk\right]\left[\ui + 2t\uj + 4t^3\uk\right]\,dt \\
+     & =\int_0^1 3t^2 + 4t^2 + 16t^7\uk\,dt=\frac{13}{3}
+  \end{align*}
 \end{soln}
 
 % PROBLEM 4
@@ -103,5 +120,12 @@ Find the line integral of $F = 3y\ui + 2x\uj + 4z\uk$ over the path $\mathbf(t) 
 Find the flux of the fields $F = 2x\ui + (x - y)\uj$ across the circle $\mathbf{r}(t) =(a\cos t)\ui + (a\sin t)\uj,\,0\leq t \leq 2\pi$.
 \end{problem}
 \begin{soln}
+  The outward normal vector for $\mathbf{r}(t)$ is $\nabla\mathbf{r}(t)=-a\sin t\ui+a\cos t\uj$, for $a\neq1$ this must be divided by
+  $a$ to unitize(? is that a word) it so,
+  \begin{align*}
+     & =\int_0^{2\pi}\left[-2\sin t\ui + (-\sin t - \cos t)\uj\right]\left[-\sin t\ui+\cos t\uj\right]\,dt \\
+     & =\int_0^{2\pi}-2\sin^2t-\sin (t)\cos (t) - \cos^2 t\,dt                                             \\
+     & =\int_0^{2\pi}\sin (t)\cos (t) - 1\,dt=-2\pi
+  \end{align*}
 \end{soln}
 \end{document}
