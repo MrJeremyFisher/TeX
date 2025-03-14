@@ -10,9 +10,9 @@
 \usepackage{changepage}
 \usepackage{circuitikz}
 \usepackage{pgfplots}
-\usepackage{siunitx}
+\usepackage[maxbibnames=10]{biblatex}
+\usepackage[separate-uncertainty=true]{siunitx}
 \usepackage{hyperref}
-\usepackage{cite}
 \usepackage{multicol, multirow, booktabs}
 \usepackage[breakable]{tcolorbox}
 \usepackage[inline]{enumitem}
@@ -45,6 +45,8 @@
     \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
 }
 
+\addbibresource{citations.bib}
+
 \newcommand{\thevenin}[2]{
   \begin{center}
     \begin{circuitikz} \draw
@@ -73,7 +75,7 @@
 
 \newcommand{\ti}[1]{\widetilde{#1}}
 
-\title{Physics 2700H: Lab III}
+\title{Physics 2610H: Lab III}
 \author{Jeremy Favro (0805980),
 Manan Ravat (0791811),
 Layla Scrimgeour-Brown (0766619)
@@ -88,132 +90,130 @@ Spectroscopy is a useful tool in many fields. A visible light spectrometer---suc
 specific wavelengths of photons by that object.
 
 This experiment seeks to employ a digital visible light spectrometer to verify calculated values for electron energy level transitions in a helium atom,
-determine the active ``ingredient'' \textbf{REPHRASE} in unknown visible light emitters, and determine a method to resolve merged spectral lines for energy
+determine the components of unknown visible light emitters, and determine a method to resolve merged spectral lines for energy
 level transitions with similar emitted photons.
 \section{Theory}
-Electrons in orbit around atomic nuclei exist in specific, quantized, energy levels and may only move between these levels when a ``hole'' \textbf{REWORK}
+Electrons in orbit around atomic nuclei exist in discrete, quantized, energy levels and may only move between these levels when a ``hole''
 is available for them to do so. In order to ``jump'' up to a higher energy level an electron must be given energy, usually by a photon, who's energy is given by
-$$E=\frac{hc}{\lambda}$$ where $h$ is Planck's constant\cite{codata}, $c$ the speed of light in the medium through which the photon moves, and $\lambda$ the
+$$E=\frac{hc}{\lambda}$$ where $h$ is Planck's constant\autocite{codata}, $c$ the speed of light in the medium through which the photon moves, and $\lambda$ the
 wavelength of the photon. Electrons may also decay to a lower energy level, emitting the energy lost in that process as a photon of energy given by the difference in energy
 between the final and initial energy levels.
 
-The spectrometer employed in this experiment records the number of these emitted photons for a given wavelength by separating\dots
+Visible light spectrometers record these energy level transitions by recording the intensity of light due to the emitted photons
+and mapping it to its corresponding wavelength.
+\vfill\null
 \section{Methods}
-\lipsum[3-5]
+This experiment utilized a software controlled device known as a monochromator to diffract incoming light into its component wavelengths
+and measure the intensity of each individually. The monochromator utilizes a reflective diffraction grating alongside entrance and exit slits
+and several internal mirrors to diffract, collimate, and deliver incoming light to a visible light sensitive photodiode connected to an Arduino.
+A MicroPython script was utilized to control the device and record data produced by the photodiode.
+
+Three light sources were measured with the monochromator. The light from each was directed to a lens which focused it onto
+the input slit. The output slit width remained constant throughout the experiment and only the wavelength step, range, and input
+slit width were varied.
+
+Light sources were placed such that the photodiode registered the maximum emission strength when the diffraction grating was in its rest position.
+\newpage
 \section{Discussion}
 \subsection{Helium Spectrum}
-% \begin{figure}
-%   \begin{tikzpicture}[define rgb/.code={\definecolor{mycolor}{RGB}{#1}},
-%       rgb color/.style={define rgb={#1},mycolor}]
-%     \begin{axis}[
-%         ymode=log,
-%         width=\columnwidth,
-%         axis background/.style={fill=black!60},
-%         xmin=350,
-%         xmax=750
-%       ]
-%       \addplot table [col sep=comma,
-%           header=false,
-%           x index=0,
-%           y index=1,
-%           mark=none
-%         ] {He/He_VIS_100_0.1nm_250um_350-750-PROCESSED.csv};
-%       \draw[rgb color={124, 0, 149}] (392.233771,0.01) -- (392.233771,0.7);
-%       \draw[rgb color={0, 255, 97}] (504.922999,0.01) -- (504.922999,0.7);
-%       \draw[rgb color={129, 0, 165}] (396.573604,0.01) -- (396.573604,0.7);
-%       \draw[rgb color={0, 255, 135}] (501.705800,0.01) -- (501.705800,0.7);
-%       \draw[rgb color={179, 0, 0}] (728.119994,0.01) -- (728.119994,0.7);
-%       \draw[rgb color={17, 0, 255}] (438.788943,0.01) -- (438.788943,0.7);
-%       \draw[rgb color={0, 255, 234}] (492.319811,0.01) -- (492.319811,0.7);
-%       \draw[rgb color={234, 0, 0}] (668.002672,0.01) -- (668.002672,0.7);
-%       \draw[rgb color={123, 0, 226}] (412.201154,0.01) --(412.201154,0.7);
-%       \draw[rgb color={0, 174, 255}] (471.453491,0.01) -- (471.453491,0.7);
-%       \draw[rgb color={131, 0, 188}] (706.514060,0.01) -- (706.514060,0.7);
-%       \draw[rgb color={118, 0, 132}] (388.983974,0.01) -- (388.983974,0.7);
-%       \draw[rgb color={131, 0, 188}] (402.608906,0.01) -- (402.608906,0.7);
-%       \draw[rgb color={0, 53, 255}] (447.287203,0.01) -- (447.287203,0.7);
-%       \draw[rgb color={255, 233, 0}] (587.716721,0.01) -- (587.716721,0.7); % Yuck
-%     \end{axis}
-%     \label{helium-spectrum-1}
-%   \end{tikzpicture}
-%   \caption{Helium lamp spectrum. Coloured lines denote predicted values. See appendix for full size and overlay. Generated with TikZ}
-% \end{figure}
-\begin{table}[ht!]
+\begin{table}[h]
   \centering%
   \begin{tabular}{p{0.2\columnwidth}p{0.1\columnwidth}p{0.2\columnwidth}p{0.06\columnwidth}p{0.1\columnwidth}}
     \toprule
     Assigned Transition         & Pred. wavelength, $\lambda_p (\unit{\nano\meter})$ & Obs. wavelength, $\lambda_o (\unit{\nano\meter})$ & \% Diff & Comments        \\
     \midrule
-    $1s0s{}^1\!S$ $1s3p{}^1\!P$ & $392$                                              & 0                                                 & 0       & `'              \\
+    $1s0s{}^1\!S$ $1s3p{}^1\!P$ & $392$                                              &                                                   &         &                 \\
     \hline
-    $1s0s{}^3\!S$ $1s3p{}^3\!P$ & $412$                                              & 0                                                 & 0       & `'              \\
+    $1s0s{}^3\!S$ $1s3p{}^3\!P$ & $412$                                              &                                                   &         &                 \\
     \hline
     $1s1s{}^1\!S$ $1s3p{}^1\!P$ & $505$                                              & $505\pm1.7$                                       & 0.337   & Extremely faint \\
     \hline
-    $1s1s{}^3\!S$ $1s3p{}^3\!P$ & $471$                                              & $471\pm0.6$                                       & 0.127   & `'              \\
+    $1s1s{}^3\!S$ $1s3p{}^3\!P$ & $471$                                              & $471\pm0.6$                                       & 0.127   &                 \\
     \hline
-    $1s2s{}^1\!S$ $1s1p{}^1\!P$ & $397$                                              & 0                                                 & 0       & `'              \\
+    $1s2s{}^1\!S$ $1s1p{}^1\!P$ & $397$                                              &                                                   &         &                 \\
     \hline
-    $1s2s{}^1\!S$ $1s2p{}^1\!P$ & $502$                                              & $502\pm1.6$                                       & 0.319   & `'              \\
+    $1s2s{}^1\!S$ $1s2p{}^1\!P$ & $502$                                              & $502\pm1.6$                                       & 0.319   &                 \\
     \hline
-    $1s2s{}^3\!S$ $1s3p{}^3\!P$ & $707$                                              & $707\pm1.5$                                       & 0.212   & `'              \\
+    $1s2s{}^3\!S$ $1s3p{}^3\!P$ & $707$                                              & $707\pm1.5$                                       & 0.212   &                 \\
     \hline
-    $1s3s{}^1\!P$ $1s0p{}^1\!D$ & $439$                                              & 0                                                 & 0       & `'              \\
+    $1s3s{}^1\!P$ $1s0p{}^1\!D$ & $439$                                              &                                                   &         &                 \\
     \hline
-    $1s3s{}^1\!P$ $1s1p{}^1\!D$ & $492$                                              & $492\pm1.6$                                       & 0.325   & `'              \\
+    $1s3s{}^1\!P$ $1s1p{}^1\!D$ & $492$                                              & $492\pm1.6$                                       & 0.325   &                 \\
     \hline
-    $1s3s{}^1\!P$ $1s2p{}^1\!D$ & $668$                                              & $668\pm1.8$                                       & 0.269   & `'              \\
+    $1s3s{}^1\!P$ $1s2p{}^1\!D$ & $668$                                              & $668\pm1.8$                                       & 0.269   &                 \\
     \hline
-    $1s3s{}^1\!S$ $1s3p{}^1\!P$ & $728$                                              & $728\pm1.5$                                       & 0.206   & `'              \\
+    $1s3s{}^1\!S$ $1s3p{}^1\!P$ & $728$                                              & $728\pm1.5$                                       & 0.206   &                 \\
     \hline
-    $1s3s{}^3\!P$ $1s0p{}^3\!D$ & $403$                                              & 0                                                 & 0       & `'              \\
+    $1s3s{}^3\!P$ $1s0p{}^3\!D$ & $403$                                              &                                                   &         &                 \\
     \hline
-    $1s3s{}^3\!P$ $1s1p{}^3\!D$ & $447$                                              & $447\pm1.6$                                       & 0.358   & `'              \\
+    $1s3s{}^3\!P$ $1s1p{}^3\!D$ & $447$                                              & $447\pm1.6$                                       & 0.358   &                 \\
     \hline
-    $1s3s{}^3\!P$ $1s2p{}^3\!D$ & $588$                                              & $588\pm1.5$                                       & 0.255   & `'              \\
+    $1s3s{}^3\!P$ $1s2p{}^3\!D$ & $588$                                              & $588\pm1.5$                                       & 0.255   &                 \\
     \hline
-    $1s3s{}^3\!S$ $1s2p{}^3\!P$ & $389$                                              & $389\pm1.4 $                                      & 0.360   & `'              \\
+    $1s3s{}^3\!S$ $1s2p{}^3\!P$ & $389$                                              & $389\pm1.4$                                       & 0.360   &                 \\
     \bottomrule
   \end{tabular}
+  \label{he-res-table}
 \end{table}
-% \begin{figure}
-%   \begin{tikzpicture}
-%     \begin{axis}[
-%         ymode=log,
-%         width=\columnwidth,
-%         xmin=350,
-%         xmax=750
-%       ]
-%       \addplot table [col sep=comma,
-%           header=false,
-%           x index=0,
-%           y index=1,
-%           mark=none
-%         ] {Phi/Phi_VIS_100_0.1nm_250um_350-750-PROCESSED.csv};
-%     \end{axis}
-%     \label{phi-spectrum-1}
-%   \end{tikzpicture}
-%   \caption{$\phi$ lamp spectrum. See appendix for full size and overlay.}
-% \end{figure}
-% \begin{figure}
-%   \begin{tikzpicture}
-%     \begin{axis}[
-%         ymode=log,
-%         width=\columnwidth,
-%         xmin=350,
-%         xmax=750
-%       ]
-%       \addplot table [col sep=comma,
-%           header=false,
-%           x index=0,
-%           y index=1,
-%           mark=none
-%         ] {Psi/Psi_VIS_100_1nm_250um_350-750-PROCESSED.csv};
-%     \end{axis}
-%     \label{psi-spectrum-1}
-%   \end{tikzpicture}
-%   \caption{$\psi$ lamp spectrum. See appendix for full size and overlay.}
-% \end{figure}
+\begin{figure}
+  \begin{tikzpicture}[define rgb/.code={\definecolor{mycolor}{RGB}{#1}},
+      rgb color/.style={define rgb={#1},mycolor}]
+    \begin{axis}[
+        % ymode=log,
+        width=\columnwidth,
+        axis background/.style={fill=black!60},
+        xmin=350,
+        xmax=750,
+        legend pos=north west
+      ]
+      \addplot table [col sep=comma,
+          header=false,
+          x index=0,
+          y index=1,
+          mark=none
+        ] {He/He_VIS_100_0.1nm_250um_350-750-PROCESSED.csv};
+      \addplot table [col sep=comma,
+          header=false,
+          x index=0,
+          y index=1,
+          mark=none
+        ] {Psi/Psi_VIS_100_1nm_250um_350-750-PROCESSED.csv};
+      \addplot[green] table [col sep=comma,
+          header=false,
+          x index=0,
+          y index=1,
+          mark=none
+        ] {Phi/Phi_VIS_100_0.1nm_250um_350-750-PROCESSED.csv};
+      \draw[rgb color={124, 0, 149}] (392.233771,0.01) -- (392.233771,0.7);
+      \draw[rgb color={0, 255, 97}] (504.922999,0.01) -- (504.922999,0.7);
+      \draw[rgb color={129, 0, 165}] (396.573604,0.01) -- (396.573604,0.7);
+      \draw[rgb color={0, 255, 135}] (501.705800,0.01) -- (501.705800,0.7);
+      \draw[rgb color={179, 0, 0}] (728.119994,0.01) -- (728.119994,0.7);
+      \draw[rgb color={17, 0, 255}] (438.788943,0.01) -- (438.788943,0.7);
+      \draw[rgb color={0, 255, 234}] (492.319811,0.01) -- (492.319811,0.7);
+      \draw[rgb color={234, 0, 0}] (668.002672,0.01) -- (668.002672,0.7);
+      \draw[rgb color={123, 0, 226}] (412.201154,0.01) --(412.201154,0.7);
+      \draw[rgb color={0, 174, 255}] (471.453491,0.01) -- (471.453491,0.7);
+      \draw[rgb color={131, 0, 188}] (706.514060,0.01) -- (706.514060,0.7);
+      \draw[rgb color={118, 0, 132}] (388.983974,0.01) -- (388.983974,0.7);
+      \draw[rgb color={131, 0, 188}] (402.608906,0.01) -- (402.608906,0.7);
+      \draw[rgb color={0, 53, 255}] (447.287203,0.01) -- (447.287203,0.7);
+      \draw[rgb color={255, 233, 0}] (587.716721,0.01) -- (587.716721,0.7); % Yuck
+      \addlegendentry{He Spectrum}
+      \addlegendentry{$\phi$ Spectrum}
+      \addlegendentry{$\psi$ Specrum}
+    \end{axis}
+    \label{helium-spectrum-1}
+  \end{tikzpicture}
+  \caption{Helium, $\psi$, and $\phi$ lamp spectrum. Coloured lines denote predicted values for helium.
+    See appendix for full size with log scale.
+    Generated with TikZ}
+\end{figure}
+\subsubsection{``Missing'' Wavelengths}
+Five expected wavelengths (see \ref{he-res-table}) in the low wavelength region are missing from the recorded data.
+This is likely because the diode is less sensitive at those lower wavelengths\autocite{diode-manufacturer} however there is
+still a strong peak at $\qty{389\pm1.4}{\nano\meter}$ which is the lowest expected approximately visible wavelength.
+\subsection{Doublet Resolution}
 \begin{figure}
   \begin{tikzpicture}
     \begin{axis}[
@@ -263,17 +263,42 @@ The spectrometer employed in this experiment records the number of these emitted
   \end{tikzpicture}
   \caption{$\psi$ lamp spectrum focused on yellow doublet. Note significantly decreased intensity for a $0\unit{\micro\meter}$ slit width requiring semilog scale. See appendix for full size.}
 \end{figure}
+The $\psi$ lamp exhibited two doublets between $\qty{588}{\nano\meter}$ and $\qty{590.5}{\nano\meter}$. As can be seen in
+\ref{psi-spectrum-1} the doublets were successfully resolved by decreasing the input slit width. And optimal value for this slit
+width is somewhere between $\qty{5}{\micro\meter}$ and $\qty{10}{\micro\meter}$ as a $\qty{0}{\micro\meter}$ slit significantly impacts
+the amount of light entering the apparatus whereas a slit widths above $\qty{10}{\micro\meter}$ do not resolve the doublet well.
+\subsection{Guessing the $\phi$ Lamp}
+As can be see in \ref{helium-spectrum-1} the $\phi$ lamp has strong peaks at approximately
+$\qty{436}{\nano\meter}$,$\qty{546}{\nano\meter}$, $\qty{577}{\nano\meter}$, $\qty{580}{\nano\meter}$. Using the
+NIST Atomic Spectra Database\autocite{spectrum-db} to determine materials with similar peaks suggests Mercury as a likely
+match. It exhibits many of the same emission peaks as the recorded data,
+with the recorded data only missing the peaks on the far ends of the visible spectrum where the photodiode employed in
+this experiment may not be as sensitive as the instruments employed by NIST.
 \subsection{Sources of error}
-\lipsum[10]
+\subsubsection{Systematic Error}
+The most significant source of systematic error in this experiment stems from the fact that the experiment
+was not conducted in ``total'' darkness. A nearby window introduced not insignificant---though not quantified---
+levels of stray light alongside the screen of the computer used to control the monochromator and the lamps not
+being studied. These sources were largely constant throughout the experiment and the calibration of the raw data by
+subtracting the minimum nonzero reading from the photodiode eliminated the majority of their
+influence.
+\subsubsection{Random Error}
+The most significant source of random error in this experiment was likely the non-rigidity of the apparatus. Only the helium
+lamp was placed directly infront of the monochromator's entrance slit, the $\psi$ and $\phi$ lamps both had their light directed
+towards the entrance slit using a mirror that was not securely fixed to any rigid mounting point. The simplest way of
+reducing the effects of this non-rigidity would likely be performing the experiment on an optical table with securely fixed
+mirrors, lenses, and lightsources.
 \section{Conclusion}
-\lipsum[11]
+This experiment successfully verified the hydrogen emission spectrum save for some lower wavelength emission peaks,
+likely due to the lower sensitivity of the employed photodiode in this range. The experiment also matched the $\phi$
+lamp to the emission spectrum of mercury and successfully resolved the yellow doublet of the $\psi$ lamp using a 
+decreased entrance slit width on the monochromator.
 \section{Bibliography}
-\bibliography{bib}{}
-\bibliographystyle{plain}
+\printbibliography
 
 \section{Appendix}
-\lipsum[12]
 \subsection{Figures}
+
 \begin{landscape}
   \begin{figure}
     \begin{tikzpicture}[define rgb/.code={\definecolor{mycolor}{RGB}{#1}},
@@ -284,7 +309,8 @@ The spectrometer employed in this experiment records the number of these emitted
           height=\textheight,
           axis background/.style={fill=black!60},
           xmin=350,
-          xmax=750
+          xmax=750,
+          legend pos=south east
         ]
         \addplot table [col sep=comma,
             header=false,
@@ -298,7 +324,7 @@ The spectrometer employed in this experiment records the number of these emitted
             y index=1,
             mark=none
           ] {Phi/Phi_VIS_100_0.1nm_250um_350-750-PROCESSED.csv};
-        \addplot table [col sep=comma,
+        \addplot[green] table [col sep=comma,
             header=false,
             x index=0,
             y index=1,
@@ -319,10 +345,13 @@ The spectrometer employed in this experiment records the number of these emitted
         \draw[rgb color={131, 0, 188}] (402.608906,0.01) -- (402.608906,0.7);
         \draw[rgb color={0, 53, 255}] (447.287203,0.01) -- (447.287203,0.7);
         \draw[rgb color={255, 233, 0}] (587.716721,0.01) -- (587.716721,0.7); % Yuck
+        \addlegendentry{He Spectrum}
+        \addlegendentry{$\phi$ Spectrum}
+        \addlegendentry{$\psi$ Specrum}
       \end{axis}
       \label{figure-1-large}
     \end{tikzpicture}
-    \caption{Helium spectrum. Coloured lines denote predicted values. See appendix for full size. Generated with TikZ}
+    \caption{Helium spectrum. Coloured lines denote predicted values.}
   \end{figure}
 \end{landscape}
 \newpage
@@ -375,7 +404,7 @@ The spectrometer employed in this experiment records the number of these emitted
       \end{axis}
       \label{psi-spectrum-1}
     \end{tikzpicture}
-    \caption{$\psi$ lamp spectrum focused on yellow doublet. Note significantly decreased intensity for a $0\unit{\micro\meter}$ slit width requiring semilog scale. See appendix for full size.}
+    \caption{$\psi$ lamp spectrum focused on yellow doublet. Note significantly decreased intensity for a $0\unit{\micro\meter}$ slit width requiring semilog scale.}
   \end{figure}
 \end{landscape}
 \end{document}

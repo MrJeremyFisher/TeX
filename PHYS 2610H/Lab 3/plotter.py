@@ -12,7 +12,6 @@ def plot_cal_norm(filename: str, plot=False, save_image=False, save_data=False) 
         np.min(np.ma.masked_array(intens, mask=intens == 0).min())
     # Normalize. Divide by greatest value so everything is scaled the same
     intens = intens / intens.max()
-
     if (plot):
         pyplot.plot(lam, intens)  # Plot with y log x lin
         pyplot.xlabel(r"Wavelength (nm)")
@@ -30,4 +29,4 @@ def plot_cal_norm(filename: str, plot=False, save_image=False, save_data=False) 
 
 
 plot_cal_norm(
-    "PHYS 2610H/Lab 3/Psi/Doublets/Psi_VIS_100_0.02nm_0um_587-591.csv", plot=True)
+    "PHYS 2610H/Lab 3/Phi/Phi_VIS_100_0.1nm_250um_350-750.csv", plot=True)
