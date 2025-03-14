@@ -88,7 +88,7 @@ Layla Scrimgeour-Brown (0766619)
 \end{abstract}
 The helium spectrum was successfully observed and matched predicted values. A doublet was resolved by modifying entrance slit width of the
 measurement apparatus and the active component of two unknown light sources was determined. A subsequent experiment to investigate the
-absent lower wavelengths in the lower wavelengths may be of value.
+absent lower wavelengths in the helium spectrum may be of value.
 \section{Introduction}
 Spectroscopy is a useful tool in many fields. A visible light spectrometer---such as the one employed in this experiment---can be used to determine the composition of an object by measuring emission or absorption of
 specific wavelengths of photons by that object.
@@ -116,7 +116,8 @@ Three light sources were measured with the monochromator. The light from each wa
 the input slit. The output slit width remained constant throughout the experiment and only the wavelength step, range, and input
 slit width were varied.
 
-Light sources were placed such that the photodiode registered the maximum emission strength when the diffraction grating was in its rest position.
+Light sources were placed such that the photodiode registered the maximum emission strength when the diffraction grating was in its rest position,
+reached by power cycling the device before beginning a measurement.
 \newpage
 \section{Discussion}
 \subsection{Helium Spectrum}
@@ -213,12 +214,12 @@ Light sources were placed such that the photodiode registered the maximum emissi
     See appendix for full size with log scale.}
 \end{figure}
 \subsubsection{``Missing'' Wavelengths}
-Five expected wavelengths (see \ref{he-res-table}) in the low wavelength region are missing from the recorded data.
-This is likely because the diode is less sensitive at those lower wavelengths\autocite{diode-manufacturer} however there is
+Five expected wavelengths (see Table \ref{he-res-table}) in the low wavelength region are missing from the recorded data.
+This could be because the diode is less sensitive at those lower wavelengths\autocite{diode-manufacturer} however there is
 still a strong peak at $\qty{389\pm1.4}{\nano\meter}$ which is the lowest expected approximately visible wavelength.
-The other possibility which could explain the lack of these wavelengths in the recorded data is that the initial states
-are unstable and decay down to the corresponding final states much quicker than other transitions. This could be verified
-and potentially resolved by increasing the number of samples at each wavelength.
+The other possibility which better explains the lack of these wavelengths and the lower wavelength that was detected in the recorded data 
+is that the initial states are unstable and decay down to the corresponding final states much quicker than other transitions. 
+This could be verified and potentially resolved by increasing the number of samples at each wavelength.
 \subsection{Doublet Resolution}
 \begin{figure}
   \begin{tikzpicture}
@@ -270,16 +271,17 @@ and potentially resolved by increasing the number of samples at each wavelength.
   \caption{$\psi$ lamp spectrum focused on yellow doublet. Note significantly decreased intensity for a $0\unit{\micro\meter}$ slit width requiring semilog scale. See appendix for full size.}
 \end{figure}
 The $\psi$ lamp exhibited two doublets between $\qty{588}{\nano\meter}$ and $\qty{590.5}{\nano\meter}$. As can be seen in
-\ref{psi-spectrum-1} the doublets were successfully resolved by decreasing the input slit width. And optimal value for this slit
+Figure \ref{psi-spectrum-1} the doublets were successfully resolved by decreasing the input slit width. And optimal value for this slit
 width is somewhere between $\qty{5}{\micro\meter}$ and $\qty{10}{\micro\meter}$ as a $\qty{0}{\micro\meter}$ slit significantly impacts
 the amount of light entering the apparatus whereas a slit widths above $\qty{10}{\micro\meter}$ do not resolve the doublet well.
 \subsection{Guessing the $\phi$ Lamp}
-As can be see in \ref{helium-spectrum-1} the $\phi$ lamp has strong peaks at approximately
+As can be see in Figure  \ref{helium-spectrum-1} the $\phi$ lamp has strong peaks at approximately
 $\qty{436}{\nano\meter}$,$\qty{546}{\nano\meter}$, $\qty{577}{\nano\meter}$, $\qty{580}{\nano\meter}$. Using the
 NIST Atomic Spectra Database\autocite{spectrum-db} to determine materials with similar peaks suggests mercury as a likely
 match. It exhibits many of the same emission peaks as the recorded data,
 with the recorded data only missing the peaks on the far ends of the visible spectrum where the photodiode employed in
-this experiment may not be as sensitive as the instruments employed by NIST.
+this experiment may not be as sensitive as the instruments employed by NIST or, as discussed above, the transitions may be more rapid
+and require a greater number of samples.
 \subsection{Guessing the $\psi$ Lamp}
 Again the NIST Atomic Spectra Database\autocite{spectrum-db} suggests sodium as the likely active component of the $\psi$ lamp.
 This fits with the extremely strong doublet at approximately $\qty{590}{nm}$ and the slightly weaker emission lines surrounding that
@@ -300,8 +302,9 @@ reducing the effects of this non-rigidity would likely be performing the experim
 mirrors, lenses, and lightsources.
 \subsubsection{Signal to Noise Ratio}
 The helium, $\psi$, and $\phi$ datasets exhibit SNRs of approximately $\qty{-8}{\decibel}$, $\qty{-10}{\decibel}$, and $\qty{-8}{\decibel}$
-respectively (see \ref{plotter-code} for calculation). The likely highest influence on this is again the non-rigidity of the experiment and
-light leakage from surrounding sources, methods to improve which
+respectively (see Figure \ref{plotter-code} for calculation). The likely highest influence on this is again the non-rigidity of the experiment and
+light leakage from surrounding sources, methods to improve each are discussed above.
+\vfill\null
 \section{Conclusion}
 This experiment successfully verified the hydrogen emission spectrum save for some lower wavelength emission peaks,
 likely due to the lower sensitivity of the employed photodiode in this range. The experiment also matched the $\phi$

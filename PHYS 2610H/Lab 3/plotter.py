@@ -37,4 +37,4 @@ def signaltonoise(a, axis=0, ddof=0):
 
 
 plot_cal_norm(
-    "PHYS 2610H/Lab 3/Psi/Psi_VIS_100_1nm_250um_350-750.csv", plot=True)
+    "PHYS 2610H/Lab 3/Phi/Phi_VIS_100_0.1nm_250um_350-750.csv", plot=True)
