@@ -3,6 +3,7 @@
 \usepackage[margin=0.75in]{geometry}
 \usepackage{amsmath,amsthm,amssymb}
 \usepackage{xcolor}
+\usepackage{minted}
 \usepackage{lipsum}
 \usepackage{cancel}
 \usepackage{pdflscape}
@@ -85,6 +86,9 @@ Layla Scrimgeour-Brown (0766619)
 \maketitle
 \begin{abstract}
 \end{abstract}
+The helium spectrum was successfully observed and matched predicted values. A doublet was resolved by modifying entrance slit width of the
+measurement apparatus and the active component of two unknown light sources was determined. A subsequent experiment to investigate the
+absent lower wavelengths in the lower wavelengths may be of value.
 \section{Introduction}
 Spectroscopy is a useful tool in many fields. A visible light spectrometer---such as the one employed in this experiment---can be used to determine the composition of an object by measuring emission or absorption of
 specific wavelengths of photons by that object.
@@ -206,13 +210,15 @@ Light sources were placed such that the photodiode registered the maximum emissi
     \label{helium-spectrum-1}
   \end{tikzpicture}
   \caption{Helium, $\psi$, and $\phi$ lamp spectrum. Coloured lines denote predicted values for helium.
-    See appendix for full size with log scale.
-    Generated with TikZ}
+    See appendix for full size with log scale.}
 \end{figure}
 \subsubsection{``Missing'' Wavelengths}
 Five expected wavelengths (see \ref{he-res-table}) in the low wavelength region are missing from the recorded data.
 This is likely because the diode is less sensitive at those lower wavelengths\autocite{diode-manufacturer} however there is
 still a strong peak at $\qty{389\pm1.4}{\nano\meter}$ which is the lowest expected approximately visible wavelength.
+The other possibility which could explain the lack of these wavelengths in the recorded data is that the initial states
+are unstable and decay down to the corresponding final states much quicker than other transitions. This could be verified
+and potentially resolved by increasing the number of samples at each wavelength.
 \subsection{Doublet Resolution}
 \begin{figure}
   \begin{tikzpicture}
@@ -270,10 +276,14 @@ the amount of light entering the apparatus whereas a slit widths above $\qty{10}
 \subsection{Guessing the $\phi$ Lamp}
 As can be see in \ref{helium-spectrum-1} the $\phi$ lamp has strong peaks at approximately
 $\qty{436}{\nano\meter}$,$\qty{546}{\nano\meter}$, $\qty{577}{\nano\meter}$, $\qty{580}{\nano\meter}$. Using the
-NIST Atomic Spectra Database\autocite{spectrum-db} to determine materials with similar peaks suggests Mercury as a likely
+NIST Atomic Spectra Database\autocite{spectrum-db} to determine materials with similar peaks suggests mercury as a likely
 match. It exhibits many of the same emission peaks as the recorded data,
 with the recorded data only missing the peaks on the far ends of the visible spectrum where the photodiode employed in
 this experiment may not be as sensitive as the instruments employed by NIST.
+\subsection{Guessing the $\psi$ Lamp}
+Again the NIST Atomic Spectra Database\autocite{spectrum-db} suggests sodium as the likely active component of the $\psi$ lamp.
+This fits with the extremely strong doublet at approximately $\qty{590}{nm}$ and the slightly weaker emission lines surrounding that
+peak.
 \subsection{Sources of error}
 \subsubsection{Systematic Error}
 The most significant source of systematic error in this experiment stems from the fact that the experiment
@@ -288,17 +298,47 @@ lamp was placed directly infront of the monochromator's entrance slit, the $\psi
 towards the entrance slit using a mirror that was not securely fixed to any rigid mounting point. The simplest way of
 reducing the effects of this non-rigidity would likely be performing the experiment on an optical table with securely fixed
 mirrors, lenses, and lightsources.
+\subsubsection{Signal to Noise Ratio}
+The helium, $\psi$, and $\phi$ datasets exhibit SNRs of approximately $\qty{-8}{\decibel}$, $\qty{-10}{\decibel}$, and $\qty{-8}{\decibel}$
+respectively (see \ref{plotter-code} for calculation). The likely highest influence on this is again the non-rigidity of the experiment and
+light leakage from surrounding sources, methods to improve which
 \section{Conclusion}
 This experiment successfully verified the hydrogen emission spectrum save for some lower wavelength emission peaks,
 likely due to the lower sensitivity of the employed photodiode in this range. The experiment also matched the $\phi$
-lamp to the emission spectrum of mercury and successfully resolved the yellow doublet of the $\psi$ lamp using a 
+lamp to the emission spectrum of mercury and successfully resolved the yellow doublet of the $\psi$ lamp using a
 decreased entrance slit width on the monochromator.
 \section{Bibliography}
 \printbibliography
+\newpage
 
 \section{Appendix}
+\subsection{Code}
+\begin{figure}[ht!]
+  \inputminted[
+    frame=lines,
+    breaklines=true,
+    autogobble,
+    fontsize=\footnotesize,
+    linenos,
+    numbersep=2pt
+  ]{python}{plotter.py}
+  \label{plotter-code}
+  \caption{Code to process and plot data. Requires that headers generated using the given
+    monochromator control script be removed.}
+\end{figure}
+\begin{figure}[ht!]
+  \inputminted[
+    frame=lines,
+    breaklines=true,
+    autogobble,
+    fontsize=\footnotesize,
+    linenos,
+    numbersep=2pt
+  ]{python}{predictor.py}
+  \label{predictor-code}
+  \caption{Code to predict visible energy level transitions.}
+\end{figure}
 \subsection{Figures}
-
 \begin{landscape}
   \begin{figure}
     \begin{tikzpicture}[define rgb/.code={\definecolor{mycolor}{RGB}{#1}},
@@ -351,7 +391,7 @@ decreased entrance slit width on the monochromator.
       \end{axis}
       \label{figure-1-large}
     \end{tikzpicture}
-    \caption{Helium spectrum. Coloured lines denote predicted values.}
+    \caption{Helium, $\psi$, and $\phi$ lamp spectrum. Coloured lines denote predicted values for helium.}
   \end{figure}
 \end{landscape}
 \newpage

@@ -24,9 +24,17 @@ def plot_cal_norm(filename: str, plot=False, save_image=False, save_data=False) 
         out[:, 1] = intens
         np.savetxt(filename.removesuffix(".csv") + "-PROCESSED" +
                    ".csv", out, delimiter=",", fmt='%f')
-
+    pyplot.title(f"SNR: {10*np.log10(signaltonoise(intens))}")
     pyplot.show()
 
 
+def signaltonoise(a, axis=0, ddof=0):
+    # Borrowed from scipy v<1.0.0
+    a = np.asanyarray(a)
+    m = a.mean(axis)
+    sd = a.std(axis=axis, ddof=ddof)
+    return np.where(sd == 0, 0, m/sd)
+
+
 plot_cal_norm(
-    "PHYS 2610H/Lab 3/Phi/Phi_VIS_100_0.1nm_250um_350-750.csv", plot=True)
+    "PHYS 2610H/Lab 3/Psi/Psi_VIS_100_1nm_250um_350-750.csv", plot=True)
