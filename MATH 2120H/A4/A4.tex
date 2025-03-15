@@ -120,12 +120,10 @@ Find the line integral of $F = 3y\ui + 2x\uj + 4z\uk$ over the path $\mathbf{r}(
 Find the flux of the fields $F = 2x\ui + (x - y)\uj$ across the circle $\mathbf{r}(t) =(a\cos t)\ui + (a\sin t)\uj,\,0\leq t \leq 2\pi$.
 \end{problem}
 \begin{soln}
-  The outward normal vector for $\mathbf{r}(t)$ is $\nabla\mathbf{r}(t)=-a\sin t\ui+a\cos t\uj$, for $a\neq1$ this must be divided by
-  $a$ to unitize(? is that a word) it so,
   \begin{align*}
-     & =\int_0^{2\pi}\left[-2\sin t\ui + (-\sin t - \cos t)\uj\right]\left[-\sin t\ui+\cos t\uj\right]\,dt \\
-     & =\int_0^{2\pi}-2\sin^2t-\sin (t)\cos (t) - \cos^2 t\,dt                                             \\
-     & =\int_0^{2\pi}\sin (t)\cos (t) - 1\,dt=-2\pi
+     & =\int_C-(x-y)\,dx+2x\,dy \\
+     & =a^2\int_0^{2\pi}\cos(t)\sin(t)+\sin^2(t)+2\cos^2(t)\,dt \\
+     & =a^2\left[\frac{\sin^2(t)}{2}-\frac{\sin(2t)-2t}{4}+\frac{\sin(2t)}{2}+t\right]_0^{2\pi}=3a^2\pi \\
   \end{align*}
 \end{soln}
 \end{document}
