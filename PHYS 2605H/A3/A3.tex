@@ -1,0 +1,486 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{changepage}
+\usepackage{quantikz}
+\usepackage{tikz}
+\usepackage{circuitikz}
+\usepackage{pgfplots}
+\usepackage{physics}
+\usepackage{hyperref}
+\usepackage{siunitx}
+\usepackage[breakable]{tcolorbox}
+\usepackage[inline]{enumitem}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{soln}{Solution}
+
+\pgfplotsset{compat=newest}
+\usetikzlibrary{arrows, angles, calc, quotes}
+\usetikzlibrary{quantikz2}
+
+\definecolor{incolor}{HTML}{303F9F}
+\definecolor{outcolor}{HTML}{D84315}
+\definecolor{cellborder}{HTML}{CFCFCF}
+\definecolor{cellbackground}{HTML}{F7F7F7}
+\newcommand{\eq}{=}
+\usetikzlibrary{positioning, fit, calc}
+\pgfdeclarelayer{background}  
+\pgfsetlayers{background,main}
+\DeclareSIUnit[number-unit-product = {\,}]\calorie{cal}
+\DeclareSIUnit[number-unit-product = {\,}]\atmosphere{atm}
+\AtBeginDocument{\RenewCommandCopy\qty\SI}
+
+\makeatletter
+\newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+\makeatother
+\newcommand{\prompt}[4]{
+    \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+}
+
+\newcommand{\thevenin}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (2,0) to[battery1, l_=$V_{Th}\eq#1$] (2,2) 
+      to[resistor, l_=$R_{Th}\eq#2$] (0,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\norton}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (3,0) to[american current source, l_=$I_{N}\eq#1$] (3,2) -- (0,2) (2,0)
+      to[resistor, l=$R_{N}\eq#2$] (2,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\highlight}[1]{\colorbox{yellow}{$\displaystyle #1$}}
+
+\newcommand{\ti}[1]{\widetilde{#1}}
+
+\NewDocumentCommand{\evalat}{sO{\big}mm}{%
+  \IfBooleanTF{#1}
+   {\mleft. #3 \mright|_{#4}}
+   {#3#2|_{#4}}%
+}
+
+\title{Physics 2605H: Assignment III}
+\author{Jeremy Favro \\ Trent University, Peterborough, ON, Canada}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+% PROBLEM 1
+\begin{problem}
+Solve the following problems from Chapter 6 (did you mean chapter 5? That was what I assumed.):
+\begin{enumerate}[label=(\alph*)]
+  \item 5.1
+  \item 5.3
+  \item 5.4
+  \item 5.5
+  \item 5.9 A and 5.9 B
+  \item 5.10
+\end{enumerate}
+\end{problem}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item \begin{enumerate}[label=(\Alph*)]
+            \item Yes, $\braket{\psi}{\psi}=\left(\sqrt{\frac{5}{6}}\bra{0}+\sqrt{\frac{1}{6}}\bra{1}\right)
+                    \left(\sqrt{\frac{5}{6}}\ket{0}+\sqrt{\frac{1}{6}}\ket{1}\right)=\frac{5}{6}+\frac{1}{6}=1$.
+            \item $\frac{5}{6}$.
+            \item $\hat{\rho}=\ket{\psi}\bra{\psi}=\left(\sqrt{\frac{5}{6}}\ket{0}+\sqrt{\frac{1}{6}}\ket{1}\right)
+                    \left(\sqrt{\frac{5}{6}}\bra{0}+\sqrt{\frac{1}{6}}\bra{1}\right)$
+            \item $\left[\hat{\rho}\right]_{\left\{\ket{0},\ket{1}\right\}}=\frac{1}{6}\begin{pmatrix}
+                      5        & \sqrt{5} \\
+                      \sqrt{5} & 1
+                    \end{pmatrix}\implies \mathrm{Tr}(\hat{\rho})=\frac{5}{6}+\frac{1}{6}=1$
+          \end{enumerate}
+    \item \begin{enumerate}[label=(\Alph*)]
+            \item $\left[\hat{\rho}\right]_{\left\{\ket{0},\ket{1}\right\}}=\ket{\psi}\bra{\psi}=
+                    \frac{1}{7}\begin{pmatrix}
+                      3         & 2\sqrt{3} \\
+                      2\sqrt{3} & 4
+                    \end{pmatrix}$
+            \item $\left[\hat{\rho}\right]^2=\frac{1}{49}\begin{pmatrix}
+                      3         & 2\sqrt{3} \\
+                      2\sqrt{3} & 4
+                    \end{pmatrix}\begin{pmatrix}
+                      3         & 2\sqrt{3} \\
+                      2\sqrt{3} & 4
+                    \end{pmatrix}=
+                    \frac{1}{49}\begin{pmatrix}
+                      21        & 14\sqrt{3} \\ 1
+                      4\sqrt{3} & 28
+                    \end{pmatrix}\implies \mathrm{Tr}(\hat{\rho}^2)=\frac{21}{49}+\frac{28}{49}=1\therefore\mathrm{State is pure}$
+            \item Change of basis matrix here is just the Hadamard gate so,\\
+                  $\left[\hat{\rho}\right]_{\left\{\ket{+},\ket{-}\right\}}=\frac{1}{14}H\left[\hat{\rho}\right]_{\left\{\ket{0},\ket{1}\right\}}H
+                    =\frac{1}{14}\begin{pmatrix}
+                      1 & 1  \\
+                      1 & -1
+                    \end{pmatrix}\begin{pmatrix}
+                      3         & 2\sqrt{3} \\
+                      2\sqrt{3} & 4
+                    \end{pmatrix}\begin{pmatrix}
+                      1 & 1  \\
+                      1 & -1
+                    \end{pmatrix}=\frac{1}{14}\begin{pmatrix}
+                      7+4\sqrt{3} & -1          \\
+                      -1          & 7-4\sqrt{3}
+                    \end{pmatrix}\\\implies \mathrm{Tr}(\left[\hat{\rho}\right]_{\left\{\ket{+},\ket{-}\right\}})=
+                    \frac{1}{14}\left[7+4\sqrt{3}+7-4\sqrt{3}\right]=1$.
+                  Then,\\
+                  $\left[\hat{\rho}^2\right]_{\left\{\ket{+},\ket{-}\right\}}=
+                    \frac{1}{196}\begin{pmatrix}
+                      7+4\sqrt{3} & -1          \\
+                      -1          & 7-4\sqrt{3}
+                    \end{pmatrix}\begin{pmatrix}
+                      7+4\sqrt{3} & -1          \\
+                      -1          & 7-4\sqrt{3}
+                    \end{pmatrix}=\frac{1}{196}\begin{pmatrix}
+                      98+56\sqrt{3} & -14           \\
+                      -14           & 98-56\sqrt{3}
+                    \end{pmatrix}\\\implies \mathrm{Tr}(\left[\hat{\rho}^2\right]_{\left\{\ket{+},\ket{-}\right\}})=
+                    \frac{1}{196}\left[98+56\sqrt{3}+98-56\sqrt{3}\right]=1$
+          \end{enumerate}
+    \item \begin{enumerate}[label=(\Alph*)]
+            \item $\hat{\rho}=\frac{1}{3}\begin{pmatrix}
+                      2        & \sqrt{2} \\
+                      \sqrt{2} & 1
+                    \end{pmatrix}\implies\hat{\rho}^2=\frac{1}{9}\begin{pmatrix}
+                      6         & 3\sqrt{2} \\
+                      3\sqrt{2} & 3
+                    \end{pmatrix}\implies \mathrm{Tr}(\hat{\rho})=\mathrm{Tr}(\hat{\rho}^2)=1$
+            \item $\langle X\rangle=\mathrm{Tr}(\rho X)=\mathrm{Tr}\left(\frac{1}{9}\begin{pmatrix}
+                      6         & 3\sqrt{2} \\
+                      3\sqrt{2} & 3
+                    \end{pmatrix}\begin{pmatrix}
+                      0 & 1 \\
+                      1 & 0
+                    \end{pmatrix}\right)=\mathrm{Tr}\left(\begin{pmatrix}\frac{\sqrt{2}}{3} & \frac{2}{3}        \\
+               \frac{1}{3}        & \frac{\sqrt{2}}{3}
+                      \end{pmatrix}\right)=\frac{2\sqrt{2}}{3}$
+          \end{enumerate}
+    \item \begin{enumerate}[label=(\Alph*)]
+            \item Yes. The matrix has trace 1 and is Hermitian.
+            \item Because the trace of the square of the density operator is less than one this is a mixed state.
+          \end{enumerate}
+    \item \begin{enumerate}[label=(\Alph*)]
+            \item $\hat{\rho}=\ket{\psi}\bra{\psi}=\frac{1}{2}\left(\ket{00}+\ket{11}\right)
+                    \left(\bra{00}+\bra{11}\right)$
+            \item $\left[\hat{\rho}\right]=\ket{\psi}\bra{\psi}=\frac{1}{2}\begin{pmatrix}
+                      1 \\
+                      0 \\
+                      0 \\
+                      1
+                    \end{pmatrix}\begin{pmatrix}
+                      1 & 0 & 0 & 1
+                    \end{pmatrix}=
+                    \frac{1}{2}\begin{pmatrix}
+                      1 & 0 & 0 & 1 \\
+                      0 & 0 & 0 & 0 \\
+                      0 & 0 & 0 & 0 \\
+                      1 & 0 & 0 & 1
+                    \end{pmatrix}\implies\mathrm{Tr}(\hat{\rho})=1$
+          \end{enumerate}
+    \item \begin{enumerate}[label=(\Alph*)]
+            \item $\hat{\rho}^\dagger=\begin{pmatrix}
+                      \frac{2}{5} & -\frac{i}{8} \\
+                      \frac{i}{8} & \frac{3}{5}  \\
+                    \end{pmatrix}^\dagger=\begin{pmatrix}
+                      \frac{2}{5} & -\frac{i}{8} \\
+                      \frac{i}{8} & \frac{3}{5}  \\
+                    \end{pmatrix}=\hat{\rho}$
+            \item These are not the eigenvalues. The eigenvalues for $\hat{\rho}$ are $-\frac{20+\sqrt{41}}{40}$ and $\frac{20+\sqrt{41}}{40}$.
+            \item It does not as the eigenvalues are not both positive.
+            \item $P(\ket{0})=\mathrm{Tr}(\bra{0}\rho\ket{0})=\mathrm{Tr}\left(\begin{pmatrix}
+                        1 &
+                        0
+                      \end{pmatrix}\begin{pmatrix}
+                        \frac{2}{5} & -\frac{i}{8} \\
+                        \frac{i}{8} & \frac{3}{5}
+                      \end{pmatrix}
+                    \begin{pmatrix}
+                        1 \\
+                        0
+                      \end{pmatrix}\right)=
+                    \mathrm{Tr}\left(\begin{pmatrix}
+                        \frac{2}{5} \\
+                        \frac{i}{8}
+                      \end{pmatrix}\right)=\frac{2}{5}\neq 0.66$. However this is meaningless as the matrix is not a valid density matrix.
+            \item Because this matrix is not a valid density matrix it is, again, meaningless to calculate the bloch vector representation.
+          \end{enumerate}
+  \end{enumerate}
+\end{soln}
+
+% PROBLEM 2
+\begin{problem}
+Follow the procedure discussed in the class to obtain the transformation matrix for following gates:
+\begin{enumerate}[label=(\roman*)]
+  \item X
+  \item Y
+  \item Z
+  \item Hadamard
+\end{enumerate}
+\end{problem}
+\begin{soln}~
+  \begin{enumerate}[label=(\roman*)]
+    \item $\left[\hat{X}\right]=\begin{pmatrix}
+              \bra{0}\hat{X}\ket{0} & \bra{0}\hat{X}\ket{1} \\
+              \bra{1}\hat{X}\ket{0} & \bra{1}\hat{X}\ket{1} \\
+            \end{pmatrix}=\begin{pmatrix}
+              \bra{0}\ket{1} & \bra{0}\ket{0} \\
+              \bra{1}\ket{1} & \bra{1}\ket{0} \\
+            \end{pmatrix}=\begin{pmatrix}
+              0 & 1 \\
+              1 & 0 \\
+            \end{pmatrix}$
+    \item $\left[\hat{Y}\right]=\begin{pmatrix}
+              \bra{0}\hat{Y}\ket{0} & \bra{0}\hat{Y}\ket{1} \\
+              \bra{1}\hat{Y}\ket{0} & \bra{1}\hat{Y}\ket{1} \\
+            \end{pmatrix}=\begin{pmatrix}
+              -i\bra{0}\ket{1} & i\bra{0}\ket{0} \\
+              -i\bra{1}\ket{1} & i\bra{1}\ket{0} \\
+            \end{pmatrix}=\begin{pmatrix}
+              0  & i \\
+              -i & 0 \\
+            \end{pmatrix}$
+    \item $\left[\hat{Z}\right]=\begin{pmatrix}
+              \bra{0}\hat{Z}\ket{0} & \bra{0}\hat{Z}\ket{1} \\
+              \bra{1}\hat{Z}\ket{0} & \bra{1}\hat{Z}\ket{1} \\
+            \end{pmatrix}=\begin{pmatrix}
+              \bra{0}\ket{1} & -\bra{0}\ket{1} \\
+              \bra{1}\ket{1} & -\bra{1}\ket{1} \\
+            \end{pmatrix}=\begin{pmatrix}
+              1 & 0  \\
+              0 & -1 \\
+            \end{pmatrix}$
+    \item $\left[\hat{H}\right]=\begin{pmatrix}
+              \bra{0}\hat{H}\ket{0} & \bra{0}\hat{H}\ket{1} \\
+              \bra{1}\hat{H}\ket{0} & \bra{1}\hat{H}\ket{1} \\
+            \end{pmatrix}=\begin{pmatrix}
+              \bra{0}\ket{+} & \bra{0}\ket{-} \\
+              \bra{1}\ket{+} & \bra{1}\ket{-} \\
+            \end{pmatrix}=\frac{1}{\sqrt{2}}\begin{pmatrix}
+              1 & 1  \\
+              1 & -1 \\
+            \end{pmatrix}$
+  \end{enumerate}
+\end{soln}
+
+% PROBLEM 3
+\begin{problem}~
+\begin{enumerate}[label=(\roman*)]
+  \item In the class we learnt about T gate. Discuss the phase shift it introduces in the quantum state
+        $\ket{\alpha}$, which is a linear combination of $\ket{0}$ and $\ket{1}$ states.
+  \item What is an S gate? Obtain its matrix form from its functionality.
+  \item How are S and T gates related to Z gate?
+\end{enumerate}
+\end{problem}
+\begin{soln}~
+  \begin{enumerate}[label=(\roman*)]
+    \item The T gate introduces a phase shift of $\qty[parse-numbers=false]{\frac{\pi}{4}}{\radian}$ to $\alpha$.
+    \item An S gate is, like the T gate, a phase shift gate. It introduces a phase shift of
+          $\qty[parse-numbers=false]{\frac{\pi}{2}}{\radian}$. It's matrix form is given by
+          $\begin{pmatrix}
+              1 & 0 \\
+              0 & i \\
+            \end{pmatrix}$.
+    \item The S, T, and Z gates are all phase shift gates. The Z gate, as introduced in class, simply did not explicitly
+          state the phase term. Because the Z gate has a bottom right entry of $-1$ the phase term must be $e^{ni\pi}$ where
+          $n$ is some odd integer.
+  \end{enumerate}
+\end{soln}
+
+% PROBLEM 4
+\begin{problem}
+In the class we discussed two qubit quantum gate C-NOT gate.
+\begin{enumerate}[label=(\roman*)]
+  \item Construct the input vector.
+  \item Using its truth table compute the transformation matrix.
+  \item Applying the transformation matrix from (ii) on the state (i), show that it follows the
+        definition of C-NOT gate.
+  \item Find the output state for following input states which are passed through the CNOT
+        gate:
+        \begin{enumerate}[label=(\alph*)]
+          \item $\ket{00}$
+          \item $\ket{01}$
+          \item $\ket{11}$
+          \item $\frac{1}{\sqrt{2}}\ket{01}+\frac{1}{\sqrt{2}}\ket{10}$
+          \item $\frac{1}{\sqrt{2}}\ket{00}+\frac{1}{2}\ket{10}-\frac{1}{2}\ket{11}$
+        \end{enumerate}
+\end{enumerate}
+\end{problem}
+\begin{soln}~
+  \begin{enumerate}[label=(\roman*)]
+    \item \begin{align*}
+            \ket{00}=\ket{0}\otimes \ket{0} & \to \ket{00}, \\
+            \ket{01}                        & \to \ket{01}, \\
+            \ket{10}                        & \to \ket{11}, \\
+            \ket{11}                        & \to \ket{10}  \\
+          \end{align*}
+    \item \begin{align*}
+            \left[\hat{C}\right] & =\begin{pmatrix}
+                                      \bra{00}\hat{C}\ket{00} & \bra{00}\hat{C}\ket{01} & \bra{00}\hat{C}\ket{10} & \bra{00}\hat{C}\ket{11} \\
+                                      \bra{01}\hat{C}\ket{00} & \bra{01}\hat{C}\ket{01} & \bra{01}\hat{C}\ket{10} & \bra{01}\hat{C}\ket{11} \\
+                                      \bra{10}\hat{C}\ket{00} & \bra{10}\hat{C}\ket{01} & \bra{10}\hat{C}\ket{10} & \bra{10}\hat{C}\ket{11} \\
+                                      \bra{11}\hat{C}\ket{00} & \bra{11}\hat{C}\ket{01} & \bra{11}\hat{C}\ket{10} & \bra{11}\hat{C}\ket{11} \\
+                                    \end{pmatrix}=
+            \begin{pmatrix}
+              \bra{00}\ket{00} & \bra{00}\ket{01} & \bra{00}\ket{11} & \bra{00}\ket{10} \\
+              \bra{01}\ket{00} & \bra{01}\ket{01} & \bra{01}\ket{11} & \bra{01}\ket{10} \\
+              \bra{10}\ket{00} & \bra{10}\ket{01} & \bra{10}\ket{11} & \bra{10}\ket{10} \\
+              \bra{11}\ket{00} & \bra{11}\ket{01} & \bra{11}\ket{11} & \bra{11}\ket{10} \\
+            \end{pmatrix}                                                     \\
+                                 & =\begin{pmatrix}
+                                      1 & 0 & 0 & 0 \\
+                                      0 & 1 & 0 & 0 \\
+                                      0 & 0 & 0 & 1 \\
+                                      0 & 0 & 1 & 0 \\
+                                    \end{pmatrix}
+          \end{align*}
+    \item I'm not sure what this question is asking. Any input vector used to construct the CNOT gate will obviously follow the definition of the
+          CNOT gate when it is applied as it was used to construct the CNOT gate.
+    \item Find the output state for following input states which are passed through the CNOT
+          gate:
+          \begin{enumerate}[label=(\alph*)]
+            \item $\hat{C}\ket{00}=\begin{pmatrix}
+                      1 & 0 & 0 & 0 \\
+                      0 & 1 & 0 & 0 \\
+                      0 & 0 & 0 & 1 \\
+                      0 & 0 & 1 & 0 \\
+                    \end{pmatrix}\begin{pmatrix}
+                      1 \\
+                      0 \\
+                      0 \\
+                      0
+                    \end{pmatrix}=\begin{pmatrix}
+                      1 \\
+                      0 \\
+                      0 \\
+                      0
+                    \end{pmatrix}=\ket{00}$
+            \item $\hat{C}\ket{01}=\begin{pmatrix}
+                      1 & 0 & 0 & 0 \\
+                      0 & 1 & 0 & 0 \\
+                      0 & 0 & 0 & 1 \\
+                      0 & 0 & 1 & 0 \\
+                    \end{pmatrix}\begin{pmatrix}
+                      0 \\
+                      1 \\
+                      0 \\
+                      0
+                    \end{pmatrix}=\begin{pmatrix}
+                      0 \\
+                      1 \\
+                      0 \\
+                      0
+                    \end{pmatrix}=\ket{01}$
+            \item $\hat{C}\ket{11}=\begin{pmatrix}
+                      1 & 0 & 0 & 0 \\
+                      0 & 1 & 0 & 0 \\
+                      0 & 0 & 0 & 1 \\
+                      0 & 0 & 1 & 0 \\
+                    \end{pmatrix}\begin{pmatrix}
+                      0 \\
+                      0 \\
+                      0 \\
+                      1
+                    \end{pmatrix}=\begin{pmatrix}
+                      0 \\
+                      0 \\
+                      1 \\
+                      0
+                    \end{pmatrix}=\ket{10}$
+            \item $\hat{C}\frac{1}{\sqrt{2}}\ket{01}+\hat{C}\frac{1}{\sqrt{2}}\ket{10}=
+                    \frac{1}{\sqrt{2}}\ket{01}+\frac{1}{\sqrt{2}}\ket{11}$
+            \item $\hat{C}\frac{1}{\sqrt{2}}\ket{00}+\hat{C}\frac{1}{2}\ket{10}-\hat{C}\frac{1}{2}\ket{11}=
+                    \frac{1}{\sqrt{2}}\ket{00}+\frac{1}{2}\ket{11}-\frac{1}{2}\ket{10}$
+          \end{enumerate}
+  \end{enumerate}
+\end{soln}
+
+% PROBLEM 5
+\begin{problem}
+Identify the product and entangled states in the list given below.
+\begin{enumerate}[label=(\alph*)]
+  \item $\frac{1}{\sqrt{2}}\ket{01}+\frac{1}{\sqrt{2}}\ket{10}$
+  \item $\frac{1}{\sqrt{2}}\ket{01}-\frac{1}{\sqrt{2}}\ket{10}$
+  \item $\frac{\sqrt{3}}{2}\ket{00}+\frac{1}{2}\ket{11}$
+  \item $\frac{1}{\sqrt{2}}\ket{01}+\frac{1}{\sqrt{2}}\ket{11}$
+  \item $\frac{1}{2}\ket{00}+\frac{1}{2}\ket{01}+\frac{1}{2}\ket{10}-\frac{1}{2}\ket{11}$
+  \item $\frac{1}{\sqrt{2}}\ket{00}+\frac{1}{2}\ket{10}-\frac{1}{2}\ket{11}$
+\end{enumerate}
+\end{problem}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item Because the system $\alpha_0\beta_0=0$, $\alpha_0\beta_1=\frac{1}{\sqrt{2}}$,
+          $\alpha_1\beta_0=\frac{1}{\sqrt{2}}$, $\alpha_1\beta_1=0$ has no solution the state is entangled
+    \item For the same general reason as above this state is entangled.
+    \item For the same general reason as above this state is entangled.
+    \item Because the system $\alpha_0\beta_0=0$, $\alpha_0\beta_1=\frac{1}{\sqrt{2}}$,
+          $\alpha_1\beta_0=0$, $\alpha_1\beta_1=\frac{1}{\sqrt{2}}$ has a solution for $\beta_0=0$,
+          $\alpha_0=\alpha_1=\frac{1}{\sqrt{2}}$, and $\beta_1=1$ this is a product state.
+    \item Because the system $\alpha_0\beta_0=\frac{1}{2}$, $\alpha_0\beta_1=\frac{1}{2}$,
+          $\alpha_1\beta_0=\frac{1}{2}$, $\alpha_1\beta_1=-\frac{1}{2}$ has no solution the state is entangled.
+    \item Because the system $\alpha_0\beta_0=\frac{1}{\sqrt{2}}$, $\alpha_0\beta_1=0$,
+          $\alpha_1\beta_0=\frac{1}{2}$, $\alpha_1\beta_1=-\frac{1}{2}$ has no solution the state is entangled.
+  \end{enumerate}
+\end{soln}
+
+% PROBLEM 6
+\begin{problem}
+Predict the output states of the following quantum circuits
+\begin{enumerate}[label=(\alph*)]
+  \item \begin{quantikz}
+          \lstick{$\ket{0}$}&&\ctrl{1}&&\meter{}&& \\
+          \lstick{$\ket{0}$}&\gate{H}&\targ{}&&&\meter{}&
+        \end{quantikz}
+  \item \begin{quantikz}
+          \lstick{$\ket{0}$}&\gate{H}&\ctrl{1}&&\meter{}&& \\
+          \lstick{$\ket{0}$}&&\targ{}&&&\meter{}&
+        \end{quantikz}
+  \item \begin{quantikz}
+          \lstick{$\ket{0}$}&&\ctrl{1}&&\meter{}&& \\
+          \lstick{$\ket{0}$}&&\targ{}&\gate{H}&&\meter{}&
+        \end{quantikz}
+  \item \begin{quantikz}
+          \lstick{$\ket{0}$}&&\ctrl{1}&\gate{H}&\meter{}&& \\
+          \lstick{$\ket{0}$}&&\targ{}&&&\meter{}&
+        \end{quantikz}
+\end{enumerate}
+\end{problem}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item \begin{quantikz}
+            \lstick{$\ket{0}$}&&\ctrl{1}&&\meter{}&&\rstick{$\ket{0}$} \\
+            \lstick{$\ket{0}$}&\gate{H}&\targ{}&&&\meter{}&\rstick{$\ket{0}$ or $\ket{1}$, equal probability (control $\ket{0}$)}
+          \end{quantikz}
+    \item \begin{quantikz}
+            \lstick{$\ket{0}$}&\gate{H}&\ctrl{1}&&\meter{}&&\rstick{$\ket{0}$ or $\ket{1}$, equal probability} \\
+            \lstick{$\ket{0}$}&&\targ{}&&&\meter{}&\rstick{$\ket{0}$ or $\ket{1}$, equal probability, dependent on control bit}
+          \end{quantikz}
+    \item \begin{quantikz}
+            \lstick{$\ket{0}$}&&\ctrl{1}&&\meter{}&&\rstick{$\ket{0}$} \\
+            \lstick{$\ket{0}$}&&\targ{}&\gate{H}&&\meter{}&\rstick{$\ket{0}$ or $\ket{1}$, equal probability}
+          \end{quantikz}
+    \item \begin{quantikz}
+            \lstick{$\ket{0}$}&&\ctrl{1}&\gate{H}&\meter{}&&\rstick{$\ket{0}$ or $\ket{1}$, equal probability} \\
+            \lstick{$\ket{0}$}&&\targ{}&&&\meter{}&\rstick{$\ket{0}$ or $\ket{1}$, equal probability, dependent on control bit}
+          \end{quantikz}
+  \end{enumerate}
+\end{soln}
+\end{document}
