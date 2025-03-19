@@ -76,12 +76,11 @@
 
 \begin{document}
 \maketitle
-
 % PROBLEM 1
 \begin{problem}
 For atomic hydrogen, the allowed energy levels are given by the Bohr equation
 $$E_n=-\frac{\qty{13.6}{\electronvolt}}{n^2}$$
-which gives energies of $-13.6$, $-3.4$, and $\qty{1.5}{\electronvolt}$ for the first three energy levels.
+which gives energies of $-13.6$, $-3.4$, and $\qty{-1.5}{\electronvolt}$ for the first three energy levels.
 Rework the example in Section 6.3.2 with atomic hydrogen at $\qty{7500}{\kelvin}$ using these three energy levels.
 \begin{enumerate}[label=(\alph*)]
   \item Compute the partition function.
@@ -89,7 +88,29 @@ Rework the example in Section 6.3.2 with atomic hydrogen at $\qty{7500}{\kelvin}
   \item Compare your results with the example in the text.
 \end{enumerate}
 \end{problem}
-\begin{soln}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item \begin{align*}
+            Z & =\sum_{i}g_i\exp{-\frac{E_i}{k_BT}}                                                     \\
+              & =\exp\left(-\frac{\qty{-13.6}{\electronvolt}}{k_B\cdot\qty{7500}{\kelvin}}\right)+
+            \exp\left(-\frac{\qty{-3.4}{\electronvolt}}{k_B\cdot\qty{7500}{\kelvin}}\right)+
+            \exp\left(-\frac{\qty{-1.5}{\electronvolt}}{k_B\cdot\qty{7500}{\kelvin}}\right)             \\
+              & \approx \num[round-mode=figures,round-precision=3,scientific-notation=true]{1373382771}
+          \end{align*}
+    \item \begin{align*}
+            P(\qty{-13.6}{\electronvolt}) & =
+            \frac{1}{\num[round-mode=figures,round-precision=3,scientific-notation=true]{1373382771}}\cdot\exp
+            \left(-\frac{\qty{-13.6}{\electronvolt}}{k_B\cdot\qty{7500}{\kelvin}}\right)\approx 1           \\
+            P(\qty{-3.4}{\electronvolt})  & =
+            \frac{1}{\num[round-mode=figures,round-precision=3,scientific-notation=true]{1373382771}}\cdot\exp
+            \left(-\frac{\qty{-3.4}{\electronvolt}}{k_B\cdot\qty{7500}{\kelvin}}\right)\approx \num{1.4d-7} \\
+            P(\qty{-1.5}{\electronvolt})  & =
+            \frac{1}{\num[round-mode=figures,round-precision=3,scientific-notation=true]{1373382771}}\cdot\exp
+            \left(-\frac{\qty{-1.5}{\electronvolt}}{k_B\cdot\qty{7500}{\kelvin}}\right)\approx \num{7.4d-9}
+          \end{align*}
+    \item The numerical results here are different than those in the text however the effective probability remains the same. Only the highest energy state
+          will realistically be occupied in both cases.
+  \end{enumerate}
 \end{soln}
 
 % PROBLEM 2
@@ -102,7 +123,31 @@ and $\qty{0.4}{\electronvolt}$, respectively. The system is at $\qty{5000}{\kelv
   \item Compute the probability that each of the three states will be occupied.
 \end{enumerate}
 \end{problem}
-\begin{soln}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item \begin{align*}
+            Z & =\sum_{i}g_i\exp{-\frac{E_i}{k_BT}}                                            \\
+              & =\exp\left(-\frac{\qty{0}{\electronvolt}}{k_B\cdot\qty{5000}{\kelvin}}\right)+
+            \exp\left(-\frac{\qty{0.2}{\electronvolt}}{k_B\cdot\qty{5000}{\kelvin}}\right)+
+            \exp\left(-\frac{\qty{0.4}{\electronvolt}}{k_B\cdot\qty{5000}{\kelvin}}\right)     \\
+              & \approx 2.02                                                                   \\
+          \end{align*}
+    \item \begin{align*}
+            \bar{E}  =\sum_{i}E_iP(E_i) & =
+            \qty{0}{\electronvolt}\cdot\exp\left(-\frac{\qty{0}{\electronvolt}}{k_B\cdot\qty{5000}{\kelvin}}\right)                                                                         \\
+                                        & +\qty{0.2}{\electronvolt}\cdot\exp\left(-\frac{\qty{0.2}{\electronvolt}}{k_B\cdot\qty{5000}{\kelvin}}\right)                                      \\
+                                        & +\qty{0.4}{\electronvolt}\cdot\exp\left(-\frac{\qty{0.4}{\electronvolt}}{k_B\cdot\qty{5000}{\kelvin}}\right)\approx\qty{0.284d-20}{\electronvolt}
+          \end{align*}
+    \item \begin{align*}
+            P(\qty{0}{\electronvolt})   & =\frac{1}{Z} \approx 0.495                                \\
+            P(\qty{0.2}{\electronvolt}) & =
+            \frac{1}{Z}\cdot\exp
+            \left(-\frac{\qty{0.2}{\electronvolt}}{k_B\cdot\qty{5000}{\kelvin}}\right)\approx 0.311 \\
+            P(\qty{0.4}{\electronvolt}) & =
+            \frac{1}{Z}\cdot\exp
+            \left(-\frac{\qty{0.4}{\electronvolt}}{k_B\cdot\qty{5000}{\kelvin}}\right)\approx 0.196
+          \end{align*}
+  \end{enumerate}
 \end{soln}
 
 % PROBLEM 3
@@ -113,7 +158,22 @@ where $\alpha$ is a constant and the other symbols have their usual meanings.
 Show that the equation of state $PV = nRT$ follows from this equation.
 \end{problem}
 \begin{soln}
-  Where is $\alpha$ here?
+  Where is $\alpha$ here? Anyway, starting with $dU=TdS-PdV$ and the total derivative of U, $dU=\frac{\partial U}{\partial S}dS+\frac{\partial U}{\partial V}dV$ we get
+  $$TdS-PdV=\frac{\partial U}{\partial S}dS+\frac{\partial U}{\partial V}dV$$
+  Where
+  $$\frac{\partial U}{\partial S}=-\frac{2}{3}\left(\frac{N}{V}\right)^{2/3}\exp\left(\frac{2S}{3Nk_B}\right),
+    \qquad\frac{\partial U}{\partial V}=\frac{2}{3}k_B\left(\frac{N}{V}\right)^{5/3}\exp\left(\frac{2S}{3Nk_B}\right)$$
+  From which we get
+  $$TdS-PdV=-\frac{2}{3}\left(\frac{N}{V}\right)^{2/3}\exp\left(\frac{2S}{3Nk_B}\right)dS+\frac{2}{3}k_B\left(\frac{N}{V}\right)^{5/3}\exp\left(\frac{2S}{3Nk_B}\right)dV$$
+  Which implies
+  $$\left[\frac{2}{3}\left(\frac{N}{V}\right)^{2/3}\exp\left(\frac{2S}{3Nk_B}\right)+T\right]dS=\left[\frac{2}{3}k_B\left(\frac{N}{V}\right)^{5/3}\exp\left(\frac{2S}{3Nk_B}\right)+P\right]dV$$
+  Because this is true everywhere we get
+  $$\frac{2}{3}\left(\frac{N}{V}\right)^{2/3}\exp\left(\frac{2S}{3Nk_B}\right)=-T,
+    \qquad\frac{2}{3}k_B\left(\frac{N}{V}\right)^{5/3}\exp\left(\frac{2S}{3Nk_B}\right)=-P$$
+  Which means that
+  $$-P=-\frac{N}{V}k_BT$$
+  Which can be rearranged to
+  $$PV=Nk_BT=nRT$$
 \end{soln}
 
 % PROBLEM 4
@@ -122,5 +182,6 @@ Water boils at $T = \qty{100}{\degreeCelsius}$ at one atmosphere of pressure. In
 $\qty{109}{\joule\per\kelvin}$ for each mole of water. Find the molar enthalpy increase.
 \end{problem}
 \begin{soln}
+  With $\displaystyle\frac{dQ}{T}=dS$ and $\displaystyle dH=\frac{dQ}{n}$ we get $\displaystyle dH=\frac{TdS}{n}\approx\qty{4.08d4}{\joule\per\mole}$
 \end{soln}
 \end{document}
