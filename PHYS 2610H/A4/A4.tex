@@ -1,0 +1,171 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{changepage}
+\usepackage{circuitikz}
+\usepackage{pgfplots}
+\usepackage{physics}
+\usepackage{hyperref}
+\usepackage{siunitx}
+\usepackage[breakable]{tcolorbox}
+\usepackage[inline]{enumitem}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{soln}{Solution}
+
+\pgfplotsset{compat=newest}
+\usetikzlibrary{lindenmayersystems}
+\usetikzlibrary{arrows}
+\usetikzlibrary{calc}
+
+\definecolor{incolor}{HTML}{303F9F}
+\definecolor{outcolor}{HTML}{D84315}
+\definecolor{cellborder}{HTML}{CFCFCF}
+\definecolor{cellbackground}{HTML}{F7F7F7}
+\newcommand{\eq}{=}
+\usetikzlibrary{positioning, fit, calc}
+\pgfdeclarelayer{background}  
+\pgfsetlayers{background,main}
+\AtBeginDocument{\RenewCommandCopy\qty\SI}
+
+\makeatletter
+\newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+\makeatother
+\newcommand{\prompt}[4]{
+    \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+}
+
+\newcommand{\thevenin}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (2,0) to[battery1, l_=$V_{Th}\eq#1$] (2,2) 
+      to[resistor, l_=$R_{Th}\eq#2$] (0,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\norton}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (3,0) to[american current source, l_=$I_{N}\eq#1$] (3,2) -- (0,2) (2,0)
+      to[resistor, l=$R_{N}\eq#2$] (2,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\highlight}[1]{\colorbox{yellow}{$\displaystyle #1$}}
+
+\newcommand{\ti}[1]{\widetilde{#1}}
+
+\title{Physics 2610H: Assignment IV}
+\author{Jeremy Favro}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+% PROBLEM 1
+\begin{problem}
+Use the tables of $R(r)$, $\Theta(\theta)$, and $\Phi(\phi)$ to describe the mathematical dependence on the $r$, $\theta$, and $\phi$
+variables of the $n = 3$, $\ell=2$, $m_\ell=2$ energy eigenstate of the hydrogen atom. Use computer software of
+your choice (Excel, Matlab, \emph{etc.}) to plot the shape of the radial probability density, $P(r)$, of this state
+against $r$. Include units! Denote on your plot the most probable radius for an electron in this state.
+\end{problem}
+\begin{soln}
+  $$R(r)=\frac{1}{\left(3a_0\right)^{3/2}}\frac{2\sqrt{2}r^2}{27\sqrt{5}a_0^2}e^{-r/3a_0}$$ 
+  $$\Theta(\theta)=\sqrt{\frac{15}{32\pi}}\sin^2\theta$$ 
+  $$\Phi(\phi)=e^{2i\phi}$$
+\end{soln}
+
+% PROBLEM 2
+\begin{problem}
+Show that the degeneracy of the $n$-th state of the hydrogen atom \emph{if} the electron had no spin (so course
+material only up to Chapter 7) would be $n^2$. That is, prove the following equality and in a sentence or two
+state why this equation answers this question:
+$$\sum_{\ell=0}^{n-1}\left(2\ell+1\right)=n^2$$
+\end{problem}
+\begin{soln}
+\end{soln}
+
+% PROBLEM 3
+\begin{problem}
+For a hydrogen atom in the $1s$ state
+\begin{enumerate}[label=(\alph*)]
+  \item What is the most probable value of $r$ from a measurement of $r$?
+  \item What is the average value of $r$?
+  \item where in 3-dimensional space is the electron most likely to be within a small volume of \underline{fixed} size $dV$?
+\end{enumerate}
+\end{problem}
+\begin{soln}
+\end{soln}
+
+% PROBLEM 4
+\begin{problem}
+Evaluate, in electron volts, the energies of the three lowest energy levels of the hydrogen atom. Then
+calculate the frequencies in $\unit{\hertz}$, and the wavelengths in $\unit{\angstrom}$ of all the photons that can be emitted by the
+atom in transitions between these levels. In what range of the electromagnetic spectrum are these photons?
+\end{problem}
+\begin{soln}
+\end{soln}
+
+% PROBLEM 5
+\begin{problem}
+Consider the probability of finding the electron in the hydrogen atom somewhere inside a cone of $\qty{23.5}{\degree}$
+(``arctic polar region'').
+\begin{enumerate}[label=(\alph*)]
+  \item If the electron were equally likely to be found anywhere in space, what would be the probability of finding the
+        electron in the arctic polar region?
+  \item Suppose the electron is in the state $n = 2$, $\ell = 1$, $m_\ell = 0$ (i.e. a $2p_z$ orbital); recalculate the probability of
+        finding the electron in the arctic polar region.
+\end{enumerate}
+\end{problem}
+\begin{soln}
+\end{soln}
+
+% PROBLEM 6
+\begin{problem}
+An electron (with spin) in a hydrogen atom is in the $4f_{5/2}$ state. Find the values of the quantum numbers
+$n$, $\ell$ and $j$. What is the magnitude of the electron's total angular momentum? What are the possible values
+for the $z$-component of the electron's total angular momentum?
+\end{problem}
+\begin{soln}
+\end{soln}
+
+% PROBLEM 7
+\begin{problem}
+Neglecting any effects of spin (i.e. if both particles are spinless), how many quantum states are possible
+for a two-particle system with orbital angular momentum quantum numbers $\ell_1=2$ and $\ell_2=1$? Write down
+all these states in what is called the \emph{uncoupled} form: ($\ell_1m_{\ell_1}\ell_2m_{\ell_2}$). Then find all possible values of the
+total orbital angular momentum quantum number $\ell_T$ and the total orbital magnetic quantum number $m_{\ell_T}$. Write down all these states
+in the \emph{coupled} form: ($\ell_1\ell_2\ell_Tm_{\ell_T}$).
+\end{problem}
+\begin{soln}
+\end{soln}
+
+% PROBLEM 8
+\begin{problem}
+Two spinless particles, assumed initially to be distinguishable from each other, occupy two different
+states ($n=2$ and $n^\prime=3$) in a 1-D infinite well of length $L$. The \emph{product wave function} for the case with particle 1 in
+state $n=2$ and particle 2 in state $n^\prime=3$ is
+$$\psi(x_1,x_2)=A\sin\left(\frac{2\pi x_1}{L}\right)\sin\left(\frac{3\pi x_2}{L}\right),\qquad A=\frac{2}{L}$$
+\begin{enumerate}[label=(\alph*)]
+  \item Show that with this normalization constant this product wave function is correctly normalized.
+  \item If the two particles are instead \emph{identical} how should this product wave function be adapted to form two
+        realistic wave functions? Given that the normalization constant for each of these wave functions is $L=\sqrt{2}/L$
+        in each case what is the probability of both particles being found in the left half of the well (i.e. between $0$ and $L/2$).
+\end{enumerate}
+\end{problem}
+\begin{soln}
+\end{soln}
+\end{document}
