@@ -8,15 +8,13 @@ from scipy.constants import physical_constants
 def plot_density(n, l, m_l, scaling_factor, phi):
     # TODO: quantum number constraints
 
-    fig, ax = pyplot.subplots(figsize=(16, 16.5))
+    ax = pyplot.subplots()
 
     grid_extent = 480
     grid_resolution = 1000
     x = y = np.linspace(-grid_extent, grid_extent, grid_resolution)
     x, y = np.meshgrid(x, y)
 
-    eps = np.finfo(float).eps
-    # 1 / (2 * (n + l + m_l))
     a_0 = scaling_factor * \
         physical_constants['Bohr radius'][0] * 1e+12
 
@@ -27,7 +25,7 @@ def plot_density(n, l, m_l, scaling_factor, phi):
     psi = radial_wfn * angular_wfn
     prob_density = np.abs(psi)**2
     im = ax.imshow(np.sqrt(prob_density),
-                   cmap=sns.color_palette('mako', as_cmap=True))
+                   cmap=sns.color_palette('rocket', as_cmap=True))
     pyplot.colorbar(im)
     pyplot.show()
 
@@ -57,4 +55,4 @@ def calculate_angular_wfn(l, m_l, theta, phi):
     return norm * legendre_polynomial * np.exp(1.j * m_l * phi)
 
 
-plot_density(3, 2, 2, 0.4, 0)
+plot_density(1, 0, 0, 2, 0)
