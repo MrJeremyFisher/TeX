@@ -8,7 +8,7 @@ from scipy.constants import physical_constants
 def plot_density(n, l, m_l, scaling_factor, phi):
     # TODO: quantum number constraints
 
-    ax = pyplot.subplots()
+    ax = pyplot.axes()
 
     grid_extent = 480
     grid_resolution = 1000
@@ -24,6 +24,8 @@ def plot_density(n, l, m_l, scaling_factor, phi):
 
     psi = radial_wfn * angular_wfn
     prob_density = np.abs(psi)**2
+    # Cheap norm, TODO figure out why it isn't norm'd from the start
+    prob_density = (prob_density - prob_density.min()) / (np.ptp(prob_density))
     im = ax.imshow(np.sqrt(prob_density),
                    cmap=sns.color_palette('rocket', as_cmap=True))
     pyplot.colorbar(im)
@@ -55,4 +57,4 @@ def calculate_angular_wfn(l, m_l, theta, phi):
     return norm * legendre_polynomial * np.exp(1.j * m_l * phi)
 
 
-plot_density(1, 0, 0, 2, 0)
+plot_density(3, 2, 2, 0.4, 0)

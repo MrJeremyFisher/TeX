@@ -83,9 +83,21 @@ your choice (Excel, Matlab, \emph{etc.}) to plot the shape of the radial probabi
 against $r$. Include units! Denote on your plot the most probable radius for an electron in this state.
 \end{problem}
 \begin{soln}
-  $$R(r)=\frac{1}{\left(3a_0\right)^{3/2}}\frac{2\sqrt{2}r^2}{27\sqrt{5}a_0^2}e^{-r/3a_0}$$ 
-  $$\Theta(\theta)=\sqrt{\frac{15}{32\pi}}\sin^2\theta$$ 
+  $$R(r)=\frac{1}{\left(3a_0\right)^{3/2}}\frac{2\sqrt{2}r^2}{27\sqrt{5}a_0^2}e^{-r/3a_0}$$
+  $$\Theta(\theta)=\sqrt{\frac{15}{32\pi}}\sin^2\theta$$
   $$\Phi(\phi)=e^{2i\phi}$$
+  % \begin{tikzpicture}
+  %   \def\a_0{5.292*10^(-11)}
+  %   \begin{axis}[
+  %       width=\textwidth, height = 5cm,
+  %       xlabel={$x$}, ylabel={$f(x)$},
+  %       xtick={0, 3*\a_0, 6*\a_0, 9*\a_0, 12*\a_0},
+  %       xticklabel={\pgfmathparse{\tick}${\pgfmathprintnumber{\pgfmathresult}}a_0$}
+  %     ]
+  %     \addplot[domain=0:50*\a_0, smooth, samples=501]
+  %     (\x,{(((3*\a_0)^(-3/2))*((2*sqrt(2)*\x^2)/(27*sqrt(5)*\a_0^2))*(e^(-\x/(3*\a_0))))^2*\x^2});
+  %   \end{axis}
+  % \end{tikzpicture}
 \end{soln}
 
 % PROBLEM 2
@@ -96,6 +108,19 @@ state why this equation answers this question:
 $$\sum_{\ell=0}^{n-1}\left(2\ell+1\right)=n^2$$
 \end{problem}
 \begin{soln}
+  Note the sum is
+  $$\sum_{\ell=0}^{n-1}(2\ell+1)=1+(2+1)+\dots+(2(n-1)+1)$$
+  which is the sum of odd integers up to $n-1$. The sum we are interested in can be split into two parts,
+  $$\sum_{\ell=0}^{n-1}(2\ell)+\sum_{\ell=0}^{n-1}1$$
+  The second part of this sum, $\sum_{\ell=0}^{n-1}1$, is the sum of $1$ $n-1+1$ times, the $+1$ arising due to the beginning index being at
+  $0$ (Fencepost problem! That took me a minute). This reduces to $n$.
+  $\sum_{\ell=0}^{n-1}(2\ell)$ is simply twice the sum of the integers up to $n-1$ which is equal to
+  $$(n-1)(n)$$
+  so the entire sum is
+  $$(n-1)(n)+(n)=n^2.$$
+  This equation gives the degeneracy of the $n$-th state of the hydrogen atom as $\ell$ runs from $0$ to $n-1$ and $m_\ell$ runs from $-\ell$ to $+\ell$
+  which means $m_\ell$ could be any value from $0$ to $\pm(n-1)$. Because degeneracy (without spin) is effectively a
+  measure of the number of possible values of $m_\ell$ the degeneracy can be expressed as the sum given in the problem statement.
 \end{soln}
 
 % PROBLEM 3
@@ -104,10 +129,25 @@ For a hydrogen atom in the $1s$ state
 \begin{enumerate}[label=(\alph*)]
   \item What is the most probable value of $r$ from a measurement of $r$?
   \item What is the average value of $r$?
-  \item where in 3-dimensional space is the electron most likely to be within a small volume of \underline{fixed} size $dV$?
+  \item Where in 3-dimensional space is the electron most likely to be within a small volume of \underline{fixed} size $dV$?
 \end{enumerate}
 \end{problem}
-\begin{soln}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item Here we are looking for the maximum of the probability,
+          $$R^2(r)r^2=\left(\frac{2e^{-r/a_0}}{a_0^{3/2}}\right)^2r^2=\frac{4r^2e^{-2r/a_0}}{a_0^3}=P(r)$$
+          This can be found by solving
+          $$\frac{dP}{dr}=\frac{8r(r-a_0)e^{-2r/a_0}}{a_0^4}=0$$
+          Which gives solutions of $r=0,a_0,\infty$. $0$ and $\infty$ are non-physical so the most probable value is $r=a_0$.
+    \item $$\int_0^\infty R^2(r)r^3\,dr
+            =\int_0^\infty\left(\frac{2e^{-r/a_0}}{a_0^{3/2}}\right)^2r^3\,dr
+            =\frac{4}{a_0^{3}}\int_0^\infty r^3e^{-2r/a_0}\,dr$$
+          Which, using the integral table given on the formula sheet, is
+          $$\frac{4}{a_0^{3}}\frac{3!}{\left(\frac{2}{a_0}\right)^4}=\frac{3a_0}{2}$$
+    \item $$dP(r,\theta,\phi)=\abs{\psi(r,\theta,\phi)}^2dV=\abs{\psi(r,\theta,\phi)}^2r^2\sin\theta d\theta d\phi
+            =\left(\frac{2e^{-r/a_0}}{a_0^{3/2}}\sqrt{\frac{1}{4\pi}}\right)^2r^2\sin\theta d\theta d\phi
+          $$
+  \end{enumerate}
 \end{soln}
 
 % PROBLEM 4
@@ -121,7 +161,7 @@ atom in transitions between these levels. In what range of the electromagnetic s
 
 % PROBLEM 5
 \begin{problem}
-Consider the probability of finding the electron in the hydrogen atom somewhere inside a cone of $\qty{23.5}{\degree}$
+Consider the probability of finding the electron in the hydrogen atom somewhere inside a cone of $\theta=\qty{23.5}{\degree}$
 (``arctic polar region'').
 \begin{enumerate}[label=(\alph*)]
   \item If the electron were equally likely to be found anywhere in space, what would be the probability of finding the
@@ -131,6 +171,20 @@ Consider the probability of finding the electron in the hydrogen atom somewhere 
 \end{enumerate}
 \end{problem}
 \begin{soln}
+  \begin{enumerate}[label=(\alph*)]
+    \item \begin{align*}
+            = & \int_{\qty{0}{\degree}}^{\qty{23.5}{\degree}}\int_{\qty{0}{\degree}}^{\qty{360}{\degree}}\int_0^R r^2\sin\theta\,dr d\phi d\theta \\
+            = & \int_{\qty{0}{\degree}}^{\qty{23.5}{\degree}}\int_{\qty{0}{\degree}}^{\qty{360}{\degree}} \frac{R^3\sin\theta}{3}\, d\phi d\theta \\
+            = & \int_{\qty{0}{\degree}}^{\qty{23.5}{\degree}}120R^3\sin\theta\,  d\theta                                                          \\
+            = & -\frac{2\pi}{3}R^3\cos\left(\frac{47\pi}{360}\right)+\frac{2\pi}{3}R^3\cos\left(0\right)
+          \end{align*}
+    \item \begin{align*}
+      = & \int_{\qty{0}{\degree}}^{\qty{23.5}{\degree}}\int_{\qty{0}{\degree}}^{\qty{360}{\degree}}\int_0^\infty r^2\sin\theta\,dr d\phi d\theta \\
+      = & \int_{\qty{0}{\degree}}^{\qty{23.5}{\degree}}\int_{\qty{0}{\degree}}^{\qty{360}{\degree}} \frac{R^3\sin\theta}{3}\, d\phi d\theta \\
+      = & \int_{\qty{0}{\degree}}^{\qty{23.5}{\degree}}120R^3\sin\theta\,  d\theta                                                          \\
+      = & -\frac{2\pi}{3}R^3\cos\left(\frac{47\pi}{360}\right)+\frac{2\pi}{3}R^3\cos\left(0\right)
+    \end{align*}
+  \end{enumerate}
 \end{soln}
 
 % PROBLEM 6
