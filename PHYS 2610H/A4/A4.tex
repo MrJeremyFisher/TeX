@@ -147,6 +147,7 @@ For a hydrogen atom in the $1s$ state
     \item $$dP(r,\theta,\phi)=\abs{\psi(r,\theta,\phi)}^2dV=\abs{\psi(r,\theta,\phi)}^2r^2\sin\theta d\theta d\phi
             =\left(\frac{2e^{-r/a_0}}{a_0^{3/2}}\sqrt{\frac{1}{4\pi}}\right)^2r^2\sin\theta d\theta d\phi
           $$
+          TODO: this isn't done
   \end{enumerate}
 \end{soln}
 
@@ -178,12 +179,14 @@ Consider the probability of finding the electron in the hydrogen atom somewhere 
             = & \int_{\qty{0}{\degree}}^{\qty{23.5}{\degree}}120R^3\sin\theta\,  d\theta                                                          \\
             = & -\frac{2\pi}{3}R^3\cos\left(\frac{47\pi}{360}\right)+\frac{2\pi}{3}R^3\cos\left(0\right)
           \end{align*}
+          TODO: infinite?
     \item \begin{align*}
-      = & \int_{\qty{0}{\degree}}^{\qty{23.5}{\degree}}\int_{\qty{0}{\degree}}^{\qty{360}{\degree}}\int_0^\infty r^2\sin\theta\,dr d\phi d\theta \\
-      = & \int_{\qty{0}{\degree}}^{\qty{23.5}{\degree}}\int_{\qty{0}{\degree}}^{\qty{360}{\degree}} \frac{R^3\sin\theta}{3}\, d\phi d\theta \\
-      = & \int_{\qty{0}{\degree}}^{\qty{23.5}{\degree}}120R^3\sin\theta\,  d\theta                                                          \\
-      = & -\frac{2\pi}{3}R^3\cos\left(\frac{47\pi}{360}\right)+\frac{2\pi}{3}R^3\cos\left(0\right)
-    \end{align*}
+            = & \iiint \left(\frac{1}{\left(2a_0\right)^{3/2}}\frac{r}{\sqrt{3}a_0}e^{-r/2a_0}\sqrt{\frac{3}{4\pi}}\cos\theta\right)^2r^2\sin\theta\,dV \\
+            = & \frac{1}{16a_0^5}\iint r^4e^{-r/a_0}\cos^2\theta\sin\theta\,dr d\theta                                                                  \\
+            = & \frac{3}{2}\int \cos^2\theta\sin\theta\,d\theta                                                                                      \\
+            = & \eval{-\frac{\cos^3(\theta)}{2}}_{0}^{47\pi/360}\approx 0.114                                                              
+          \end{align*}
+          TODO: Check this
   \end{enumerate}
 \end{soln}
 

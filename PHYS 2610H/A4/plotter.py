@@ -57,4 +57,4 @@ def calculate_angular_wfn(l, m_l, theta, phi):
     return norm * legendre_polynomial * np.exp(1.j * m_l * phi)
 
 
-plot_density(3, 2, 2, 0.4, 0)
+plot_density(2, 1, 0, 0.4, 0)
