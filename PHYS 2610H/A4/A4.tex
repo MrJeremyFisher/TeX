@@ -183,8 +183,8 @@ Consider the probability of finding the electron in the hydrogen atom somewhere 
     \item \begin{align*}
             = & \iiint \left(\frac{1}{\left(2a_0\right)^{3/2}}\frac{r}{\sqrt{3}a_0}e^{-r/2a_0}\sqrt{\frac{3}{4\pi}}\cos\theta\right)^2r^2\sin\theta\,dV \\
             = & \frac{1}{16a_0^5}\iint r^4e^{-r/a_0}\cos^2\theta\sin\theta\,dr d\theta                                                                  \\
-            = & \frac{3}{2}\int \cos^2\theta\sin\theta\,d\theta                                                                                      \\
-            = & \eval{-\frac{\cos^3(\theta)}{2}}_{0}^{47\pi/360}\approx 0.114                                                              
+            = & \frac{3}{2}\int \cos^2\theta\sin\theta\,d\theta                                                                                         \\
+            = & \eval{-\frac{\cos^3(\theta)}{2}}_{0}^{47\pi/360}\approx 0.114
           \end{align*}
           TODO: Check this
   \end{enumerate}
@@ -197,6 +197,9 @@ $n$, $\ell$ and $j$. What is the magnitude of the electron's total angular momen
 for the $z$-component of the electron's total angular momentum?
 \end{problem}
 \begin{soln}
+  $n=4$, $\ell=3$, $j=\left|\ell-s\right|=\left|3-\frac{1}{2}\right|=5/2$.
+  $\| \vec{J}\Vert =\| \vec{L}+ \vec{S}\Vert=\left(\sqrt{\ell(\ell+1)}+\sqrt{s(s+1)}\right)\hbar=\frac{5\sqrt{3}}{2}\hbar$.
+  $J_z=m_j\hbar=\left\{-j,-j+1,\dots, j-1, j\right\}\hbar=\left\{-5/2,-3/2,-1/2, 1/2, 3/2, 5/2\right\}\hbar$
 \end{soln}
 
 % PROBLEM 7
@@ -224,5 +227,13 @@ $$\psi(x_1,x_2)=A\sin\left(\frac{2\pi x_1}{L}\right)\sin\left(\frac{3\pi x_2}{L}
 \end{enumerate}
 \end{problem}
 \begin{soln}
+  \begin{enumerate}[label=(\alph*)]
+    \item \begin{align*}
+      =&\int_{0}^{L}\int_{0}^{L}A\sin\left(\frac{2\pi x_1}{L}\right)\sin\left(\frac{3\pi x_2}{L}\right)\,dx_1dx_2\\
+    \end{align*}
+    \item If the two particles are instead \emph{identical} how should this product wave function be adapted to form two
+          realistic wave functions? Given that the normalization constant for each of these wave functions is $L=\sqrt{2}/L$
+          in each case what is the probability of both particles being found in the left half of the well (i.e. between $0$ and $L/2$).
+  \end{enumerate}
 \end{soln}
 \end{document}
