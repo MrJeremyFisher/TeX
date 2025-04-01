@@ -158,6 +158,18 @@ calculate the frequencies in $\unit{\hertz}$, and the wavelengths in $\unit{\ang
 atom in transitions between these levels. In what range of the electromagnetic spectrum are these photons?
 \end{problem}
 \begin{soln}
+  The energy levels of the hydrogen atom can be expressed as a function of the principle quantum number, $n$, only. These
+  energies are given by the equation
+  $$E(n)=-\frac{mZ^2e^4}{\left(4\pi\epsilon_0\right)2\hbar^2n^2}\approx-\frac{\qty{13.6}{\electronvolt}}{n^2}$$
+  which gives energy levels of $\qty{-13.6}{\electronvolt}$, $\qty{-3.4}{\electronvolt}$, and $\qty{-1.51}{\electronvolt}$
+  for $n=1,2,3$. For frequencies associated with these transitions we only have to care about downward movement so we have
+  \begin{align*}
+    3\to 2  : & \lambda=\frac{hc}{\Delta E}\approx\frac{hc}{\qty{-3.4}{\electronvolt}-\qty{-13.6}{\electronvolt}}\approx\qty{1.22}{\kilo\angstrom}
+    \implies f\approx\qty{2.47d15}{\hertz}                                                                                                         \\
+    3\to 1  : & \approx\qty{1.02}{\kilo\angstrom}\implies f\approx\qty{2.92d15}{\hertz}                                                            \\
+    2\to 1  : & \approx\qty{6.56}{\kilo\angstrom}\implies f\approx\qty{4.57d14}{\hertz}
+  \end{align*}
+  The the first two transitions emit photons in the ultraviolet range and the last emits a photon in the near infrared range.
 \end{soln}
 
 % PROBLEM 5
@@ -229,11 +241,26 @@ $$\psi(x_1,x_2)=A\sin\left(\frac{2\pi x_1}{L}\right)\sin\left(\frac{3\pi x_2}{L}
 \begin{soln}
   \begin{enumerate}[label=(\alph*)]
     \item \begin{align*}
-      =&\int_{0}^{L}\int_{0}^{L}A\sin\left(\frac{2\pi x_1}{L}\right)\sin\left(\frac{3\pi x_2}{L}\right)\,dx_1dx_2\\
-    \end{align*}
-    \item If the two particles are instead \emph{identical} how should this product wave function be adapted to form two
-          realistic wave functions? Given that the normalization constant for each of these wave functions is $L=\sqrt{2}/L$
-          in each case what is the probability of both particles being found in the left half of the well (i.e. between $0$ and $L/2$).
+            = & \int_{0}^{L}\int_{0}^{L}A^2\sin^2\left(\frac{2\pi x_1}{L}\right)\sin^2\left(\frac{3\pi x_2}{L}\right)\,dx_1dx_2                                                                             \\
+            = & \frac{A^2}{4}\int_{0}^{L}\int_{0}^{L}\left(1-\cos\left(\frac{4\pi}{L}x_1\right)\right)\left(1-\cos\left(\frac{6\pi}{L}x_2\right)\right)\,dx_1dx_2                                           \\
+            = & \frac{A^2}{4}\int_{0}^{L}\int_{0}^{L}1-\cos\left(\frac{4\pi}{L}x_1\right)-\cos\left(\frac{6\pi}{L}x_2\right)+\cos\left(\frac{4\pi}{L}x_1\right)\cos\left(\frac{6\pi}{L}x_2\right)\,dx_1dx_2 \\
+            = & \frac{A^2}{4}\int_{0}^{L}\left[x_1x_2-\frac{Lx_2}{4\pi}\sin\left(\frac{4\pi}{L}x_1\right)
+              -\frac{Lx_1}{6\pi}\sin\left(\frac{6\pi}{L}x_2\right)
+              + \frac{L^2}{24\pi^2}\sin\left(\frac{4\pi}{L}x_1\right)\sin\left(\frac{6\pi}{L}x_2\right)
+            \right]_0^L                                                                                                                                                                                     \\
+            = & \frac{A^2}{4}\int_{0}^{L}\left[x_1x_2-\frac{Lx_2}{4\pi}\sin\left(\frac{4\pi}{L}x_1\right)
+              -\frac{Lx_1}{6\pi}\sin\left(\frac{6\pi}{L}x_2\right)
+              + \frac{L^2}{24\pi^2}\sin\left(\frac{4\pi}{L}x_1\right)\sin\left(\frac{6\pi}{L}x_2\right)
+            \right]_0^L                                                                                                                                                                                     \\
+            = & \frac{A^2}{4}\cdot L^2=\frac{4}{4L^2}\cdot L^2=1
+          \end{align*}
+    \item Dependent on whether the particles are fermions or bosons the wavefunction must be made antisymmetric or symmetric,
+          e.g. $\psi(x_1,x_2)=-\psi(x_2,x_1)$ for fermions (antisymmetric) and $\psi(x_1,x_2)=\psi(x_2,x_1)$ for bosons (symmetric).
+          This can be accomplished by either adding or subtracting a copy of the given wavefunction with flipped particle identifiers,
+          \begin{align*}
+             & A\sin\left(\frac{2\pi x_1}{L}\right)\sin\left(\frac{3\pi x_2}{L}\right)-A\sin\left(\frac{2\pi x_2}{L}\right)\sin\left(\frac{3\pi x_1}{L}\right)\qquad\text{Antisymmetric} \\
+             & A\sin\left(\frac{2\pi x_1}{L}\right)\sin\left(\frac{3\pi x_2}{L}\right)+A\sin\left(\frac{2\pi x_2}{L}\right)\sin\left(\frac{3\pi x_1}{L}\right)\qquad\text{Symmetric}
+          \end{align*}
   \end{enumerate}
 \end{soln}
 \end{document}
