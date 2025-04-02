@@ -281,9 +281,7 @@ in the \emph{coupled} form: ($\ell_1\ell_2\ell_Tm_{\ell_T}$).
       \bottomrule
     \end{tabular}
   \end{table}
-
 \end{soln}
-\newpage
 
 % PROBLEM 8
 \begin{problem}
@@ -318,9 +316,22 @@ $$\psi(x_1,x_2)=A\sin\left(\frac{2\pi x_1}{L}\right)\sin\left(\frac{3\pi x_2}{L}
           e.g. $\psi(x_1,x_2)=-\psi(x_2,x_1)$ for fermions (antisymmetric) and $\psi(x_1,x_2)=\psi(x_2,x_1)$ for bosons (symmetric).
           This can be accomplished by either adding or subtracting a copy of the given wavefunction with flipped particle identifiers,
           \begin{align*}
-             & A\sin\left(\frac{2\pi x_1}{L}\right)\sin\left(\frac{3\pi x_2}{L}\right)-A\sin\left(\frac{2\pi x_2}{L}\right)\sin\left(\frac{3\pi x_1}{L}\right)\qquad\text{Antisymmetric} \\
-             & A\sin\left(\frac{2\pi x_1}{L}\right)\sin\left(\frac{3\pi x_2}{L}\right)+A\sin\left(\frac{2\pi x_2}{L}\right)\sin\left(\frac{3\pi x_1}{L}\right)\qquad\text{Symmetric}
+             & \sin\left(\frac{2\pi x_1}{L}\right)\sin\left(\frac{3\pi x_2}{L}\right)-\sin\left(\frac{2\pi x_2}{L}\right)\sin\left(\frac{3\pi x_1}{L}\right)\qquad\text{Antisymmetric} \\
+             & \sin\left(\frac{2\pi x_1}{L}\right)\sin\left(\frac{3\pi x_2}{L}\right)+\sin\left(\frac{2\pi x_2}{L}\right)\sin\left(\frac{3\pi x_1}{L}\right)\qquad\text{Symmetric}
           \end{align*}
+          As for probability we need to evaluate the integrals
+          $$\frac{2}{L^2}\int_{0}^{L/2}\int_{0}^{L/2}\left(\sin\left(\frac{2\pi x_1}{L}\right)\sin\left(\frac{3\pi x_2}{L}\right)-\sin\left(\frac{2\pi x_2}{L}\right)\sin\left(\frac{3\pi x_1}{L}\right)\right)^2\,dx_1dx_2$$
+          $$\frac{2}{L^2}\int_{0}^{L/2}\int_{0}^{L/2}\left(\sin\left(\frac{2\pi x_1}{L}\right)\sin\left(\frac{3\pi x_2}{L}\right)+\sin\left(\frac{2\pi x_2}{L}\right)\sin\left(\frac{3\pi x_1}{L}\right)\right)^2\,dx_1dx_2$$
+          For the antisymmetric integral,
+          \begin{align*}
+             & = \frac{2}{L^2}\int_{0}^{L/2}\int_{0}^{L/2}\left(\sin\left(\frac{2\pi x_1}{L}\right)\sin\left(\frac{3\pi x_2}{L}\right)-\sin\left(\frac{2\pi x_2}{L}\right)\sin\left(\frac{3\pi x_1}{L}\right)\right)^2\,dx_1dx_2                                                    \\
+             & = \frac{2}{L^2}\int_{0}^{L/2}\int_{0}^{L/2}\sin^2\left(\frac{2\pi x_1}{L}\right)\sin^2\left(\frac{3\pi x_2}{L}\right)-2\sin\left(\frac{2\pi x_1}{L}\right)\sin\left(\frac{3\pi x_2}{L}\right)\sin\left(\frac{2\pi x_2}{L}\right)\sin\left(\frac{3\pi x_1}{L}\right)+ \\
+             & \qquad \sin^2\left(\frac{2\pi x_2}{L}\right)\sin^2\left(\frac{3\pi x_1}{L}\right)\,dx_1dx_2                                                                                                                                                                          \\
+             & = \frac{2}{L^2}\left[\frac{L^2}{16}-\frac{L^2}{2\pi^2}\left(1-\frac{1}{5}\right)^2+\frac{L^2}{16}\right] \quad \text{(Integral formulas borrowed from the text.)}                                                                                                    \\
+             & \approx 4.63\%
+          \end{align*}
+          For the symmetric integral we repeat the same process but flip the sign when expanding the binomial so we end up with
+          $$\frac{2}{L^2}\left[\frac{L^2}{16}+\frac{L^2}{2\pi^2}\left(1-\frac{1}{5}\right)^2+\frac{L^2}{16}\right]\approx45.4\%$$
   \end{enumerate}
 \end{soln}
 \end{document}
