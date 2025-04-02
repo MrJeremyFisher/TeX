@@ -11,6 +11,7 @@
 \usepackage{physics}
 \usepackage{hyperref}
 \usepackage{siunitx}
+\usepackage{multicol, multirow, booktabs}
 \usepackage[breakable]{tcolorbox}
 \usepackage[inline]{enumitem}
 
@@ -82,23 +83,31 @@ variables of the $n = 3$, $\ell=2$, $m_\ell=2$ energy eigenstate of the hydrogen
 your choice (Excel, Matlab, \emph{etc.}) to plot the shape of the radial probability density, $P(r)$, of this state
 against $r$. Include units! Denote on your plot the most probable radius for an electron in this state.
 \end{problem}
-\begin{soln}
+\begin{soln} For the $n = 3$, $\ell=2$, $m_\ell=2$ state of the hydrogen atom the wavefunctions are
   $$R(r)=\frac{1}{\left(3a_0\right)^{3/2}}\frac{2\sqrt{2}r^2}{27\sqrt{5}a_0^2}e^{-r/3a_0}$$
   $$\Theta(\theta)=\sqrt{\frac{15}{32\pi}}\sin^2\theta$$
   $$\Phi(\phi)=e^{2i\phi}$$
-  % \begin{tikzpicture}
-  %   \def\a_0{5.292*10^(-11)}
-  %   \begin{axis}[
-  %       width=\textwidth, height = 5cm,
-  %       xlabel={$x$}, ylabel={$f(x)$},
-  %       xtick={0, 3*\a_0, 6*\a_0, 9*\a_0, 12*\a_0},
-  %       xticklabel={\pgfmathparse{\tick}${\pgfmathprintnumber{\pgfmathresult}}a_0$}
-  %     ]
-  %     \addplot[domain=0:50*\a_0, smooth, samples=501]
-  %     (\x,{(((3*\a_0)^(-3/2))*((2*sqrt(2)*\x^2)/(27*sqrt(5)*\a_0^2))*(e^(-\x/(3*\a_0))))^2*\x^2});
-  %   \end{axis}
-  % \end{tikzpicture}
+  The radial wavefunction decays exponentially as we would expect it should. The $\Theta$ component of the angular wavefunction ramps up smoothly to 1
+  as the $\theta$ value approaches $\pi/2$. The $\Phi$ component of the angular wavefunction provides an oscillation that is seen more strongly in
+  higher quantum numbers and only has one real oscillation before it is killed off by the real valued exponential in the radial component.
+  \begin{center}
+    \begin{tikzpicture}
+      %\def\a_0{5.292*10^(-11)} This yields the wrong graph for some reason
+      \def\a_0{1}
+      \begin{axis}[
+          width=\textwidth*0.9, height = 5cm,
+          xlabel={$r\,(a_0\,(\unit{\meter}))$}, ylabel={$\left|R(r)^2r^2\right|$},
+          xticklabel={\pgfmathparse{\tick}${\pgfmathprintnumber{\pgfmathresult}}a_0$},
+          xmin=0, xmax=50
+        ]
+        \addplot[domain=0:50*\a_0, smooth, samples=501]
+        (\x,{(((3*\a_0)^(-3/2))*((2*sqrt(2)*\x^2)/(27*sqrt(5)*\a_0^2))*(e^(-\x/(3*\a_0))))^2*\x^2});
+        \draw [dashed, -Rays] (9*\a_0,0) -- (9*\a_0,0.1095) node[midway, right]{$9a_0$};
+      \end{axis}
+    \end{tikzpicture}
+  \end{center}
 \end{soln}
+\newpage
 
 % PROBLEM 2
 \begin{problem}
@@ -122,6 +131,7 @@ $$\sum_{\ell=0}^{n-1}\left(2\ell+1\right)=n^2$$
   which means $m_\ell$ could be any value from $0$ to $\pm(n-1)$. Because degeneracy (without spin) is effectively a
   measure of the number of possible values of $m_\ell$ the degeneracy can be expressed as the sum given in the problem statement.
 \end{soln}
+\newpage
 
 % PROBLEM 3
 \begin{problem}
@@ -144,10 +154,11 @@ For a hydrogen atom in the $1s$ state
             =\frac{4}{a_0^{3}}\int_0^\infty r^3e^{-2r/a_0}\,dr$$
           Which, using the integral table given on the formula sheet, is
           $$\frac{4}{a_0^{3}}\frac{3!}{\left(\frac{2}{a_0}\right)^4}=\frac{3a_0}{2}$$
-    \item $$dP(r,\theta,\phi)=\abs{\psi(r,\theta,\phi)}^2dV=\abs{\psi(r,\theta,\phi)}^2r^2\sin\theta d\theta d\phi
-            =\left(\frac{2e^{-r/a_0}}{a_0^{3/2}}\sqrt{\frac{1}{4\pi}}\right)^2r^2\sin\theta d\theta d\phi
-          $$
-          TODO: this isn't done
+    \item The probability density is maximum at the origin. Though this is nonphysical and does not align with the answer in (a) it makes sense
+          when looking at a probability density plot of the $1s$ state. The inconsistency between this and part (a) can be resolved by noting that
+          the radial probability considers a sphere of thickness $dr$ centered about the origin with greatest probability density being where this sphere
+          ``intersects'' the greatest ``amount of probability'' whereas the probability of a fixed volume is measured with a region of infinitesimal
+          volume $dV$. Noting this the apparent inconsistency disappears as they are fundamentally different measurements.
   \end{enumerate}
 \end{soln}
 
@@ -171,6 +182,7 @@ atom in transitions between these levels. In what range of the electromagnetic s
   \end{align*}
   The the first two transitions emit photons in the ultraviolet range and the last emits a photon in the near infrared range.
 \end{soln}
+\newpage
 
 % PROBLEM 5
 \begin{problem}
@@ -183,22 +195,21 @@ Consider the probability of finding the electron in the hydrogen atom somewhere 
         finding the electron in the arctic polar region.
 \end{enumerate}
 \end{problem}
-\begin{soln}
+\begin{soln}~
   \begin{enumerate}[label=(\alph*)]
-    \item \begin{align*}
-            = & \int_{\qty{0}{\degree}}^{\qty{23.5}{\degree}}\int_{\qty{0}{\degree}}^{\qty{360}{\degree}}\int_0^R r^2\sin\theta\,dr d\phi d\theta \\
-            = & \int_{\qty{0}{\degree}}^{\qty{23.5}{\degree}}\int_{\qty{0}{\degree}}^{\qty{360}{\degree}} \frac{R^3\sin\theta}{3}\, d\phi d\theta \\
-            = & \int_{\qty{0}{\degree}}^{\qty{23.5}{\degree}}120R^3\sin\theta\,  d\theta                                                          \\
-            = & -\frac{2\pi}{3}R^3\cos\left(\frac{47\pi}{360}\right)+\frac{2\pi}{3}R^3\cos\left(0\right)
+    \item Because the probability distribution here is uniform we are looking for how much volume the arctic polar region occupies out of the total sphere.
+          This is somewhat difficult to determine as both are technically infinite but by evaluating the improper integral we get using a limit the final answer is finite.
+          \begin{align*}
+            = & \lim_{R\to\infty}\frac{1}{\frac{4}{3}\pi r^3}\int_{0}^{47\pi/360}\int_{0}^{2\pi}\int_0^R r^2\sin\theta\,dr d\phi d\theta \\
+            = & -\lim_{R\to\infty}\frac{1}{\frac{4}{3}\pi r^3}\eval{\frac{2\pi r^3\cos\theta}{3}}_{r=0,\theta=0}^{r=R,\theta=47\pi/360}  \\
+            = & -\eval{\frac{\cos\theta}{2}}_{\theta=0}^{\theta=47\pi/360}\approx 4.15\%
           \end{align*}
-          TODO: infinite?
     \item \begin{align*}
             = & \iiint \left(\frac{1}{\left(2a_0\right)^{3/2}}\frac{r}{\sqrt{3}a_0}e^{-r/2a_0}\sqrt{\frac{3}{4\pi}}\cos\theta\right)^2r^2\sin\theta\,dV \\
             = & \frac{1}{16a_0^5}\iint r^4e^{-r/a_0}\cos^2\theta\sin\theta\,dr d\theta                                                                  \\
             = & \frac{3}{2}\int \cos^2\theta\sin\theta\,d\theta                                                                                         \\
-            = & \eval{-\frac{\cos^3(\theta)}{2}}_{0}^{47\pi/360}\approx 0.114
+            = & \eval{-\frac{\cos^3(\theta)}{2}}_{0}^{47\pi/360}\approx 11.4\%
           \end{align*}
-          TODO: Check this
   \end{enumerate}
 \end{soln}
 
@@ -211,8 +222,9 @@ for the $z$-component of the electron's total angular momentum?
 \begin{soln}
   $n=4$, $\ell=3$, $j=\left|\ell-s\right|=\left|3-\frac{1}{2}\right|=5/2$.
   $\| \vec{J}\Vert =\| \vec{L}+ \vec{S}\Vert=\left(\sqrt{\ell(\ell+1)}+\sqrt{s(s+1)}\right)\hbar=\frac{5\sqrt{3}}{2}\hbar$.
-  $J_z=m_j\hbar=\left\{-j,-j+1,\dots, j-1, j\right\}\hbar=\left\{-5/2,-3/2,-1/2, 1/2, 3/2, 5/2\right\}\hbar$
+  $J_z=m_j\hbar=\left\{-j,-j+1,\dots, j-1, j\right\}\hbar=\left\{-5/2,-3/2,-1/2, 1/2, 3/2, 5/2\right\}\hbar$.
 \end{soln}
+\newpage
 
 % PROBLEM 7
 \begin{problem}
@@ -222,8 +234,56 @@ all these states in what is called the \emph{uncoupled} form: ($\ell_1m_{\ell_1}
 total orbital angular momentum quantum number $\ell_T$ and the total orbital magnetic quantum number $m_{\ell_T}$. Write down all these states
 in the \emph{coupled} form: ($\ell_1\ell_2\ell_Tm_{\ell_T}$).
 \end{problem}
-\begin{soln}
+\begin{soln} For such a system there are 15 possible states. This arises because there are five values of $m_{\ell_1}$ ($-2,-1,0,1,2$) and
+  three of $m_{\ell_2}$ ($-1,0,1$) and $5\cdot 3 = 15$. Each possible combination in both forms is tabulated below,
+  \begin{table}[h!]
+    \centering%
+    \begin{tabular}{l}
+      \toprule
+      Uncoupled      \\
+      \midrule
+      ($2(-2)1(-1)$) \\
+      ($2(-2)10$)    \\
+      ($2(-2)11$)    \\
+      ($2(-1)1(-1)$) \\
+      ($2(-1)10$)    \\
+      ($2(-1)11$)    \\
+      ($201(-1)$)    \\
+      ($2010$)       \\
+      ($2011$)       \\
+      ($211(-1)$)    \\
+      ($2110$)       \\
+      ($2111$)       \\
+      ($221(-1)$)    \\
+      ($2210$)       \\
+      ($2211$)       \\
+      \bottomrule
+    \end{tabular}\qquad
+    \begin{tabular}{l}
+      \toprule
+      Coupled       \\
+      \midrule
+      ($21 1 (-1)$) \\
+      ($21 1 (0)$)  \\
+      ($21 1 (1)$)  \\
+      ($21 2 (-2)$) \\
+      ($21 2 (-1)$) \\
+      ($21 2 0$)    \\
+      ($21 2 1$)    \\
+      ($21 2 2$)    \\
+      ($21 3 (-3)$) \\
+      ($21 3 (-2)$) \\
+      ($21 3 (-1)$) \\
+      ($21 3 0$)    \\
+      ($21 3 1$)    \\
+      ($21 3 2$)    \\
+      ($21 3 3$)    \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+
 \end{soln}
+\newpage
 
 % PROBLEM 8
 \begin{problem}
@@ -238,7 +298,7 @@ $$\psi(x_1,x_2)=A\sin\left(\frac{2\pi x_1}{L}\right)\sin\left(\frac{3\pi x_2}{L}
         in each case what is the probability of both particles being found in the left half of the well (i.e. between $0$ and $L/2$).
 \end{enumerate}
 \end{problem}
-\begin{soln}
+\begin{soln}~
   \begin{enumerate}[label=(\alph*)]
     \item \begin{align*}
             = & \int_{0}^{L}\int_{0}^{L}A^2\sin^2\left(\frac{2\pi x_1}{L}\right)\sin^2\left(\frac{3\pi x_2}{L}\right)\,dx_1dx_2                                                                             \\
