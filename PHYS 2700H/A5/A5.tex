@@ -82,16 +82,35 @@
 Show that the Joule-Kelvin coefficient is zero for an ideal gas.
 \end{problem}
 \begin{soln}
+  \begin{align*}
+    \mu_{JK} & =\frac{1}{C_p}\left[T\left(\frac{\partial V}{\partial T}\right)_P-V\right] \\
+             & =\frac{1}{C_p}\left[\frac{nRT}{P}-V\right]                                 \\
+             & =\frac{1}{C_p}\left[\frac{nRT}{P}-\frac{nRT}{P}\right]                     \\
+             & = 0
+  \end{align*}
 \end{soln}
 
 % PROBLEM 2
 \begin{problem}
-At the critical point, $(\partial P/\partial V)T = 0$ and $(\partial^2 P/\partial V^2)T = 0$. Show that, for a
+At the critical point, $(\partial P/\partial V)_T = 0$ and $(\partial^2 P/\partial V^2)_T = 0$. Show that, for a
 van der Waals gas (see Section 3.5.4), the critical point is at
 $$P_c=\frac{a}{27b^2};V_c=3nb; T_c=\frac{8a}{27Rb}$$
 \end{problem}
 \begin{soln}
+  $$(\partial P/\partial V)_T=\frac{2n^2a}{V^3}-\frac{nRT}{\left(V-nb\right)^2}$$
+  and
+  $$(\partial^2 P/\partial V^2)_T=\frac{2nRT}{\left(V-nb\right)^3}-\frac{6n^2a}{V^4}.$$
+  Setting the first derivative to zero and solving for $T$ gives $T=\frac{2na\left(V-nb\right)^2}{RV^3}$. Doing
+  the same for the second derivative gives $T=\frac{3na\left(V-nb\right)^3}{RV^4}$. Dividing these two gives
+  \begin{align*}
+    1        & = \frac{\frac{2na\left(V-nb\right)^2}{RV^3}}{\frac{3na\left(V-nb\right)^3}{RV^4}} \\
+    1        & = \frac{2V}{3\left(V-nb\right)}                                                   \\
+    \implies & 3nb  = V                                                                          \\
+  \end{align*}
+  which can be back substituted to get $T=\frac{2na\left(3nb-nb\right)^2}{R(3nb)^3}=\frac{8a}{27Rb}$ which can, in combination with the volume be back substituted into
+  the original Van der Waals equation to get $P=\frac{nR\frac{8a}{27Rb}}{3nb-nb}-\frac{n^2a}{(3nb)^2}=\frac{a}{27b^2}$.
 \end{soln}
+\newpage
 
 % PROBLEM 3
 \begin{problem}
@@ -101,6 +120,10 @@ where $\mu_0$ is the value at reference point of pressure $P_0$ and temperature 
 This expression is of great use in chemistry.
 \end{problem}
 \begin{soln}
+  Using the hint from the text that $\left(\frac{\partial G}{\partial P}\right)_{T,N}=V\implies dG=VdP$ so $\int_{G_i}^{G_f}dG=\int_{P_i}^{P_f}VdP
+    =\int_{P_i}^{P_f}\frac{nRT}{P}dP\implies Nk_BT\ln\left(\frac{P_i}{P_f}\right)+G_i=G_f$. From here we can differentiate with respect to $N$ and
+  using $\left(\frac{\partial G}{\partial N}\right)_{T,P}=\mu$ we get $k_BT\ln\left(\frac{P_i}{P_f}\right)+\mu_i=\mu_f$ which is the same as the given expression
+  if we treat the $f$ variables as the current ``position'' which is valid and just switch $i$ for $0$.
 \end{soln}
 
 % PROBLEM 4
@@ -117,6 +140,16 @@ $$S=Nk_B\left[\ln\left(\frac{V}{N}\left[\frac{4\pi mU}{3Nh^2}\right]^{3/2}\right
   \item Discuss the implications of the fact that your answer in (c) is negative.
 \end{enumerate}
 \end{problem}
-\begin{soln}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item The derivative is $k_B\ln\left(\frac{V}{N}\left[\frac{2\pi mk_BT}{Nh^2}\right]^{3/2}\right)$ in its most simplified form (I think?)
+          Where to go from there though I have no idea and I'm out of time.
+    \item Substituting the given expression for $U$ we get $\mu=-k_BT\ln\left(\frac{V}{N}\left[\frac{2\pi mk_BT}{Nh^2}\right]^{3/2}\right)$.
+    \item Using the ideal gas equation for one mole of helium ($m=\qty{4d-3}{\kilo\gram}$, $N=N_A\approx\num{6.02d23}$) we get $V\approx\qty{2.44d-2}{\meter\cubed}$
+          which when plugged into the equation for $\mu$ we get
+          $\mu=-k_B\qty{298}{\kelvin}\ln\left(\frac{\qty{2.44d-2}{\meter\cubed}}{N_A}\left[\frac{2\pi \qty{4d-3}{\kilo\gram}k_B\qty{298}{\kelvin}}{N_Ah^2}\right]^{3/2}\right)\approx
+            \qty{-0.834}{\electronvolt\per\kilogram}$.
+    \item The chemical potential being negative means that the internal energy of the gas will decrease if more helium is added and other state variables are held constant.
+  \end{enumerate}
 \end{soln}
 \end{document}

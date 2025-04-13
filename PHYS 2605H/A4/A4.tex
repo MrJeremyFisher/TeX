@@ -11,6 +11,7 @@
 \usepackage{circuitikz}
 \usepackage{pgfplots}
 \usepackage{physics}
+\usepackage{nicematrix}
 \usepackage{hyperref}
 \usepackage{siunitx}
 \usepackage[breakable]{tcolorbox}
@@ -94,4 +95,263 @@
     \lstick{$\ket{a}=\ket{0}$}&&\targ{}&&&\targ{}&\gate{H}&\targ{}&\gate{H}&
   \end{quantikz}
 \end{center}
+Here we will perform the analysis by creating a global transformation matrix and applying that to the input vector.
+Our global matrix will look like
+$$HG_{CNOT}HG_{CNOT}HG_{CNOT}G_{CNOT}H.$$
+Here the matrix for a Hadamard gate,
+$$
+  \frac{1}{\sqrt{2}}\begin{pmatrix}
+    1 & 1  \\
+    1 & -1
+  \end{pmatrix}
+$$
+and the matrix for a CNOT gate,
+$$
+  \begin{pmatrix}
+    1 & 0 & 0 & 0 \\
+    0 & 1 & 0 & 0 \\
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 1 & 0
+  \end{pmatrix}
+$$
+will need to be scaled using the Kronecker product to work with a 3-qubit system.
+The scaled versions of these gates will be dependent on where in the circuit the qubit(s) are.
+For example, the last operation which is the first matrix we are calculating will be $H\otimes I_2 \otimes I_2$ and then
+the CNOT gate after that is given by $G_{CNOT}=\ket{0}\bra{0}\otimes I_2 + \ket{1}\bra{1}\otimes X\implies G_{CNOT}=\ket{0}\bra{0}\otimes I_2\otimes I_2 + \ket{1}\bra{1}\otimes I_2\otimes X$
+eg applying the identity operation to the qubit(s) we ``don't care'' about in each case, going upwards from the bottom in order of Kronecker product. We can then follow this through for the whole circuit giving
+$$(H\otimes I_2 \otimes I_2)
+  (\ket{0}\bra{0}\otimes I_2\otimes I_2 + \ket{1}\bra{1}\otimes I_2\otimes X)
+  (H\otimes I_2 \otimes I_2)
+  (G_{CNOT}\otimes I_2)
+  (I_2 \otimes I_2\otimes H)
+  (I_2 \otimes G_{CNOT})
+  (G_{CNOT}\otimes I_2)
+  (I_2 \otimes H \otimes I_2).$$
+\begin{center}
+  \begin{quantikz}
+    \lstick{$\ket{c}$}&\gategroup[3,steps=1,label style={label position=below, rotate=90, anchor=east, xshift=-0.1cm}]{$(I_2 \otimes H \otimes I_2)$}
+    &\gategroup[3,steps=1,label style={rotate=90, anchor=west}]{$(G_{CNOT}\otimes I_2)$}
+    &\ctrl{1}\gategroup[3,steps=1,label style={label position=below, rotate=90, anchor=east, xshift=-0.1cm}]{$(I_2 \otimes G_{CNOT})$}
+    &\gate{H}\gategroup[3,steps=1,label style={rotate=90, anchor=west}]{$(I_2 \otimes I_2\otimes H)$}
+    &\gategroup[3,steps=1,label style={label position=below, rotate=90, anchor=east, xshift=-0.1cm}]{$(G_{CNOT}\otimes I_2)$}
+    &\gategroup[3,steps=1,label style={rotate=90, anchor=west}]{$(H\otimes I_2 \otimes I_2)$}
+    &\ctrl{2}\gategroup[3,steps=1,label style={label position=below, rotate=90, anchor=east, xshift=-0.1cm}]{$(\ket{0}\bra{0}\otimes I_2\otimes I_2 + \ket{1}\bra{1}\otimes I_2\otimes X)$}
+    &\gategroup[3,steps=1,label style={rotate=90, anchor=west}]{$(H\otimes I_2 \otimes I_2)$}& \\
+    \lstick{$\ket{b}=\ket{0}$}&\gate{H}&\ctrl{1}&\targ{}&&\ctrl{1}&&&&\\
+    \lstick{$\ket{a}=\ket{0}$}&&\targ{}&&&\targ{}&\gate{H}&\targ{}&\gate{H}&
+  \end{quantikz}
+\end{center}
+Performing these tensor products gives us
+\begin{align*}
+  (H\otimes I_2 \otimes I_2)                                                  & =\frac{1}{\sqrt{2}}\begin{pmatrix}
+                                                                                                     I_2 & I_2  \\
+                                                                                                     I_2 & -I_2
+                                                                                                   \end{pmatrix}\otimes I_2
+  =\frac{1}{\sqrt{2}}\begin{pmatrix}
+                       I_4 & I_4  \\
+                       I_4 & -I_4
+                     \end{pmatrix}                                                                                                  \\
+  (\ket{0}\bra{0}\otimes I_2\otimes I_2 + \ket{1}\bra{1}\otimes I_2\otimes X) & =\begin{pmatrix}
+                                                                                   1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+                                                                                   0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+                                                                                   0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
+                                                                                   0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+                                                                                   0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
+                                                                                   0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+                                                                                   0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
+                                                                                   0 & 0 & 0 & 0 & 0 & 0 & 1 & 0
+                                                                                 \end{pmatrix}                       \\
+  (H\otimes I_2 \otimes I_2)                                                  & =\frac{1}{\sqrt{2}}\begin{pmatrix}
+                                                                                                     I_4 & I_4  \\
+                                                                                                     I_4 & -I_4
+                                                                                                   \end{pmatrix}                    \\
+  (G_{CNOT}\otimes I_2)                                                       & =\begin{pmatrix}
+                                                                                   1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+                                                                                   0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+                                                                                   0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
+                                                                                   0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+                                                                                   0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 \\
+                                                                                   0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
+                                                                                   0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+                                                                                   0 & 0 & 0 & 0 & 0 & 1 & 0 & 0
+                                                                                 \end{pmatrix}                       \\
+  (I_2 \otimes I_2\otimes H)                                                  & =\frac{1}{\sqrt{2}}\begin{pmatrix}
+                                                                                                     1 & 1  & 0 & 0  & 0 & 0  & 0 & 0  \\
+                                                                                                     1 & -1 & 0 & 0  & 0 & 0  & 0 & 0  \\
+                                                                                                     0 & 0  & 1 & 1  & 0 & 0  & 0 & 0  \\
+                                                                                                     0 & 0  & 1 & -1 & 0 & 0  & 0 & 0  \\
+                                                                                                     0 & 0  & 0 & 0  & 1 & 1  & 0 & 0  \\
+                                                                                                     0 & 0  & 0 & 0  & 1 & -1 & 0 & 0  \\
+                                                                                                     0 & 0  & 0 & 0  & 0 & 0  & 1 & 1  \\
+                                                                                                     0 & 0  & 0 & 0  & 0 & 0  & 1 & -1
+                                                                                                   \end{pmatrix} \\
+  (I_2 \otimes G_{CNOT})                                                      & =\begin{pmatrix}
+                                                                                   1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+                                                                                   0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+                                                                                   0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+                                                                                   0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
+                                                                                   0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+                                                                                   0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
+                                                                                   0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
+                                                                                   0 & 0 & 0 & 0 & 0 & 0 & 1 & 0
+                                                                                 \end{pmatrix}                       \\
+  (G_{CNOT}\otimes I_2)                                                       & =\begin{pmatrix}
+                                                                                   1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+                                                                                   0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+                                                                                   0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
+                                                                                   0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+                                                                                   0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 \\
+                                                                                   0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
+                                                                                   0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+                                                                                   0 & 0 & 0 & 0 & 0 & 1 & 0 & 0
+                                                                                 \end{pmatrix}                       \\
+  (I_2 \otimes H \otimes I_2)                                                 & =\frac{1}{\sqrt{2}}\begin{pmatrix}
+                                                                                                     1 & 0 & 1  & 0  & 0 & 0 & 0  & 0  \\
+                                                                                                     0 & 1 & 0  & 1  & 0 & 0 & 0  & 0  \\
+                                                                                                     1 & 0 & -1 & 0  & 0 & 0 & 0  & 0  \\
+                                                                                                     0 & 1 & 0  & -1 & 0 & 0 & 0  & 0  \\
+                                                                                                     0 & 0 & 0  & 0  & 1 & 0 & 1  & 0  \\
+                                                                                                     0 & 0 & 0  & 0  & 0 & 1 & 0  & 1  \\
+                                                                                                     0 & 0 & 0  & 0  & 1 & 0 & -1 & 0  \\
+                                                                                                     0 & 0 & 0  & 0  & 0 & 1 & 0  & -1
+                                                                                                   \end{pmatrix}
+\end{align*}
+Then we multiply these together with $\cdot$ representing standard matrix multiplication,
+\begin{align*}
+  G_{TOTAL}=\frac{1}{4} & \begin{pmatrix}
+                            1 & 0 & 0 & 0 & 1  & 0  & 0  & 0  \\
+                            0 & 1 & 0 & 0 & 0  & 1  & 0  & 0  \\
+                            0 & 0 & 1 & 0 & 0  & 0  & 1  & 0  \\
+                            0 & 0 & 0 & 1 & 0  & 0  & 0  & 1  \\
+                            1 & 0 & 0 & 0 & -1 & 0  & 0  & 0  \\
+                            0 & 1 & 0 & 0 & 0  & -1 & 0  & 0  \\
+                            0 & 0 & 1 & 0 & 0  & 0  & -1 & 0  \\
+                            0 & 0 & 0 & 1 & 0  & 0  & 0  & -1
+                          \end{pmatrix}\cdot
+  \begin{pmatrix}
+    1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+    0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+    0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
+    0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+    0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
+    0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+    0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 0 & 0 & 0 & 1 & 0
+  \end{pmatrix}\cdot
+  \begin{pmatrix}
+    1 & 0 & 0 & 0 & 1  & 0  & 0  & 0  \\
+    0 & 1 & 0 & 0 & 0  & 1  & 0  & 0  \\
+    0 & 0 & 1 & 0 & 0  & 0  & 1  & 0  \\
+    0 & 0 & 0 & 1 & 0  & 0  & 0  & 1  \\
+    1 & 0 & 0 & 0 & -1 & 0  & 0  & 0  \\
+    0 & 1 & 0 & 0 & 0  & -1 & 0  & 0  \\
+    0 & 0 & 1 & 0 & 0  & 0  & -1 & 0  \\
+    0 & 0 & 0 & 1 & 0  & 0  & 0  & -1
+  \end{pmatrix}\cdot                                          \\
+                        & \begin{pmatrix}
+                            1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+                            0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+                            0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
+                            0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+                            0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 \\
+                            0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
+                            0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+                            0 & 0 & 0 & 0 & 0 & 1 & 0 & 0
+                          \end{pmatrix}\cdot
+  \begin{pmatrix}
+    1 & 1  & 0 & 0  & 0 & 0  & 0 & 0  \\
+    1 & -1 & 0 & 0  & 0 & 0  & 0 & 0  \\
+    0 & 0  & 1 & 1  & 0 & 0  & 0 & 0  \\
+    0 & 0  & 1 & -1 & 0 & 0  & 0 & 0  \\
+    0 & 0  & 0 & 0  & 1 & 1  & 0 & 0  \\
+    0 & 0  & 0 & 0  & 1 & -1 & 0 & 0  \\
+    0 & 0  & 0 & 0  & 0 & 0  & 1 & 1  \\
+    0 & 0  & 0 & 0  & 0 & 0  & 1 & -1
+  \end{pmatrix}\cdot
+  \begin{pmatrix}
+    1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+    0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+    0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+    0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
+    0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+    0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
+    0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 0 & 0 & 0 & 1 & 0
+  \end{pmatrix}\cdot                                              \\
+                        & \begin{pmatrix}
+                            1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+                            0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+                            0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
+                            0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+                            0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 \\
+                            0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
+                            0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+                            0 & 0 & 0 & 0 & 0 & 1 & 0 & 0
+                          \end{pmatrix}\cdot
+  \begin{pmatrix}
+    1 & 0 & 1  & 0  & 0 & 0 & 0  & 0  \\
+    0 & 1 & 0  & 1  & 0 & 0 & 0  & 0  \\
+    1 & 0 & -1 & 0  & 0 & 0 & 0  & 0  \\
+    0 & 1 & 0  & -1 & 0 & 0 & 0  & 0  \\
+    0 & 0 & 0  & 0  & 1 & 0 & 1  & 0  \\
+    0 & 0 & 0  & 0  & 0 & 1 & 0  & 1  \\
+    0 & 0 & 0  & 0  & 1 & 0 & -1 & 0  \\
+    0 & 0 & 0  & 0  & 0 & 1 & 0  & -1
+  \end{pmatrix}                                          \\
+                        & = \frac{1}{2}\begin{pmatrix}
+                                         1  & 0  & 1  & 0  & 1  & 0  & 1  & 0  \\
+                                         1  & 0  & 1  & 0  & -1 & 0  & -1 & 0  \\
+                                         0  & 1  & 0  & -1 & 0  & 1  & 0  & -1 \\
+                                         0  & 1  & 0  & -1 & 0  & -1 & 0  & 1  \\
+                                         0  & 1  & 0  & 1  & 0  & 1  & 0  & 1  \\
+                                         0  & -1 & 0  & -1 & 0  & 1  & 0  & 1  \\
+                                         1  & 0  & -1 & 0  & 1  & 0  & -1 & 0  \\
+                                         -1 & 0  & 1  & 0  & 1  & 0  & -1 & 0
+                                       \end{pmatrix}
+\end{align*}
+Then we construct our input vector $\ket{a}\otimes \ket{b}\otimes \ket{c}=\ket{00}\otimes\begin{pmatrix}
+    c_1 \\
+    c_2
+  \end{pmatrix}
+  =\begin{pmatrix}
+    c_1 \\
+    c_2 \\
+    0   \\
+    0   \\
+    0   \\
+    0   \\
+    0   \\
+    0
+  \end{pmatrix}$\\ and multiply,
+$\frac{1}{2}\begin{pmatrix}
+    1  & 0  & 1  & 0  & 1  & 0  & 1  & 0  \\
+    1  & 0  & 1  & 0  & -1 & 0  & -1 & 0  \\
+    0  & 1  & 0  & -1 & 0  & 1  & 0  & -1 \\
+    0  & 1  & 0  & -1 & 0  & -1 & 0  & 1  \\
+    0  & 1  & 0  & 1  & 0  & 1  & 0  & 1  \\
+    0  & -1 & 0  & -1 & 0  & 1  & 0  & 1  \\
+    1  & 0  & -1 & 0  & 1  & 0  & -1 & 0  \\
+    -1 & 0  & 1  & 0  & 1  & 0  & -1 & 0
+  \end{pmatrix}\begin{pmatrix}
+    c_1 \\
+    c_2 \\
+    0   \\
+    0   \\
+    0   \\
+    0   \\
+    0   \\
+    0
+  \end{pmatrix}=
+  \frac{1}{2}\begin{pmatrix}c_1  \\
+    c_1  \\
+    c_2  \\
+    c_2  \\
+    c_2  \\
+    -c_2 \\
+    c_1  \\
+    -c_1
+  \end{pmatrix}$
+
+
+
 \end{document}

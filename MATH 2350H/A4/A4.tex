@@ -1,0 +1,324 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{changepage}
+\usepackage{circuitikz}
+\usepackage{pgfplots}
+\usepackage{physics}
+\usepackage{hyperref}
+\usepackage{siunitx}
+\usepackage[breakable]{tcolorbox}
+\usepackage[inline]{enumitem}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{soln}{Solution}
+
+\pgfplotsset{compat=newest}
+\usetikzlibrary{lindenmayersystems}
+\usetikzlibrary{arrows}
+\usetikzlibrary{calc}
+
+\definecolor{incolor}{HTML}{303F9F}
+\definecolor{outcolor}{HTML}{D84315}
+\definecolor{cellborder}{HTML}{CFCFCF}
+\definecolor{cellbackground}{HTML}{F7F7F7}
+\newcommand{\eq}{=}
+\usetikzlibrary{positioning, fit, calc}
+\pgfdeclarelayer{background}  
+\pgfsetlayers{background,main}
+\DeclareSIUnit[number-unit-product = {\,}]\calorie{cal}
+\DeclareSIUnit[number-unit-product = {\,}]\atmosphere{atm}
+\AtBeginDocument{\RenewCommandCopy\qty\SI}
+
+\makeatletter
+\newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+\makeatother
+\newcommand{\prompt}[4]{
+    \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+}
+
+\newcommand{\thevenin}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (2,0) to[battery1, l_=$V_{Th}\eq#1$] (2,2) 
+      to[resistor, l_=$R_{Th}\eq#2$] (0,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+\newcommand{\norton}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (3,0) to[american current source, l_=$I_{N}\eq#1$] (3,2) -- (0,2) (2,0)
+      to[resistor, l=$R_{N}\eq#2$] (2,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+\newcommand{\highlight}[1]{\colorbox{yellow}{$\displaystyle #1$}}
+\newcommand{\ti}[1]{\widetilde{#1}}
+\newcommand{\vlen}[1]{\| {#1}\Vert }
+
+\NewDocumentCommand{\evalat}{sO{\big}mm}{%
+  \IfBooleanTF{#1}
+   {\mleft. #3 \mright|_{#4}}
+   {#3#2|_{#4}}%
+}
+
+\title{Math 2350H: Assignment IV}
+\author{Jeremy Favro (0805980) \\ Trent University, Peterborough, ON, Canada}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+% PROBLEM 1 
+\begin{problem}
+Consider the subspace
+$$U=\mathrm{span}\left(
+  \left(2,-1,-2,4\right),
+  \left(-2,1,-5,5\right),
+  \left(-1,3,7,11\right)
+  \right)$$
+\begin{enumerate}[label=(\alph*)]
+  \item Apply the Gram-Schmidt process (with normalization) to find an orthonormal basis of $U$.
+  \item Find a basis for $U^\perp$
+  \item Express the vector $v = (-11, 8, -4, 18)$ as $v = x + y$ where
+        $x\in U$ and $y \in U^\perp$.
+\end{enumerate}
+\end{problem}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item \begin{align*}
+            u_1 & =\left(2,-1,-2,4\right)\implies \hat{u}_1=\left(\frac{2}{5},-\frac{1}{5},-\frac{2}{5},\frac{4}{5}\right)                                                                                      \\
+            u_2 & =v_2-\frac{\braket{v_2}{u_1}}{\vlen{u_1}^2}u_1                                                                                                                                                \\
+                & =\left(-2,1,-5,5\right)-\frac{\left(-2,1,-5,5\right)\cdot\left(2,-1,-2,4\right)}{25}\left(2,-1,-2,4\right)                                                                                    \\
+                & =\left(-4,2,-3,1\right)\implies \hat{u}_2=\left(-\frac{4}{\sqrt{30}},\frac{2}{\sqrt{30}},-\frac{3}{\sqrt{30}},\frac{1}{\sqrt{30}}\right)                                                      \\
+            u_3 & =v_3-\frac{\braket{v_3}{u_1}}{\vlen{u_1}^2}u_1-\frac{\braket{v_3}{u_2}}{\vlen{u_2}^2}u_2                                                                                                      \\
+                & =\left(-1,3,7,11\right)-\frac{\left(-1,3,7,11\right)\cdot\left(2,-1,-2,4\right)}{25}\left(2,-1,-2,4\right)-\frac{\left(-1,3,7,11\right)\cdot\left(-4,2,-3,1\right)}{30}\left(-4,2,-3,1\right) \\
+                & = \left(-3,4,9,7\right)\implies \hat{u}_3=\left(-\frac{3}{\sqrt{155}},\frac{4}{\sqrt{155}},\frac{9}{\sqrt{155}},\frac{7}{\sqrt{155}}\right)
+          \end{align*}
+    \item We are looking for the vector $v\in U^\perp$ such that $\braket{v}{u_n}=0$ which can be found by solving the system represented by the matrix of
+          the basis vectors ($u_n$) we found previously (un-normalized because it yields the same result and is easier),
+          $$\begin{pmatrix}
+              2  & -1 & -2 & 4 \\
+              -4 & 2  & -3 & 1 \\
+              -3 & 4  & 9  & 7
+            \end{pmatrix}\sim
+            \begin{pmatrix}
+              1 & 0 & 0 & 34/7 \\
+              0 & 1 & 0 & 58/7 \\
+              0 & 0 & 1 & -9/7
+            \end{pmatrix}$$
+          which means that $U^\perp=\mathrm{span}(-34/7,-58/7,9/7,1)$.
+    \item Using the fact that the coefficients of a linear combination are given by the inner products of the result of that linear combination and the vector paired with the coefficient
+          and calling $u_4=(-34/7,-58/7,9/7,1)$
+          \begin{align*}
+            \braket{v}{u_1} & =\braket{x+y}{u_1}=\braket{x}{u_1}+\braket{y}{u_1}=\braket{x}{u_1}=c_1, \\
+            \braket{v}{u_2} & =\braket{x+y}{u_2}=\braket{x}{u_2}+\braket{y}{u_2}=\braket{x}{u_2}=c_2, \\
+            \braket{v}{u_3} & =\braket{x+y}{u_3}=\braket{x}{u_3}+\braket{y}{u_3}=\braket{x}{u_3}=c_3, \\
+            \braket{v}{u_4} & =\braket{x+y}{u_4}=\braket{x}{u_4}+\braket{y}{u_4}=\braket{y}{u_4}=c_4
+          \end{align*} so
+          \begin{align*}
+            v & =\braket{v}{u_1}u_1+\braket{v}{u_2}u_2+\braket{v}{u_3}u_3+\braket{v}{u_4}u_4
+          \end{align*}
+          which gives $x=2u_1+3u_2+u_3$ and $y=0u_4$.
+  \end{enumerate}
+\end{soln}
+
+% PROBLEM 2
+\begin{problem}
+The dot product is defined on $\mathcal{M}_{n\cross 1}(\mathbb{R})$ and $\mathcal{M}_{n\cross 1}(\mathbb{C})$ just as it is
+for $\mathbb{R}^n$ and $\mathbb{C}^n$. For $u,v\in\mathcal{M}_{n\cross 1}(\mathbb{C})$, with
+$$u=\begin{pmatrix}
+    u_1    \\
+    u_2    \\
+    \vdots \\
+    u_n
+  \end{pmatrix},\quad v=\begin{pmatrix}
+    v_1    \\
+    v_2    \\
+    \vdots \\
+    v_n
+  \end{pmatrix}$$
+the dot product (or standard inner product) is
+$$\braket{u}{v}=\sum_{k=1}^{n}u_kv_k^*$$
+This can be written more compactly with matrix multiplication as
+$$\braket{u}{v}=v^\dagger u$$
+where $v^\dagger=\left(v^T\right)^*$. We use this inner product below.
+\begin{enumerate}[label=(\alph*)]
+  \item Let $P\in\mathcal{M}_{n\cross n}(\mathbb{R})$. Relative to the dot product on column vectors, show that the following are equivalent:
+        \begin{enumerate}[label=(\roman*)]
+          \item The columns $u_1,\dots,u_n$ of $P$ form an orthonormal basis $\mathcal{M}_{n\cross 1}(\mathbb{R})$.
+          \item $P^T=P^{-1}$.
+          \item The rows of $P$ form an orthonormal basis for $\mathbb{R}^n$.
+        \end{enumerate}
+  \item A matrix $P\in\mathcal{M}_{n\cross n}(\mathbb{R})$ is called an \emph{orthogonal matrix} if $P^T=P^{-1}$. Determine which
+        of the following matrices are orthogonal.
+        \begin{enumerate}[label=(\roman*)]
+          \item $\begin{pmatrix}
+                    3/5  & 4/5  \\
+                    -4/5 & -3/5
+                  \end{pmatrix}$
+          \item $\begin{pmatrix}
+                    5/13  & 12/13 \\
+                    12/13 & -5/13
+                  \end{pmatrix}$
+          \item $\begin{pmatrix}
+                    1 & 0 \\
+                    0 & 1
+                  \end{pmatrix}$
+          \item $\begin{pmatrix}
+                    1/\sqrt{2} & -1/\sqrt{2} \\
+                    1/\sqrt{2} & 1/\sqrt{2}
+                  \end{pmatrix}$
+          \item $\begin{pmatrix}
+                    1/3 & 2/3  & -2/3 \\
+                    1/3 & -2/3 & 1/3  \\
+                    2/3 & 1/3  & 2/3
+                  \end{pmatrix}$
+          \item $\begin{pmatrix}
+                    1/3 & 2/3  & 2/3  \\
+                    2/3 & -2/3 & 1/3  \\
+                    2/3 & 1/3  & -2/3
+                  \end{pmatrix}$
+        \end{enumerate}
+  \item Let $P,Q\in\mathcal{M}_{n\cross n}(\mathbb{R})$ be orthogonal matrices and $u,v\in\mathcal{M}_{n\cross 1}(\mathbb{R})$.
+        Prove that
+        \begin{enumerate}[label=(\roman*)]
+          \item $\braket{Pu}{Pv}=\braket{u}{v}$
+          \item $\|Pu \Vert =\|u \Vert $
+          \item $PQ$ is an orthogonal matrix.
+        \end{enumerate}
+\end{enumerate}
+\end{problem}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item To prove the equivalency of these statements we need to prove that $(\mathrm{i})\implies(\mathrm{ii})\implies(\mathrm{iii})\implies(\mathrm{i})$.
+          For $(\mathrm{i})\implies(\mathrm{ii})$ we know that
+          $$\braket{u_i}{u_j}=\begin{cases}
+              1\quad i=j \\
+              0\quad i\neq j
+            \end{cases}$$
+          because these columns are linearly independent. By the definition of this inner product this is equal to $u_j^Tu_i$ which is the $ij$-th entry of
+          $P^TP$ which we know from above must be $I$ so $P^TP=I\implies P^T=P^{-1}$.
+          \\
+          For $(\mathrm{ii})\implies(\mathrm{iii})$ we are trying to show that if $P^T=P^{-1}$ then the rows of $P$ form a basis for $\mathbb{R}^n$
+          where $P\in\mathcal{M}_{n\cross n}(\mathbb{R}$). We start by noting that $P^T=P^{-1}\implies P^TP=I$ so
+            $$P_{ji}P_{ij}=\begin{cases}
+                1\quad i=j \\
+                0\quad i\neq j
+              \end{cases}.$$
+            The entries of $P^TP$ are given by the inner product $\braket{P_k}{P_h^T}$ where $P_k$ is the $k$-th row of $P$ and $P_h$ the $h$-th column of $P^T$ which is equivalent
+            to the $h$-th \emph{row} of $P$ which means we have that
+            $$\braket{P_k}{P_h}=\begin{cases}
+                1\quad h=k \\
+                0\quad h\neq k
+              \end{cases}$$
+            which means that the rows of $P$ are by definition linearly independent and normalized and because we have $n$ of them form an orthonormal basis for $\mathbb{R}^n$.\\
+            For $\implies(\mathrm{iii})\implies(\mathrm{i})$ we can see that a matrix with linearly independent rows will reduce to the appropriate identity matrix which will also
+          have independent columns because Gaussian elimination preserves linear independence between rows/columns.
+    \item A matrix $P\in\mathcal{M}_{n\cross n}(\mathbb{R})$ is called an \emph{orthogonal matrix} if $P^T=P^{-1}$. Determine which
+          of the following matrices are orthogonal.
+          \begin{enumerate}[label=(\roman*)]
+            \item From part (a) it's enough to note that $\braket{u_1}{u_2}=\begin{pmatrix}
+                      3/5 & -4/5
+                    \end{pmatrix}\begin{pmatrix}
+                      4/5 \\
+                      -3/5
+                    \end{pmatrix}=24/25\neq 0$ so the columns of this matrix do not form an orthonormal basis and therefore $P^T\neq P^{-1}$
+            \item Here again it is sufficient to note that, by inspection (as the columns are flipped and the 22 entry is negative), the columns
+                  of this matrix form an orthonormal basis for $\mathcal{M}_{n\cross 1}(\mathbb{R})$ and therefore $P^T=P^{-1}$
+            \item Here again it is sufficient to note that, by inspection, the columns
+                  of this matrix form an orthonormal basis for $\mathcal{M}_{n\cross 1}(\mathbb{R})$ and therefore $P^T=P^{-1}$
+            \item Here again it is sufficient to note that, by inspection (as the columns are flipped and the 21 entry is negative), the columns
+                  of this matrix form an orthonormal basis for $\mathcal{M}_{n\cross 1}(\mathbb{R})$ and therefore $P^T=P^{-1}$
+            \item Here it is sufficient to note that the first column is not normalized ($u_1=\sqrt{2\cdot(1/3)^2+(2/3)^2}=\sqrt{6}/3=\neq 1$) and therefore the columns
+                  cannot form an orthonormal basis so $P^T\neq P^{-1}$
+            \item Here $\braket{u_1}{u_2}=\begin{pmatrix}
+                      2/3 & -2/3 & 1/3
+                    \end{pmatrix}\begin{pmatrix}
+                      1/3 \\
+                      2/3 \\
+                      2/3
+                    \end{pmatrix}=0$,
+                  $\braket{u_1}{u_3}=\begin{pmatrix}
+                      2/3 & 1/3 & -2/3
+                    \end{pmatrix}\begin{pmatrix}
+                      1/3 \\
+                      2/3 \\
+                      2/3
+                    \end{pmatrix}=0$, and
+                  $\braket{u_2}{u_3}=\begin{pmatrix}
+                      2/3 & 1/3 & -2/3
+                    \end{pmatrix}\begin{pmatrix}
+                      2/3  \\
+                      -2/3 \\
+                      1/3
+                    \end{pmatrix}=0$ and $u_1$, $u_2$, and $u_3$ are normalized so $P^T=P^{-1}$
+          \end{enumerate}
+    \item \begin{enumerate}[label=(\roman*)]
+            \item $\braket{Pu}{Pv}=v^TP^TPu=v^TIu=v^Tu=\braket{u}{v}$
+            \item $\vlen{Pu} =\braket{Pu}{Pu}=u^TP^TPu=u^TIu=\braket{u}{u}=\vlen{u} $
+            \item Because $P,Q$ are of the same size we can multiply them (and their transposes),
+                  $(PQ)^T PQ=Q^TP^T PQ=Q^TIQ=Q^TQ=I$ which satisfies the property of an orthogonal matrix
+                  $A$ that $A^TA=I$
+          \end{enumerate}
+  \end{enumerate}
+\end{soln}
+
+% PROBLEM 3
+\begin{problem}
+Let $V$ be the vector space of continuous, real-valued functions defined
+on the interval $[0, 1]$. Then $V$ is an inner product space with inner
+product
+$$\braket{f}{g}=\int_{0}^{1}f(x)g(x)dx,$$
+for $f,g\in V$. Consider the subspace $U$ of $V$ spanned by the functions $f(x)=\sqrt{x}$, $g(x)=x$, $h(x)=x^2$.
+\begin{enumerate}[label=(\alph*)]
+  \item Show that $f, g, h$ is linearly independent.
+  \item Find an orthonormal basis for $U$
+  \item Let $p(x)=x^3$. Find the closest approximation of $p$ in $U$.
+\end{enumerate}
+\end{problem}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item By the definition of linear independence
+          $$c_1f(x)+c_2g(x)+c_3h(x)=0.$$
+          Using the Wronskian here for fun we get $\frac{3\sqrt{x}}{4}$ (calculated using SageMath) which gives $0$ only at $x=0$ which, by the definition of the Wronskian, implies
+          linear independence.
+    \item Here we apply the Gram-Schmidt process,
+          $$w_1=\sqrt{x}$$
+          $$w_2=x-\frac{\braket{x}{\sqrt{x}}}{\vlen{\sqrt{x}}^2}\sqrt{x}=x-\frac{\int_{0}^{1}x\sqrt{x}\,dx}{\int_{0}^{1}x\,dx}\sqrt{x}=x-\frac{4}{5}\sqrt{x}$$
+          \begin{align*}
+            w_3 & =x^2-\frac{\braket{x^2}{\sqrt{x}}}{\vlen{\sqrt{x}}^2}\sqrt{x}-\frac{\braket{x^2}{x-\frac{4}{5}\sqrt{x}}}{\vlen{x-\frac{4}{5}\sqrt{x}}^2}\left(x-\frac{4}{5}\sqrt{x}\right) \\
+                & =x^2-\frac{\int_{0}^{1}x^2\sqrt{x}\,dx}{\frac{1}{2}}\sqrt{x}-\frac{\int_{0}^{1}x^2\left(x-\frac{4}{5}\sqrt{x}\right)\,dx}{\frac{1}{75}}\left(x-\frac{4}{5}\sqrt{x}\right)  \\
+                & =x^2-\frac{4}{7}\sqrt{x}-\frac{45}{28}\left(x-\frac{4}{5}\sqrt{x}\right)                                                                                                   \\
+                & =x^2-\frac{45}{28}x+\frac{5}{7}\sqrt{x}
+          \end{align*}
+          then we normalize,
+          $$\vlen{w_1}=\frac{1}{\sqrt{2}}\implies\hat{u}_1=\sqrt{2x}$$
+          $$\vlen{w_2}=\frac{1}{\sqrt{75}}\implies\hat{u}_2=\sqrt{75}\left(x-\frac{4}{5}\sqrt{x}\right)$$
+          $$\vlen{w_3}=\int_{0}^{1}\left(x^2-\frac{45}{28}x+\frac{5}{7}\sqrt{x}\right)^2\,dx=\sqrt{\frac{9}{3920}}
+            \implies\hat{u}_3=\sqrt{\frac{3920}{9}}\left(x^2-\frac{45}{28}x+\frac{5}{7}\sqrt{x}\right)$$
+    \item Here we are looking for the projection map
+          \begin{align*}
+            P_U(x^3) & =\braket{x^3}{\sqrt{2x}}\left(\sqrt{2x}\right)+                                                                                                                                       \\
+                     & \quad\braket{x^3}{\sqrt{75}\left(x-\frac{4}{5}\sqrt{x}\right)}\sqrt{75}\left(x-\frac{4}{5}\sqrt{x}\right)+                                                                            \\
+                     & \quad\braket{x^3}{\sqrt{\frac{3920}{9}}\left(x^2-\frac{45}{28}x+\frac{5}{7}\sqrt{x}\right)}\sqrt{\frac{3920}{9}}\left(x^2-\frac{45}{28}x+\frac{5}{7}\sqrt{x}\right)                   \\
+                     & = \left[\int_{0}^{1}x^3\sqrt{2x}\,dx\right]\sqrt{2x} +                                                                                                                                \\
+                     & \quad\left[\int_{0}^{1}x^3\sqrt{75}\left(x-\frac{4}{5}\sqrt{x}\right)\,dx\right]\sqrt{75}\left(x-\frac{4}{5}\sqrt{x}\right)+                                                          \\
+                     & \quad\left[\int_{0}^{1}x^3\sqrt{\frac{3920}{9}}\left(x^2-\frac{45}{28}x+\frac{5}{7}\sqrt{x}\right)\,dx\right]\sqrt{\frac{3920}{9}}\left(x^2-\frac{45}{28}x+\frac{5}{7}\sqrt{x}\right) \\
+                     & =\frac{4}{9}\sqrt{x}+\frac{5}{3}\left(x-\frac{4}{5}\sqrt{x}\right)+\frac{140}{81}\left(x^2-\frac{45}{28}x+\frac{5}{7}\sqrt{x}\right)
+          \end{align*}
+  \end{enumerate}
+\end{soln}
+\end{document}
