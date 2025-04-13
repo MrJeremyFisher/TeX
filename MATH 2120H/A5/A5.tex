@@ -83,6 +83,27 @@ Verify that the below vector field is conservative and find a potential function
 $$\mathbf{F}=e^{y+2z}\left(\ui+x\uj+2x\uk\right)$$
 \end{problem}
 \begin{soln}
+  For conservative fields
+  $$\frac{\partial M}{\partial y}=\frac{\partial N}{\partial x},
+    \frac{\partial N}{\partial z}=\frac{\partial P}{\partial y},
+    \frac{\partial P}{\partial x}=\frac{\partial M}{\partial z}.
+  $$
+  Here $M=e^{y+2z}$, $N=xe^{y+2z}$, $P=2xe^{y+2z}$ so,
+  \begin{align*}
+    \frac{\partial M}{\partial y} & =e^{y+2z},
+                                  & \frac{\partial M}{\partial z} & =2e^{y+2z}  \\
+    \frac{\partial N}{\partial x} & =e^{y+2z},
+                                  & \frac{\partial N}{\partial z} & =2xe^{y+2z} \\
+    \frac{\partial P}{\partial y} & =2xe^{y+2z},
+                                  & \frac{\partial P}{\partial x} & =2e^{y+2z}
+  \end{align*}
+  which satisfies the previous set of equalities so the field is conservative. For the potential function we find
+  $f(x,y,z)\int M\,dx=\int e^{y+2z}\,dx=xe^{y+2z}+G(y,z)$, then differentiate with respect to $y$ and $z$ to determine
+  $G$. First with respect to $y$,
+  $$\frac{\partial f}{\partial y}=N=xe^{y+2z}=xe^{y+2z}+\frac{\partial G}{\partial y}\implies \frac{\partial G}{\partial y}=0\therefore G(y,z)=G(z)$$
+  Then with respect to $z$,
+  $$\frac{\partial f}{\partial z}=P=2xe^{y+2z}=2xe^{y+2z}+\frac{\partial G}{\partial z}\implies \frac{\partial G}{\partial z}=0\therefore G=C$$
+  so $f(x,y,z)=xe^{y+2z}+C$ where $C$ is a constant of integration.
 \end{soln}
 
 % PROBLEM 2
@@ -91,6 +112,24 @@ Find a potential function for the field below and evaluate the integral
 $$\int_{(1,1,1)}^{(1,2,3)}3x^2\,dx+\frac{z^2}{y}\,dy+2z\ln y\,dz$$
 \end{problem}
 \begin{soln}
+  Here we first ensure that this field is conservative,
+  \begin{align*}
+    \frac{\partial M}{\partial y} & =0
+                                  & \frac{\partial M}{\partial z} & =0            \\
+    \frac{\partial N}{\partial x} & =0,
+                                  & \frac{\partial N}{\partial z} & =\frac{2z}{y} \\
+    \frac{\partial P}{\partial y} & =\frac{2z}{y},
+                                  & \frac{\partial P}{\partial x} & =0
+  \end{align*}
+  which it is. Then we follow the standard procedure to determine $f(x,y,z)$,
+  $$f(x,y,z)=\int M\,dx=x^3+G(y,z)$$
+  then we differentiate with respect to $y$,
+  $$\frac{\partial f}{\partial y}=\frac{z^2}{y}=0+\frac{\partial G}{\partial y}
+    \implies G(y,z)=z^2\ln y+C$$
+  then with respect to $z$,
+  $$\frac{\partial f}{\partial z}=2z\ln y=0+\frac{\partial G}{\partial z}
+    \implies G(z,y)=z^2\ln y + C$$
+  So $f(x,y,z)=x^3+z^2\ln y + C$
 \end{soln}
 
 % PROBLEM 3
@@ -103,9 +142,9 @@ the curve $y = x^2$ and the line $y = x$.
 
 % PROBLEM 4
 \begin{problem}
-  Apply Green's Theorem to evaluate the integral below
-  $$\oint 3y\,dx+2x\,dy,\qquad\text{Where $C$ is the boundary of } 0\leq x\leq\pi,\,0\leq y\leq \sin x$$
-  \end{problem}
-  \begin{soln}
-  \end{soln}
+Apply Green's Theorem to evaluate the integral below
+$$\oint 3y\,dx+2x\,dy,\qquad\text{Where $C$ is the boundary of } 0\leq x\leq\pi,\,0\leq y\leq \sin x$$
+\end{problem}
+\begin{soln}
+\end{soln}
 \end{document}
