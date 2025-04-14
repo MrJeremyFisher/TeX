@@ -7,6 +7,9 @@
 \newcommand\longdiv[2]{%
 $\strut#1$\kern.25em\smash{\raise.3ex\hbox{$\big)$}}$\mkern-8mu
         \overline{\enspace\strut#2}$}
+\newcommand{\ui}{\mathbf{i}}
+\newcommand{\uj}{\mathbf{j}}
+\newcommand{\uk}{\mathbf{k}}
 \usepackage{mdframed}
 \usepackage{cancel}
 \title{Calculus Cheat Sheet}
@@ -166,64 +169,65 @@ $V = \int_{a}^{b} A(x) \,dx$ where $A(x)$ is a function which gives the area
 of one ``slice'' of the solid. Slices are generally circular and may have holes in them, area
 of a circle is $\pi r^2$, and the area of a washer is $\pi (r_{outer}^2-r_{inner}^2)$
 
-\section*{Sequences and Series}
-\subsection*{Series With Nice Formulae}
-The geometric series $\sum_{n=0}^{\infty}ar^n=\frac{a}{1-r}$ provided that $|r|<1$
-The telescoping series where the ``inbetween'' terms cancel. Take the limit as $k\to\infty$
-\subsection{Basic Divergence Test}
-If for some series $\sum_{n=0}^{\infty}a_n$ the limit $\lim_{n \to \infty} a_n \neq 0$ the series diverges.
-However, if the limit is 0, no information can be determined from this test.
-\subsection*{Integral Test}
-If some function $f(n)=a_n$ is decreasing on $[c,\infty)$ then the
-series $\sum_{n=c}^{\infty}a_n$ converges exactly as $\int_{c}^{\infty}f(x)dx$ does / does not. This works because
-$\int_{c}^{\infty}f(x)dx\leq\sum_{n=c}^{\infty}a_n\leq f(c)+\int_{c}^{\infty}f(x)dx$
-\subsection*{P-Test}
-Generally, $\sum_{n=c}^{\infty}\frac{an^k+\dots+a_0}{bn^l+\dots+b_0}$ converges if $p=l-k<1$ and diverges if $p\geq 1$
-\subsection*{Basic Comparsion Test}
-If two sequences $\{a_n\}$ and $\{b_n\}$ exist, are comprised of positive terms, and satisfy $0<a_n\leq b_n$
-past some point then
-\begin{enumerate}[label=(\alph*)]
-        \item if $\sum_{n=0}^{\infty}b_n$ converges, so does $\sum_{n=0}^{\infty}a_n$
-        \item if $\sum_{n=0}^{\infty}a_n$ diverges, so does $\sum_{n=0}^{\infty}b_n$
-\end{enumerate}
-\subsection*{Limit Comparison Test}
-If two sequences $\{a_n\}$ and $\{b_n\}$ exist and are comprised of positive terms past some point then
-$\lim_{n \to \infty} \frac{a_n}{b_n} =c$
-\begin{enumerate}[label=(\alph*)]
-        \item if $c>0$ both series either converge or diverge (one converging means the other does and vice versa)
-        \item if $c=0$ then $a_n$ diverges so does $b_n$ and if $b_n$ converges so does $a_n$
-        \item if $c=\infty$ then $a_n$ converges so does $b_n$ and if $b_n$ diverges so does $a_n$
-\end{enumerate}
-\subsection*{Alternating Series Test}
-If each $a_n$ in the series $\sum_{n=0}^{\infty}a_n$ and
-\begin{enumerate}[label=(\arabic*)]
-        \item $|a_{n+1}|<|a_n|$ (The series is decreasing)
-        \item $a_{n+1}<0$ \& $a_n>0$ (The series is alternating)
-        \item $\lim_{n \to \infty} |a_n|=0$
-\end{enumerate}
-then the series converges
-\subsection*{Ratio Test}
-If past some point $a_n\neq 0$ then for the series $\sum_{n=0}^{\infty}a_n$
-if the limit $\lim_{n \to \infty} \left|\frac{a_{n+1}}{a_n}\right|=L$ then
-\begin{enumerate}[label=(\alph*)]
-        \item if $L<1$ the series converges absolutely
-        \item if $L=1$ no information can be obtained through this test
-        \item if $L>1$ the series diverges
-\end{enumerate}
-\subsection*{Root Test}
-For the series $\sum_{n=0}^{\infty}a_n$ if $\lim_{n \to \infty}\sqrt[n]{|a_n|}=L$ then
-\begin{enumerate}[label=(\alph*)]
-        \item if $L<1$ the series converges absolutely
-        \item if $L=1$ no information can be obtained through this test
-        \item if $L>1$ the series diverges
-\end{enumerate}
-\subsection*{Taylor Series}
-Taylor's formula states that if some function $f(x)$ can be expanded as a power series around $x=a$
-its representation is given by $$\sum_{n=0}^{\infty}\frac{\frac{d^n}{dx^n}f(a)}{n!}(x-a)^n$$
-\subsubsection*{Remainder Terms}
-If there exists some function $f(x)$ whose Taylor Series is defined as $T_n(x)$ then the remainder term is
-defined as $R_n(x)=f(x)-T_n(x)$, which is how ``far off'' the Taylor Series $T_n(x)$ is from the function $f(x)$
-for some $n$.
+% \section*{Sequences and Series}
+% \subsection*{Series With Nice Formulae}
+% The geometric series $\sum_{n=0}^{\infty}ar^n=\frac{a}{1-r}$ provided that $|r|<1$
+% The telescoping series where the ``inbetween'' terms cancel. Take the limit as $k\to\infty$
+% \subsection{Basic Divergence Test}
+% If for some series $\sum_{n=0}^{\infty}a_n$ the limit $\lim_{n \to \infty} a_n \neq 0$ the series diverges.
+% However, if the limit is 0, no information can be determined from this test.
+% \subsection*{Integral Test}
+% If some function $f(n)=a_n$ is decreasing on $[c,\infty)$ then the
+% series $\sum_{n=c}^{\infty}a_n$ converges exactly as $\int_{c}^{\infty}f(x)dx$ does / does not. This works because
+% $\int_{c}^{\infty}f(x)dx\leq\sum_{n=c}^{\infty}a_n\leq f(c)+\int_{c}^{\infty}f(x)dx$
+% \subsection*{P-Test}
+% Generally, $\sum_{n=c}^{\infty}\frac{an^k+\dots+a_0}{bn^l+\dots+b_0}$ converges if $p=l-k<1$ and diverges if $p\geq 1$
+% \subsection*{Basic Comparsion Test}
+% If two sequences $\{a_n\}$ and $\{b_n\}$ exist, are comprised of positive terms, and satisfy $0<a_n\leq b_n$
+% past some point then
+% \begin{enumerate}[label=(\alph*)]
+%         \item if $\sum_{n=0}^{\infty}b_n$ converges, so does $\sum_{n=0}^{\infty}a_n$
+%         \item if $\sum_{n=0}^{\infty}a_n$ diverges, so does $\sum_{n=0}^{\infty}b_n$
+% \end{enumerate}
+% \subsection*{Limit Comparison Test}
+% If two sequences $\{a_n\}$ and $\{b_n\}$ exist and are comprised of positive terms past some point then
+% $\lim_{n \to \infty} \frac{a_n}{b_n} =c$
+% \begin{enumerate}[label=(\alph*)]
+%         \item if $c>0$ both series either converge or diverge (one converging means the other does and vice versa)
+%         \item if $c=0$ then $a_n$ diverges so does $b_n$ and if $b_n$ converges so does $a_n$
+%         \item if $c=\infty$ then $a_n$ converges so does $b_n$ and if $b_n$ diverges so does $a_n$
+% \end{enumerate}
+% \subsection*{Alternating Series Test}
+% If each $a_n$ in the series $\sum_{n=0}^{\infty}a_n$ and
+% \begin{enumerate}[label=(\arabic*)]
+%         \item $|a_{n+1}|<|a_n|$ (The series is decreasing)
+%         \item $a_{n+1}<0$ \& $a_n>0$ (The series is alternating)
+%         \item $\lim_{n \to \infty} |a_n|=0$
+% \end{enumerate}
+% then the series converges
+% \subsection*{Ratio Test}
+% If past some point $a_n\neq 0$ then for the series $\sum_{n=0}^{\infty}a_n$
+% if the limit $\lim_{n \to \infty} \left|\frac{a_{n+1}}{a_n}\right|=L$ then
+% \begin{enumerate}[label=(\alph*)]
+%         \item if $L<1$ the series converges absolutely
+%         \item if $L=1$ no information can be obtained through this test
+%         \item if $L>1$ the series diverges
+% \end{enumerate}
+% \subsection*{Root Test}
+% For the series $\sum_{n=0}^{\infty}a_n$ if $\lim_{n \to \infty}\sqrt[n]{|a_n|}=L$ then
+% \begin{enumerate}[label=(\alph*)]
+%         \item if $L<1$ the series converges absolutely
+%         \item if $L=1$ no information can be obtained through this test
+%         \item if $L>1$ the series diverges
+% \end{enumerate}
+% \subsection*{Taylor Series}
+% Taylor's formula states that if some function $f(x)$ can be expanded as a power series around $x=a$
+% its representation is given by $$\sum_{n=0}^{\infty}\frac{\frac{d^n}{dx^n}f(a)}{n!}(x-a)^n$$
+% \subsubsection*{Remainder Terms}
+% If there exists some function $f(x)$ whose Taylor Series is defined as $T_n(x)$ then the remainder term is
+% defined as $R_n(x)=f(x)-T_n(x)$, which is how ``far off'' the Taylor Series $T_n(x)$ is from the function $f(x)$
+% for some $n$.
+
 \section*{Tidbits}
 $\vec{v}$ here is the velocity vector (duh)\\
 Unit tangent vector $\vec{T}=\frac{\vec{v}}{\left|\vec{v}\right|}$\\
@@ -234,4 +238,31 @@ $\frac{\partial M}{\partial y}=\frac{\partial N}{\partial x},
         \frac{\partial N}{\partial z}=\frac{\partial P}{\partial y},
         \frac{\partial P}{\partial x}=\frac{\partial M}{\partial z}.
 $
+\subsection{Line Integrals and Work}
+For variable force $f(x,y,z)$ along curve $r(t)=g(t)\ui+h(t)\uj+k(t)\uk$
+work is $\int_C\vec{F}\cdot dr=\int_{t_i}^{t_f}f(g,h,k)\left|\vec{v}(t)\right|\,dt$.\\
+For vector valued functions it simplifies to
+$\int_C\vec{F}\cdot dr\int_{t_i}^{t_f}\vec{F}(\vec{r}(t))\cdot\vec{v}(t)\,dt$.\\
+Alternatively for
+$\vec{F}=M\ui+N\uj+P\uk$
+we have $\int_CMdx+Ndy+Pdz$ where we change $dx,y,z$ as we do in integration by Substitution.
+\subsection{Flux}
+Flux of field $\vec{F}=M\ui+N\uj$ through curve $C=g(t)\ui+h(t)\uj$ is given by $\int_CMdy-Ndx$ which can be evaluated
+as seen above.
+\subsection{Green's Theorem}
+For $\vec{F}=M\mathbf{i}+N\mathbf{j}$:\\
+Divergence is $\frac{\partial M}{\partial x}+\frac{\partial N}{\partial y}$.\\
+$\oint_C\vec{F}\cdot d\vec{r}=\oint_CM\,dx+N\,dy=\iint_R\frac{\partial N}{\partial x}-\frac{\partial M}{\partial y}\,dx\,dy$\\
+and
+$\oint_C\vec{F}\cdot \vec{n}dS=\oint_CM\,dy-N\,dx=\iint_R\frac{\partial M}{\partial x}+\frac{\partial N}{\partial y}\,dx\,d$\\
+Integral of divergence over a region is the outward flux of the associated field over that region.
+\subsection{Surface Integrals}
+Area of $r(u,v)=f(u,v)\ui+g(u,v)\uj+h(u,v)\uk$
+is $\iint_R\left|r_u\times r_v\right|\,dA$
+remember that cross product is det of matrix with first row of unit vectors, second of first vector and third of second vector.
+For a surface given as $z=f(x,y)$ we get $A=\iint_R\sqrt{1+f_x^2+f_y^2}dA$.
+For integrating a scalar function $G$ over a surface if we have parametrized the surface we do 
+$\iint G(f(u,v),g,h)\left|r_u\times r_v\right|dudv$, if the surface is given as $z=f(x,y)$ we do
+$\iint G(x,y,f(x,y))\sqrt{f_x^2+f_y^2+1}dxdy$. For field $\vec{F}$ across surface $\vec{r}$ we do 
+$\iint_R \vec{F}\cdot\left(\vec{r}_x\times \vec{r}_z\right)\,dxdz$
 \end{document}

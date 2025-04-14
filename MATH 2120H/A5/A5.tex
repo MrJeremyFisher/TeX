@@ -114,7 +114,7 @@ $$\int_{(1,1,1)}^{(1,2,3)}3x^2\,dx+\frac{z^2}{y}\,dy+2z\ln y\,dz$$
 \begin{soln}
   Here we first ensure that this field is conservative,
   \begin{align*}
-    \frac{\partial M}{\partial y} & =0
+    \frac{\partial M}{\partial y} & =0,
                                   & \frac{\partial M}{\partial z} & =0            \\
     \frac{\partial N}{\partial x} & =0,
                                   & \frac{\partial N}{\partial z} & =\frac{2z}{y} \\
@@ -138,13 +138,22 @@ Find the outward flux of the field $\mathbf{F} = xy\ui + y^2\uj$ over the bounda
 the curve $y = x^2$ and the line $y = x$.
 \end{problem}
 \begin{soln}
+  Here the divergence of the field is $3y$. By Green's theorem we then evaluate the integral of the divergence over the given region,
+  \begin{align*}
+     & =\int_{0}^{1}\int_{x^2}^{x}3y\,dydx \\
+     & =\frac{3}{2}\int_{0}^{1}x^2-x^4\,dx \\
+     & =\frac{1}{5}
+  \end{align*}
 \end{soln}
 
 % PROBLEM 4
 \begin{problem}
 Apply Green's Theorem to evaluate the integral below
-$$\oint 3y\,dx+2x\,dy,\qquad\text{Where $C$ is the boundary of } 0\leq x\leq\pi,\,0\leq y\leq \sin x$$
+$$\oint_C 3y\,dx+2x\,dy,\qquad\text{Where $C$ is the boundary of } 0\leq x\leq\pi,\,0\leq y\leq \sin x$$
 \end{problem}
 \begin{soln}
+  Green's Theorem states that $$\oint M\,dx+N\,dy=\iint_R\frac{\partial N}{\partial x}-\frac{\partial M}{\partial y}\,dx\,dy.$$
+  Applying this here we get
+  $$\oint_C 3y\,dx+2x\,dy=\int_0^\pi\int_{0}^{\sin x}-1\,dydx=\eval{\cos x}_{0}^{\pi}=-2$$
 \end{soln}
 \end{document}
