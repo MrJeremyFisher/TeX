@@ -11,6 +11,8 @@
 \usepackage{physics}
 \usepackage{hyperref}
 \usepackage{siunitx}
+\usepackage{fontspec}
+\usepackage{relsize}
 \usepackage{multicol, multirow, booktabs}
 \usepackage[breakable]{tcolorbox}
 \usepackage[inline]{enumitem}
@@ -28,7 +30,13 @@
 \definecolor{outcolor}{HTML}{D84315}
 \definecolor{cellborder}{HTML}{CFCFCF}
 \definecolor{cellbackground}{HTML}{F7F7F7}
-\newcommand{\eq}{=}
+\newcommand{\ui}{\hat{i}}
+\newcommand{\uj}{\hat{j}}
+\newcommand{\uk}{\hat{k}}
+\newcommand{\ux}{\hat{x}}
+\newcommand{\uy}{\hat{y}}
+\newcommand{\uz}{\hat{z}}
+\newcommand{\primed}[1]{#1^\prime}
 \usetikzlibrary{positioning, fit, calc}
 \pgfdeclarelayer{background}  
 \pgfsetlayers{background,main}
@@ -69,9 +77,15 @@
 
 \newcommand{\ti}[1]{\widetilde{#1}}
 
-\def\rcurs{{\mbox{$\resizebox{.16in}{.08in}{\includegraphics{../TeX/Common Resources/ScriptR.pdf}}$}}}
-\def\brcurs{{\mbox{$\resizebox{.16in}{.08in}{\includegraphics{../TeX/Common Resources/BoldR.pdf}}$}}}
-\def\hrcurs{{\mbox{$\hat \brcurs$}}}
+\newfontface{\Kaufmann}{Kaufmann}
+\DeclareTextFontCommand{\kf}{\Kaufmann}
+\newcommand{\scriptr}{\kf{r}}
+
+\newfontface{\KaufmannB}{Kaufmann Bd BT}
+\DeclareTextFontCommand{\kfb}{\KaufmannB}
+\newcommand{\bscriptr}{\kfb{r}}
+
+\newcommand{\bv}[1]{\mathbf{#1}}
 
 \title{Physics 3200Y: Assignment I}
 \author{Jeremy Favro (0805980) \\ Trent University, Peterborough, ON, Canada}
@@ -82,9 +96,37 @@
 
 % PROBLEM 1
 \begin{problem}
-Let $\mathbf{\mathcal{r}}=\mathbf{r}-\mathbf{r}^\prime$ be the separation between $r$ and $r$, where $r^\prime = (x^\prime, y^\prime, z^\prime)$ is a fixed point and $r = (x, y, z)$. Let
-$r = \left|\mathbf{\mathcal{r}} \right|$ be the magnitude of the separation
+Let $\bscriptr=\bv{r}-\bv{r}^\prime$ be the separation between $\bv{r}$ and $\bv{r}^\prime$, where $\bv{r}^\prime = (x^\prime, y^\prime, z^\prime)$ is a fixed point and $\bv{r} = (x, y, z)$. Let
+$\scriptr = \left|\bscriptr \right|$ be the magnitude of the separation.
+\begin{enumerate}[label=(\alph*)]
+  \item Show that $\nabla\left(\scriptr^2\right)=2\bscriptr$.
+  \item Show that $\nabla\exp\left(\vec{k}\cdot\vec{\bscriptr}\right)=\vec{k}\exp\left(\vec{k}\cdot\vec{\bscriptr}\right)$, where $\vec{k}$ is a vector constant.
+  \item Show that $\nabla\exp\left(k\scriptr\right)=k\hat{\bscriptr}\exp\left(k\scriptr\right)$.
+  \item Show that $\nabla \left(\scriptr^{-1}\right)=-\hat{\bscriptr}/\scriptr^2$.
+\end{enumerate}
 \end{problem}
-\begin{soln}
+\begin{soln} ~
+  \begin{enumerate}[label=(\alph*)]
+    \item \begin{proof}
+            \begin{align*}
+               & =\nabla\left(\scriptr^2\right)                                                                                                                                                                                     \\
+               & =\left[\frac{\partial}{\partial x}\ux + \frac{\partial}{\partial y}\uy + \frac{\partial}{\partial z}\uz \right]\sqrt{\left(x-\primed{x}\right)^2 + \left(y-\primed{y}\right)^2+ \left(z-\primed{z}\right)^2}^2     \\
+               & =\left[\frac{\partial}{\partial x}\ux + \frac{\partial}{\partial y}\uy + \frac{\partial}{\partial z}\uz \right]\left[\left(x-\primed{x}\right)^2 + \left(y-\primed{y}\right)^2+ \left(z-\primed{z}\right)^2\right] \\
+               & =\frac{\partial}{\partial x}\left(x-\primed{x}\right)^2\ux + \frac{\partial}{\partial y} \left(y-\primed{y}\right)^2\uy + \frac{\partial}{\partial z}\left(z-\primed{z}\right)^2\uz \quad \text{Note\footnotemark} \\
+               & =2\left(x-\primed{x}\right)\ux + 2\left(y-\primed{y}\right)\uy+2\left(z-\primed{z}\right)\uz \quad \text{By chain rule}                                                                                            \\
+               & =2(\left(x-\primed{x}\right),\left(y-\primed{y}\right),\left(z-\primed{z}\right)) = 2\bscriptr\qedhere
+            \end{align*}
+            \footnotetext{The partials kill the terms that don't contain their variable of differentiation, omitted for brevity}
+          \end{proof}
+    \item \begin{proof}
+            \begin{align*}
+               & =  \nabla\exp\left(\vec{k}\cdot\vec{\bscriptr}\right)                                                             \\
+               & =  \nabla\exp\left(k_x(x-\primed{x})+k_y(y-\primed{y})+k_z(z-\primed{z})\right)                                   \\
+               & =  \nabla\exp\left(k_x(x-\primed{x})\right) \exp\left(k_y(y-\primed{y})\right) \exp\left(k_z(z-\primed{z})\right) \\
+            \end{align*}
+          \end{proof}
+    \item Show that $\nabla\exp\left(k\scriptr\right)=k\hat{\bscriptr}\exp\left(k\scriptr\right)$.
+    \item Show that $\nabla \left(\scriptr^{-1}\right)=-\hat{\bscriptr}/\scriptr^2$.
+  \end{enumerate}
 \end{soln}
 \end{document}
