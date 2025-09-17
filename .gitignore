@@ -18,3 +18,7 @@ robustExternalize/
 robExt-prepare-for-arxiv.py
 robExt-remove-old-figures.py
 .~lock.*.ods#
+\#auto_saved_files#
+*.lck
+_autosave*
+*.tdo
