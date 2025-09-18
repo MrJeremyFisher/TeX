@@ -446,8 +446,8 @@ Note that the most direct integration path may not be simplest.
   Here we have that $d\boldsymbol{\ell}=dx\ux+dy\uy+dz\uz$ which means that
   $\mathbf{E}\cdot d\boldsymbol{\ell}=E_0\left[y^2dx+\left(2xy+z^2\right)dy+2yzdz\right]$ so,
   \begin{align*}
-     & V(\mathbf{r})= \int_0^{\mathbf{r}}E_0\left[y^2dx+\left(2xy+z^2\right)dy+2yzdz\right]     \\
-     & = E_0\left[\int_0^{r_x}y^2dx+\int_0^{r_y}\left(2xy+z^2\right)dy+\int_0^{r_z}2yzdz\right]
+     & V(\mathbf{r})= -\int_0^{\mathbf{r}}E_0\left[y^2dx+\left(2xy+z^2\right)dy+2yzdz\right]     \\
+     & = -E_0\left[\int_0^{r_x}y^2dx+\int_0^{r_y}\left(2xy+z^2\right)dy+\int_0^{r_z}2yzdz\right]
   \end{align*}
   Which simplifies nicely along several paths (though it's already fairly simple). I'll go along the $x$, the $y$, then the $z$.
   This means that for our first integral along $x$ we are moving from $\langle0,0,0\rangle$ to $\langle r_x,0,0\rangle$ so $y$ is zero
@@ -457,6 +457,6 @@ Note that the most direct integration path may not be simplest.
   Finally along $z$ we are moving from $\langle r_x,r_y,0\rangle$ to $\langle r_x,r_y,r_z\rangle$ so
   $$\int_0^{r_z}2yzdz=\int_0^{r_z}2yzdz=r_yr_z^2.$$
   This yields
-  $$V(\mathbf{r})=E_0\left[r_xr_y^2 + r_yr_z^2\right].$$
+  $$V(\mathbf{r})=-E_0\left[r_xr_y^2 + r_yr_z^2\right].$$
 \end{soln}
 \end{document}
