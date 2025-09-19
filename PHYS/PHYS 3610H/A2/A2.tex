@@ -152,39 +152,59 @@ $$
           where $A$ is a constant of integration that we will determine later.
           Now for \ref{eq2} with some rearranging (and noticing the $V(x)=0$ in the region we care about) we have
           $$-\frac{2mE}{\hbar^2}\psi(x)=\frac{d^2}{d x^2}\psi(x).$$
-          This means we are looking now for a function whose second derivative is itself times a negative constant. \todo{Why choose sin}
-          Using the theorem given that functions for such a system must be either even or odd I choose to use an even function which also satisfies the derivative
-          property above, $\sin x$. We must however be careful to note that however we set up our $\psi(x)$ it must obey the physical constraint that
-          the particle cannot be found at $-c$ as it would need sufficient energy to pass a potential barrier of infinite energy which is impossible. We can use this knowledge to say that
-          $$\psi(x)=\sin\left(k(x+c)\right)$$
-          where $k=\sqrt{\frac{2mE}{\hbar^2}}$. This, at $-c$, becomes $\sin (0)=0$. Now we must consider the upper bound of the well where we enforce the same constraint for the same reasons,
-          $$ \psi(c) =0= A\sin\left(2kc\right)=A\sin\left(2\sqrt{\frac{2mE}{\hbar^2}}c\right) $$
-          This gives us two constants to mess with to satisfy the equality, $A$ and $E$. To make this zero using $A$ would require $A=0$ which is a trivial solution which gives us no information
-          and says that the particle does not exist. We instead choose to determine an $E$ such that the equation is zero. Given that $\sin(x)$ is zero for all
-          $x=2n\pi$ where $n\in \mathbb{Z}$ we need to find an $E$ that gives this. However we must first trim our bound on $n$ down a bit as $n=0$ gives us
-          again the no-particle solution over the entire well and not just the edges as we want here
-          and the negative $n$s result in only a change in $A$ as $\sin(-x)=\sin(x)$ meaning they are linearly dependent and therefore superfluous in combination with the
-          positive solutions. We therefore adopt the final form of $\psi(x)$,
-          $$\psi(x)=A\sin\left(2\sqrt{\frac{2E_nm}{\hbar^2}}x\right)$$
-          where $E_n=\displaystyle\frac{\hbar^2n^2\pi^2}{8mc^2}$ where $n\in \mathbb{Z}^{>0}$ (integers $1,2,3,\dots$).
-          To find $A$ we use the condition that the probability of the particle existing (being found anywhere) must be $1$. This means that
-          $$\int_{-\infty}^{\infty}\left|\Psi(x,t)\right|^2dx=1.$$
-          We can simplify this a bit by noting that the time dependent part of $\Psi$ cancels itself out when multiplied with its conjugate
-          as we are doing in the integral and also noting that, as mentioned earlier, the particle may only exist in the well so the bounds can
-          be reduced to $-c\to c$,
+          This means we are looking now for a function whose second derivative is itself times a negative constant.
+          This is satisfied by
+          $$\psi(x)=A\sin\left(kx\right)+B\cos\left(kx\right).$$
+          where $k=\sqrt{\frac{2mE}{\hbar^2}}$.
+          We can now work to determine $k$ (really $E$) using the implied boundary conditions given by the fact that the particle may not exist at $x=\pm c$ meaning the wavefunction
+          must be zero there. Applying this gives
+          $$\psi(c)=A\sin\left(kc\right)+B\cos\left(kc\right)=0$$
+          and
+          $$\psi(-c)=A\sin\left(-kc\right)+B\cos\left(-kc\right)=-A\sin\left(kc\right)+B\cos\left(kc\right)=0.$$
+          The fact that both of these are zero is satisfied only by
+          $$A\sin\left(kc\right)=B\cos\left(kc\right)=0.$$
+          The only way this can happen is if either $A=B=0$ meaning the probability of the particle being found anywhere is zero and the particle therefore does not exist
+          or the more useful case of $k$ being some value that makes either $\sin\left(kc\right)$ or $\cos\left(kc\right)$ zero. Knowing that
+          $k$ must be the same for both functions this gives rise to two possible solutions. For $\sin(x)$ to be zero $x$ must be some integer multiple of $\pi$ and
+          for $\cos(x)$ to be zero $x$ must be some \emph{half} integer multiple of $\pi$. The only way to satisfy this is to construct a $k$ of the form
+          $$k=\frac{n\pi}{2c}$$
+          and use the $\sin(kx)$ function for even values of $n$ and $\cos(kx)$ for odd values. It's also important to note that we require $n\in \mathbb{Z}>0$
+          as the negative $n$s are just multiples of the positive ones and so give no new information and $n=0$ is again the no-particle-exists case
+          and also gives no information. So we now have two possible functions for $\psi_n(x)$,
+          $$
+            \psi_n(x) =
+            \begin{cases}
+              A\sin(kx),\qquad n=2,4,6,\dots \\
+              B\cos(kx),\qquad n=1,3,5,\dots \\
+            \end{cases}
+          $$
+          Working out $E$ now as it is the only thing inside $k$ which we can set to force $k$ to adopt our constructed value,
           \begin{align*}
-            1 & =\int_{-c}^{c}\psi(x)\psi^*(x)dx                                                                                         \\
-              & =\int_{-c}^{c}\left|A\right|\sin\left(\frac{n\pi}{c}x\right)\left|A\right|\sin\left(\frac{n\pi}{c}x\right)dx             \\
-              & =\left|A\right|^2\int_{-c}^{c}\sin^2\left(\frac{n\pi}{c}x\right)dx                                                       \\
-              & =\left|A\right|^2\int_{-c}^{c}\frac{1-\cos\left(2\frac{n\pi}{c}x\right)}{2}dx                                            \\
-              & =\left|A\right|^2\left(\int_{-c}^{c}\frac{1}{2}dx-\int_{-c}^{c}\frac{\cos\left(2\frac{n\pi}{c}x\right)}{2}dx\right)      \\
-              & =\frac{\left|A\right|^2}{2}\left(2c-\cancel{\frac{c}{2n\pi}\left[\sin\left(2\frac{n\pi}{c}x\right)\right]_{-c}^c}\right) \\
-              & 1=c\left|A\right|^2\implies \left|A\right|=\sqrt{\frac{1}{c}}\implies A=\sqrt{1/c}
+            k        & =\frac{n\pi}{2c}=\sqrt{\frac{2mE}{\hbar^2}} \\
+            \implies & \frac{n^2\pi^2}{4c^2}=\frac{2mE}{\hbar^2}   \\
+            \implies & \frac{n^2\pi^2\hbar^2}{8mc^2}=E_n
           \end{align*}
-          So we have
-          $$\psi(x)=\sqrt{1/c}\sin\left(\frac{n\pi}{c}x\right).$$
-          Which gives us our eigenfunctions $\psi_n(x)$ and our eigenvalues
-          $$E_n=\displaystyle\frac{\hbar^2n^2\pi^2}{8mc^2}.$$
+          Now using our last available bit of information, the requirement that the probability of finding the particle anywhere must be 1,
+          we integrate our wavefunction (either one! both have the same amplitude and will therefore have the same constant) over all space and force it to be 1 using the constants.
+          We can also note that helpfully the particle is guaranteed to only exist within the well so we can narrow down our bounds of integration,
+          \begin{align*}
+            1 & =\int_{-c}^{c}\psi(x)\psi^*(x)dx                                                                                 \\
+              & =\int_{-c}^{c}\left|A\right|\sin\left(\frac{n\pi}{2c}x\right)\left|A\right|\sin\left(\frac{n\pi}{2c}x\right)\,dx \\
+              & =\left|A\right|^2\int_{-c}^{c}\sin^2\left(\frac{n\pi}{2c}x\right)\,dx                                            \\
+              & =\frac{\left|A\right|^2}{2}\left[\int_{-c}^{c}1\,dx-\int_{-c}^{c}\cos\left(\frac{n\pi}{c}x\right)\,dx\right]     \\
+              & =\frac{\left|A\right|^2}{2}\left[2c-\int_{-c}^{c}\cos\left(\frac{n\pi}{c}x\right)\,dx\right]                     \\
+              & =\frac{\left|A\right|^2}{2}\left[2c-\frac{2c}{n\pi}\cancelto{0}{\sin(\pi n)}\right]
+              & \implies c \left|A\right|^2=1\implies \left|A\right|=\sqrt{\frac{1}{c}}
+          \end{align*}
+          By example of the text we pick the positive real value of $\left|A\right|$ and so obtain
+          $$
+            \psi_n(x) =
+            \begin{cases}
+              \sqrt{\frac{1}{c}}\sin(\frac{n\pi}{2c}x),\qquad n=2,4,6,\dots \\
+              \sqrt{\frac{1}{c}}\cos(\frac{n\pi}{2c}x),\qquad n=1,3,5,\dots \\
+            \end{cases}
+          $$
+          We can now say that the above $\psi_n(x)$s are our eigenstates and $E_n=\displaystyle\frac{n^2\pi^2\hbar^2}{8mc^2}$ our eigenvalues.
           \newpage
     \item ~\\
           \begin{enumerate}[label=(\roman*)]
@@ -209,29 +229,48 @@ $$
                       \draw[->]  (-1, -0.04) to (-1, \topval+0.2);
 
 
-                      %Functions
-
-                      \draw[red, thick, domain=-1:1, samples=100] plot (\x, {sin(deg(pi*\x))+1}) node[right, black] {$n=1$};
+                      \draw[red, thick, domain=-1:1, samples=100] plot (\x, {cos(deg(pi*\x/2))+1}) node[right, black] {$n=1$, $\frac{\cos(\frac{\pi}{2c}x)}{\sqrt{c^{-1}}}$};
                       \draw[dashed, thick] (-1,1) --(1,1);
-                      \draw[green, thick, domain=-1:1, samples=100] plot (\x, {sin(deg(2*pi*\x))+3.5}) node[right, black] {$n=2$};
+                      \draw[green, thick, domain=-1:1, samples=100] plot (\x, {sin(deg(pi*\x))+3.5}) node[right, black] {$n=2$, $\frac{\sin(\frac{\pi}{c}x)}{\sqrt{c^{-1}}}$};
                       \draw[dashed, thick] (-1,3.5) --(1,3.5);
                       % \draw[blue, thick, domain=0:4, samples=200] plot (\x, {sin(360*\x/4)}) ;
                       % \draw[green, thick, domain=0:4, samples=200] plot (\x, {sin(540*\x/4)})  ;
                     \end{tikzpicture}
                   \end{center}
-            \item In the example in class we solved for a well with width $a$ (running from $0\to a$). Our energy here for $n=1$ is
-                  $$E_1=\frac{\hbar^2\pi^2}{8mc^2}$$
-
+            \item Yes, the results obtained here are consistent with those in class. In class we had a well with width $a$ and here we have a well with width
+                  $2c$. This means we'd see a doubling everywhere there is width dependent term.
+                  For the energy eigenvalues acting as if we are now in a well of half the width we obtain $\displaystyle\frac{n^2\pi^2\hbar^2}{8m(c/2)^2}=\frac{n^2\pi^2\hbar^2}{2mc^2}$
+                  which is what we same in class. For the eigenstates we see
+                  $$
+                    \psi_n(x) =
+                    \begin{cases}
+                      \sqrt{\frac{1}{c/2}}\sin(\frac{n\pi}{2(c/2)}x),\qquad n=2,4,6,\dots \\
+                      \sqrt{\frac{1}{c/2}}\cos(\frac{n\pi}{2(c/2)}x),\qquad n=1,3,5,\dots \\
+                    \end{cases}
+                  $$
+                  Which simplifies down to
+                  $$
+                    \psi_n(x) =
+                    \begin{cases}
+                      \sqrt{\frac{2}{c}}\sin(\frac{n\pi}{c}x),\qquad n=2,4,6,\dots \\
+                      \sqrt{\frac{2}{c}}\cos(\frac{n\pi}{c}x),\qquad n=1,3,5,\dots \\
+                    \end{cases}
+                  $$
+                  which is similar to what we had in class, the only difference coming from the fact that we have assumed that the origin is in the middle of our bounds.
+                  If we followed the previous math used to obtain these $\psi$ values but assumed the origin was at the left bound of a well with width $c/2$ we would obtain the in class
+                  solution as we would expect.
             \item Orthogonality on functions is defined using the inner product of functions,
                   $$\int_{-c}^c f(x)g(x)\,dx$$
                   with the typical definition of orthogonality (0 means orthogonal). So,
                   \begin{align*}
-                     & =\int_{-c}^c\psi_1(x)\psi_2(x)\,dx                                                                                          \\
-                     & =\int_{-c}^c\sqrt{1/c}\sin\left(\frac{\pi}{c}x\right)\sqrt{1/c}\sin\left(\frac{2\pi}{c}x\right)\,dx                         \\
-                     & =\frac{1}{c}\int_{-c}^c\sin\left(\frac{\pi}{c}x\right)\sin\left(\frac{2\pi}{c}x\right)\,dx                                  \\
-                     & =\frac{1}{2c}\int_{-c}^c\cos\left(\frac{\pi}{c}x-\frac{2\pi}{c}x\right)-\cos\left(\frac{\pi}{c}x+\frac{2\pi}{c}x\right)\,dx \\
-                     & =\frac{1}{2c}\int_{-c}^c\cos\left(-\frac{\pi}{c}x\right)-\cos\left(\frac{3\pi}{c}x\right)\,dx                               \\
-                     & =-\frac{c}{6c\pi}\left[\sin\left(\frac{3\pi}{c}x\right)-3\sin\left(\frac{\pi}{c}x\right)\right]_{-c}^c=0
+                     & =\int_{-c}^c\psi_1(x)\psi_2(x)\,dx \\
+                     & =\int_{-c}^c\sqrt{\frac{1}{c}}\cos(\frac{\pi}{2c}x)\sqrt{\frac{1}{c}}\sin(\frac{\pi}{c}x)\,dx \\
+                     & =c^{-1}\int_{-c}^c\cos(\frac{\pi}{2c}x)\sin(\frac{\pi}{c}x)\,dx\rightsquigarrow u=\frac{\pi}{2c}x\implies du=\frac{\pi}{2c}dx\\
+                     & =\frac{2}{\pi}\int_{-c}^c\cos(u)\sin(2u)\,du\rightsquigarrow \sin(2u)=2\sin (u)\cos (u)\\
+                     & =\frac{2}{\pi}\int_{-c}^c2\cos^2(u)\sin(u)\,du\rightsquigarrow s=\cos(u)\implies ds=-\sin(u)du\\
+                     & =-\frac{4}{\pi}\int_{-c}^cs^2\,ds\\
+                     & =-\frac{4}{3\pi}\eval{s^3}_{-c}^{c}=-\frac{4}{3\pi}\eval{\cos^3(u)}_{-c}^{c}=-\frac{4}{3\pi}\eval{\cos^3\left(\frac{\pi}{2c}x\right)}_{-c}^{c}\\
+                     & =-\frac{4}{3\pi}\left[\cos^3\left(\frac{\pi}{2c}c\right)-\cos^3\left(-\frac{\pi}{2c}c\right)\right]=0\\
                   \end{align*}
           \end{enumerate}
   \end{enumerate}
