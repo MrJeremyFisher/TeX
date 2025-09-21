@@ -146,17 +146,18 @@ $$
             E & =\frac{i\hbar}{\phi(t)}\frac{d}{d t}\phi(t) \label{eq1}                                      \\
             E & =\frac{1}{\psi(x)}\left[-\frac{\hbar^2}{2m}\frac{d^2}{d x^2} + V(x)\right]\psi(x)\label{eq2}
           \end{align}
-          We will first begin by solving \ref{eq1} as it is very easy by recognizing that there is an easy function who's derivative is itself times a constant, $e^x$.
+          We will first begin by solving \ref{eq1} as it is very easy by recognizing that there is an easy function whose derivative is itself times a constant, $e^x$.
           This gives us
           $$\phi=Ce^{-iEt/\hbar}$$
-          where $A$ is a constant of integration that we will determine later.
+          where $C$ is a constant of integration.
           Now for \ref{eq2} with some rearranging (and noticing the $V(x)=0$ in the region we care about) we have
           $$-\frac{2mE}{\hbar^2}\psi(x)=\frac{d^2}{d x^2}\psi(x).$$
           This means we are looking now for a function whose second derivative is itself times a negative constant.
           This is satisfied by
           $$\psi(x)=A\sin\left(kx\right)+B\cos\left(kx\right).$$
           where $k=\sqrt{\frac{2mE}{\hbar^2}}$.
-          We can now work to determine $k$ (really $E$) using the implied boundary conditions given by the fact that the particle may not exist at $x=\pm c$ meaning the wavefunction
+          We can now work to determine $k$ (really $E$) using the implied boundary conditions given by the fact that the particle may not exist at $x=\pm c$ 
+          as it would require a nonphysical energy, meaning the wavefunction
           must be zero there. Applying this gives
           $$\psi(c)=A\sin\left(kc\right)+B\cos\left(kc\right)=0$$
           and
@@ -169,7 +170,7 @@ $$
           for $\cos(x)$ to be zero $x$ must be some \emph{half} integer multiple of $\pi$. The only way to satisfy this is to construct a $k$ of the form
           $$k=\frac{n\pi}{2c}$$
           and use the $\sin(kx)$ function for even values of $n$ and $\cos(kx)$ for odd values. It's also important to note that we require $n\in \mathbb{Z}>0$
-          as the negative $n$s are just multiples of the positive ones and so give no new information and $n=0$ is again the no-particle-exists case
+          as the negative $n$s are just multiples of the positive ones (due to the odd/even nature of our trig functions) and so give no new information and $n=0$ is again the no-particle-exists case
           and also gives no information. So we now have two possible functions for $\psi_n(x)$,
           $$
             \psi_n(x) =
@@ -229,9 +230,9 @@ $$
                       \draw[->]  (-1, -0.04) to (-1, \topval+0.2);
 
 
-                      \draw[red, thick, domain=-1:1, samples=100] plot (\x, {cos(deg(pi*\x/2))+1}) node[right, black] {$n=1$, $\frac{\cos(\frac{\pi}{2c}x)}{\sqrt{c^{-1}}}$};
+                      \draw[red, thick, domain=-1:1, samples=100] plot (\x, {cos(deg(pi*\x/2))+1}) node[right, black] {$n=1$, $\frac{\cos(\frac{\pi}{2c}x)}{\sqrt{c}}$};
                       \draw[dashed, thick] (-1,1) --(1,1);
-                      \draw[green, thick, domain=-1:1, samples=100] plot (\x, {sin(deg(pi*\x))+3.5}) node[right, black] {$n=2$, $\frac{\sin(\frac{\pi}{c}x)}{\sqrt{c^{-1}}}$};
+                      \draw[green, thick, domain=-1:1, samples=100] plot (\x, {sin(deg(pi*\x))+3.5}) node[right, black] {$n=2$, $\frac{\sin(\frac{\pi}{c}x)}{\sqrt{c}}$};
                       \draw[dashed, thick] (-1,3.5) --(1,3.5);
                       % \draw[blue, thick, domain=0:4, samples=200] plot (\x, {sin(360*\x/4)}) ;
                       % \draw[green, thick, domain=0:4, samples=200] plot (\x, {sin(540*\x/4)})  ;
@@ -240,7 +241,7 @@ $$
             \item Yes, the results obtained here are consistent with those in class. In class we had a well with width $a$ and here we have a well with width
                   $2c$. This means we'd see a doubling everywhere there is width dependent term.
                   For the energy eigenvalues acting as if we are now in a well of half the width we obtain $\displaystyle\frac{n^2\pi^2\hbar^2}{8m(c/2)^2}=\frac{n^2\pi^2\hbar^2}{2mc^2}$
-                  which is what we same in class. For the eigenstates we see
+                  which is the same as what we obtained in class. For the eigenstates we see
                   $$
                     \psi_n(x) =
                     \begin{cases}
