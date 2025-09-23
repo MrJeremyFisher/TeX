@@ -128,7 +128,7 @@ $\scriptr = \left|\bscriptr \right|$ be the magnitude of the separation.
             \begin{align*}
                & =  \nabla\exp\left(\vec{k}\cdot\vec{\bscriptr}\right)                                   \\
                & =  \nabla\exp\left(k_x(x-\primed{x})+k_y(y-\primed{y})+k_z(z-\primed{z})\right)         \\
-               & = k_x\exp\exp\left(k_x(x-\primed{x})+k_y(y-\primed{y})+k_z(z-\primed{z})\right)\ux      \\
+               & = k_x\exp\left(k_x(x-\primed{x})+k_y(y-\primed{y})+k_z(z-\primed{z})\right)\ux      \\
                & \qquad + k_y\exp\left(k_x(x-\primed{x})+k_y(y-\primed{y})+k_z(z-\primed{z})\right)  \uy \\
                & \qquad + k_z\exp\left(k_x(x-\primed{x})+k_y(y-\primed{y})+k_z(z-\primed{z})\right)  \uz \\
                & = (k_x, k_y, k_z)\exp\left(k_x(x-\primed{x})+k_y(y-\primed{y})+k_z(z-\primed{z})\right) \\
@@ -169,7 +169,6 @@ For each of the vector fields illustrated below, find an equation that \emph{cou
 divergence and curl.
 \begin{figure*}[h]
   \subfloat[]{
-    % \includegraphics[width=.48\linewidth]{example-image-a}
     \begin{tikzpicture}
       \begin{axis}[
           view     = {0}{90}, % for a view 'from above'
@@ -190,7 +189,6 @@ divergence and curl.
     \label{subfig:a}
   }\hfill
   \subfloat[]{
-    % \includegraphics[width=.48\linewidth]{example-image-b}
     \begin{tikzpicture}
       \begin{axis}[
           view     = {0}{90}, % for a view 'from above'
@@ -203,7 +201,7 @@ divergence and curl.
           xtick pos = bottom,
           xtick align = outside,
         ]
-        \addplot3[blue, quiver={u=0, v=y/2,
+        \addplot3[blue, quiver={u=0, v=x/2,
               scale arrows=0.085,
             }, -stealth, samples=16] (x,y,0);
       \end{axis}
@@ -211,7 +209,6 @@ divergence and curl.
     \label{subfig:b}
   }\\
   \subfloat[]{
-    %\includegraphics[width=.48\linewidth]{example-image}
     \begin{tikzpicture}
       \begin{axis}[
           view     = {0}{90}, % for a view 'from above'
@@ -233,7 +230,6 @@ divergence and curl.
     \label{subfig:c}
   }\hfill
   \subfloat[]{
-    %\includegraphics[width=.48\linewidth]{example-image}
     \begin{tikzpicture}
       \begin{axis}[
           view     = {0}{90}, % for a view 'from above'
@@ -269,15 +265,15 @@ divergence and curl.
                                  \end{vmatrix} \\
                               & = 0\ux + 0\uy+0\uz
           \end{align*}
-    \item $\mathbf{F}=0\ux+y\uy+0\uz$. $\Div(\mathbf{F})=\vec{\nabla} \cdot \mathbf{F}=1$
+    \item $\mathbf{F}=0\ux+x\uy+0\uz$. $\Div(\mathbf{F})=\vec{\nabla} \cdot \mathbf{F}=0$
           \begin{align*}
             \Curl(\mathbf{F}) & =\vec{\nabla} \cross \mathbf{F}                                                          \\
                               & =\begin{vmatrix}
                                    \ux                         & \uy                         & \uz                         \\
                                    \frac{\partial}{\partial x} & \frac{\partial}{\partial y} & \frac{\partial}{\partial z} \\
-                                   0                           & y                           & 0
+                                   0                           & x                           & 0
                                  \end{vmatrix} \\
-                              & = 0\ux + 0\uy+ 0\uz
+                              & = 0\ux + 0\uy+ 1\uz
           \end{align*}
     \item $\mathbf{F}=-y\ux+x\uy+0\uz$. $\Div(\mathbf{F})=\vec{\nabla} \cdot \mathbf{F}=0$
           \begin{align*}
@@ -354,9 +350,9 @@ charge density $\sigma$. Complete all the steps we discussed in class:
              & = \frac{\sigma}{4\pi\epsilon_0}\int\frac{\bscriptr}{\scriptr^3}d\primed{a}                                                                                                                                                           \\
              & = \frac{\sigma}{4\pi\epsilon_0}\int\frac{(-x,-y,z)}{\left(x^2+y^2+z^2\right)^{3/2}}d\primed{a}                                                                                                                                       \\
              & = \frac{\sigma}{4\pi\epsilon_0}\int\frac{(-x,-y,z)}{\left(x^2+y^2+z^2\right)^{3/2}}d\primed{a} \rightsquigarrow x=\primed{r}\cos\theta,y=\primed{r}\sin\theta                                                                        \\
-             & = \frac{\sigma}{4\pi\epsilon_0}\int_0^{2\pi}\int_0^R\frac{(-r\cos\theta,-r\sin\theta,z)}{\left({\primed{r}}^2\cos^2\theta+{\primed{r}}^2\sin^2\theta+z^2\right)^{3/2}}\primed{r}d\primed{r}d\theta
+             & = \frac{\sigma}{4\pi\epsilon_0}\int_0^{2\pi}\int_0^R\frac{(-\primed{r}\cos\theta,-\primed{r}\sin\theta,z)}{\left({\primed{r}}^2\cos^2\theta+{\primed{r}}^2\sin^2\theta+z^2\right)^{3/2}}\primed{r}d\primed{r}d\theta
             \rightsquigarrow x=\primed{r}\cos\theta,y=\primed{r}\sin\theta                                                                                                                                                                          \\
-             & = \frac{\sigma}{4\pi\epsilon_0}\int_0^{2\pi}\int_0^R\frac{(-r\cos\theta,-r\sin\theta,z)}{\left({\primed{r}}^2+z^2\right)^{3/2}}\primed{r}d\primed{r}d\theta \quad \text{Integrating w.r.t \theta\,kills the sin and cos by symmetry} \\
+             & = \frac{\sigma}{4\pi\epsilon_0}\int_0^{2\pi}\int_0^R\frac{(-\primed{r}\cos\theta,-\primed{r}\sin\theta,z)}{\left({\primed{r}}^2+z^2\right)^{3/2}}\primed{r}d\primed{r}d\theta \quad \text{Integrating w.r.t \theta\,kills the sin and cos by symmetry} \\
              & = \frac{\sigma}{4\pi\epsilon_0}\int_{0=\primed{r}}^R\frac{(0,0,2\pi z)}{2u^{3/2}}du\rightsquigarrow u={\primed{r}}^2+z^2\implies du/2\primed{r}=d\primed{r}                                                                          \\
              & = \frac{\sigma}{4\epsilon_0}\int_{0=\primed{r}}^R\frac{(0,0,z)}{u^{3/2}}du                                                                                                                                                           \\
              & = -\frac{z\sigma}{2\epsilon_0}{\left[\left({\primed{r}}^2+z^2\right)^{-1/2}\right]}_{0}^{R}\uz=\frac{z\sigma}{2\epsilon_0}\left[\frac{1}{\abs{z}}-\frac{1}{\sqrt{R^2+z^2}}\right]\uz                                                 \\
