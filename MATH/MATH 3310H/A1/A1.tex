@@ -99,9 +99,9 @@
 
 % PROBLEM 1
 \begin{problem}
-Define a relation $\mathbb{R}\cross\mathbb{R}$ by $(a,b)~(c,d)$ if $2(a-c)-3(b-d)=0$
+Define a relation $\mathbb{R}\cross\mathbb{R}$ by $(a,b)\sim(c,d)$ if $2(a-c)-3(b-d)=0$
 \begin{enumerate}[label=(\alph*)]
-  \item Show that $~$ is an equivalence relation on $\mathbb{R}$.
+  \item Show that $\sim$ is an equivalence relation on $\mathbb{R}$.
   \item Give an example of two pairs $(a,b),(c,d)\in\mathbb{R}\cross\mathbb{R}$, which lie in the same
         equivalence class, and two pairs that don't.
   \item This equivalence relation partitions the 2D plane $\mathbb{R}\cross\mathbb{R}$ into subregions.
@@ -109,7 +109,65 @@ Define a relation $\mathbb{R}\cross\mathbb{R}$ by $(a,b)~(c,d)$ if $2(a-c)-3(b-d
 \end{enumerate}
 \end{problem}
 \begin{soln}
-
+  \begin{enumerate}[label=(\alph*)]
+    \item For $\sim$ to be an equivalence relation it must satisfy the following properties for a set $S$ (proofs included)
+          \begin{enumerate}[label=(\roman*)]
+            \item Reflexivity: $x\sim x\,\forall x\in S$.
+                  \begin{proof}
+                    Let $(a,b)\in\mathbb{R}\cross\mathbb{R}$, then
+                    \begin{align*}
+                               & (a,b)\stackrel{?}{\sim}(a,b) \\
+                      \implies & 2(a-a)-3(b-b) = 0
+                    \end{align*}
+                    Which satisfies our relation as defined. Therefore the relation is reflexive. \qedhere
+                  \end{proof}
+            \item Symmetry: $x\sim y\implies  y\sim x\,\forall x,y\in S$
+                  \begin{proof}
+                    Let $(a,b), (c,d)\in\mathbb{R}\cross\mathbb{R}$, then
+                    \begin{align*}
+                               & (a,b)\sim(c,d)          \\
+                      \implies & 2(a-c)-3(b-d) = 0       \\
+                      \implies & 2(a-c) = 3(b-d)         \\
+                      \implies & -2(a-c) = -3(b-d)       \\
+                      \implies & 2(c-a) = 3(d-b)         \\
+                      \implies & 2(c-a)-3(d-b) =0        \\
+                      \implies & (c,d)\sim(a,b) \qedhere
+                    \end{align*}
+                  \end{proof}
+            \item Transitivity: $x\sim y\sim z\implies  x\sim z\,\forall x,y,z\in S$
+                  \begin{proof}
+                    Let $(a,b), (c,d), (e,f)\in\mathbb{R}\cross\mathbb{R}$, then
+                    \begin{align*}
+                               & (a,b)\sim(c,d)    \\
+                      \implies & 2(a-c)-3(b-d) = 0 \\
+                    \end{align*}
+                    and
+                    \begin{align*}
+                               & (c,d)\sim(e,f)    \\
+                      \implies & 2(c-e)-3(d-f) = 0 \\
+                    \end{align*}
+                    so
+                    \begin{align*}
+                               & 2(a-c)-3(c-d) + 2(c-e)-3(d-f)  = 0   \\
+                      \implies & 2(a-c + c-e)-3(b-d + d-f)  = 0 \\
+                      \implies & 2(a-e)-3(b-f)  = 0 \\
+                      \implies & (a,b)\sim(e,f) \qedhere\\
+                    \end{align*}
+                  \end{proof}
+          \end{enumerate}
+          Therefore $\sim$ is an equivalence relation on $\mathbb{R}\cross\mathbb{R}$.
+    \item For representative element $(1,1)$ we get that for an element $(a,b)\in \mathbb{R}\cross\mathbb{R}$ 
+    to belong to the associated equivalence class we must have
+    $$2(1-a)-3(1-b)=0$$
+    which can be rearranged to obtain
+    $$a=-\frac{1-3b}{2}$$
+    so for $b=\pm 1$ we get two members of the equivalence class represented by $(1,1)$ under $\sim$, $(1,1)$ and $(-2,1)$. 
+    The elements $(\pi, e)$ and $(\phi, i^i)$ where $\pi,e$ take on their usual definitions, $\phi$ is the golden ratio and $i^i$ is, interestingly,
+    both transcendental \emph{and} real!
+    \item The equivalence class with representative $(a,b)$ is the set $E=\left\{(x,y)\in \mathbb{R}\cross\mathbb{R} | x\sim (a,b)\right\}$. This gives the equation
+    $$2(a-x)-3(b-y)=0\implies y=\frac{2(a-x)-3b}{-3}$$
+    so the class looks like a line with slope $2/3$ and y-intercept $b-2a/3$
+  \end{enumerate}
 \end{soln}
 
 % PROBLEM 2
