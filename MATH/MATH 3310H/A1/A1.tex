@@ -44,6 +44,7 @@
 \pgfdeclarelayer{background}  
 \pgfsetlayers{background,main}
 \AtBeginDocument{\RenewCommandCopy\qty\SI}
+\newcommand{\justif}[2]{&{#1}&\text{#2}}
 
 \makeatletter
 \newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
@@ -148,25 +149,25 @@ Define a relation $\mathbb{R}\cross\mathbb{R}$ by $(a,b)\sim(c,d)$ if $2(a-c)-3(
                     \end{align*}
                     so
                     \begin{align*}
-                               & 2(a-c)-3(c-d) + 2(c-e)-3(d-f)  = 0   \\
-                      \implies & 2(a-c + c-e)-3(b-d + d-f)  = 0 \\
-                      \implies & 2(a-e)-3(b-f)  = 0 \\
-                      \implies & (a,b)\sim(e,f) \qedhere\\
+                               & 2(a-c)-3(c-d) + 2(c-e)-3(d-f)  = 0 \\
+                      \implies & 2(a-c + c-e)-3(b-d + d-f)  = 0     \\
+                      \implies & 2(a-e)-3(b-f)  = 0                 \\
+                      \implies & (a,b)\sim(e,f) \qedhere            \\
                     \end{align*}
                   \end{proof}
           \end{enumerate}
           Therefore $\sim$ is an equivalence relation on $\mathbb{R}\cross\mathbb{R}$.
-    \item For representative element $(1,1)$ we get that for an element $(a,b)\in \mathbb{R}\cross\mathbb{R}$ 
-    to belong to the associated equivalence class we must have
-    $$2(1-a)-3(1-b)=0$$
-    which can be rearranged to obtain
-    $$a=-\frac{1-3b}{2}$$
-    so for $b=\pm 1$ we get two members of the equivalence class represented by $(1,1)$ under $\sim$, $(1,1)$ and $(-2,1)$. 
-    The elements $(\pi, e)$ and $(\phi, i^i)$ where $\pi,e$ take on their usual definitions, $\phi$ is the golden ratio and $i^i$ is, interestingly,
-    both transcendental \emph{and} real!
+    \item For representative element $(1,1)$ we get that for an element $(a,b)\in \mathbb{R}\cross\mathbb{R}$
+          to belong to the associated equivalence class we must have
+          $$2(1-a)-3(1-b)=0$$
+          which can be rearranged to obtain
+          $$a=-\frac{1-3b}{2}$$
+          so for $b=\pm 1$ we get two members of the equivalence class represented by $(1,1)$ under $\sim$, $(1,1)$ and $(-2,1)$.
+          The elements $(\pi, e)$ and $(\phi, i^i)$ where $\pi,e$ take on their usual definitions, $\phi$ is the golden ratio and $i^i$ is, interestingly,
+          both transcendental \emph{and} real!
     \item The equivalence class with representative $(a,b)$ is the set $E=\left\{(x,y)\in \mathbb{R}\cross\mathbb{R} | x\sim (a,b)\right\}$. This gives the equation
-    $$2(a-x)-3(b-y)=0\implies y=\frac{2(a-x)-3b}{-3}$$
-    so the class looks like a line with slope $2/3$ and y-intercept $b-2a/3$
+          $$2(a-x)-3(b-y)=0\implies y=\frac{2(a-x)-3b}{-3}$$
+          so the class looks like a line with slope $2/3$ and y-intercept $b-2a/3$
   \end{enumerate}
 \end{soln}
 
@@ -183,7 +184,126 @@ addition modulo $n$, or multiplication modulo $n$, or both or neither.
   \item $S=\left\{1,5,7,11\right\},n=12$.
 \end{enumerate}
 \end{problem}
-\begin{soln}
+\begin{soln}~\\
+  \begin{enumerate}[label=(\alph*)]
+    \item ~\begin{center}
+            \setlength\extrarowheight{3pt}
+            \noindent\begin{tabular}{c | c c c c c}
+              $+_{16}$ & 0  & 4  & 8  & 12 \\
+              \cline{1-5}
+              0        & 0  & 4  & 8  & 12 \\
+              4        & 4  & 8  & 12 & 0  \\
+              8        & 8  & 12 & 0  & 4  \\
+              12       & 12 & 0  & 4  & 8  \\
+            \end{tabular}
+            \qquad
+            \setlength\extrarowheight{3pt}
+            \noindent\begin{tabular}{c | c c c c c}
+              $\cdot_{16}$ & 0 & 4 & 8 & 12 \\
+              \cline{1-5}
+              0            & 0 & 0 & 0 & 0  \\
+              4            & 0 & 0 & 0 & 0  \\
+              8            & 0 & 0 & 0 & 0  \\
+              12           & 0 & 0 & 0 & 0  \\
+            \end{tabular}
+          \end{center}
+          That these tables, being every possible combination of elements on each set with their respective operations
+          contain no elements not members of $S$ means that both are closed under $+_{16}$ and $\cdot_{16}$.
+    \item ~\begin{center}
+            \setlength\extrarowheight{3pt}
+            \noindent\begin{tabular}{c | c c c c c}
+              $+_{15}$ & 0  & 3  & 6  & 9  & 12 \\
+              \cline{1-6}
+              0        & 0  & 3  & 6  & 9  & 12 \\
+              3        & 3  & 6  & 9  & 12 & 0  \\
+              6        & 6  & 9  & 12 & 0  & 3  \\
+              9        & 9  & 12 & 0  & 3  & 6  \\
+              12       & 12 & 0  & 3  & 6  & 9  \\
+            \end{tabular}
+            \qquad
+            \noindent\begin{tabular}{c | c c c c c}
+              $\cdot_{15}$ & 0 & 3  & 6  & 9  & 12 \\
+              \cline{1-6}
+              0            & 0 & 0  & 0  & 0  & 0  \\
+              3            & 0 & 9  & 3  & 12 & 6  \\
+              6            & 0 & 3  & 6  & 9  & 12 \\
+              9            & 0 & 12 & 9  & 6  & 3  \\
+              12           & 0 & 6  & 12 & 3  & 9  \\
+            \end{tabular}
+          \end{center}
+          Again because these tables contain only elements of $S$ $S$ is closed under both of their respective operations.
+    \item ~\begin{center}
+            \setlength\extrarowheight{3pt}
+            \noindent\begin{tabular}{c | c c c c}
+              $+_{5}$ & 1 & 2 & 3 & 4 \\
+              \cline{1-5}
+              1       & 2 & 3 & 4 & 0 \\
+              2       & 3 & 4 & 0 & 1 \\
+              3       & 4 & 0 & 1 & 2 \\
+              4       & 0 & 1 & 2 & 3 \\
+            \end{tabular}
+            \qquad
+            \noindent\begin{tabular}{c | c c c c}
+              $\cdot_{5}$ & 1 & 2 & 3 & 4 \\
+              \cline{1-5}
+              1           & 1 & 2 & 3 & 4 \\
+              2           & 2 & 4 & 1 & 3 \\
+              3           & 3 & 1 & 4 & 2 \\
+              4           & 4 & 3 & 2 & 1 \\
+            \end{tabular}
+          \end{center}
+          Here because $0\notin S\implies S$ is not closed under $+_5$ but is closed under $\cdot_5$ for the same reasons as previously.
+    \item ~\begin{center}
+            \setlength\extrarowheight{3pt}
+            \noindent\begin{tabular}{c | c c c c c c c c}
+              $+_{12}$ & 0  & 2  & 3  & 4  & 6  & 8  & 9  & 10 \\
+              \cline{1-9}
+              0        & 0  & 2  & 3  & 4  & 6  & 8  & 9  & 10 \\
+              2        & 2  & 4  & 5  & 6  & 8  & 10 & 11 & 0  \\
+              3        & 3  & 5  & 6  & 7  & 9  & 11 & 0  & 1  \\
+              4        & 4  & 6  & 7  & 8  & 10 & 0  & 1  & 2  \\
+              6        & 6  & 8  & 9  & 10 & 0  & 2  & 3  & 4  \\
+              8        & 8  & 10 & 11 & 0  & 2  & 4  & 5  & 6  \\
+              9        & 9  & 11 & 0  & 1  & 3  & 5  & 6  & 7  \\
+              10       & 10 & 0  & 1  & 2  & 4  & 6  & 7  & 8  \\
+            \end{tabular}
+            \qquad
+            \noindent\begin{tabular}{c | c c c c c c c c}
+              $\cdot_{12}$ & 0 & 2 & 3 & 4 & 6 & 8 & 9 & 10 \\
+              \cline{1-9}
+              0            & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0  \\
+              2            & 0 & 4 & 6 & 8 & 0 & 4 & 6 & 8  \\
+              3            & 0 & 6 & 9 & 0 & 6 & 0 & 3 & 6  \\
+              4            & 0 & 8 & 0 & 4 & 0 & 8 & 0 & 4  \\
+              6            & 0 & 0 & 6 & 0 & 0 & 0 & 6 & 0  \\
+              8            & 0 & 4 & 0 & 8 & 0 & 4 & 0 & 8  \\
+              9            & 0 & 6 & 3 & 0 & 6 & 0 & 9 & 6  \\
+              10           & 0 & 8 & 6 & 4 & 0 & 8 & 6 & 4  \\
+            \end{tabular}
+          \end{center}
+          Here because $1,5,7,11\notin S$ $S$ is not closed under $+_12$ but is closed under $\cdot_12$ for the same reasons as previously.
+    \item ~\begin{center}
+            \setlength\extrarowheight{3pt}
+            \noindent\begin{tabular}{c | c c c c}
+              $+_{12}$ & 1 & 5  & 7 & 11 \\
+              \cline{1-5}
+              1        & 2 & 6  & 8 & 0  \\
+              5        & 6 & 10 & 0 & 4  \\
+              7        & 8 & 0  & 2 & 6  \\
+              11       & 0 & 4  & 6 & 10 \\
+            \end{tabular}
+            \qquad
+            \noindent\begin{tabular}{c | c c c c}
+              $\cdot_{12}$ & 1  & 5  & 7  & 11 \\
+              \cline{1-5}
+              1            & 1  & 5  & 7  & 11 \\
+              5            & 5  & 1  & 11 & 7  \\
+              7            & 7  & 11 & 1  & 5  \\
+              11           & 11 & 7  & 5  & 1  \\
+            \end{tabular}
+          \end{center}
+          Here because $0,2,4,6,8,10\notin S$ $S$ is not closed under $+_12$ but is closed under $\cdot_12$ for the same reasons as previously.
+  \end{enumerate}
 \end{soln}
 
 % PROBLEM 3
@@ -198,7 +318,88 @@ associative, both or neither. Justify your answers with proof.
   \item The operation $*$ on $\mathbb{Z}\cross\mathbb{Z}$ given by $(a,b)*(c,d)=(ad,bc)$
 \end{enumerate}
 \end{problem}
-\begin{soln}
+\begin{soln}~
+  \todo[inline]{Counterexamples for the failures}
+  \begin{enumerate}[label=(\alph*)]
+    \item For commutativity,
+          \begin{proof}
+            Let $a,b\in\mathbb{Z}$, then
+            \begin{align*}
+              a*b & = a+b+ab                                                            \\
+                  & =b+a+ba\justif{\quad}{Commutativity of $+$ and $-$ on $\mathbb{Z}$} \\
+                  & =b*a\justif{\quad}{Definition of $*$}\qedhere
+            \end{align*}
+          \end{proof}
+          For associativity,
+          \begin{proof}
+            Let $a,b,c\in\mathbb{Z}$, then
+            \begin{align*}
+              a*(b*c) & = a*(b+c+bc)                                                                 \\
+                      & = a + b+c+bc + a(b+c+bc)                                                     \\
+                      & = a + b+c+bc + ab+ac+abc\justif{\quad}{$\cdot$ distributive on $\mathbb{Z}$} \\
+            \end{align*}
+            and
+            \begin{align*}
+              (a*b)*c & = (a+b+ab)*c                                                                  \\
+                      & = a+b+ab + c + (a+b+ab)c                                                      \\
+                      & = a+b+ab + c + ac+bc+abc \justif{\quad}{$\cdot$ distributive on $\mathbb{Z}$} \\
+                      & = a+b+c+ bc + ab+ac+abc \justif{\quad}{$+$ commutative on $\mathbb{Z}$}       \\
+            \end{align*}
+            because the two are equal we have associativity. \qedhere
+          \end{proof}
+    \item For commutativity,
+          \begin{proof}
+            Let $a,b\in\mathbb{Z}$, then
+            \begin{align*}
+              a*b & = a+b-ab                                                             \\
+                  & =b+a-ba \justif{\quad}{Commutativity of $+$ and $-$ on $\mathbb{Z}$} \\
+                  & =b*a\justif{\quad}{Definition of $*$}\qedhere
+            \end{align*}
+          \end{proof}
+          For associativity,
+          \begin{proof}
+            Let $a,b,c\in\mathbb{Z}$, then
+            \begin{align*}
+              a*(b*c) & = a*(b+c-bc)                                                                 \\
+                      & = a + b+c-bc + a(b+c-bc)                                                     \\
+                      & = a + b+c-bc + ab+ac-abc\justif{\quad}{$\cdot$ distributive on $\mathbb{Z}$} \\
+            \end{align*}
+            and
+            \begin{align*}
+              (a*b)*c & = (a+b-ab)*c                                                                  \\
+                      & = a+b-ab + c + (a+b-ab)c                                                      \\
+                      & = a+b-ab + c + ac+bc-abc \justif{\quad}{$\cdot$ distributive on $\mathbb{Z}$} \\
+            \end{align*}
+            because of the difference in sign on the $ab$ terms these two cannot be made to be equal, therefore $*$ is not associative. \qedhere
+          \end{proof}
+    \item For commutativity,
+          \begin{proof}
+            Let $a,b\in\mathbb{Z}$, then
+            $$
+              a*b = a+2ab;\qquad
+              b*a = b+2ba
+            $$
+            which cannot be manipulated to be equal, therefore $*$ is not commutative here. \qedhere
+          \end{proof}
+          For associativity,
+          \begin{proof}
+            Let $a,b,c\in\mathbb{Z}$, then
+            \begin{align*}
+              a*(b*c) & = a*(b+2bc)                                                       \\
+                      & = a+ 2a(b+2bc)                                                    \\
+                      & = a+ 2ab+4abc\justif{\quad}{$\cdot$ distributive on $\mathbb{Z}$}
+            \end{align*}
+            and
+            \begin{align*}
+              (a*b)*c & = (a+2ab)*c                                                        \\
+                      & = c+ 2c(a+2ab)                                                     \\
+                      & = c+ 2ca+4cab \justif{\quad}{$\cdot$ distributive on $\mathbb{Z}$} \\
+            \end{align*}
+            which cannot be manipulated to be equal, therefore $*$ is not associative here. \qedhere
+          \end{proof}
+    \item The operation $*$ on $\mathbb{Z}\cross\mathbb{Z}$ given by $(a,b)*(c,d)=(ad+bc, bd)$
+    \item The operation $*$ on $\mathbb{Z}\cross\mathbb{Z}$ given by $(a,b)*(c,d)=(ad,bc)$
+  \end{enumerate}
 \end{soln}
 
 % PROBLEM 4
