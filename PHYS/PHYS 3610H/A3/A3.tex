@@ -142,7 +142,6 @@ $$
               & =\abs{A}^2\left[\delta_{11}+\cancelto{0}{\delta_{12}+\delta_{12}}+4\delta_{22}\right]                            \\
               & =\abs{A}^2\left[1+4\right]\implies \abs{A}^2=1/5\implies A=\sqrt{1/5}
           \end{align*}
-          \todo[inline]{Why doesn't this work for $0<a\leq 3$????}
     \item ~\\
           \begin{center}
             \begin{tikzpicture}
@@ -221,91 +220,104 @@ $$
           \begin{align*}                                                                                                                                                                                                                  \\
              & =\frac{2A^2}{a}\int_{0}^{a/2}\sin\left(\frac{\pi x}{a}\right)\sin\left(\frac{\pi x}{a}\right)+2\sin\left(\frac{2\pi x}{a}\right)\sin\left(\frac{\pi x}{a}\right) + \sin\left(\frac{\pi x}{a}\right)2\sin\left(\frac{2\pi x}{a}\right)+2\sin\left(\frac{2\pi x}{a}\right)2\sin\left(\frac{2\pi x}{a}\right)\,dx \\
              & =\frac{2A^2}{a}\int_{0}^{a/2}\sin^2\left(\frac{\pi x}{a}\right)+2\sin\left(\frac{2\pi x}{a}\right)\sin\left(\frac{\pi x}{a}\right) + \sin\left(\frac{\pi x}{a}\right)2\sin\left(\frac{2\pi x}{a}\right)+4\sin^2\left(\frac{2\pi x}{a}\right)\,dx                                                               \\
-             & =\frac{2A^2}{a}\left[\int_{0}^{a/2}\sin^2\left(\frac{\pi x}{a}\right)\,dx +4\int_{0}^{a/2}\sin\left(\frac{2\pi x}{a}\right)\sin\left(\frac{\pi x}{a}\right)\,dx +4\int_{0}^{a/2}\sin^2\left(\frac{2\pi x}{a}\right)\,dx\right] \\
-             & =\frac{2A^2}{a}\left[a/4 +\frac{8a}{3\pi} + a\right] \\
+             & =\frac{2A^2}{a}\left[\int_{0}^{a/2}\sin^2\left(\frac{\pi x}{a}\right)\,dx +4\int_{0}^{a/2}\sin\left(\frac{2\pi x}{a}\right)\sin\left(\frac{\pi x}{a}\right)\,dx +4\int_{0}^{a/2}\sin^2\left(\frac{2\pi x}{a}\right)\,dx\right]                                                                                 \\
+             & =\frac{2A^2}{a}\left[a/4 +\frac{8a}{3\pi} + a\right]                                                                                                                                                                                                                                                           \\
              & =A^2/2 +\frac{16A^2}{3\pi} + 2A^2\approx84\%.
           \end{align*}
-    \item Here we are going to be ``undoing'' the separation $\Psi(x,t)=\psi(x)\phi(t)$. Due to the completeness of the 
-    set of solutions to the T.D.S.E $\Psi$ can be expressed as a weighted sum of the $\psi(x)\phi(t)$ terms. When we are considering 
-    $\Psi(x,0)$ the $\phi_n(t)=\exp(-iE_nt/\hbar)$ terms just become $1$ and drop out. Combining both of these facts it's safe to say that
-    $$\Psi(x,t)=A(\psi_1(x)\exp(-iE_1t/\hbar)+2\psi_2(x)\exp(-iE_2t/\hbar)).$$
-    \todo[inline]{Is there a more formal way of putting this together or do we just say ``yeah, that's how it is''}
+    \item Here we are going to be ``undoing'' the separation $\Psi(x,t)=\psi(x)\phi(t)$. Due to the completeness of the
+          set of solutions to the T.D.S.E $\Psi$ can be expressed as a weighted sum of the $\psi(x)\phi(t)$ terms. When we are considering
+          $\Psi(x,0)$ the $\phi_n(t)=\exp(-iE_nt/\hbar)$ terms just become $1$ and drop out. Combining both of these facts it's safe to say that
+          $$\Psi(x,t)=A(\psi_1(x)\exp(-iE_1t/\hbar)+2\psi_2(x)\exp(-iE_2t/\hbar)).$$
+          \todo[inline]{Is there a more formal way of putting this together or do we just say ``yeah, that's how it is''}
     \item Again we integrate over all space. Now however we have $A$ and are checking that the integral returns a value independent of time.
-    We want the value independent of time because it implies that the total probability (of finding the particle at all) will never change.
-    \begin{align*}
-      &=\int_{0}^{a}\abs{\Psi(x,t)}^2\,dx\\
-      &=\int_{0}^{a}\Psi^*(x,t)\Psi(x,t)\,dx\\
-      &=\int_{0}^{a}\abs{A}(\psi_1^*(x)\exp(iE_1t/\hbar)+2\psi_2^*(x)\exp(iE_2t/\hbar))\abs{A}(\psi_1(x)\exp(-iE_1t/\hbar)+2\psi_2(x)\exp(-iE_2t/\hbar))\,dx\\
-      &=\abs{A}^2\int_{0}^{a}
-      \psi_1^*(x)\exp(iE_1t/\hbar)\psi_1(x)\exp(-iE_1t/\hbar)\\
-      &\qquad+2\psi_2^*(x)\exp(iE_2t/\hbar)\psi_1(x)\exp(-iE_1t/\hbar)\\
-      &\qquad+\psi_1^*(x)\exp(iE_1t/\hbar)2\psi_2(x)\exp(-iE_2t/\hbar)\\
-      &\qquad+2\psi_2^*(x)\exp(iE_2t/\hbar)2\psi_2(x)\exp(-iE_2t/\hbar)
-      \,dx\\
-            &=\abs{A}^2\left[
-      \int_{0}^{a}\psi_1^*(x)\psi_1(x)\cancelto{1}{\exp(iE_1t/\hbar)\exp(-iE_1t/\hbar)}\,dx\right.\\
-      &\qquad+\int_{0}^{a}2\psi_2^*(x)\psi_1(x)\exp(iE_2t/\hbar)\exp(-iE_1t/\hbar)\,dx\\
-      &\qquad+\int_{0}^{a}2\psi_1^*(x)\psi_2(x)\exp(iE_1t/\hbar)\exp(-iE_2t/\hbar)\,dx\\
-      &\left.\qquad+\int_{0}^{a}4\psi_2^*(x)\psi_2(x)\cancelto{1}{\exp(iE_2t/\hbar)\exp(-iE_2t/\hbar)}
-      \,dx\right]\\
-      &=\abs{A}^2\left[
-      \cancelto{1}{\delta_{11}}
-      +2\cancelto{0}{\delta_{21}}\int_{0}^{a}\exp(iE_2t/\hbar)\exp(-iE_1t/\hbar)\,dx
-      +2\cancelto{0}{\delta_{21}}\int_{0}^{a}\exp(iE_1t/\hbar)\exp(-iE_2t/\hbar)\,dx
-      +4\cancelto{1}{\delta_{22}}\right]\\
-      &=\abs{A}^2\left[1+4\right]=\frac{1}{5}\cdot 5=1.
-    \end{align*}
-    This is, as we hoped, both normalized and time independent, meaning $\Psi(x,t)$ will remain normalized for all times.
-    \item Here we are searching for $\langle \hat{x}\rangle$ which is given by 
-    \begin{align*}
-      &=\int_{0}^{a}\Psi^*\hat{x}\Psi\,dx\\
-      &=A^2\int_{0}^{a}(\psi_1^*(x)\exp(iE_1t/\hbar)+2\psi_2^*(x)\exp(iE_2t/\hbar))x(\psi_1(x)\exp(-iE_1t/\hbar)+2\psi_2(x)\exp(-iE_2t/\hbar))\,dx\\
-      &=A^2\int_{0}^{a}x\psi_1^*(x)\exp(iE_1t/\hbar)\psi_1(x)\exp(-iE_1t/\hbar)\\
-      &\qquad+2x\psi_2^*(x)\exp(iE_2t/\hbar)\psi_1(x)\exp(-iE_1t/\hbar)\\
-      &\qquad+x\psi_1^*(x)\exp(iE_1t/\hbar)2\psi_2(x)\exp(-iE_2t/\hbar)\\
-      &\qquad+2x\psi_2^*(x)\exp(iE_2t/\hbar)2\psi_2(x)\exp(-iE_2t/\hbar)\,dx\\
-      &=A^2\int_{0}^{a}x\psi_1^*(x)\psi_1(x)\\
-      &\qquad+2x\psi_2^*(x)\psi_1(x)\exp(iE_2t/\hbar)\exp(-iE_1t/\hbar)\\
-      &\qquad+x\psi_1^*(x)2\psi_2(x)\exp(iE_1t/\hbar)\exp(-iE_2t/\hbar)\\
-      &\qquad+4x\psi_2^*(x)\psi_2(x)\,dx\\
-      &=A^2\left[\int_{0}^{a}x\psi_1^*(x)\psi_1(x)\,dx\right.\\
-      &\qquad+2\exp(iE_2t/\hbar)\exp(-iE_1t/\hbar)\int_{0}^{a}x\psi_2^*(x)\psi_1(x)\,dx\\
-      &\qquad+2\exp(iE_1t/\hbar)\exp(-iE_2t/\hbar)\int_{0}^{a}x\psi_1^*(x)\psi_2(x)\,dx\\
-      &\qquad+\left.4\int_{0}^{a}x\psi_2^*(x)\psi_2(x)\,dx\right]\\
-      &=A^2\left[\int_{0}^{a}x\sqrt{\frac{2}{a}}\sin\left(\frac{\pi x}{a}\right)\sqrt{\frac{2}{a}}\sin\left(\frac{\pi x}{a}\right)\,dx\right.\\
-      &\qquad+2\exp(iE_2t/\hbar)\exp(-iE_1t/\hbar)\int_{0}^{a}x\sqrt{\frac{2}{a}}\sin\left(\frac{2\pi x}{a}\right)\sqrt{\frac{2}{a}}\sin\left(\frac{\pi x}{a}\right)\,dx\\
-      &\qquad+2\exp(iE_1t/\hbar)\exp(-iE_2t/\hbar)\int_{0}^{a}x\sqrt{\frac{2}{a}}\sin\left(\frac{\pi x}{a}\right)\sqrt{\frac{2}{a}}\sin\left(\frac{2\pi x}{a}\right)\,dx\\
-      &\qquad+\left.4\int_{0}^{a}x\sqrt{\frac{2}{a}}\sin\left(\frac{2\pi x}{a}\right)\sqrt{\frac{2}{a}}\sin\left(\frac{2\pi x}{a}\right)\,dx\right]\\
-      &=\frac{2A^2}{a}\left[\int_{0}^{a}x\sin^2\left(\frac{\pi x}{a}\right)\,dx\right.\\
-      &\qquad+2\int_{0}^{a}x\sin\left(\frac{2\pi x}{a}\right)\sin\left(\frac{\pi x}{a}\right)\,dx\left(\exp(\frac{it}{\hbar}\left[E_2-E_1\right])\right.\\
-      &\qquad+\left.\exp(\frac{it}{\hbar}\left[E_1-E_2\right])\right)\\
-      &\qquad+\left.4\int_{0}^{a}x\sin^2\left(\frac{2\pi x}{a}\right)\,dx\right]\\
-      &=\frac{2A^2}{a}\left[\frac{a^2}{4}
-      -\frac{16a^2}{9\pi^2}\left(\exp(\frac{it}{\hbar}\left[E_2-E_1\right])
-      +\exp(\frac{it}{\hbar}\left[E_1-E_2\right])\right)
-      +a^2\right]\\
-      &=5-\frac{64}{9\pi^2}\left(\exp(\frac{it}{\hbar}\left[E_2-E_1\right])
-      +\exp(\frac{it}{\hbar}\left[E_1-E_2\right])\right)\\
-    \end{align*}
+          We want the value independent of time because it implies that the total probability (of finding the particle at all) will never change.
+          \begin{align*}
+             & =\int_{0}^{a}\abs{\Psi(x,t)}^2\,dx                                                                                                                    \\
+             & =\int_{0}^{a}\Psi^*(x,t)\Psi(x,t)\,dx                                                                                                                 \\
+             & =\int_{0}^{a}\abs{A}(\psi_1^*(x)\exp(iE_1t/\hbar)+2\psi_2^*(x)\exp(iE_2t/\hbar))\abs{A}(\psi_1(x)\exp(-iE_1t/\hbar)+2\psi_2(x)\exp(-iE_2t/\hbar))\,dx \\
+             & =\abs{A}^2\int_{0}^{a}
+            \psi_1^*(x)\exp(iE_1t/\hbar)\psi_1(x)\exp(-iE_1t/\hbar)                                                                                                  \\
+             & \qquad+2\psi_2^*(x)\exp(iE_2t/\hbar)\psi_1(x)\exp(-iE_1t/\hbar)                                                                                       \\
+             & \qquad+\psi_1^*(x)\exp(iE_1t/\hbar)2\psi_2(x)\exp(-iE_2t/\hbar)                                                                                       \\
+             & \qquad+2\psi_2^*(x)\exp(iE_2t/\hbar)2\psi_2(x)\exp(-iE_2t/\hbar)
+            \,dx                                                                                                                                                     \\
+             & =\abs{A}^2\left[
+            \int_{0}^{a}\psi_1^*(x)\psi_1(x)\cancelto{1}{\exp(iE_1t/\hbar)\exp(-iE_1t/\hbar)}\,dx\right.                                                             \\
+             & \qquad+\int_{0}^{a}2\psi_2^*(x)\psi_1(x)\exp(iE_2t/\hbar)\exp(-iE_1t/\hbar)\,dx                                                                       \\
+             & \qquad+\int_{0}^{a}2\psi_1^*(x)\psi_2(x)\exp(iE_1t/\hbar)\exp(-iE_2t/\hbar)\,dx                                                                       \\
+             & \left.\qquad+\int_{0}^{a}4\psi_2^*(x)\psi_2(x)\cancelto{1}{\exp(iE_2t/\hbar)\exp(-iE_2t/\hbar)}
+            \,dx\right]                                                                                                                                              \\
+             & =\abs{A}^2\left[
+              \cancelto{1}{\delta_{11}}
+              +2\cancelto{0}{\delta_{21}}\int_{0}^{a}\exp(iE_2t/\hbar)\exp(-iE_1t/\hbar)\,dx
+              +2\cancelto{0}{\delta_{21}}\int_{0}^{a}\exp(iE_1t/\hbar)\exp(-iE_2t/\hbar)\,dx
+            +4\cancelto{1}{\delta_{22}}\right]                                                                                                                       \\
+             & =\abs{A}^2\left[1+4\right]=\frac{1}{5}\cdot 5=1.
+          \end{align*}
+          This is, as we hoped, both normalized and time independent, meaning $\Psi(x,t)$ will remain normalized for all times.
+    \item Here we are searching for $\langle \hat{x}\rangle$ which is given by
+          \begin{align*}
+             & =\int_{0}^{a}\Psi^*\hat{x}\Psi\,dx                                                                                                                                \\
+             & =A^2\int_{0}^{a}(\psi_1^*(x)\exp(iE_1t/\hbar)+2\psi_2^*(x)\exp(iE_2t/\hbar))x(\psi_1(x)\exp(-iE_1t/\hbar)+2\psi_2(x)\exp(-iE_2t/\hbar))\,dx                       \\
+             & =A^2\int_{0}^{a}x\psi_1^*(x)\exp(iE_1t/\hbar)\psi_1(x)\exp(-iE_1t/\hbar)                                                                                          \\
+             & \qquad+2x\psi_2^*(x)\exp(iE_2t/\hbar)\psi_1(x)\exp(-iE_1t/\hbar)                                                                                                  \\
+             & \qquad+x\psi_1^*(x)\exp(iE_1t/\hbar)2\psi_2(x)\exp(-iE_2t/\hbar)                                                                                                  \\
+             & \qquad+2x\psi_2^*(x)\exp(iE_2t/\hbar)2\psi_2(x)\exp(-iE_2t/\hbar)\,dx                                                                                             \\
+             & =A^2\int_{0}^{a}x\psi_1^*(x)\psi_1(x)                                                                                                                             \\
+             & \qquad+2x\psi_2^*(x)\psi_1(x)\exp(iE_2t/\hbar)\exp(-iE_1t/\hbar)                                                                                                  \\
+             & \qquad+x\psi_1^*(x)2\psi_2(x)\exp(iE_1t/\hbar)\exp(-iE_2t/\hbar)                                                                                                  \\
+             & \qquad+4x\psi_2^*(x)\psi_2(x)\,dx                                                                                                                                 \\
+             & =A^2\left[\int_{0}^{a}x\psi_1^*(x)\psi_1(x)\,dx\right.                                                                                                            \\
+             & \qquad+2\exp(iE_2t/\hbar)\exp(-iE_1t/\hbar)\int_{0}^{a}x\psi_2^*(x)\psi_1(x)\,dx                                                                                  \\
+             & \qquad+2\exp(iE_1t/\hbar)\exp(-iE_2t/\hbar)\int_{0}^{a}x\psi_1^*(x)\psi_2(x)\,dx                                                                                  \\
+             & \qquad+\left.4\int_{0}^{a}x\psi_2^*(x)\psi_2(x)\,dx\right]                                                                                                        \\
+             & =A^2\left[\int_{0}^{a}x\sqrt{\frac{2}{a}}\sin\left(\frac{\pi x}{a}\right)\sqrt{\frac{2}{a}}\sin\left(\frac{\pi x}{a}\right)\,dx\right.                            \\
+             & \qquad+2\exp(iE_2t/\hbar)\exp(-iE_1t/\hbar)\int_{0}^{a}x\sqrt{\frac{2}{a}}\sin\left(\frac{2\pi x}{a}\right)\sqrt{\frac{2}{a}}\sin\left(\frac{\pi x}{a}\right)\,dx \\
+             & \qquad+2\exp(iE_1t/\hbar)\exp(-iE_2t/\hbar)\int_{0}^{a}x\sqrt{\frac{2}{a}}\sin\left(\frac{\pi x}{a}\right)\sqrt{\frac{2}{a}}\sin\left(\frac{2\pi x}{a}\right)\,dx \\
+             & \qquad+\left.4\int_{0}^{a}x\sqrt{\frac{2}{a}}\sin\left(\frac{2\pi x}{a}\right)\sqrt{\frac{2}{a}}\sin\left(\frac{2\pi x}{a}\right)\,dx\right]                      \\
+             & =\frac{2A^2}{a}\left[\int_{0}^{a}x\sin^2\left(\frac{\pi x}{a}\right)\,dx\right.                                                                                   \\
+             & \qquad+2\int_{0}^{a}x\sin\left(\frac{2\pi x}{a}\right)\sin\left(\frac{\pi x}{a}\right)\,dx\left(\exp(\frac{it}{\hbar}\left[E_2-E_1\right])\right.                 \\
+             & \qquad+\left.\exp(\frac{it}{\hbar}\left[E_1-E_2\right])\right)                                                                                                    \\
+             & \qquad+\left.4\int_{0}^{a}x\sin^2\left(\frac{2\pi x}{a}\right)\,dx\right]                                                                                         \\
+             & =\frac{2A^2}{a}\left[\frac{a^2}{4}
+              -\frac{16a^2}{9\pi^2}\left(\exp(\frac{it}{\hbar}\left[E_2-E_1\right])
+              +\exp(\frac{it}{\hbar}\left[E_1-E_2\right])\right)
+            +a^2\right]                                                                                                                                                          \\
+             & =\frac{a}{2}-\frac{32a}{45\pi^2}\left(\exp(\frac{it}{\hbar}\left[E_2-E_1\right])
+            +\exp(\frac{it}{\hbar}\left[E_1-E_2\right])\right)                                                                                                                   \\
+          \end{align*}
     \item Because energy is quantized here we would expect to only see energy values corresponding to the states we have, so $E_1$ and $E_2$.
-    For what the probabilities of the energies we would see we can first recall that we can write 
-    $$\Psi(x,t)=\sum_{\infty}^{n=1}c_n\psi_n\exp(-iE_nt/\hbar)$$
-    with 
-    $$c_n=\int_{0}^{a}\psi_n^*(x)\Psi(x,0)dx.$$
-    This gives 
-    $$\abs{\Psi}^2=\abs{\sum_{\infty}^{n=1}c_n\psi_n\exp(-iE_nt/\hbar)}^2$$
-    which \todo[inline]{do we actually know that $P(E_n)=\abs{\int_{0}^{a}\psi_n^*\Psi(x,0)}^2$? I can justify it off of looks and behaviour but I don't know if we've stated it.}
-    \item \begin{align*}
-      \langle \hat{H} \rangle & = \int \Psi^*\hat{H}\Psi\,dx\\
-      & = \int \left(\sum_{\infty}^{m=1}c_m\psi_m\exp(-iE_mt/\hbar)\right)^*\hat{H}\left(\sum_{\infty}^{n=1}c_n\psi_n\exp(-iE_nt/\hbar)\right)\,dx\\
-      & = \int \left(\sum_{\infty}^{m=1}c_m^*\psi_m^*\exp(iE_mt/\hbar)\right)\hat{H}\left(\sum_{\infty}^{n=1}c_n\psi_n\exp(-iE_nt/\hbar)\right)\,dx\\
-      & = \sum_{\infty}^{m=1}\sum_{\infty}^{n=1}\int c_m^*c_n\left(\psi_m^*\exp(iE_mt/\hbar)\right)\hat{H}\left(\psi_n\exp(-iE_nt/\hbar)\right)\,dx\\
-      & = \sum_{\infty}^{m=1}\sum_{\infty}^{n=1}c_m^*c_n\exp(iE_mt/\hbar)\exp(-iE_nt/\hbar)\int \left(\psi_m^*\right)\hat{H}\left(\psi_n\right)\,dx\rightsquigarrow \hat{H}\left(\psi_n\right)=E_n\psi_n\\
-      & = \sum_{\infty}^{m=1}\sum_{\infty}^{n=1}c_m^*c_n\exp(iE_mt/\hbar)\exp(-iE_nt/\hbar)E_n\int \psi_m^*\psi_n\,dx\\
-      & = \sum_{\infty}^{n=1}c_n^*c_n\exp(iE_nt/\hbar)\exp(-iE_nt/\hbar)E_n\\
-      & = \sum_{\infty}^{n=1}\abs{c_n}^2E_n\\
-    \end{align*}
-    which aligns with our idea that $c_n$ is the probability of energy $E_n$
+          For the probabilities that a measurement would yield one of these energies we can begin by
+          recalling that
+          $$\Psi(x,t)=\sum_{n=1}^{\infty}c_n\psi_n\exp(-iE_nt/\hbar)$$
+          where $\abs{c_n}^2$ is the probability that a measurement would find the particle in state
+          $n$. I'm not sure how to prove this fact but the text states it and we've shown in class
+          that it sure behaves a lot like a probability so I'm fairly comfortable with trusting that it is,
+          though I wish I had something more formal to justify it with.
+          Knowing that our $\Psi$ can be expressed in this form with $c_n$ having a meaning
+          we can look back to our original function and note that we had
+          $$\Psi(x,0)=\frac{1}{\sqrt{5}}\left(\psi_1+2\psi_2\right)$$
+          which looks like the fixed-time version of the linear combination we had above.
+          Again this is an area where I'm kind of trusting what I've been told without really
+          being able to justify it to a level I'm comfortable with beyond potential coincidence
+          but things still work. If we say that this \emph{is} a specific form linear combination we had above
+          for this system we can note that then
+          $$c_1=\frac{1}{\sqrt{5}}\qquad\text{and}\qquad c_2=\frac{2}{\sqrt{5}}.$$
+          That would mean that the probability of finding the particle with energy $E_1$
+          would be $\abs{c_1}^2=1/5=20\%$ and the probability of $E_2$ would be
+          $\abs{c_2}^2=4/5=80\%$ which does align with the total probability being $1$.
+    \item We could make the elaborate derivation of the expectation value of the Hamiltonian here
+          or, if we were short on time (hypothetically), we could note that
+          $$\langle \hat{H} \rangle=\langle E \rangle$$
+          and because we just have a set of $E_n$s with associated probabilities $\abs{c_n}^2$
+          and we know that the expectation value of some probabilistic measurement is
+          $$\langle A\rangle=\sum_{n}P(A_n)A_n$$
+          we can say that
+          $$\langle E \rangle \sum_{n}\abs{c_n}^2E_n$$
+          which for our case of two energies become
+          $$\langle E \rangle =\frac{1}{5}\cdot E_1+\frac{4}{5}\cdot E_2=
+            \frac{\hbar^2\pi^2}{10ma^2}+\frac{8\hbar^2\pi^2}{10ma^2}
+            =\frac{9\hbar^2\pi^2}{10ma^2}.$$
   \end{enumerate}
 \end{soln}
 \end{document}

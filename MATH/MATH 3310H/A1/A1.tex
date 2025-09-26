@@ -376,10 +376,10 @@ associative, both or neither. Justify your answers with proof.
           \begin{proof}
             Let $a,b\in\mathbb{Z}$, then
             $$
-              a*b = a+2ab;\qquad
+              a*b = a+2ab\neq
               b*a = b+2ba
             $$
-            which cannot be manipulated to be equal, therefore $*$ is not commutative here. \qedhere
+            therefore $*$ is not commutative here. \qedhere
           \end{proof}
           For associativity,
           \begin{proof}
@@ -397,7 +397,29 @@ associative, both or neither. Justify your answers with proof.
             \end{align*}
             which cannot be manipulated to be equal, therefore $*$ is not associative here. \qedhere
           \end{proof}
-    \item The operation $*$ on $\mathbb{Z}\cross\mathbb{Z}$ given by $(a,b)*(c,d)=(ad+bc, bd)$
+    \item For commutativity,
+          \begin{proof}
+            Let $(a,b),(c,d)\in\mathbb{Z}\cross\mathbb{Z}$, then
+              \begin{align*}
+                (a,b)*(c,d) & =(ad+bc, bd)                                                                 \\
+                            & =(cb+da, db)\justif{\quad}{Associativity of $+$ and $\cdot$ on $\mathbb{Z}$} \\
+                            & =(c,d)*(a,b)\justif{\quad}{Definition of $*$ in reverse} \qedhere                   
+              \end{align*}
+          \end{proof}
+          For associativity,
+          \begin{proof}
+            Let $(a,b),(c,d),(e,f)\in\mathbb{Z}\cross\mathbb{Z}$, then
+            \begin{align*}
+              (a,b)*((c,d)*(e,f)) & = 
+            \end{align*}
+            and
+            \begin{align*}
+              (a*b)*c & = (a+2ab)*c                                                        \\
+                      & = c+ 2c(a+2ab)                                                     \\
+                      & = c+ 2ca+4cab \justif{\quad}{$\cdot$ distributive on $\mathbb{Z}$} \\
+            \end{align*}
+            which cannot be manipulated to be equal, therefore $*$ is not associative here. \qedhere
+          \end{proof}
     \item The operation $*$ on $\mathbb{Z}\cross\mathbb{Z}$ given by $(a,b)*(c,d)=(ad,bc)$
   \end{enumerate}
 \end{soln}
@@ -417,5 +439,63 @@ a semigroup if $*$ is associative.
 \end{enumerate}
 \end{problem}
 \begin{soln}
+  \begin{enumerate}[label=(\alph*)]
+    \item For associativity (semigroupness)
+          \begin{proof}
+            Let $a,b,c\in S$, then
+            \begin{align*}
+              a*(b*c) & = a*\left(\frac{bc}{b+c}\right)                                                                \\
+                      & = \frac{a(bc)}{a+(b+c)}                                                                        \\
+                      & = \frac{abc}{a+(b+c)} \justif{\quad}{Associativity of $+$ and $\cdot$ on $\mathbb{Q}^{\geq0}$}
+            \end{align*}
+            and
+            \begin{align*}
+              (a*b)*c & = \left(\frac{ab}{a+b}\right)*c                                                               \\
+                      & = \frac{(ab)c}{(a+b)+c}                                                                       \\
+                      & = \frac{abc}{a+b+c}  \justif{\quad}{Associativity of $+$ and $\cdot$ on $\mathbb{Q}^{\geq0}$}
+            \end{align*}
+            $\therefore$ $(S, *)$ is a semigroup\qedhere
+          \end{proof}
+          For commutativity
+          \begin{proof}
+            Let $a,b\in S$, then
+            \begin{align*}
+              a*b & = \frac{ab}{a+b}                                                                         \\
+                  & = \frac{ba}{b+a}\justif{\quad}{Commutativity of $+$ and $\cdot$ on $\mathbb{Q}^{\geq0}$} \\                                                                     \\
+                  & = b*a \justif{\quad}{Definition of $*$ in reverse}
+            \end{align*}
+            $\therefore$ $(S, *)$ is commutative\qedhere
+          \end{proof}
+    \item For associativity (semigroupness)
+          \begin{proof}
+            Let $a,b,c\in S$, then
+            \begin{align*}
+              a*(b*c) & = a*c \\
+                      & = c
+            \end{align*}
+            and
+            \begin{align*}
+              (a*b)*c & = b*c \\
+                      & = c
+            \end{align*}
+            $\therefore$ $(S, *)$ is a semigroup\qedhere
+          \end{proof}
+          For commutativity
+          \begin{proof}
+            Let $a,b\in S$, then
+            $$a*b=b\neq b*a=a$$
+            $\therefore$ $(S, *)$ is not commutative\qedhere
+          \end{proof}
+          For the identity element if we assume, by way of contradiction, that such an
+          element, $e$, exists then it must satisfy
+          $$a*e=e*a=a\forall a\in S.$$
+          We can note however that by our definition of $*$ we have
+          $$a*e=e\neq e*a=a$$
+          which is only satisfied by $e=a$ which would not satisfy any other such equation
+          where we swap out $a$ for some other element of $S$ unless we also swap out $e$
+          which would violate the uniqueness requirement imposed by the definition of $e$ as
+          an identity element meaning that it must be the same for all expressions and therefore
+          cannot exist in $S$.
+  \end{enumerate}
 \end{soln}
 \end{document}
