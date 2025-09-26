@@ -109,7 +109,7 @@ Define a relation $\mathbb{R}\cross\mathbb{R}$ by $(a,b)\sim(c,d)$ if $2(a-c)-3(
         What does the equivalence class $(a,b)$ look like as a region of the plane?
 \end{enumerate}
 \end{problem}
-\begin{soln}
+\begin{soln}~
   \begin{enumerate}[label=(\alph*)]
     \item For $\sim$ to be an equivalence relation it must satisfy the following properties for a set $S$ (proofs included)
           \begin{enumerate}[label=(\roman*)]
@@ -135,6 +135,7 @@ Define a relation $\mathbb{R}\cross\mathbb{R}$ by $(a,b)\sim(c,d)$ if $2(a-c)-3(
                       \implies & (c,d)\sim(a,b) \qedhere
                     \end{align*}
                   \end{proof}
+                  \newpage
             \item Transitivity: $x\sim y\sim z\implies  x\sim z\,\forall x,y,z\in S$
                   \begin{proof}
                     Let $(a,b), (c,d), (e,f)\in\mathbb{R}\cross\mathbb{R}$, then
@@ -170,6 +171,7 @@ Define a relation $\mathbb{R}\cross\mathbb{R}$ by $(a,b)\sim(c,d)$ if $2(a-c)-3(
           so the class looks like a line with slope $2/3$ and y-intercept $b-2a/3$
   \end{enumerate}
 \end{soln}
+\newpage
 
 % PROBLEM 2
 \begin{problem}
@@ -253,6 +255,7 @@ addition modulo $n$, or multiplication modulo $n$, or both or neither.
             \end{tabular}
           \end{center}
           Here because $0\notin S\implies S$ is not closed under $+_5$ but is closed under $\cdot_5$ for the same reasons as previously.
+          \newpage
     \item ~\begin{center}
             \setlength\extrarowheight{3pt}
             \noindent\begin{tabular}{c | c c c c c c c c}
@@ -281,7 +284,7 @@ addition modulo $n$, or multiplication modulo $n$, or both or neither.
               10           & 0 & 8 & 6 & 4 & 0 & 8 & 6 & 4  \\
             \end{tabular}
           \end{center}
-          Here because $1,5,7,11\notin S$ $S$ is not closed under $+_12$ but is closed under $\cdot_12$ for the same reasons as previously.
+          Here because $1,5,7,11\notin S$ $S$ is not closed under $+_{12}$ but is closed under $\cdot_{12}$ for the same reasons as previously.
     \item ~\begin{center}
             \setlength\extrarowheight{3pt}
             \noindent\begin{tabular}{c | c c c c}
@@ -302,9 +305,15 @@ addition modulo $n$, or multiplication modulo $n$, or both or neither.
               11           & 11 & 7  & 5  & 1  \\
             \end{tabular}
           \end{center}
-          Here because $0,2,4,6,8,10\notin S$ $S$ is not closed under $+_12$ but is closed under $\cdot_12$ for the same reasons as previously.
+          Here because $0,2,4,6,8,10\notin S$ $S$ is not closed under $+_{12}$ but is closed under $\cdot_{12}$ for the same reasons as previously.
   \end{enumerate}
 \end{soln}
+\begin{figure}[ht]
+  \centering
+  \includegraphics[scale=0.5]{space filling cat.jpg}
+  \caption{Space Filling Cat Picture}
+\end{figure}
+\newpage
 
 % PROBLEM 3
 \begin{problem}
@@ -319,7 +328,6 @@ associative, both or neither. Justify your answers with proof.
 \end{enumerate}
 \end{problem}
 \begin{soln}~
-  \todo[inline]{Counterexamples for the failures}
   \begin{enumerate}[label=(\alph*)]
     \item For commutativity,
           \begin{proof}
@@ -327,8 +335,9 @@ associative, both or neither. Justify your answers with proof.
             \begin{align*}
               a*b & = a+b+ab                                                            \\
                   & =b+a+ba\justif{\quad}{Commutativity of $+$ and $-$ on $\mathbb{Z}$} \\
-                  & =b*a\justif{\quad}{Definition of $*$}\qedhere
+                  & =b*a\justif{\quad}{Definition of $*$}
             \end{align*}
+            Therefore $*$ is commutative. \qedhere
           \end{proof}
           For associativity,
           \begin{proof}
@@ -345,16 +354,18 @@ associative, both or neither. Justify your answers with proof.
                       & = a+b+ab + c + ac+bc+abc \justif{\quad}{$\cdot$ distributive on $\mathbb{Z}$} \\
                       & = a+b+c+ bc + ab+ac+abc \justif{\quad}{$+$ commutative on $\mathbb{Z}$}       \\
             \end{align*}
-            because the two are equal we have associativity. \qedhere
+            Because the two are equal we have associativity. \qedhere
           \end{proof}
+          \newpage
     \item For commutativity,
           \begin{proof}
             Let $a,b\in\mathbb{Z}$, then
             \begin{align*}
               a*b & = a+b-ab                                                             \\
                   & =b+a-ba \justif{\quad}{Commutativity of $+$ and $-$ on $\mathbb{Z}$} \\
-                  & =b*a\justif{\quad}{Definition of $*$}\qedhere
+                  & =b*a\justif{\quad}{Definition of $*$}
             \end{align*}
+            Therefore $*$ is commutative. \qedhere
           \end{proof}
           For associativity,
           \begin{proof}
@@ -370,7 +381,7 @@ associative, both or neither. Justify your answers with proof.
                       & = a+b-ab + c + (a+b-ab)c                                                      \\
                       & = a+b-ab + c + ac+bc-abc \justif{\quad}{$\cdot$ distributive on $\mathbb{Z}$} \\
             \end{align*}
-            because of the difference in sign on the $ab$ terms these two cannot be made to be equal, therefore $*$ is not associative. \qedhere
+            Because of the difference in sign on the $ab$ terms these two cannot be made to be equal, therefore $*$ is not associative. \qedhere
           \end{proof}
     \item For commutativity,
           \begin{proof}
@@ -379,7 +390,7 @@ associative, both or neither. Justify your answers with proof.
               a*b = a+2ab\neq
               b*a = b+2ba
             $$
-            therefore $*$ is not commutative here. \qedhere
+            Therefore $*$ is not commutative here. \qedhere
           \end{proof}
           For associativity,
           \begin{proof}
@@ -395,34 +406,62 @@ associative, both or neither. Justify your answers with proof.
                       & = c+ 2c(a+2ab)                                                     \\
                       & = c+ 2ca+4cab \justif{\quad}{$\cdot$ distributive on $\mathbb{Z}$} \\
             \end{align*}
-            which cannot be manipulated to be equal, therefore $*$ is not associative here. \qedhere
+            Which cannot be manipulated to be equal, therefore $*$ is not associative here. \qedhere
           \end{proof}
+          \newpage
     \item For commutativity,
           \begin{proof}
             Let $(a,b),(c,d)\in\mathbb{Z}\cross\mathbb{Z}$, then
-              \begin{align*}
-                (a,b)*(c,d) & =(ad+bc, bd)                                                                 \\
-                            & =(cb+da, db)\justif{\quad}{Associativity of $+$ and $\cdot$ on $\mathbb{Z}$} \\
-                            & =(c,d)*(a,b)\justif{\quad}{Definition of $*$ in reverse} \qedhere                   
-              \end{align*}
+            \begin{align*}
+              (a,b)*(c,d) & =(ad+bc, bd)                                                                 \\
+                          & =(cb+da, db)\justif{\quad}{Associativity of $+$ and $\cdot$ on $\mathbb{Z}$} \\
+                          & =(c,d)*(a,b)\justif{\quad}{Definition of $*$ in reverse} 
+            \end{align*}
+            Therefore $*$ is commutative. \qedhere
           \end{proof}
           For associativity,
           \begin{proof}
             Let $(a,b),(c,d),(e,f)\in\mathbb{Z}\cross\mathbb{Z}$, then
             \begin{align*}
-              (a,b)*((c,d)*(e,f)) & = 
+              (a,b)*((c,d)*(e,f)) & = (a,b)*(cf+de,df)                                                    \\
+                                  & = (adf+b(cf+de),bdf)                                                  \\
+                                  & = (adf+bcf+bde,bdf)\justif{\quad}{\cdot distributive on $\mathbb{Z}$}
             \end{align*}
             and
             \begin{align*}
-              (a*b)*c & = (a+2ab)*c                                                        \\
-                      & = c+ 2c(a+2ab)                                                     \\
-                      & = c+ 2ca+4cab \justif{\quad}{$\cdot$ distributive on $\mathbb{Z}$} \\
+              ((a,b)*(c,d))*(e,f) & = (ad+bc, bd)*(e,f)                                                            \\
+                                  & =  ((ad+bc)f+bde, bdf)                                                         \\
+                                  & =  (fad+fbc+bde, bdf)\justif{\quad}{\cdot distributive on $\mathbb{Z}$}        \\
+                                  & =  (adf+bcf+bde, bdf)\justif{\quad}{\cdot commutative on $\mathbb{Z}$}
             \end{align*}
-            which cannot be manipulated to be equal, therefore $*$ is not associative here. \qedhere
+            As these two are equal, $*$ is associative. \qedhere
           \end{proof}
-    \item The operation $*$ on $\mathbb{Z}\cross\mathbb{Z}$ given by $(a,b)*(c,d)=(ad,bc)$
+    \item For commutativity,
+          \begin{proof}
+            Let $(a,b),(c,d)\in\mathbb{Z}\cross\mathbb{Z}$, then
+            $$
+              (a,b)*(c,d)=(ad,bc)\neq (c,d)*(a,b) =(cb,da).
+            $$
+          \end{proof}
+          Therefore $*$ is not commutative. \qedhere
+          For associativity,
+          \begin{proof}
+            Let $(a,b),(c,d),(e,f)\in\mathbb{Z}\cross\mathbb{Z}$, then
+
+            \begin{align*}
+              (a,b)*((c,d)*(e,f)) & = (a,b)*(cf,de) \\
+                                  & = (ade,bcf)
+            \end{align*}
+            and
+            \begin{align*}
+              ((a,b)*(c,d))*(e,f) & = (ad,bc)*(e,f) \\
+                                  & = (adf,bce)
+            \end{align*}
+            As these two cannot be made equal $*$ is not associative. \qedhere
+          \end{proof}
   \end{enumerate}
 \end{soln}
+\newpage
 
 % PROBLEM 4
 \begin{problem}
@@ -438,7 +477,7 @@ a semigroup if $*$ is associative.
         for all $a,b\in S$. Show that $(S,*)$ is a noncommutative semigroup with no identity element.
 \end{enumerate}
 \end{problem}
-\begin{soln}
+\begin{soln}~
   \begin{enumerate}[label=(\alph*)]
     \item For associativity (semigroupness)
           \begin{proof}
@@ -466,6 +505,7 @@ a semigroup if $*$ is associative.
             \end{align*}
             $\therefore$ $(S, *)$ is commutative\qedhere
           \end{proof}
+          \newpage
     \item For associativity (semigroupness)
           \begin{proof}
             Let $a,b,c\in S$, then

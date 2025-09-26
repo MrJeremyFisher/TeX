@@ -178,37 +178,43 @@ $$
               & =A\frac{\pi}{a}\sqrt{\frac{2}{a}}\left[\cos\left(\frac{\pi x}{a}\right)+4\cos\left(\frac{2\pi x}{a}\right)\right]                              \\
           \end{align*}
           Which will be zero when
-          $$\cos\left(\frac{\pi x}{a}\right)=-4\cos\left(\frac{2\pi x}{a}\right).$$
-          This is a nasty expression to solve analytically so we force a computer to do it. I used SageMath but most advanced
-          CAS software (or numerical optimization techniques, as it turns out) should be able to handle this
-          \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-            \prompt{In}{incolor}{2}{\boxspacing}
-            \begin{minted}[breaklines, autogobble]{sage}
-                a = 1
-                A = 1/sqrt(5)
-                x = var("x")
-                eqn = cos(pi*x/a) == -4*cos(2*pi*x/a) #
-                show(find_root(eqn, 0, a/2)) # Find roots on [0,a/2] because we need to force finding the maxima on the left rather than the minima on the right
-            \end{minted}
-          \end{tcolorbox}
-          \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-            \prompt{Out}{outcolor}{2}{\boxspacing}
-            $0.27587156664462037$
-          \end{tcolorbox}
-          Sadly even sage can't give me a nice analytical solution here (Interestingly, the open access version of Wolfram alpha actually can) so
-          we'll have to resign ourselves to using a numerical value that has to be recalculated for new $a$. See blue mark on the plot for
+          $$\cos\left(\frac{\pi x}{a}\right)+4\cos\left(\frac{2\pi x}{a}\right)=0.$$
+          Solving this,
+          \begin{align*}
+            0 & =\cos\left(\frac{\pi x}{a}\right)+4\cos\left(\frac{2\pi x}{a}\right)                                                               \\
+              & =\cos\left(\frac{\pi x}{a}\right)+4\left[cos^2\left(\frac{\pi x}{a}\right)-\sin^2\left(\frac{\pi x}{a}\right)\right]               \\
+              & =\cos\left(\frac{\pi x}{a}\right)+4\left[cos^2\left(\frac{\pi x}{a}\right)-\left(1-cos^2\left(\frac{\pi x}{a}\right)\right)\right] \\
+              & =\cos\left(\frac{\pi x}{a}\right)+4cos^2\left(\frac{\pi x}{a}\right)-4+4cos^2\left(\frac{\pi x}{a}\right)                          \\
+              & =8s^2+s-4\implies \cos\left(\frac{\pi x}{a}\right)=\frac{-1\pm\sqrt{129}}{16}                                                      \\
+              & \implies x =\begin{cases}
+                              \frac{a}{\pi}\arccos\left(\frac{-1+\sqrt{129}}{16}\right)+2k\pi   \\
+                              -\frac{a}{\pi}\arccos\left(\frac{-1+\sqrt{129}}{16}\right)+2k\pi  \\
+                              a-\frac{a}{\pi}\arccos\left(\frac{-1-\sqrt{129}}{16}\right)+2k\pi \\
+                              -a+\frac{a}{\pi}\arccos\left(\frac{-1-\sqrt{129}}{16}\right)+2k\pi
+                            \end{cases} k\in \mathbb{Z}
+          \end{align*}
+          Here the $$\frac{a}{\pi}\arccos\left(\frac{-1+\sqrt{129}}{16}\right)$$
+          solution gives us the value we want, $\approx 0.276$ for $a=1$. See the blue mark on the plot for
           where this point lies.
-    \item Here we recognize that as probability is $\abs{\Psi}^2$ we lose the sign and so are looking for the smallest value. Because we have
+    \item Here we recognize that as probability is $\abs{\Psi}^2$ we lose the sign and so are looking for the smallest value ignoring sign. Because we have
           points where we cross zero those will remain the smallest even when taking the modulus and squaring it and so we can look for points
           $$\Psi(x,0)=0.$$
-          This are given by
+          These are given by
           $$A\sqrt{\frac{2}{a}}\left[\sin\left(\frac{\pi x}{a}\right)+2\sin\left(\frac{2\pi x}{a}\right)\right]=0$$
           which reduces to
           $$\sin\left(\frac{\pi x}{a}\right)+2\sin\left(\frac{2\pi x}{a}\right)=0.$$
           which we can see will have ``cheap'' solutions at $x=a$ and $x=0$. We expect from the graph however there to exist a third solution somewhere between
-          these two. To find this we can again employ our CAS approach as before while restricting the solver to between $0+\epsilon$ and $a-\epsilon$ where
-          $\epsilon$ is sufficiently small that the algorithm (whatever you chose) will skip the trivial endpoints. Doing this for our case of $a=1$ gives
-          $x=0.5804306232551663$. This is, and the other two points, is marked in green on the original plot.
+          these two. Solving for this point,
+          \begin{align*}
+            0 & =\sin\left(\frac{\pi x}{a}\right)+2\sin\left(\frac{2\pi x}{a}\right)                                                           \\
+              & =\sin\left(\frac{\pi x}{a}\right)+4\sin\left(\frac{\pi x}{a}\right)\cos\left(\frac{\pi x}{a}\right)                            \\
+              & =\sin\left(\frac{\pi x}{a}\right)\left[1+4\cos\left(\frac{\pi x}{a}\right)\right]                                              \\
+              & \implies\sin\left(\frac{\pi x}{a}\right)=0\implies x=2ak, k\in\mathbb{Z} \quad\text{``cheap'' solutions}                       \\
+              & \text{AND}                                                                                                                     \\
+              & \implies 1+4\cos\left(\frac{\pi x}{a}\right)=0 \implies x=\pm a \mp \frac{a}{\pi}\arccos\left(1/4\right)+2k\pi, k\in\mathbb{Z}
+          \end{align*}
+          the $\arccos$ equation again gives us our nontrivial solution, $x\approx 0.58$ for $a=1$. See the green markers on the original plot for where all three points lie.
+          \newpage
     \item Here we just integrate our probability density over $0\to a/2$,
           \begin{align*}
              & P(0<x\leq a/2)=\int_{0}^{a/2}\abs{\Psi(x,0)}^2\,dx                                                                 \\
@@ -228,7 +234,12 @@ $$
           set of solutions to the T.D.S.E $\Psi$ can be expressed as a weighted sum of the $\psi(x)\phi(t)$ terms. When we are considering
           $\Psi(x,0)$ the $\phi_n(t)=\exp(-iE_nt/\hbar)$ terms just become $1$ and drop out. Combining both of these facts it's safe to say that
           $$\Psi(x,t)=A(\psi_1(x)\exp(-iE_1t/\hbar)+2\psi_2(x)\exp(-iE_2t/\hbar)).$$
-          \todo[inline]{Is there a more formal way of putting this together or do we just say ``yeah, that's how it is''}
+          \begin{figure}[ht]
+            \centering
+            \includegraphics[scale=0.5]{space filling cat.jpg}
+            \caption{Space Filling Cat Picture}
+          \end{figure}
+          \newpage
     \item Again we integrate over all space. Now however we have $A$ and are checking that the integral returns a value independent of time.
           We want the value independent of time because it implies that the total probability (of finding the particle at all) will never change.
           \begin{align*}
@@ -286,6 +297,7 @@ $$
              & =\frac{a}{2}-\frac{32a}{45\pi^2}\left(\exp(\frac{it}{\hbar}\left[E_2-E_1\right])
             +\exp(\frac{it}{\hbar}\left[E_1-E_2\right])\right)                                                                                                                   \\
           \end{align*}
+          \newpage
     \item Because energy is quantized here we would expect to only see energy values corresponding to the states we have, so $E_1$ and $E_2$.
           For the probabilities that a measurement would yield one of these energies we can begin by
           recalling that
@@ -300,7 +312,7 @@ $$
           which looks like the fixed-time version of the linear combination we had above.
           Again this is an area where I'm kind of trusting what I've been told without really
           being able to justify it to a level I'm comfortable with beyond potential coincidence
-          but things still work. If we say that this \emph{is} a specific form linear combination we had above
+          but things still work. If we say that this \emph{is} a specific of the form linear combination we had above
           for this system we can note that then
           $$c_1=\frac{1}{\sqrt{5}}\qquad\text{and}\qquad c_2=\frac{2}{\sqrt{5}}.$$
           That would mean that the probability of finding the particle with energy $E_1$
