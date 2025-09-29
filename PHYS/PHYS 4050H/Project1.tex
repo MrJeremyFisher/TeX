@@ -100,13 +100,27 @@
 \listoftodos
 
 \begin{abstract}
-  We successfully automated PHYS-2250H's lab 4\todo{right number?} on operational amplifiers through microcontroller operated
-  wave generation, input element switching, and measurement. Results are similar to those that could be obtained
+  We successfully automated PHYS-2250H's lab 4 on operational amplifiers through microcontroller operated
+  wave generation and input element switching, however due to time constraints did not automate data collection. Results are similar to those that could be obtained
   by ``manually'' completing the lab with most inaccuracy owing to additional resistance in the switching element(s) \todo{Any other areas?}.
 \end{abstract}
 \section{Introduction}
+The goal of this project was to take a lab from PHYS-2250H (Electronics) and improve upon/automate the content of that lab. We opted to 
+automate lab 4 which involved constructing different configurations of operational amplifiers and verifying that the theoretical equations 
+derived in lecture corresponded to the real-world behaviour of the device. Lab 4 specifically looked at varying the input resistance of an
+inverting amplifier and looked at a single configuration of differentiating amplifier. Our initial concept for automation was to go the most direct route
+and use a microcontroller to control a switch which would allow selecting different components as in the case of both the inverting and differentiating amplifiers
+the only component which is varied between measurements in the element lying between the signal source and inverting input of the amplifier. We additionally
+sought to eliminate as many components external to those which sit directly on a breadboard and so created a function generator to replace the one used in the original lab.
 \section{High Level Overview}
+The automation consists of two key segments, one which generates a fixed frequency and peak-to-peak voltage input and one
+which controls which element is connected to the inverting input of the amplifier. There is technically a third segment
+of the device which provides a stable $\qty{5}{\unit{volts}}$ supply for the various integrated circuits but due to its simplicity
+it is left off the following diagrams.
+\todo[inline]{Whole circuit block diagram here}
 \subsection{Wave Generator}
+The input signal generator uses a single ATMmega328P \cite{microchip:ATmega328P} (through hole, 28-PDIP) microcontroller connected through SPI
+to an MCP4822\cite{microchip:MCP4822} digital-to-analog converter.
 \subsection{Amplifier Control \& Measurement}
 \section{Detailed Methods}
 \subsection{Wave Generator}
@@ -115,4 +129,8 @@
 \section{Conclusion}
 \subsection{Results}
 \subsection{Areas for Improvement}
+\section{References}
+\bibliography{sources}{}
+\bibliographystyle{plain}
+\section{Appendix}
 \end{document}
