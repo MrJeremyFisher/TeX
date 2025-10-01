@@ -14,6 +14,7 @@
 \usepackage{fontspec}
 \usepackage{relsize}
 \usepackage{subfig}
+\usepackage{minted}
 \usepackage{todonotes}
 \usepackage{multicol, multirow, booktabs}
 \usepackage[breakable]{tcolorbox}
@@ -44,6 +45,7 @@
 \pgfdeclarelayer{background}  
 \pgfsetlayers{background,main}
 \AtBeginDocument{\RenewCommandCopy\qty\SI}
+\definecolor{LightGray}{gray}{0.9}
 
 \makeatletter
 \newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
@@ -92,7 +94,7 @@
 \newcommand{\bv}[1]{\mathbf{#1}}
 
 \title{Physics 4050H: Project 1}
-\author{Jeremy Favro (0805980) Melody Berhane (), \\\emph{Department of Physics \& Astronomy}\\ Trent University, Peterborough, ON, Canada}
+\author{Jeremy Favro (0805980), Melody Berhane () \\\emph{Department of Physics \& Astronomy}\\ Trent University, Peterborough, ON, Canada}
 \date{\today}
 
 \begin{document}
@@ -105,8 +107,8 @@
   by ``manually'' completing the lab with most inaccuracy owing to additional resistance in the switching element(s) \todo{Any other areas?}.
 \end{abstract}
 \section{Introduction}
-The goal of this project was to take a lab from PHYS-2250H (Electronics) and improve upon/automate the content of that lab. We opted to 
-automate lab 4 which involved constructing different configurations of operational amplifiers and verifying that the theoretical equations 
+The goal of this project was to take a lab from PHYS-2250H (Electronics) and improve upon/automate the content of that lab. We opted to
+automate lab 4 which involved constructing different configurations of operational amplifiers and verifying that the theoretical equations
 derived in lecture corresponded to the real-world behaviour of the device. Lab 4 specifically looked at varying the input resistance of an
 inverting amplifier and looked at a single configuration of differentiating amplifier. Our initial concept for automation was to go the most direct route
 and use a microcontroller to control a switch which would allow selecting different components as in the case of both the inverting and differentiating amplifiers
@@ -124,13 +126,70 @@ to an MCP4822\cite{microchip:MCP4822} digital-to-analog converter.
 \subsection{Amplifier Control \& Measurement}
 \section{Detailed Methods}
 \subsection{Wave Generator}
+The ATmega328P (hereon referred to as a 328P) runs the code seen in \ref{fgcode}. 
+The core operating principal of this uses something known as a phase accumulator. 
+A phase accumulator is convenient as it allows easy control of the frequency of the output wave.
+At the beginning of the program we calculate a period over which the phase accumulator operates
+and populate a lookup table with precalculated values of our desired output wave, sin in this case.
+Then, for every iteration of the loop, we first check if sufficient time has passed that we
+can update the output of the DAC. If not, we continue the loop. If sufficient time has passed,
+we first write out the value in our lookup table which corresponds to the current ``phase value''. We
+then increment the phase modulo the size of our table, then increment the next update time by our precalculated period.
+Writing a value to the DAC involves, for the MCP4822, sending a 16-bit integer via SPI. 
+The contents of this integer, are, ordered from most to least significant bits,
+4 command bits whose meanings are shown in \ref{fgcode} for our specific case and explained more generally
+in the datasheet\cite{microchip:MCP4822}, then the 12-bit value to be written to the output of the DAC. Dependent
+on command bits, this value may be a fraction of either 4096 (twice the internal voltage reference of the MCP4822)
+or 2048. As our application requires a $1\unit{\volt}$ peak-to-peak wave, we opted for the latter. The 12-bit value
+is then represented at the output of the DAC as the given fraction of the internal voltage reference. As
+it becomes difficult to write with sufficient speed to produce a high-fidelity wave directly from the DAC
+when high-frequencies are desired we only operate with 16 possible states for the output of the DAC. Because
+we desire a smooth wave for the input of the op-amp we need to feed the stepped output that this
+low sample count results in through a suitable reconstruction filter. Here this will be a filter which rejects
+the sudden changes of the stepped wave and makes them more gradual, e.g. a low-pass filter. The output
+of the DAC is already fed through a $\qty{1}{\kilo\ohm}$ current limiting resistor so we opted to include
+a $\qty{1}{\micro\farad}$ capacitor to ground in parallel with this output resistor, giving a time constant of
+$\qty{1}{\milli\second}$ which, though not exactly the same as our sampling frequency, gives a sufficiently smoothed wave
+and was chosen based on on-hand components. For the final step of this first stage of the whole device we feed the signal
+through an emitter-follower amplifier to pass the loading created by the second stage
+from the DAC to an op-amp which fixes the output voltage at the voltage generated by the DAC.
+\todo[inline]{Block diagram}
 \subsection{Amplifier Control}
-\subsection{Measurement}
+The amplifier control circuit is much simpler than the frequency generator and is comprised
+of a single 328P which is dedicated to switching four of its digital output pins between high and
+low in sequence. These pins are connected to the control pins of an SN74HC4066N\cite{} whose input pins are chained 
+together and connected to the output of stage 1 (the emitter-follower output). Each output pin of the switch
+is then connected to a $\qty{220}{\ohm},\qty{1}{\kilo\ohm}, \qty{3.6}{\kilo\ohm}, \qty{9.1}{\kilo\ohm}$ resistor, each of which are
+in turn connected to the inverting input of our final op-amp. We then have the inverting input connected to the output
+through a $\qty{10}{\kilo\ohm}$ resistor (and the non-inverting input connected to ground) to create a variable
+inverting amplifier. The code which controls the switching via the 328P is available here\ref{mcode}.
 \section{Conclusion}
+
 \subsection{Results}
 \subsection{Areas for Improvement}
 \section{References}
-\bibliography{sources}{}
 \bibliographystyle{plain}
+\bibliography{sources}{}
 \section{Appendix}
+\subsection{Full Schematic}
+\subsection{Switch Control Code} \label{mcode}
+\inputminted[
+  frame=lines,
+  framesep=2mm,
+  baselinestretch=1.2,
+  bgcolor=LightGray,
+  fontsize=\footnotesize,
+  linenos,
+  breaklines
+]{cpp}{./measurement/measurement.ino}
+\subsection{Frequency Generator Code} \label{fgcode}
+\inputminted[
+  frame=lines,
+  framesep=2mm,
+  baselinestretch=1.2,
+  bgcolor=LightGray,
+  fontsize=\footnotesize,
+  linenos,
+  breaklines
+]{cpp}{./sinegen/sinegen.ino}
 \end{document}
