@@ -34,6 +34,7 @@ void loop()
     phase = (phase + 1) % SAMPLES;
     next += PERIOD;
   }
+  // Could we delayMicroseconds(PERIOD);??
 }
 
 void writeDAC(uint16_t value)
@@ -45,8 +46,9 @@ void writeDAC(uint16_t value)
   // 1 -> Output shutdown, operating on HI
   // See datasheet for more
 
-  // OR command w/ masked value, gives
-  // 0011 CMD
+  // AND here forces to 12 bit
+  // OR command w/value, gives
+  // 0011 value
   command |= (value & 0x0FFF);
 
   digitalWrite(CS_PIN, LOW);
