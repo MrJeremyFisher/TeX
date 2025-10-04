@@ -115,8 +115,8 @@ automate lab 4 which involved constructing different configurations of operation
 derived in lecture corresponded to the real-world behaviour of the device. Lab 4 specifically looked at varying the input resistance of an
 inverting amplifier and looked at a single configuration of differentiating amplifier. Our initial concept for automation was to go the most direct route
 and use a microcontroller to control a switch which would allow selecting different components as in the case of both the inverting and differentiating amplifiers
-the only component which is varied between measurements in the element lying between the signal source and inverting input of the amplifier. We additionally
-sought to eliminate as many components external to those which sit directly on a breadboard and so created a function generator to replace the one used in the original lab.
+the only component which is varied between measurements is the element lying between the signal source and inverting input of the amplifier. We additionally
+sought to eliminate as many components external to those which sit directly on a breadboard and so created a (single) function generator to replace the one used in the original lab.
 \newpage
 \section{High Level Overview}
 \begin{figure*}[h]
@@ -140,15 +140,16 @@ sought to eliminate as many components external to those which sit directly on a
             ($(gen328.south)+(0,-.5)$)
             ($(gen328.west)+(0,-.5)$)
             ($(efa.east)+(0,.5)$)
-          }, draw, fill=blue, opacity=0.2, dashed, label={Stage 1 - Frequency Generator}, inner sep=10pt]{};
+          }, draw, fill=blue, opacity=0.2, dashed, label={Stage 1 - Wave Generator}, inner sep=10pt]{};
       \draw
       node[fit={($(sw.north)+(0,.5)$)
             ($(sw328.south)+(0,-.5)$)
             ($(sw328.west)+(0,-.5)$)
             ($(fa.out)+(0,.5)$)
-          }, draw, fill=green, opacity=0.2, dashed, label={Stage 2 - Switching}, inner sep=10pt]{};
+          }, draw, fill=green, opacity=0.2, dashed, label={Stage 2 - Amplifier Control}, inner sep=10pt]{};
     \end{pgfonlayer}
   \end{circuitikz}
+  \caption{Block Diagram of the Device. Note that the component labeled E-F is an emitter-follower/voltage follower op-amp}
 \end{figure*}
 The automation consists of two main stages, one which generates a fixed frequency and peak-to-peak voltage input and one
 which controls which element is connected to the inverting input of the amplifier. There is technically a third stage which
@@ -156,8 +157,14 @@ provides power to the devices in the other two but it is a basic three component
 filter capacitors and is therefore left off of diagrams from hereon.
 \subsection{Wave Generator}
 The input signal generator uses a single ATMmega328P \cite{microchip:ATmega328P} (hereon referred to as a 328P) microcontroller connected through SPI
-to an MCP4822\cite{microchip:MCP4822} digital-to-analog converter.
-\subsection{Amplifier Control \& Measurement}
+to an MCP4822\cite{microchip:MCP4822} digital-to-analog converter (DAC from hereon). The output of the DAC is passed
+through a low-pass reconstruction filter, then to a emitter-follower/voltage-follower op-amp to stabilize the signal and then forwarded to
+the second stage of the device.
+\subsection{Amplifier Control}
+This section of the device uses another 328P to control a 4 input/output switch where each input is connected
+to the output of the first stage (the sine wave). Each output is connected then to a single resistor each
+of which are in turn connected to the inverting input of an op-amp wired in an inverting configuration. The 328P
+switches between each of these resistors every two seconds.
 \section{Detailed Methods}
 \subsection{Wave Generator}
 The 328P runs the code seen in \ref{fgcode}. The ``algorithm'' used in the code is known as a phase accumulator.
@@ -173,7 +180,7 @@ when we reach the end of the table, then increment the next update time by our p
 Writing a value to the DAC involves, for the MCP4822, sending a 16-bit integer via SPI.
 The contents of this integer, are, ordered from most to least significant bits,
 4 command bits whose meanings are shown in \ref{fgcode} for our specific case and explained more generally
-in the datasheet\cite{microchip:MCP4822}, then the 12-bit value to be written to the output of the DAC. Dependent
+in the datasheet \cite{microchip:MCP4822}, then the 12-bit value to be written to the output of the DAC. Dependent
 on command bits, this value may be a fraction of either 4096 (twice the internal voltage reference of the MCP4822)
 or 2048. As our application requires a $1\unit{\volt}$ peak-to-peak wave, we opted for the latter. The 12-bit value
 is then represented at the output of the DAC as the given fraction of the internal voltage reference. As
@@ -191,14 +198,14 @@ from the DAC to an op-amp which fixes the output voltage at the voltage generate
 \subsection{Amplifier Control}
 The amplifier control circuit is much simpler than the frequency generator and is comprised
 of a single 328P running the code found in \ref{mcode} which is dedicated to switching four of its digital output pins between high and
-low in sequence. These pins are connected to the control pins of an SN74HC4066N\cite{TI:sn74hc4066} whose input pins are chained
+low in sequence. These pins are connected to the control pins of an SN74HC4066N \cite{TI:sn74hc4066} whose input pins are chained
 together and connected to the output of stage 1 (the emitter-follower output). Each output pin of the switch
 is then connected to a $\qty{220}{\ohm},\qty{1}{\kilo\ohm}, \qty{3.6}{\kilo\ohm}, \qty{9.1}{\kilo\ohm}$ resistor, each of which are
 in turn connected to the inverting input of our final op-amp. We then have the inverting input connected to the output
 through a $\qty{10}{\kilo\ohm}$ resistor (and the non-inverting input connected to ground) to create a variable
 inverting amplifier.
 \section{Conclusion}
-\subsection{Results}
+Generally the project was a success insofar as automation is concerned.
 \subsection{Areas for Improvement}
 \subsubsection{Automated Measurement}
 The 328P is capable of analog reads from $0-\qty{5}{\volt}$. The amplifier stage of the device outputs above this range but
