@@ -21,6 +21,8 @@
 \usepackage{multicol, multirow, booktabs}
 \usepackage[breakable]{tcolorbox}
 \usepackage[inline]{enumitem}
+\usepackage{etoolbox}
+\patchcmd{\thebibliography}{\section*{\refname}}{}{}{}
 
 \theoremstyle{definition}
 \newtheorem{problem}{Problem}
@@ -96,12 +98,11 @@
 \newcommand{\bv}[1]{\mathbf{#1}}
 
 \title{Physics 4050H: Project 1}
-\author{Jeremy Favro (0805980), Melody Berhane () \\\emph{Department of Physics \& Astronomy}\\ Trent University, Peterborough, ON, Canada}
+\author{Jeremy Favro (0805980), Melody Berhane (0793076) \\\emph{Department of Physics \& Astronomy}\\ Trent University, Peterborough, ON, Canada}
 \date{\today}
 
 \begin{document}
 \maketitle
-\listoftodos
 
 \begin{abstract}
   We successfully automated PHYS-2250H's lab 4 on operational amplifiers through microcontroller operated
@@ -127,7 +128,7 @@ sought to eliminate as many components external to those which sit directly on a
     \draw[] (0,0) to[twoport, t=328P, name=gen328, long] ++ (2,0)
     (gen328.e) ++(1.7,0) node[above]{SPI Control}
     (gen328.e) -- ++(2.2,0) to[dac, name=mcp, anchor=west, l=MCP4822] ++(2,0)
-    (mcp.e) -- ++(0,0) to[amp, name=efa, t={E-F}] ++(2,0)
+    (mcp.e) -- ++(0,0) to[amp, name=efa, t={V-F}] ++(2,0)
     (efa.e) -- ++(0.5,0) to[twoport, t=Switch, name=sw, long, style={circuitikz/bipoles/twoport/width=1.25}] ++(3,0)
     (sw.s) -- ++(0,0) to[twoport, t=328P, name=sw328, long] ++ (0,-2)
     (sw.e) to[resistor, l={Resistor Array}, name=rarr] ++(3,0)
@@ -149,7 +150,8 @@ sought to eliminate as many components external to those which sit directly on a
           }, draw, fill=green, opacity=0.2, dashed, label={Stage 2 - Amplifier Control}, inner sep=10pt]{};
     \end{pgfonlayer}
   \end{circuitikz}
-  \caption{Block Diagram of the Device. Note that the component labeled E-F is an emitter-follower/voltage follower op-amp}
+  \caption{Block Diagram of the Device. Note that the component labeled V-F is a voltage follower op-amp. Does not include the reconstruction filter
+  between the DAC and voltage follower.}
 \end{figure*}
 The automation consists of two main stages, one which generates a fixed frequency and peak-to-peak voltage input and one
 which controls which element is connected to the inverting input of the amplifier. There is technically a third stage which
@@ -158,7 +160,7 @@ filter capacitors and is therefore left off of diagrams from hereon.
 \subsection{Wave Generator}
 The input signal generator uses a single ATMmega328P \cite{microchip:ATmega328P} (hereon referred to as a 328P) microcontroller connected through SPI
 to an MCP4822\cite{microchip:MCP4822} digital-to-analog converter (DAC from hereon). The output of the DAC is passed
-through a low-pass reconstruction filter, then to a emitter-follower/voltage-follower op-amp to stabilize the signal and then forwarded to
+through a low-pass reconstruction filter, then to a voltage follower op-amp to stabilize the signal and then forwarded to
 the second stage of the device.
 \subsection{Amplifier Control}
 This section of the device uses another 328P to control a 4 input/output switch where each input is connected
@@ -184,28 +186,36 @@ in the datasheet \cite{microchip:MCP4822}, then the 12-bit value to be written t
 on command bits, this value may be a fraction of either 4096 (twice the internal voltage reference of the MCP4822)
 or 2048. As our application requires a $1\unit{\volt}$ peak-to-peak wave, we opted for the latter. The 12-bit value
 is then represented at the output of the DAC as the given fraction of the internal voltage reference. As
-it becomes difficult to write with sufficient speed to produce a high-fidelity wave directly from the DAC
-when high-frequencies are desired we only operate with 16 possible states for the output of the DAC. Because
+it becomes difficult or impossible to write with sufficient speed to produce a high-fidelity wave directly from the DAC
+when high-frequencies are desired we have to compromise on fidelity. This is done by decreasing the sampling frequency and ``reconstruct''
+the desired smooth wave through analog circuitry. Because
 we desire a smooth wave for the input of the op-amp we need to feed the stepped output that this
 low sample count results in through a suitable reconstruction filter. Here this will be a filter which rejects
 the sudden changes of the stepped wave and makes them more gradual, e.g. a low-pass filter. The output
 of the DAC is already fed through a $\qty{1}{\kilo\ohm}$ current limiting resistor so we opted to include
 a $\qty{1}{\micro\farad}$ capacitor to ground in parallel with this output resistor, giving a time constant of
-$\qty{1}{\milli\second}$ which, though not exactly the same as our sampling frequency, gives a sufficiently smoothed wave
-and was chosen based on on-hand components. For the final step of this first stage of the whole device we feed the signal
-through an emitter-follower amplifier to pass the loading created by the second stage
-from the DAC to an op-amp which fixes the output voltage at the voltage generated by the DAC.
+$\qty{1}{\milli\second}$ which, though not exactly matched to our sampling frequency, gives a sufficiently smoothed wave
+and was chosen based on on-hand components. For the final step of this first stage of the whole device we feed the reconstructed signal
+through a voltage follower amplifier to pass the loading created by the second stage
+from the DAC to an op-amp which fixes the output voltage at the voltage generated by the DAC so we can make consistent measurements.
 \subsection{Amplifier Control}
 The amplifier control circuit is much simpler than the frequency generator and is comprised
 of a single 328P running the code found in \ref{mcode} which is dedicated to switching four of its digital output pins between high and
-low in sequence. These pins are connected to the control pins of an SN74HC4066N \cite{TI:sn74hc4066} whose input pins are chained
-together and connected to the output of stage 1 (the emitter-follower output). Each output pin of the switch
+low in sequence. These pins are connected to the control pins of an SN74HC4066N \cite{TI:sn74hc4066} 4 input-output switch whose input pins are chained
+together and connected to the output of stage 1 (the voltage follower output). This specific switch was chosen due to 
+its low on-state resistance of approximately $\qty{30}{\ohm}$ compared to other such devices on hand with resistances high enough
+that they would have had a significant effect on measurements of the lowest ($\qty{220}{\ohm}$) resistor. Each output pin of the switch
 is then connected to a $\qty{220}{\ohm},\qty{1}{\kilo\ohm}, \qty{3.6}{\kilo\ohm}, \qty{9.1}{\kilo\ohm}$ resistor, each of which are
 in turn connected to the inverting input of our final op-amp. We then have the inverting input connected to the output
 through a $\qty{10}{\kilo\ohm}$ resistor (and the non-inverting input connected to ground) to create a variable
 inverting amplifier.
 \section{Conclusion}
-Generally the project was a success insofar as automation is concerned.
+Generally the project was a success insofar as automation is concerned. The first portion of the original lab where the properties of 
+an inverting amplifier were examined was reproduced using a software controlled switching device and the frequency generator required 
+by the original lab was replaced with an onboard fixed-frequency generator. The infrastructure is in place to modify the circuit to 
+complete the second part of the original lab where the resistor on the inverting input of the final stage op-amp is replaced
+with a capacitor to create a differentiating amplifier. Future work on the device could encompass some of the areas discussed below,
+none of which are extremely difficult and would offer noticeable improvements to the already completed work.
 \subsection{Areas for Improvement}
 \subsubsection{Automated Measurement}
 The 328P is capable of analog reads from $0-\qty{5}{\volt}$. The amplifier stage of the device outputs above this range but
