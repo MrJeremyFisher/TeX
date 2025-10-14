@@ -209,9 +209,9 @@ Use definition (2), Sec.15, of the limit to prove that
           $\abs{\overline{z}-\overline{z_0}}<\epsilon$.
     \item Let $\epsilon>0$. Suppose $\abs{z-z_0}<\delta$. We have
           $$\abs{\frac{\overline{z}^2}{z}-\frac{\overline{z_0}^2}{z_0}}=\abs{\frac{\overline{zz}}{z}-\frac{\overline{z_0z_0}}{z_0}}$$
-    
-    
-    $\lim_{z\to 0}=0$.
+
+
+          $\lim_{z\to 0}=0$.
   \end{enumerate}
 \end{soln}
 
@@ -224,19 +224,68 @@ $$T(z)=\frac{az+b}{cz+d}\qquad (ad-bc)\neq0$$
   \item $\lim_{z\to\infty}T(z)=\frac{a}{c}\quad\text{and}\quad\lim_{z\to-d/c}T(z)=\infty\quad\text{if } c\neq 0$
 \end{enumerate}
 \end{problem}
-\begin{soln}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item For $c=0$ we get
+          $$T(z)=\frac{az+b}{d}.$$
+          The referenced theorem states that
+          $$\lim_{z\to z_0}T(z)=\infty\quad\text{if}\quad \lim_{z\to z_0}T^{-1}(z)=0.$$
+          Here we have then that
+          $$\lim_{z\to \infty}T^{-1}(z)=\lim_{z\to \infty}\frac{d}{az+b}=\frac{d}{\infty}=0\implies \lim_{z\to\infty}T(z)=\infty$$
+    \item \begin{align*}
+             & =\lim_{z\to 0}T(z^{-1})                                                   \\
+             & =\lim_{z\to 0}\frac{az^{-1}+b}{cz^{-1}+d}                                 \\
+             & =\lim_{z\to 0}\frac{az^{-1}}{cz^{-1}+d}+\cancelto{0}{\frac{b}{cz^{-1}+d}} \\
+             & =\lim_{z\to 0}\frac{a}{c\cancelto{1}{zz^{-1}}+\cancelto{0}{dz}}           \\
+             & =\frac{a}{c}
+          \end{align*}
+          Which, by the second part of the given theorem which says that
+          $$\lim_{z\to\infty}f(z)=w_0\quad\text{if}\quad\lim_{z\to\infty}f(z^{-1})=w_0$$
+          means that our original limit
+          $$\lim_{z\to\infty}T(z)=\frac{a}{c}$$
+          holds true. For the second part,
+          \begin{align*}
+             & =\lim_{z\to-d/c}T^{-1}(z)                   \\
+             & =\lim_{z\to-d/c}\frac{c(-d/c)+d}{a(-d/c)+b} \\
+             & =\lim_{z\to-d/c}\frac{0}{a(-d/c)+b}=0
+          \end{align*}
+          which by the first part of the theorem (as used in part (a) here) means that our original limit holds true.
+  \end{enumerate}
 \end{soln}
 
 % PROBLEM 5
 \begin{problem}
-Use the method in Example 2, Sec. 19, to show that $f(z)$ does not exist at any point
+Use the method in Example 2, Sec. 19, to show that $\primed{f}(z)$ does not exist at any point
 $z$ when
-\begin{enumerate*}[label=(\alph*)]
-  \item $f(z)=\Re z$;\qquad~
-  \item $f(z)=\Im z$.
-\end{enumerate*}
+\begin{center}
+  \begin{enumerate*}[label=(\alph*)]
+    \item $f(z)=\Re z$;\qquad~
+    \item $f(z)=\Im z$.
+  \end{enumerate*}
+\end{center}
 \end{problem}
 \begin{soln}
+  \begin{enumerate}[label=(\alph*)]
+    \item $$\frac{\Delta f}{\Delta z}
+            =\frac{\Re (z+\Delta z)- \Re z}{\Delta z}
+            =\frac{\Re z+\Re \Delta z - \Re z}{\Delta z}
+            =\frac{\Re \Delta z}{\Delta z}.$$
+          Approaching along the real axis gives $\Delta z=\Delta x+0i$ so
+          $$\frac{\Re \Delta z}{\Delta z}=\frac{\Delta x}{\Delta x}=1.$$
+          Approaching along the imaginary axis gives $Delta z = 0+\Delta yi$ so
+          $$\frac{\Re \Delta z}{\Delta z}=\frac{0}{\Delta yi}=0.$$
+          Because these two do not agree the limit which defines the derivative cannot exist
+          and therefore the derivative itself cannot exist.
+    \item $$\frac{\Delta f}{\Delta z}
+            =\frac{\Im (z+\Delta z)- \Im z}{\Delta z}
+            =\frac{\Im z+\Im \Delta z - \Im z}{\Delta z}
+            =\frac{\Im \Delta z}{\Delta z}.$$
+          We can make the same argument as previously, first approaching along the real axis,
+          $$\frac{\Im \Delta z}{\Delta z}=\frac{0}{\Delta x}=0.$$
+          Then the imaginary axis,
+          $$\frac{\Im \Delta z}{\Delta z}=\frac{\Delta y}{\Delta yi}=-i.$$
+          Again because this limit does not exist the derivative cannot exist.
+  \end{enumerate}
 \end{soln}
 
 % PROBLEM 6
@@ -248,7 +297,28 @@ indicated domain of definition, and also to find $\primed{f}(z)$:
   \item $f(z)=e^{-\theta}\cos\left(\ln r\right)+ie^{-\theta}\sin\left(\ln r\right)$ $(r>0. 0<\theta<2\pi)$.
 \end{enumerate}
 \end{problem}
-\begin{soln}
+\todo{Find diff}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item First we note that
+          $$f(z)=z^{-4}=r^{-4}\left(\cos\left(4\theta\right)-i\sin\left(4\theta\right)\right).$$
+          The partials are then
+          \begin{align*}
+             & u_r=-4r^{-5}\cos\left(4\theta\right)\qquad u_\theta=-4r^{-4}\sin\left(4\theta\right)  \\
+             & v_r=+4r^{-5}\sin\left(4\theta\right)\qquad v_\theta=-4r^{-4}\cos\left(4\theta\right).
+          \end{align*}
+          These agree with the Cauchy-Riemann equations for polar coordinates,
+          $$ru_r=v_\theta\qquad\text{and}\qquad u_\theta=-rv_r$$
+          which, alongside the fact that the partials exists for all $(r,\theta)$, satisfies
+          the theorem. This means that the derivative will exist for all $(r,\theta)$ in the domain.
+    \item Our partials here are
+          \begin{align*}
+             & u_r=-r^{-1}e^{-\theta}\sin\left(\ln r\right)\qquad u_\theta=-e^{-\theta}\cos\left(\ln r\right) \\
+             & v_r=r^{-1}e^{-\theta}\cos\left(\ln r\right)\qquad v_\theta=-e^{-\theta}\sin\left(\ln r\right).
+          \end{align*}
+          which satisfy the Cauchy-Riemann equations. Because the trig functions are only undefined (they oscillate infinitely quickly) at $r=0$ which is not 
+          a part of the domain the derivative exists over the domain.
+  \end{enumerate}
 \end{soln}
 
 % PROBLEM 7
