@@ -14,6 +14,8 @@
 \usepackage{fontspec}
 \usepackage{relsize}
 \usepackage{subfig}
+\usepackage{sagetex}
+\usepackage{minted}
 \usepackage{todonotes}
 \usepackage{multicol, multirow, booktabs}
 \usepackage[breakable]{tcolorbox}
@@ -46,6 +48,7 @@
 \AtBeginDocument{\RenewCommandCopy\qty\SI}
 \newcommand{\justif}[2]{&{#1}&\text{#2}}
 \DeclareMathOperator\Arg{Arg}
+\DeclareMathOperator{\sgn}{sgn}
 
 \makeatletter
 \newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
@@ -163,31 +166,375 @@ $$pu_{xx}+10pu_{xy}+9pu_{yy}+qu_x+qu_y=8pqx+e^{8ry}$$
           This gives us
           \begin{align*}
             u\exp\left(\frac{8q}{64p}\eta\right) & =\int\exp\left(\frac{8q}{64p}\eta\right)
-            \left[\frac{q}{64} \left({\eta}{\xi} - \frac{{\xi}^{2}}{2}\right) - \frac{e^{r \left(9{\eta} - {\xi}\right)}}{64pr}\right]\,d\eta                                                         \\
+            \left[\frac{q}{64} \left({\eta}{\xi} - \frac{{\xi}^{2}}{2}\right) - \frac{e^{r \left(9{\eta} - {\xi}\right)}}{64pr}\right]\,d\eta                                                                                                                          \\
                                                  & =-\frac{e^{9r{\eta} + \frac{q{\eta}}{8p} - r{\xi}}}{64pr \left(9r + \frac{q}{8p}\right)} + \frac{{\xi} \left(8pq{\eta} - 64p^{2}\right) e^{\frac{q{\eta}}{8p}}}{64q} - \frac{p{\xi}^{2} e^{\frac{q{\eta}}{8p}}}{16}
           \end{align*}
           Transforming this back to something in terms of $x$ and $y$ we get
           \begin{align*}
-            u & =\exp\left(-\frac{8q}{64p}(y-x)\right)\left(-\frac{e^{9r{(y-x)} + \frac{q{(y-x)}}{8p} - r{(y-9x)}}}{64pr \left(9r + \frac{q}{8p}\right)} + \frac{(y-9x) \left(8pq{(y-x)} - 64p^{2}\right) e^{\frac{q{(y-x)}}{8p}}}{64q} - \frac{p(y-9x)^{2} e^{\frac{q{(y-x)}}{8p}}}{16}\right)            \\
+            u & =\exp\left(-\frac{8q}{64p}(y-x)\right)\left(-\frac{e^{9r{(y-x)} + \frac{q{(y-x)}}{8p} - r{(y-9x)}}}{64pr \left(9r + \frac{q}{8p}\right)} + \frac{(y-9x) \left(8pq{(y-x)} - 64p^{2}\right) e^{\frac{q{(y-x)}}{8p}}}{64q} - \frac{p(y-9x)^{2} e^{\frac{q{(y-x)}}{8p}}}{16}\right) \\
             % & =\left(\frac{q \left({(y-9x)}{(y-x)} - \frac{{(y-9x)}^{2}}{2}\right)}{64} - \frac{e^{r \left(9{(y-x)} - {(y-9x)}\right)}}{64pr}\right) \\
             %   & = \frac{q\left(y^2-2yx-63x^2\right)}{128}-\frac{e^{8yr}}{64pr}
           \end{align*}
     \item For this we first calculate the partials,
           \begin{align*}
-             & u_x=-\frac{q \left(63x + y\right)}{64} \qquad u_{xx}=-\frac{63q}{64} \qquad u_{xy}=-\frac{q}{64}                     \\
+             & u_x=-\frac{q \left(63x + y\right)}{64} \qquad u_{xx}=-\frac{63q}{64} \qquad u_{xy}=-\frac{q}{64}            \\
              & u_y=\frac{q \left(2y - 2x\right)}{128} - \frac{e^{8ry}}{8p} \qquad u_{yy}=\frac{q}{64} - \frac{re^{8ry}}{p}
           \end{align*}
           Then evaluate the original equation with these values,
           \begin{align*}
-             & =pu_{xx}+10pu_{xy}+9pu_{yy}+qu_x+qu_y                            \\
+             & =pu_{xx}+10pu_{xy}+9pu_{yy}+qu_x+qu_y         \\
              & =p\left[-\frac{63q}{64}\right]+
             10p\left[-\frac{q}{64}\right]+
             9p\left[\frac{q}{64} - \frac{re^{8ry}}{p}\right]+
             q\left[-\frac{q \left(63x + y\right)}{64}\right]+
-            q\left[\frac{q \left(2y - 2x\right)}{128}\right]                    \\
-             & =-q\left(p+qx\right)-9e^{8ry}r \\
-             8pqx+e^{8ry}
+            q\left[\frac{q \left(2y - 2x\right)}{128}\right] \\
+             & =-q\left(p+qx\right)-9e^{8ry}r                \\
+            8pqx+e^{8ry}
           \end{align*}
   \end{enumerate}
+\end{soln}
+
+% PROBLEM 2
+\begin{problem}
+Use the method of characteristics to solve the IVP
+$$u_y+R(x,y)u_x=ru;\qquad u(x,0)=r,\quad R(x,y)=\left(1-x\right)\left(p-q\sin\left(qy\right)\right)-p\left(1-x\right)^2e^{py}\sin\left(qy\right)$$
+\end{problem}
+\begin{soln}
+  From the IVP we obtain
+  \begin{align*}
+             & \frac{dx}{dt}=R(x,y) & \frac{dy}{dt}=1 & \frac{dz}{dt}=r \\
+    \implies & t=\int\frac{dx}{R}   & y=t+C_2         & z=rt+C_3.
+  \end{align*}
+  Solving the more difficult integral,
+  \begin{align*}
+     & =\int\frac{dx}{R}                                                                                                  \\
+    % &=\int\frac{dx}{\left(1-x\right)\left(p-q\sin\left(qy\right)\right)-p\left(1-x\right)^2e^{py}\sin\left(qy\right)}\\
+     & =\int\frac{du}{pe^{py}\sin\left(qy\right)u^2+(p-q\sin\left(qy\right))u}\justif{\>}{$u=x-1\implies du=dx$}          \\
+     & =\int\frac{du}{\left[pe^{py}\sin\left(qy\right)+(p-q\sin\left(qy\right))/u\right]u^2}                              \\
+     & =-\frac{1}{p-q\sin\left(qy\right)}\int\frac{dv}{v}
+    \justif{\>}{$v=pe^{py}\sin\left(qy\right)+(p-q\sin\left(qy\right))/u\implies dv=-(p-q\sin\left(qy\right))/u^2 du$}    \\
+     & =\frac{1}{q\sin\left(qy\right)-p}\ln\left(pe^{py}\sin\left(qy\right)+\frac{p-q\sin\left(qy\right)}{u}\right)       \\
+     & =\frac{1}{q\sin\left(qy\right)-p}\ln\left(pe^{py}\sin\left(qy\right)+\frac{p-q\sin\left(qy\right)}{x-1}\right)+C_1
+  \end{align*}
+  Now applying our initial condition,
+  $$x(0)=s;\qquad y(0)=0;\qquad z(0)=r$$
+  and solving for the constants we obtained,
+  $$y(0)=0+C_2=0\implies y=t$$
+  $$z(0)=0+C_3=r\implies z=r\left(t+1\right)$$
+  \begin{align*}
+    0&=\frac{1}{q\sin\left(0\right)-p}\ln\left(pe^{0}\sin\left(0\right)+\frac{p-q\sin\left(0\right)}{x(0)-1}\right)+C_1\\
+    0&=-\frac{1}{p}\ln\left(\frac{p}{x(0)-1}\right)+C_1\\
+    \impliesm1&=\exp -\frac{1}{p}\ln\left(\frac{p}{x(0)-1}\right)+C_1\\
+    1&=e^{C_1}\left(\exp \ln\left(\frac{p}{x(0)-1}\right)\right)^{-1/p}\\
+    1&=e^{-pC_1}\frac{p}{x(0)-1}\\
+    x(0)&=pe^{-pC_1}+1=s\\
+  \end{align*}
+\end{soln}
+
+% PROBLEM 3
+\begin{problem}
+Use SAGE or otherwise to show that a transformation of a second order linear PDE to its canonical form does not alter the classification of the PDE.
+\end{problem}
+\begin{soln}
+  Given that for the PDE
+  $$Au_{xx}+Bu_{xy}+Cu_{yy}+Du_x+Eu_y+Fu=G$$
+  has discriminant
+  $$\Delta=B^2-4AC$$
+  and can be transformed into a canonical form with (disregarding other terms as they do not affect $\Delta$)
+  \begin{align*}
+    A_1 & =A\xi_x^2+B\xi_x\xi_y+C\xi_y^2                                     \\
+    B_1 & =2A\xi_x\eta_x+B\left(\xi_x\eta_y+\xi_y\eta_x\right)+2C\xi_y\eta_y \\
+    C_1 & =A\eta_x^2+B\eta_x\eta_y+C\eta_y^2.
+  \end{align*}
+  we can say that the discriminant of the new PDE in the $(\xi,\eta)$ plane will be
+  \begin{align*}
+    \Delta_1 & = B_1^2-4A_1C_1 \\
+             & = B_1^2-4A_1C_1 \\
+             & = (2A\xi_x\eta_x+B\left(\xi_x\eta_y+\xi_y\eta_x\right)+2C\xi_y\eta_y)^2-4(A\xi_x^2+B\xi_x\xi_y+C\xi_y^2)(A\eta_x^2+B\eta_x\eta_y+C\eta_y^2)\\
+             & = \left(B^{2} - 4 A C\right) \eta_{y}^{2} \xi_{x}^{2} - 2 {\left(B^{2} - 4 A C\right)} \eta_{x} \eta_{y} \xi_{x} \xi_{y} + {\left(B^{2} - 4 A C\right)} \eta_{x}^{2} \xi_{y}^{2}\justif{\quad}{Sage's full\_simplify()}\\
+             & = \left(B^{2} - 4 A C\right)\left(\eta_{y} \xi_{x}-\eta_{x} \xi_{y}\right)
+  \end{align*}
+  which we can see is 
+  $$J^2\Delta.$$
+  Because we started with canonical forms by making a change of variables with non-singular (real) Jacobian
+  $$
+  J=\begin{vmatrix}
+    \xi_x&\xi_y\\
+    \eta_x&\eta_y
+  \end{vmatrix}\implies \sgn J^2\Delta = \sgn \Delta
+  $$
+  which will return the same classification as we originally had in the $x,y$ plane.
+\end{soln}
+
+% PROBLEM 4
+\begin{problem}
+Consider the functions
+\begin{align*}
+  f_1(x) & =\begin{cases}
+              r,       & -p<x<0 \\
+              e^{-qx}, & 0<x<p
+            \end{cases} \\
+  f(x)=e^{-qx},\quad 0<x<p
+\end{align*}
+\begin{enumerate}[label=(\alph*)]
+  \item Find the Fourier sine series of $f_1(x)$
+  \item Find the Fourier sine series of $f(x)$ on $\left[0,p\right]$
+  \item Find the Fourier cosine series of $f(x)$ on $\left[0,p\right]$
+  \item Sketch the appropriate periodic extensions of the functions for each of the above series.
+  \item Sketch the graph of each of the above series.
+\end{enumerate}
+\end{problem}
+\begin{soln}
+  \begin{enumerate}[label=(\alph*)]
+    \item Our coefficient here is
+          \begin{align*}
+            b_n & = \frac{1}{p}\left[\int_{-p}^{p}f_1(x)\sin\left(n\pi x/p\right)\,dx\right]                                                                              \\
+                & = \frac{1}{p}\left[\int_{-p}^{0}r\sin\left(n\pi x/p\right)\,dx
+            +\int_{0}^{p}e^{-qx}\sin\left(n\pi x/p\right)\,dx\right]                                                                                                      \\
+                & = \frac{1}{p}\left[\eval{-\frac{pr}{n\pi}\cos\left(n\pi x/p\right)}_{-p}^{0}
+            -\eval{\frac{1}{q^{2} + (n\pi/p)^2}e^{-qx} \left(q \sin\left(\frac{n\pi x}{p}\right) + \frac{n\pi}{p}\cos\left(\frac{n\pi x}{p}\right)\right)}_{0}^{p}\right] \\
+                & = \frac{1}{p}\left[
+              \frac{pr}{n\pi}\left[-\cos\left(0\right)
+                +\cos\left(-n\pi\right)\right]
+              +
+              \frac{1}{q^{2} + (n\pi/p)^2}\left[
+                e^{-qp} \left(q \sin\left(n\pi\right) + \frac{n\pi}{p}\cos\left(n\pi\right)\right)
+                -\left(q \sin\left(0\right) + \frac{n\pi}{p}\cos\left(0\right)\right)
+            \right]\right]                                                                                                                                                \\
+                & = -\left[
+            \frac{r}{n\pi}\left[1
+              +(-1)^{n-1}\right]
+            +
+            \frac{n\pi}{(pq)^2 + (n\pi/p)^2}\left[
+            (-1)^{n-1}e^{-qp}+1
+            \right]\right]                                                                                                                                                \\
+          \end{align*}
+          which gives a corresponding Fourier sine series of
+          $$\sum_{n=1}^{\infty}-\left[
+            \frac{r}{n\pi}\left[1
+              +(-1)^{n-1}\right]
+            +
+            \frac{n\pi}{(pq)^2 + (n\pi/p)^2}\left[
+            (-1)^{n-1}e^{-qp}+1
+            \right]\right]\sin \left(n\pi x/p\right)$$
+    \item Here we have almost the same integral as previously,
+          \begin{align*}
+            b_n & = \frac{2}{p}\int_{0}^{p}e^{-qx}\sin\left(n\pi x/p\right)\,dx                            \\
+                & = \frac{2e^{-pq} \left(n\pi e^{pq} + n\pi\left(-1\right)^{n+1}\right)}{(pq)^2+ (n\pi)^2} \\
+          \end{align*}
+          which gives a corresponding series of
+          $$
+            \sum_{n=1}^{\infty}\frac{2e^{-pq} \left(n\pi e^{pq} + n\pi\left(-1\right)^{n+1}\right)}{(pq)^2+ (n\pi)^2} \sin\left(n\pi x/p\right)
+          $$
+    \item ~
+          $$
+            a_0=\frac{1}{p}\int_{0}^{p}r\,dx=r
+          $$
+          and
+          \begin{align*}
+            a_n & =\frac{2}{p}\int_{0}^{p}e^{-qx}\cos\left(n\pi x/p\right)\,dx                  \\
+                & =\frac{2pq\mathrm{e}^{-pq} \left(e^{pq} +(-1)^{n+1}\right)}{(pq)^2+ (n\pi)^2}
+          \end{align*}
+          which gives a corresponding series of
+          $$
+            r+\sum_{n=1}^{\infty}\frac{2pq\mathrm{e}^{-pq} \left(e^{pq} +(-1)^{n+1}\right)}{(pq)^2+ (n\pi)^2}\cos\left(n\pi x/p\right)
+          $$
+    \item ~\begin{center}
+            \begin{tikzpicture}
+              \begin{axis}[title = {$f_1$},
+                  ymax = 25,
+                  ymin = -25,
+                  xmin=-3,
+                  xmax=3,
+                  xtick pos = bottom,
+                  ytick pos = left,
+                  height=0.25\textwidth,
+                  width=0.65\textwidth,
+                  scale only axis=true,
+                  xlabel=$p$,
+                  legend pos=north east
+                ]
+                \draw[red, thick, domain=-3:-2, samples=2] plot (\x, {
+                    -22
+                  });
+                \draw[red, thick, domain=-2:-1, samples=100] plot (\x, {
+                    -e^(-5*(\x+2))
+                  });
+                \draw[red, thick, domain=-1:0, samples=2] plot (\x, {
+                    22
+                  });
+                \draw[red, thick, domain=0:1, samples=100] plot (\x, {
+                    e^(-5*\x)
+                  });
+                \draw[red, thick, domain=1:2, samples=2] plot (\x, {
+                    -22
+                  });
+                \draw[red, thick, domain=2:3, samples=100] plot (\x, {
+                    -e^(-5*(\x-2))
+                  });
+              \end{axis}
+            \end{tikzpicture}
+            \begin{tikzpicture}
+              \begin{axis}[title = {$f$},
+                  ymax = 5,
+                  ymin = -5,
+                  xmin=-2,
+                  xmax=2,
+                  xtick pos = bottom,
+                  ytick pos = left,
+                  height=0.25\textwidth,
+                  width=0.65\textwidth,
+                  scale only axis=true,
+                  xlabel=$p$,
+                  legend pos=north east
+                ]
+                \draw[red, thick, domain=-2:-1, samples=100] plot (\x, {
+                    e^(-5*(\x+2))
+                  });
+                \draw[red, thick, domain=-1:0, samples=100] plot (\x, {
+                    -e^(-5*(\x+1))
+                  });
+                \draw[red, thick, domain=0:1, samples=100] plot (\x, {
+                    e^(-5*\x)
+                  });
+                \draw[red, thick, domain=1:2, samples=100] plot (\x, {
+                    -e^(-5*(\x-1))
+                  });
+              \end{axis}
+            \end{tikzpicture}
+          \end{center}
+    \item Sketch the graph of each of the above series.
+  \end{enumerate}
+\end{soln}
+
+% PROBLEM 5
+\begin{problem}
+Consider the function
+$$
+  f(x)=\left(px/r\right)^2+q
+$$
+defined on $\left[0,r\right]$.
+
+\begin{enumerate}[label=(\alph*)]
+  \item Use SageMath to compute the $N^{th}$ partial sum of the Fourier sine series of $f(x)$
+        for $N=5,10,50,100$. Plot the partial sums along with the odd extension of $f(x)$
+        on the extension interval $\left[-r,r\right]$.
+  \item Use SageMath to compute the $N^{th}$ partial sum of the Fourier cosine series of $f(x)$
+        for $N=5,10,50,100$. Plot the partial sums along with the odd extension of $f(x)$
+        on the extension interval $\left[-r,r\right]$.
+  \item Demonstrate the Gibbs Phenomenon from your results.
+\end{enumerate}
+\end{problem}
+\begin{soln}
+  \begin{enumerate}[label=(\alph*)]
+    \item ~\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+            \prompt{In}{incolor}{1}{\boxspacing}
+            \begin{minted}[breaklines, autogobble]{sage}
+# Q5 a
+clear_vars()
+q = 5
+p = 9
+r = 22
+n, x = var('n x')
+
+f = ((p*x/r)^2)+q
+# plot function s dashed line to see convergence
+f_ext = piecewise([((-r, 0), -f), ((0,r), f)])
+func_sin = plot(f_ext, (x, -r, r), color='black', linestyle='dashed')
+N = [5, 10, 50, 100] #list of N values to plot over
+approx_sin = [] #initialize array of plots
+L = r #Define length
+
+b(n) = (2/L) * (integral((f*sin(n*pi*x/L)), x, 0, L))
+for i in range (len(N)):
+    g(x) = sum((b(n)*sin(n*pi*x/L)) for n in (1..(N[i]+1)))
+    approx_sin += [plot(g, (x, -r, r))] #compute and load up plots into array
+
+
+for i in range (len(N)):
+    print("{}th partial sum of Fourier Sine series".format(N[i]))
+    gibbs_upper = plot(f(x=r) *1.18, (x, -r, r), color="red") 
+    gibbs_lower = plot(-f(x=r) *1.18, (x, -r, r), color="red")
+    show(approx_sin[i] + func_sin + gibbs_upper + gibbs_lower) #print out plots with labels
+              \end{minted}
+          \end{tcolorbox}
+          \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+            \prompt{Out}{outcolor}{1}{\boxspacing}
+            5th partial sum of Fourier Sine series\\
+            \includegraphics[scale=0.75]{graphs/g1s.png}\\
+            10th partial sum of Fourier Sine series\\
+            \includegraphics[scale=0.75]{graphs/g2s.png}\\
+            50th partial sum of Fourier Sine series\\
+            \includegraphics[scale=0.75]{graphs/g3s.png}\\
+            100th partial sum of Fourier Sine series\\
+            \includegraphics[scale=0.75]{graphs/g4s.png}
+          \end{tcolorbox}
+    \item \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+            \prompt{In}{incolor}{1}{\boxspacing}
+            \begin{minted}[breaklines, autogobble]{sage}
+# Q5 b
+clear_vars()
+q = 5
+p = 9
+r = 22
+n, x = var('n x')
+
+f = ((p*x/r)^2)+q
+# plot function s dashed line to see convergence
+f_ext = piecewise([((-r, 0), f), ((0,r), f)])
+func_sin = plot(f_ext, (x, -r, r), color='black', linestyle='dashed')
+N = [5, 10, 50, 100] #list of N values to plot over
+approx_sin = [] #initialize array of plots
+L = r #Define length
+a_0 = (1/L) * (integral(f, x, 0, L))
+a(n) = (2/L) * (integral((f*cos(n*pi*x/L)), x, 0, L))
+for i in range (len(N)):
+    g(x) = a_0 + sum((a(n)*cos(n*pi*x/L)) for n in (1..(N[i]+1)))
+    approx_sin += [plot(g, (x, -r, r))] #compute and load up plots into array
+
+
+for i in range (len(N)):
+    print("{}th partial sum of Fourier Cosine series".format(N[i]))
+    show(approx_sin[i] + func_sin) #print out plots with labels
+              \end{minted}
+          \end{tcolorbox}
+          \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+            \prompt{Out}{outcolor}{1}{\boxspacing}
+            5th partial sum of Fourier Cosine series\\
+            \includegraphics[scale=0.75]{graphs/g1c.png}\\
+            10th partial sum of Fourier Cosine series\\
+            \includegraphics[scale=0.75]{graphs/g2c.png}\\
+            50th partial sum of Fourier Cosine series\\
+            \includegraphics[scale=0.75]{graphs/g3c.png}\\
+            100th partial sum of Fourier Cosine series\\
+            \includegraphics[scale=0.75]{graphs/g4c.png}
+          \end{tcolorbox}
+    \item See the red line in the sine series plots. Note that the multiplication by $1.18$ to obtain
+          the approximate $9\%$ Gibbs Phenomenon value originates from the expression for $9\%$ of the jump height,
+          $$\frac{f(x_j^+)+f(x_j^-)}{2}\cdot0.09=2f(x_j)\cdot0.09=0.18\cdot f(x).$$
+  \end{enumerate}
+\end{soln}
+
+% PROBLEM 6
+\begin{problem}
+Recall that an odd function $f(x)$ which is defined on an interval $\left[-L,L\right]$ has a Fourier
+series comprised only of sines. Determine an additional symmetric condition on $f(x)$ that will make
+the sine coefficients with even indices vanish.
+\end{problem}
+\begin{soln}
+  If $f(x)$ is odd then, as stated in the problem, our Fourier series drops down to
+  $$f(x)=\sum_{n=1}^{\infty} b_n\sin\left(n\pi x/L\right)$$
+  with
+  \begin{align*}
+    b_n & =\frac{1}{L}\int_{-L}^{L}f(x)\sin\left(n\pi x/L\right)\,dx                                                                                                        \\
+        & =\frac{1}{L}\left(\int_{-L}^{0}f(x)\sin\left(n\pi x/L\right)\,dx+\int_{0}^{L}f(x)\sin\left(n\pi x/L\right)\,dx\right)                                             \\
+        & =\frac{1}{L}\left(\int_{0}^{L}f(x)\sin\left(n\pi x/L\right)\,dx+\int_{0}^{L}f(x)\sin\left(n\pi x/L\right)\,dx\right)\justif{\quad}{$x=L-x$ in the first integral} \\
+        & =\frac{2}{L}\int_{0}^{L}f(x)\sin\left(n\pi x/L\right)\,dx
+  \end{align*}
+  now if we assume $f(x)=f(L-x)$, e.g. $f(x)$ is symmetric about $L/2$ then the above integral becomes
+  $$
+    b_{n}=\frac{2}{L}\int_{0}^{L}f(x)\sin\left(n\pi (L-x)/L\right)\,dx=\frac{2}{L}\int_{0}^{L}(-1)^{n-1}f(x)\sin\left(n\pi x/L\right)\,dx=\frac{1}{L}\int_{-L}^{L}(-1)^{n-1}f(x)\sin\left(n\pi x/L\right)\,dx
+  $$
+  which makes the integrand odd for even $n$ as $(-1)^{n-1}=-1$ which makes the integrand odd overall.
 \end{soln}
 \end{document}
