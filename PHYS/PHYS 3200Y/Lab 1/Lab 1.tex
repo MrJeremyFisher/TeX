@@ -103,7 +103,6 @@
 \begin{document}
 \maketitle
 
-\listoftodos
 \section{Introduction}
 This lab seeks to derive and verify an expression for the potential at every point inside a coaxial cylindrical capacitor.
 Herein such a capacitor is constructed and analyzed at a variety of frequencies to determine the validity of the derived equation.
@@ -114,7 +113,7 @@ by the invalidation of assumptions made during the derivation of the equation
 By the integral form of Gauss'
 law
 $$\oint_{S}\vec{E}\cdot d\vec{a}=\frac{Q_{enc}}{\epsilon_0}$$
-in the setup depicted in \ref{fig:coax} a cylindrical Gaussian surface can be constructed, giving an area element
+in the setup depicted in Figure 1 a cylindrical Gaussian surface can be constructed, giving an area element
 $$d\vec{a}=r\phi d\phi dz\hat{r}.$$
 Because the electric field here is unknown it cannot be directly integrated.
 Instead an assumption must be made that the electric field solely in the radial direction.
@@ -144,12 +143,11 @@ which is entirely in terms of known quantities.
 \clearpage
 \section{Methods}
 \subsection{Coaxial Capacitor}
-\todo{image of lab setup}
-The first setup involved two coaxial \todo{Maybe talk about alignment}
-aluminum cylinders held at known but different potentials (See \ref{fig:coax}). The outer cylinder
-with inner radius $r_b\approx\qty{21.25(0.01)}{\centi\meter}$ and the inner (solid) cylinder with radius
-$r_a\approx\qty{5.77(0.01)}{\centi\meter}$. The inner cylinder was connected to a variable frequency
-function generator set to a root-mean-square (RMS) voltage of $V_{gen}\approx\qty{7.76}{\milli\volt}$.
+The first setup involved two coaxial
+aluminum cylinders held at known but different potentials (See Figure 1). The outer cylinder
+with inner radius $r_b\approx\qty{21.25(0.1)}{\centi\meter}$ and the inner (solid) cylinder with radius
+$r_a\approx\qty{5.77(0.1)}{\centi\meter}$. The inner cylinder was connected to a variable frequency
+function generator set to a root-mean-square (RMS) voltage of $V_{gen}\approx\qty{7.76}{\volt}$.
 The outer cylinder was held at ground. Tap water was used as a dielectric and filled the space between the cylinders
 at a constant depth.
 A Siglent SDS1202X-E oscilloscope was connected to a needle-tip probe. The probe was
@@ -160,12 +158,11 @@ were performed with a fixed input signal RMS voltage of $V_{gen}$ on the interse
 every neighbouring grid square in a line outward from the inner cylinder. Measurements
 were performed at a variety of frequencies to determine if the potential inside the capacitor
 has any dependence on frequency.
-\todo{Mention code for potential map?}
 \subsection{Second Capacitor}
 A second capacitor consisting of parallel aluminum plates centered inside the outer cylinder in the original coaxial capacitor
-was also studied (see \ref{fig:ppc}). The setup was similar to the coaxial capacitor with the inner element(s)
+was also studied (see Figure 2). The setup was similar to the coaxial capacitor with the inner element(s)
 at a known potential $V_{gen}$ and the outer element at ground. Tap water was again used as a dielectric. The configuration was quadrant-wise symmetric
-which allowed measurements to be made for only the upper-left quadrant using the same oscilloscope and need tipped probe as before.
+which allowed measurements to be made for only the upper-left quadrant using the same oscilloscope and needle tipped probe as before.
 The collected data was then mirrored into the other quadrants using Python.
 \newcolumn
 \begin{figure}
@@ -222,20 +219,20 @@ The collected data was then mirrored into the other quadrants using Python.
   \begin{minipage}{.5\textwidth}
     \centering
     \includegraphics[width=\linewidth]{Figure_1.png}
-    \captionof{figure}{A figure}
+    \captionof{figure}{Coaxial Potential Plot}
     \label{fig:coax-results}
   \end{minipage}%
   \begin{minipage}{.5\textwidth}
     \centering
     \includegraphics[width=\linewidth]{Figure_2.png}
-    \captionof{figure}{Another figure}
+    \captionof{figure}{Coaxial Potential Residuals}
     \label{fig:coax-residuals}
   \end{minipage}%
 \end{figure}
 \section{Results}
 \subsection{Coaxial Capacitor}
 The general curve shape of the derived potential vs. position curve was successfully retrieved for the coaxial capacitor.
-There is significant error near the edges of the measured region (see \ref{fig:coax-residuals}).
+There is significant error near the edges of the measured region (see Figure 4).
 These regions are where the assumptions made in deriving
 the ideal potential equation begin to fall apart as the electric field is no longer radial and begins to curve significantly.
 Uncertainty is also present in the position of the probe. No strategies were employed to accurately locate the probe beyond visual inspection.
@@ -284,14 +281,14 @@ in the data.
   \begin{minipage}{.5\textwidth}
     \centering
     \includegraphics[width=\linewidth]{hplot-sideon.png}
-    \captionof{figure}{Side-on view of \ref{fig:ppc-results}.}
+    \captionof{figure}{Side-on view of Figure 5.}
     \label{fig:ppc-results-so}
   \end{minipage}%
   \hspace{.1\textwidth}%
   \begin{minipage}{.5\textwidth}
     \centering
     \includegraphics[width=\linewidth]{hplot-topdown.png}
-    \captionof{figure}{Top down view of \ref{fig:ppc-results}. Note the distinct behaviours per ``region''.}
+    \captionof{figure}{Top down view of Figure 5. Note the distinct behaviours per ``region''.}
     \label{fig:ppc-results-td}
   \end{minipage}%
 \end{figure}
@@ -308,7 +305,7 @@ mounting system of the probe, it was difficult to center the measuring tip.
 Systematic uncertainty in the experiment is largely caused by (in order of severity)
 \begin{enumerate}
   \item Imprecise probe placement. The exact position of the probe was not precisely determined during each measurement.
-        An estimated $\qty{2}{\milli\meter}$ position uncertainty is included in the horizontal error bars in \ref{fig:ppc-results}
+        An estimated $\qty{2}{\milli\meter}$ position uncertainty is included in the horizontal error bars in Figure 4
         to represent this, though the actual deviation from an ideal measurement is likely significantly more than this in some cases
         and makes determining subtle influences on the equation, such as a potential frequency dependence, difficult.
   \item Imprecise potential measurement. This arises from several factors. Most notably is direct fluctuations
@@ -341,14 +338,14 @@ The second capacitor's potentials were successfully mapped and qualitatively beh
     \centering
     \includegraphics[scale=0.2]{cylcap.png}
     \captionof{figure}{Coaxial cylinder capacitor. Probe visible at left. Mapping template visible beneath the aluminum elements.}
-    \label{fig:ppc-results}
+    \label{fig:i1}
   \end{minipage}%
   \hspace{.1\textwidth}%
   \begin{minipage}{.5\textwidth}
     \centering
     \includegraphics[scale=0.2]{ppcap.png}
     \captionof{figure}{Second capacitor. Note that the plates of the inner element were electrically connected during the potential mapping.}
-    \label{fig:ppc-results-td}
+    \label{fig:i2}
   \end{minipage}%
 \end{figure}
 \subsection{Data}
