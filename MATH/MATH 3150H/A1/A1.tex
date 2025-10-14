@@ -153,44 +153,49 @@ $$pu_{xx}+10pu_{xy}+9pu_{yy}+qu_x+qu_y=8pqx+e^{8ry}$$
             x & =\frac{1}{8}\left(\eta-\xi\right)   \\
             y & =\frac{1}{8}\left(9\eta-\xi\right).
           \end{align*}
-          This gives our new canonical form PDE as (with some manipulation):
-          $$64pu_{\xi\eta}+8qu_\xi=pq\left(\eta-\xi\right)+e^{r\left(9\eta-\xi\right)}$$
+          This gives our new canonical form PDE as:
+          $$64pu_{\xi\eta}+8qu_\xi=pq\left(\xi-\eta\right)-e^{r\left(9\eta-\xi\right)}$$
     \item First we integrate with respect to $\xi$,
           \begin{align*}
-            \int64pu_{\xi\eta}+8qu_\xi\,d\xi & =\int pq\left(\eta-\xi\right)+e^{r\left(9\eta-\xi\right)}\,d\xi                                                  \\
-            64pu_{\eta}+8qu                  & =pq \left({\eta}{\xi} - \frac{{\xi}^{2}}{2}\right) - \frac{e^{r \left(9{\eta} - {\xi}\right)}}{r}                \\
-            u_{\eta}+\frac{8q}{64p}u         & =\frac{pq}{64p} \left({\eta}{\xi} - \frac{{\xi}^{2}}{2}\right) - \frac{e^{r \left(9{\eta} - {\xi}\right)}}{64pr}
+            \int64pu_{\xi\eta}+8qu_\xi\,d\xi & =\int pq\left(\xi-\eta\right)-e^{r\left(9\eta-\xi\right)}\,d\xi                         \\
+            64pu_{\eta}+8qu                  & =\frac{e^{9r{\eta} - r{\xi}}}{r} + \frac{pq{\xi} \left({\xi} - 2{\eta}\right)}{2}       \\
+            u_{\eta}+\frac{8q}{64p}u         & =\frac{e^{9r{\eta} - r{\xi}}}{64pr} + \frac{pq{\xi} \left({\xi} - 2{\eta}\right)}{128p} \\
           \end{align*}
           Which is a linear first order ODE so we find an integrating factor $\mu$,
           $$\mu=\exp\left(\int\frac{8q}{64p}\,d\eta\right)=\exp\left(\frac{8q}{64p}\eta\right).$$
           This gives us
           \begin{align*}
             u\exp\left(\frac{8q}{64p}\eta\right) & =\int\exp\left(\frac{8q}{64p}\eta\right)
-            \left[\frac{q}{64} \left({\eta}{\xi} - \frac{{\xi}^{2}}{2}\right) - \frac{e^{r \left(9{\eta} - {\xi}\right)}}{64pr}\right]\,d\eta                                                                                                                          \\
-                                                 & =-\frac{e^{9r{\eta} + \frac{q{\eta}}{8p} - r{\xi}}}{64pr \left(9r + \frac{q}{8p}\right)} + \frac{{\xi} \left(8pq{\eta} - 64p^{2}\right) e^{\frac{q{\eta}}{8p}}}{64q} - \frac{p{\xi}^{2} e^{\frac{q{\eta}}{8p}}}{16}
+            \left[\frac{e^{9r{\eta} - r{\xi}}}{64pr} + \frac{pq{\xi} \left({\xi} - 2{\eta}\right)}{128p}\right]\,d\eta                                                                                                                                                         \\
+                                                 & =\frac{\left(2qe^{9r{\eta}} - 2pqr \left(72pr + q\right) {\xi}e^{r{\xi}} {\eta} + pr \left(72pr + q\right) {\xi} \left(q{\xi} + 16p\right) e^{r{\xi}}\right) e^{\frac{q{\eta} - 8pr{\xi}}{8p}}}{16qr \left(72pr + q\right)}
           \end{align*}
           Transforming this back to something in terms of $x$ and $y$ we get
           \begin{align*}
-            u & =\exp\left(-\frac{8q}{64p}(y-x)\right)\left(-\frac{e^{9r{(y-x)} + \frac{q{(y-x)}}{8p} - r{(y-9x)}}}{64pr \left(9r + \frac{q}{8p}\right)} + \frac{(y-9x) \left(8pq{(y-x)} - 64p^{2}\right) e^{\frac{q{(y-x)}}{8p}}}{64q} - \frac{p(y-9x)^{2} e^{\frac{q{(y-x)}}{8p}}}{16}\right) \\
-            % & =\left(\frac{q \left({(y-9x)}{(y-x)} - \frac{{(y-9x)}^{2}}{2}\right)}{64} - \frac{e^{r \left(9{(y-x)} - {(y-9x)}\right)}}{64pr}\right) \\
-            %   & = \frac{q\left(y^2-2yx-63x^2\right)}{128}-\frac{e^{8yr}}{64pr}
+            u & =\exp\left(-\frac{8q}{64p}(y-x)\right)\frac{2qe^{9r{(y-x)}} - 2pqr \left(72pr + q\right) {(y-9x)}e^{r{(y-9x)}} {(y-x)} + pr \left(72pr + q\right) {(y-9x)}\dots}{16qr \left(72pr + q\right)} \\
           \end{align*}
-    \item For this we first calculate the partials,
-          \begin{align*}
-             & u_x=-\frac{q \left(63x + y\right)}{64} \qquad u_{xx}=-\frac{63q}{64} \qquad u_{xy}=-\frac{q}{64}            \\
-             & u_y=\frac{q \left(2y - 2x\right)}{128} - \frac{e^{8ry}}{8p} \qquad u_{yy}=\frac{q}{64} - \frac{re^{8ry}}{p}
-          \end{align*}
-          Then evaluate the original equation with these values,
-          \begin{align*}
-             & =pu_{xx}+10pu_{xy}+9pu_{yy}+qu_x+qu_y         \\
-             & =p\left[-\frac{63q}{64}\right]+
-            10p\left[-\frac{q}{64}\right]+
-            9p\left[\frac{q}{64} - \frac{re^{8ry}}{p}\right]+
-            q\left[-\frac{q \left(63x + y\right)}{64}\right]+
-            q\left[\frac{q \left(2y - 2x\right)}{128}\right] \\
-             & =-q\left(p+qx\right)-9e^{8ry}r                \\
-            8pqx+e^{8ry}
-          \end{align*}
+          (Sage used for substitutions).
+    \item For this sage was used to calculate the partials and simplify the expression.
+          \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+            \prompt{In}{incolor}{1}{\boxspacing}
+            \begin{minted}[breaklines, autogobble]{sage}
+x,y,p,q,r = var("x y p q r")
+
+f = ((2 * q * e^(9 * r * (y - x)) + p * r * (72 * p * r + q) * (y - 9 * x) * (q * (y - 9 * x) + 16 * p) * e^(r * (y - 9 * x)) - 2 * p * q * r * (72 * p * r + q) * (y - 9 * x) * (y - x) * e^(r * (y - 9 * x))) * e^((q * (y - x) - 8 * p * r * (y - 9 * x)) / (8 * p) - (q * (y - x)) / (8 * p))) / (16 * q * r * (72 * p * r + q))
+
+ux = diff(f, x)
+uxx = diff(ux, x)
+uy = diff(f, y)
+uyy = diff(uy, y)
+uxy = diff(ux, y)
+
+PDE = p*uxx+ 10*p*uxy+9*p*uyy+q*ux+q*uy 
+show(PDE.full_simplify())
+              \end{minted}
+          \end{tcolorbox}
+          \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+            \prompt{Out}{outcolor}{1}{\boxspacing}
+            $\displaystyle 8 p q x + e^{\left(8 r y\right)}$
+          \end{tcolorbox}
   \end{enumerate}
 \end{soln}
 
@@ -221,14 +226,14 @@ $$u_y+R(x,y)u_x=ru;\qquad u(x,0)=r,\quad R(x,y)=\left(1-x\right)\left(p-q\sin\le
   and solving for the constants we obtained,
   $$y(0)=0+C_2=0\implies y=t$$
   $$z(0)=0+C_3=r\implies z=r\left(t+1\right)$$
-  \begin{align*}
-    0&=\frac{1}{q\sin\left(0\right)-p}\ln\left(pe^{0}\sin\left(0\right)+\frac{p-q\sin\left(0\right)}{x(0)-1}\right)+C_1\\
-    0&=-\frac{1}{p}\ln\left(\frac{p}{x(0)-1}\right)+C_1\\
-    \impliesm1&=\exp -\frac{1}{p}\ln\left(\frac{p}{x(0)-1}\right)+C_1\\
-    1&=e^{C_1}\left(\exp \ln\left(\frac{p}{x(0)-1}\right)\right)^{-1/p}\\
-    1&=e^{-pC_1}\frac{p}{x(0)-1}\\
-    x(0)&=pe^{-pC_1}+1=s\\
-  \end{align*}
+  % \begin{align*}
+  %   0&=\frac{1}{q\sin\left(0\right)-p}\ln\left(pe^{0}\sin\left(0\right)+\frac{p-q\sin\left(0\right)}{x(0)-1}\right)+C_1\\
+  %   0&=-\frac{1}{p}\ln\left(\frac{p}{x(0)-1}\right)+C_1\\
+  %   \impliesm1&=\exp -\frac{1}{p}\ln\left(\frac{p}{x(0)-1}\right)+C_1\\
+  %   1&=e^{C_1}\left(\exp \ln\left(\frac{p}{x(0)-1}\right)\right)^{-1/p}\\
+  %   1&=e^{-pC_1}\frac{p}{x(0)-1}\\
+  %   x(0)&=pe^{-pC_1}+1=s\\
+  % \end{align*}
 \end{soln}
 
 % PROBLEM 3
@@ -248,20 +253,20 @@ Use SAGE or otherwise to show that a transformation of a second order linear PDE
   \end{align*}
   we can say that the discriminant of the new PDE in the $(\xi,\eta)$ plane will be
   \begin{align*}
-    \Delta_1 & = B_1^2-4A_1C_1 \\
-             & = B_1^2-4A_1C_1 \\
-             & = (2A\xi_x\eta_x+B\left(\xi_x\eta_y+\xi_y\eta_x\right)+2C\xi_y\eta_y)^2-4(A\xi_x^2+B\xi_x\xi_y+C\xi_y^2)(A\eta_x^2+B\eta_x\eta_y+C\eta_y^2)\\
-             & = \left(B^{2} - 4 A C\right) \eta_{y}^{2} \xi_{x}^{2} - 2 {\left(B^{2} - 4 A C\right)} \eta_{x} \eta_{y} \xi_{x} \xi_{y} + {\left(B^{2} - 4 A C\right)} \eta_{x}^{2} \xi_{y}^{2}\justif{\quad}{Sage's full\_simplify()}\\
+    \Delta_1 & = B_1^2-4A_1C_1                                                                                                                                                                                                         \\
+             & = B_1^2-4A_1C_1                                                                                                                                                                                                         \\
+             & = (2A\xi_x\eta_x+B\left(\xi_x\eta_y+\xi_y\eta_x\right)+2C\xi_y\eta_y)^2-4(A\xi_x^2+B\xi_x\xi_y+C\xi_y^2)(A\eta_x^2+B\eta_x\eta_y+C\eta_y^2)                                                                             \\
+             & = \left(B^{2} - 4 A C\right) \eta_{y}^{2} \xi_{x}^{2} - 2 {\left(B^{2} - 4 A C\right)} \eta_{x} \eta_{y} \xi_{x} \xi_{y} + {\left(B^{2} - 4 A C\right)} \eta_{x}^{2} \xi_{y}^{2}\justif{\quad}{Sage's full\_simplify()} \\
              & = \left(B^{2} - 4 A C\right)\left(\eta_{y} \xi_{x}-\eta_{x} \xi_{y}\right)
   \end{align*}
-  which we can see is 
+  which we can see is
   $$J^2\Delta.$$
   Because we started with canonical forms by making a change of variables with non-singular (real) Jacobian
   $$
-  J=\begin{vmatrix}
-    \xi_x&\xi_y\\
-    \eta_x&\eta_y
-  \end{vmatrix}\implies \sgn J^2\Delta = \sgn \Delta
+    J=\begin{vmatrix}
+      \xi_x  & \xi_y  \\
+      \eta_x & \eta_y
+    \end{vmatrix}\implies \sgn J^2\Delta = \sgn \Delta
   $$
   which will return the same classification as we originally had in the $x,y$ plane.
 \end{soln}
