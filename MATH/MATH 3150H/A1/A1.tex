@@ -14,7 +14,7 @@
 \usepackage{fontspec}
 \usepackage{relsize}
 \usepackage{subfig}
-\usepackage{sagetex}
+% \usepackage{sagetex}
 \usepackage{minted}
 \usepackage{todonotes}
 \usepackage{multicol, multirow, booktabs}
@@ -174,7 +174,7 @@ $$pu_{xx}+10pu_{xy}+9pu_{yy}+qu_x+qu_y=8pqx+e^{8ry}$$
             u & =\exp\left(-\frac{8q}{64p}(y-x)\right)\frac{2qe^{9r{(y-x)}} - 2pqr \left(72pr + q\right) {(y-9x)}e^{r{(y-9x)}} {(y-x)} + pr \left(72pr + q\right) {(y-9x)}\dots}{16qr \left(72pr + q\right)} \\
           \end{align*}
           (Sage used for substitutions).
-    \item For this sage was used to calculate the partials and simplify the expression.
+    \item For this Sage was used to calculate the partials and simplify the expression.
           \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
             \prompt{In}{incolor}{1}{\boxspacing}
             \begin{minted}[breaklines, autogobble]{sage}
@@ -202,38 +202,70 @@ show(PDE.full_simplify())
 % PROBLEM 2
 \begin{problem}
 Use the method of characteristics to solve the IVP
-$$u_y+R(x,y)u_x=ru;\qquad u(x,0)=r,\quad R(x,y)=\left(1-x\right)\left(p-q\sin\left(qy\right)\right)-p\left(1-x\right)^2e^{py}\sin\left(qy\right)$$
+$$u_y+R(x,y)u_x=ru;\qquad u(x,0)=x^r,\quad R(x,y)=\left(1-x\right)\left(p-q\sin\left(qy\right)\right)-p\left(1-x\right)^2e^{py}\sin\left(qy\right)$$
 \end{problem}
 \begin{soln}
   From the IVP we obtain
   \begin{align*}
-             & \frac{dx}{dt}=R(x,y) & \frac{dy}{dt}=1 & \frac{dz}{dt}=r \\
-    \implies & t=\int\frac{dx}{R}   & y=t+C_2         & z=rt+C_3.
+             & \frac{dx}{dt}=R(x,y); \qquad \frac{dy}{dt}=1; \qquad \frac{dz}{dt}=r \\
+    \implies & \qquad y=t+C_2\implies y=t; \qquad z=rt+C_3.
   \end{align*}
-  Solving the more difficult integral,
+  Now we need to solve
+  $$\frac{dx}{dt}=R(x,t)=\left(1-x\right)\left(p-q\sin\left(qt\right)\right)-p\left(1-x\right)^2e^{pt}\sin\left(qt\right)$$
+  before we can move on.
+  If we make the substitution
+  $$k=1-x\implies dk=-dx$$
+  we obtain
+  $$-\frac{dk}{dt}=k\left(p-q\sin\left(qt\right)\right)-pk^2e^{pt}\sin\left(qt\right)$$
+  which we rearrange to
+  $$\frac{dk}{dt}+k\left(p-q\sin\left(qt\right)\right)=pk^2e^{pt}\sin\left(qt\right).$$
+  This is a Bernoulli equation. So we divide through by $k^2$,
+  $$k^{-2}\frac{dk}{dt}+k^{-1}\left(p-q\sin\left(qt\right)\right)=pe^{pt}\sin\left(qt\right)$$
+  and we'll let $v=k^{-1}\implies dv = -k^{-2}dt$ which gives
+  $$-\frac{dv}{dt}+v\left(p-q\sin\left(qt\right)\right)=pe^{pt}\sin\left(qt\right).$$
+  We rearrange this to
+  $$\frac{dv}{dt}+v\left(q\sin\left(qt\right)-p\right)=-pe^{pt}\sin\left(qt\right).$$
+  We now apply an integrating factor
+  $$\mu=\exp\left(\int \left(q\sin\left(qt\right)-p\right)dt\right)=C\exp\left(-\cos(qt)-pt\right)$$
+  which gives
+  $$\exp\left(-\cos(qt)-pt\right)dv+\left(\exp\left(-\cos(qt)-pt\right)\left(q\sin (qt)-p\right)v+\frac{p\sin(qt)}{\exp(\cos(qt))}\right)dt=0.$$
+  This is an exact equation.
+  We have
+  $$M=\exp\left(-\cos(qt)-pt\right)$$
+  and
+  $$N=\exp\left(-\cos(qt)-pt\right)\left(q\sin (qt)-p\right)v+\frac{p\sin(qt)}{\exp(\cos(qt))}.$$
+  So we look for some $F(v,t)$ such that
+  $$dF=Mdv+Ndt$$
+  and
+  $$\frac{\partial F}{\partial v}=M;\quad \frac{\partial F}{\partial t}= N.$$
+  These are both easily solved by direct integration,
   \begin{align*}
-     & =\int\frac{dx}{R}                                                                                                  \\
-    % &=\int\frac{dx}{\left(1-x\right)\left(p-q\sin\left(qy\right)\right)-p\left(1-x\right)^2e^{py}\sin\left(qy\right)}\\
-     & =\int\frac{du}{pe^{py}\sin\left(qy\right)u^2+(p-q\sin\left(qy\right))u}\justif{\>}{$u=x-1\implies du=dx$}          \\
-     & =\int\frac{du}{\left[pe^{py}\sin\left(qy\right)+(p-q\sin\left(qy\right))/u\right]u^2}                              \\
-     & =-\frac{1}{p-q\sin\left(qy\right)}\int\frac{dv}{v}
-    \justif{\>}{$v=pe^{py}\sin\left(qy\right)+(p-q\sin\left(qy\right))/u\implies dv=-(p-q\sin\left(qy\right))/u^2 du$}    \\
-     & =\frac{1}{q\sin\left(qy\right)-p}\ln\left(pe^{py}\sin\left(qy\right)+\frac{p-q\sin\left(qy\right)}{u}\right)       \\
-     & =\frac{1}{q\sin\left(qy\right)-p}\ln\left(pe^{py}\sin\left(qy\right)+\frac{p-q\sin\left(qy\right)}{x-1}\right)+C_1
+    F & =\int \exp\left(-\cos(qt)-pt\right)\left(q\sin (qt)-p\right)v+\frac{p\sin(qt)}{\exp(\cos(qt))}\,dt\\
+      & =\frac{p}{q}e^{-\cos qt}+ve^{-\cos (qt)-pt}+C(v).
   \end{align*}
-  Now applying our initial condition,
-  $$x(0)=s;\qquad y(0)=0;\qquad z(0)=r$$
-  and solving for the constants we obtained,
-  $$y(0)=0+C_2=0\implies y=t$$
-  $$z(0)=0+C_3=r\implies z=r\left(t+1\right)$$
-  % \begin{align*}
-  %   0&=\frac{1}{q\sin\left(0\right)-p}\ln\left(pe^{0}\sin\left(0\right)+\frac{p-q\sin\left(0\right)}{x(0)-1}\right)+C_1\\
-  %   0&=-\frac{1}{p}\ln\left(\frac{p}{x(0)-1}\right)+C_1\\
-  %   \impliesm1&=\exp -\frac{1}{p}\ln\left(\frac{p}{x(0)-1}\right)+C_1\\
-  %   1&=e^{C_1}\left(\exp \ln\left(\frac{p}{x(0)-1}\right)\right)^{-1/p}\\
-  %   1&=e^{-pC_1}\frac{p}{x(0)-1}\\
-  %   x(0)&=pe^{-pC_1}+1=s\\
-  % \end{align*}
+  Differentiating this now with respect to $v$ and setting equal to $M$ we get
+  $$
+    \frac{\partial F}{\partial v} = e^{-\cos (qt)-pt}+\primed{C}(v)=\exp\left(-\cos(qt)-pt\right)\implies \primed{C}(v)=0.
+  $$
+  So our solution is 
+  $$
+  F(t,v)=\frac{p}{q}e^{-\cos qt}+ve^{-\cos (qt)-pt}=C\implies v=Ce^{\cos(qt)+pt}-\frac{p}{q}e^{pt}.
+  $$
+  Now we back substitute for $v=k^{-1}$,
+  $$k^{-1}=Ce^{\cos(qt)+pt}-\frac{p}{q}e^{pt}$$
+  and then back substitute for $k=1-x$,
+  $$x = \frac{q}{Ce^{\cos(qt)+pt}+pe^{pt}}+1.$$
+  Now using our initial condition we can say that
+  $$x(0)=\frac{q}{C_1e^{\cos(0)+p\cdot(0)}+pe^{0}}+1=\frac{q}{C_1e+p}+1=s\implies C_1 = \left(\frac{q}{s-1}-p\right)e^{-1}.$$
+  Now our initial condition on $z$,
+  $$z(0)=C_3=s^r\implies z=rt+s^r.$$
+  So we have
+  $$x=\frac{q}{ \left(\frac{q}{s-1}-p\right)e^{\cos(qt)+pt-1}+pe^{pt}}+1;\qquad y=t;\qquad z=rt+s^r.$$
+  Solving the $x$ expression for $s$ (and substituting $t=y$) we get that 
+  $$s = \frac{{\left(p + q\right)} e^{\left(p y + \cos\left(q y\right) - 1\right)} - p e^{\left(p y\right)} - q}{p e^{\left(p y + \cos\left(q y\right) - 1\right)} - p e^{\left(p y\right)} - q}
+  \implies z = ry+\left[\frac{q e^{\left(p y + \cos\left(q y\right) - 1\right)}}{p e^{\left(p y + \cos\left(q y\right) - 1\right)} - p e^{\left(p y\right)} - q}\right]^r
+  $$
+  Which isn't actually a solution so obviously I've gone wrong somewhere. 
 \end{soln}
 
 % PROBLEM 3
@@ -531,15 +563,22 @@ the sine coefficients with even indices vanish.
   $$f(x)=\sum_{n=1}^{\infty} b_n\sin\left(n\pi x/L\right)$$
   with
   \begin{align*}
-    b_n & =\frac{1}{L}\int_{-L}^{L}f(x)\sin\left(n\pi x/L\right)\,dx                                                                                                        \\
-        & =\frac{1}{L}\left(\int_{-L}^{0}f(x)\sin\left(n\pi x/L\right)\,dx+\int_{0}^{L}f(x)\sin\left(n\pi x/L\right)\,dx\right)                                             \\
-        & =\frac{1}{L}\left(\int_{0}^{L}f(x)\sin\left(n\pi x/L\right)\,dx+\int_{0}^{L}f(x)\sin\left(n\pi x/L\right)\,dx\right)\justif{\quad}{$x=L-x$ in the first integral} \\
+    b_n & =\frac{1}{L}\int_{-L}^{L}f(x)\sin\left(n\pi x/L\right)\,dx                                                                                                       \\
+        & =\frac{1}{L}\left(\int_{-L}^{0}f(x)\sin\left(n\pi x/L\right)\,dx+\int_{0}^{L}f(x)\sin\left(n\pi x/L\right)\,dx\right)                                            \\
+        & =\frac{1}{L}\left(\int_{0}^{L}f(x)\sin\left(n\pi x/L\right)\,dx+\int_{0}^{L}f(x)\sin\left(n\pi x/L\right)\,dx\right)\justif{\quad}{$x=-x$ in the first integral} \\
         & =\frac{2}{L}\int_{0}^{L}f(x)\sin\left(n\pi x/L\right)\,dx
   \end{align*}
-  now if we assume $f(x)=f(L-x)$, e.g. $f(x)$ is symmetric about $L/2$ then the above integral becomes
+  Now if we want our integral to be zero for even indices we require that the integral in that case 
+  be of an odd function over the entire interval. We can note that 
+  if $f(x)=f(L-x)$ e.g. $f$ is even symmetric about $L/2$ then the integral will become
   $$
-    b_{n}=\frac{2}{L}\int_{0}^{L}f(x)\sin\left(n\pi (L-x)/L\right)\,dx=\frac{2}{L}\int_{0}^{L}(-1)^{n-1}f(x)\sin\left(n\pi x/L\right)\,dx=\frac{1}{L}\int_{-L}^{L}(-1)^{n-1}f(x)\sin\left(n\pi x/L\right)\,dx
+    b_{n}=\frac{2}{L}\int_{0}^{L}f(L-x)\sin\left(n\pi (L-x)/L\right)\,dx
+    =\frac{2}{L}(-1)^{n-1}\int_{0}^{L}f(x)\sin\left(n\pi x/L\right)\,dx
+    =\frac{1}{L}(-1)^{n-1}\int_{-L}^{L}f(x)\sin\left(n\pi x/L\right)\,dx/
   $$
-  which makes the integrand odd for even $n$ as $(-1)^{n-1}=-1$ which makes the integrand odd overall.
+  because our 
+  $$\sin\left(n\pi (L-x)/L\right)=(-1)^{n-1}\sin\left(n\pi x/L\right)$$
+  odd numbered sines will behave as even functions about $L/2$ and even numbered sines will
+  be odd about $L/2$ giving a net odd function when $n$ is even and therefore making the integral zero. 
 \end{soln}
 \end{document}

@@ -23,3 +23,7 @@ robExt-remove-old-figures.py
 _autosave*
 *.tdo
 *.minted
+*.sage
+*.sage.py
+*.scmd
+*.sout

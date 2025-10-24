@@ -15,6 +15,7 @@
 \usepackage{relsize}
 \usepackage{subfig}
 \usepackage{todonotes}
+\usepackage{sagetex}
 \usepackage{multicol, multirow, booktabs}
 \usepackage[breakable]{tcolorbox}
 \usepackage[inline]{enumitem}
@@ -208,10 +209,8 @@ Use definition (2), Sec.15, of the limit to prove that
           all by properties of the complex conjugate. So provided $\abs{z-z_0}<\delta=\epsilon$, then
           $\abs{\overline{z}-\overline{z_0}}<\epsilon$.
     \item Let $\epsilon>0$. Suppose $\abs{z-z_0}<\delta$. We have
-          $$\abs{\frac{\overline{z}^2}{z}-\frac{\overline{z_0}^2}{z_0}}=\abs{\frac{\overline{zz}}{z}-\frac{\overline{z_0z_0}}{z_0}}$$
-
-
-          $\lim_{z\to 0}=0$.
+          $$\abs{\frac{\overline{z}^2}{z}-0}=\frac{\abs{\overline{z}^2}}{\abs{z}}=\abs{z}.$$
+          This means that $$\abs{\frac{\overline{z}^2}{z}-0}=\abs{z}< \delta=\epsilon$$
   \end{enumerate}
 \end{soln}
 
@@ -264,7 +263,7 @@ $z$ when
   \end{enumerate*}
 \end{center}
 \end{problem}
-\begin{soln}
+\begin{soln}~
   \begin{enumerate}[label=(\alph*)]
     \item $$\frac{\Delta f}{\Delta z}
             =\frac{\Re (z+\Delta z)- \Re z}{\Delta z}
@@ -272,7 +271,7 @@ $z$ when
             =\frac{\Re \Delta z}{\Delta z}.$$
           Approaching along the real axis gives $\Delta z=\Delta x+0i$ so
           $$\frac{\Re \Delta z}{\Delta z}=\frac{\Delta x}{\Delta x}=1.$$
-          Approaching along the imaginary axis gives $Delta z = 0+\Delta yi$ so
+          Approaching along the imaginary axis gives $\Delta z = 0+\Delta yi$ so
           $$\frac{\Re \Delta z}{\Delta z}=\frac{0}{\Delta yi}=0.$$
           Because these two do not agree the limit which defines the derivative cannot exist
           and therefore the derivative itself cannot exist.
@@ -297,7 +296,6 @@ indicated domain of definition, and also to find $\primed{f}(z)$:
   \item $f(z)=e^{-\theta}\cos\left(\ln r\right)+ie^{-\theta}\sin\left(\ln r\right)$ $(r>0. 0<\theta<2\pi)$.
 \end{enumerate}
 \end{problem}
-\todo{Find diff}
 \begin{soln}~
   \begin{enumerate}[label=(\alph*)]
     \item First we note that
@@ -311,13 +309,19 @@ indicated domain of definition, and also to find $\primed{f}(z)$:
           $$ru_r=v_\theta\qquad\text{and}\qquad u_\theta=-rv_r$$
           which, alongside the fact that the partials exists for all $(r,\theta)$, satisfies
           the theorem. This means that the derivative will exist for all $(r,\theta)$ in the domain.
+          Recalling that, as in real valued functions, the power rule applies, we have that
+          $$\primed{f}(x)=-4/z^5.$$
     \item Our partials here are
           \begin{align*}
              & u_r=-r^{-1}e^{-\theta}\sin\left(\ln r\right)\qquad u_\theta=-e^{-\theta}\cos\left(\ln r\right) \\
              & v_r=r^{-1}e^{-\theta}\cos\left(\ln r\right)\qquad v_\theta=-e^{-\theta}\sin\left(\ln r\right).
           \end{align*}
-          which satisfy the Cauchy-Riemann equations. Because the trig functions are only undefined (they oscillate infinitely quickly) at $r=0$ which is not 
+          which satisfy the Cauchy-Riemann equations. Because the trig functions are only undefined (they oscillate infinitely quickly) at $r=0$ which is not
           a part of the domain the derivative exists over the domain.
+          Now using the definition of the derivative,
+          $$\primed{f}(x)=e^{-i\theta}\left[u_r+iv_r\right]$$
+          we get
+          $$\primed{f}(x)=e^{-i\theta}\left[-r^{-1}e^{-\theta}\sin\left(\ln r\right)+ir^{-1}e^{-\theta}\cos\left(\ln r\right)\right]$$
   \end{enumerate}
 \end{soln}
 
@@ -325,20 +329,44 @@ indicated domain of definition, and also to find $\primed{f}(z)$:
 \begin{problem}
 With the aid of the theorem in Sec. 21, show that each of these functions is nowhere
 analytic:
-\begin{enumerate*}[label=(\alph*)]
-  \item $f(z)=xy+iy$;\qquad~
-  \item $f(z)=2xy+i(x^2-y^2)$;\qquad~
-  \item $f(z)=e^ye^{ix}$.
-\end{enumerate*}
+\begin{center}
+  \begin{enumerate*}[label=(\alph*)]
+    \item $f(z)=xy+iy$;\qquad~
+    \item $f(z)=2xy+i(x^2-y^2)$;\qquad~
+    \item $f(z)=e^ye^{ix}$.
+  \end{enumerate*}
+\end{center}
 \end{problem}
-\begin{soln}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item Here the partials are
+          $$u_x=y;\qquad v_y=1;\qquad v_x=0;\qquad u_y=x.$$
+          This means that the Cauchy-Riemann equations are
+          $$y=1;\qquad x=0.$$
+          As the definition for an analytic function requires that the derivative exists on a disk around a point for
+          a function to be analytic at the center of the disk, this function cannot be analytic because it is only
+          differentiable at $(0,1)$.
+    \item Here the partials are
+          $$u_x=2y;\qquad v_y=-2y;\qquad v_x=2x;\qquad u_y=2x.$$
+          This means that the Cauchy-Riemann equations are
+          $$2y=-2y;\qquad 2x=-2x$$
+          which implies the derivative only exists at $(0,0)$
+          which, by the same reasoning as above, the function is nowhere analytic.
+    \item $f(z)=e^ye^{ix}=e^y\left(\cos x i\sin x\right)$
+          $$u_x=-e^y\sin x;\qquad v_y=e^y\sin x;\qquad v_x=e^y\cos x;\qquad u_y=e^y\cos x.$$
+          This means that the Cauchy-Riemann equations are
+          $$-e^y\sin x=e^y\sin x;\qquad e^y\cos x=-e^y\cos x$$
+          Which simplifies to
+          $$-\sin x=\sin x;\qquad \cos x=-\cos x$$
+          which is only true at $x=0$ which is, again, not a neighborhood and this is therefore nowhere analytic.
+  \end{enumerate}
 \end{soln}
 
 % PROBLEM 8
 \begin{subtheorem}{problem}
   \begin{problem}
   Let the function $f (z) = u(x, y) + iv(x, y)$ be analytic in a domain $D$, and consider the
-  families of level curves $u(x, y) = c_1$ and $v(x, y) = c_2$ , where $c_1$ and $c_2$ are arbitrary
+  families of level curves $u(x, y) = c_1$ and $v(x, y) = c_2$, where $c_1$ and $c_2$ are arbitrary
   real constants. Prove that these families are orthogonal. More precisely, show that if
   $z_0 = (x_0,y_0)$ is a point in $D$ which is common to two particular curves $u(x, y) = c_1$
   and $v(x, y) = c_2$ and if $\primed{f}(z_0)\neq0$, then the lines tangent to those curves at $(x_0,y_0)$ are
@@ -351,8 +379,37 @@ analytic:
 \end{subtheorem}
 \begin{subtheorem}{soln}
   \begin{soln}
+    Coming at this from a multivariate calculus standpoint we know that level curves are orthogonal
+    if their normal vectors are orthogonal. These normal vectors are given by the gradient of the corresponding
+    function at that point,
+    $$\grad{u}=\left(u_x,u_y\right);\qquad \grad{v}=\left(v_x,v_y\right).$$
+    For orthogonality we need the inner product,
+    $$
+      u_xv_x+u_yv_y,
+    $$
+    to be zero.
+    Now as we know that $f(z)$ is analytic we can say that, by definition, the Cauchy-Riemann equations hold in $D$ and
+    therefore
+    $$u_x=v_y;\qquad u_y=-v_x.$$
+    Plugging these into our previous expression for the inner product,
+    $$
+      v_yv_x-v_xv_y=0.
+    $$
   \end{soln}
   \begin{soln}
+    With $$f(z)=1/z=1/(x+iy)=\frac{x}{x^2+y^2}-\frac{y}{x^2+y^2}i$$
+    we have
+    $$u=\frac{x}{x^2+y^2};\qquad v=-\frac{y}{x^2+y^2}$$
+    \begin{sagesilent}
+      x, y = var('x y')
+
+      f(x,y) = x / (x ^ 2 + y ^ 2)
+      f_1(x,y)=-y / (x ^ 2 + y ^ 2)
+    \end{sagesilent}
+    \begin{center}
+      \sageplot[scale=0.5]{contour_plot(lambda x, y: f(x,y), (-1, 1), (-1, 1), contours=[1], fill=False, cmap=['blue'])+contour_plot(lambda x, y: f_1(x,y), (-1, 1), (-1, 1), contours=[1], fill=False, cmap=['green'])}
+    \end{center}
+Blue: level curve of $u=1$, Green: level curve of $v=1$
   \end{soln}
 \end{subtheorem}
 \end{document}

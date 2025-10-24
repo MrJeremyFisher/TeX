@@ -1,0 +1,336 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{changepage}
+\usepackage{circuitikz}
+\usepackage{pgfplots}
+\usepackage{physics}
+\usepackage{hyperref}
+\usepackage{siunitx}
+\usepackage{fontspec}
+\usepackage{relsize}
+\usepackage{subfig}
+\usepackage{todonotes}
+\usepackage{emoji}
+\usepackage{multicol, multirow, booktabs}
+\usepackage[breakable]{tcolorbox}
+\usepackage[inline]{enumitem}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{soln}{Solution}
+
+\pgfplotsset{compat=newest}
+\usetikzlibrary{lindenmayersystems}
+\usetikzlibrary{arrows}
+\usetikzlibrary{calc}
+\usetikzlibrary{positioning, fit}
+\usetikzlibrary{3d, perspective}
+
+\definecolor{incolor}{HTML}{303F9F}
+\definecolor{outcolor}{HTML}{D84315}
+\definecolor{cellborder}{HTML}{CFCFCF}
+\definecolor{cellbackground}{HTML}{F7F7F7}
+\newcommand{\ui}{\hat{i}}
+\newcommand{\uj}{\hat{j}}
+\newcommand{\uk}{\hat{k}}
+\newcommand{\ux}{\hat{x}}
+\newcommand{\uy}{\hat{y}}
+\newcommand{\uz}{\hat{z}}
+\newcommand{\primed}[1]{#1^\prime}
+\pgfdeclarelayer{background}  
+\pgfsetlayers{background,main}
+\AtBeginDocument{\RenewCommandCopy\qty\SI}
+\newcommand{\justif}[2]{&{#1}&\text{#2}}
+
+\makeatletter
+\newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+\makeatother
+\newcommand{\prompt}[4]{
+    \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+}
+
+\newcommand{\thevenin}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (2,0) to[battery1, l_=$V_{Th}\eq#1$] (2,2) 
+      to[resistor, l_=$R_{Th}\eq#2$] (0,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\norton}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (3,0) to[american current source, l_=$I_{N}\eq#1$] (3,2) -- (0,2) (2,0)
+      to[resistor, l=$R_{N}\eq#2$] (2,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\highlight}[1]{\colorbox{yellow}{$\displaystyle #1$}}
+
+\newcommand{\ti}[1]{\widetilde{#1}}
+
+\newfontface{\Kaufmann}{Kaufmann}
+\DeclareTextFontCommand{\kf}{\Kaufmann}
+\newcommand{\scriptr}{\fontsize{12pt}{12pt}\kf{r}}
+
+\newfontface{\KaufmannB}{Kaufmann Bd BT}
+\DeclareTextFontCommand{\kfb}{\KaufmannB}
+\newcommand{\bscriptr}{\fontsize{12pt}{12pt}\kfb{r}}
+
+\newcommand{\bv}[1]{\mathbf{#1}}
+
+\title{Math 3310H: Assignment II}
+\author{Jeremy Favro (0805980) \\ Trent University, Peterborough, ON, Canada}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+% PROBLEM 1
+\begin{problem}
+Complete the following Cayley table (for a group). (Justify your
+results.)
+\begin{center}
+  \begin{tabular}{c | c c c c c c c c}
+    ~ & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\
+    \cline{1-9}
+    1 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\
+    2 & 2 & 1 & 4 & 3 & 6 & 5 & 8 & 7 \\
+    3 & 3 & 4 & 2 & 1 & 7 & 8 & 6 & 5 \\
+    4 & 4 & 3 & 1 & 2 & 8 & 7 & 5 & 6 \\
+    5 & 5 & 6 & 8 & 7 & 1 &   &   &   \\
+    6 & 6 & 5 & 7 & 8 &   & 1 &   &   \\
+    7 & 7 & 8 & 5 & 6 &   &   & 1 &   \\
+    8 & 8 & 7 & 6 & 5 &   &   &   & 1
+  \end{tabular}
+\end{center}
+\end{problem}
+\begin{soln}~
+  The strategy I settled on for this is to use the existing information in the table (obviously) and to break
+  down the unknown entries using the known entries. I found it easiest to look for
+  combinations that gave the identity, like in the case of $8* 7$ we'll look for
+  some way to make 8 which is the $*$ of something and $7$ as $7*7=1$ which is the identity in this case.
+  We see that $8=2*7\implies 8*7=2*7*7=2*1=\colorbox{red!35!white}{2}$.
+  Repeating this process for $8*5$ we get $8*5=3*5*5=3*1=\colorbox{blue!20!white}{3}$. Using the Sudoku theorem
+  we can automatically fill in the $8*6$ spot with a \colorbox{green!50!white}{4} as that is the only element we haven't used.
+  \begin{center}
+    \begin{tabular}{c | c c c c c c c c}
+      ~ & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8                            \\
+      \cline{1-9}
+      1 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8                            \\
+      2 & 2 & 1 & 4 & 3 & 6 & 5 & 8 & 7                            \\
+      3 & 3 & 4 & 2 & 1 & 7 & 8 & 6 & 5                            \\
+      4 & 4 & 3 & 1 & 2 & 8 & 7 & 5 & 6                            \\
+      5 & 5 & 6 & 8 & 7 & 1 &   &   & \colorbox{blue!20!white}{3}  \\
+      6 & 6 & 5 & 7 & 8 &   & 1 &   & \colorbox{green!50!white}{4} \\
+      7 & 7 & 8 & 5 & 6 &   &   & 1 & \colorbox{red!35!white}{2}   \\
+      8 & 8 & 7 & 6 & 5 &   &   &   & 1
+    \end{tabular}
+  \end{center}
+  Now we can start on the $8$ row. Beginning with $5*8=4*8*8=4*1=\colorbox{blue!20!white}{4}$.
+  Now $6*8=3*8*8=3*1=\colorbox{red!35!white}{3}$. Then using the Sudoku theorem $7*8$ must be
+  \colorbox{green!50!white}{2}
+  \begin{center}
+    \begin{tabular}{c | c c c c c c c c}
+      ~ & 1 & 2 & 3 & 4 & 5                           & 6                          & 7                            & 8 \\
+      \cline{1-9}
+      1 & 1 & 2 & 3 & 4 & 5                           & 6                          & 7                            & 8 \\
+      2 & 2 & 1 & 4 & 3 & 6                           & 5                          & 8                            & 7 \\
+      3 & 3 & 4 & 2 & 1 & 7                           & 8                          & 6                            & 5 \\
+      4 & 4 & 3 & 1 & 2 & 8                           & 7                          & 5                            & 6 \\
+      5 & 5 & 6 & 8 & 7 & 1                           &                            &                              & 3 \\
+      6 & 6 & 5 & 7 & 8 &                             & 1                          &                              & 4 \\
+      7 & 7 & 8 & 5 & 6 &                             &                            & 1                            & 2 \\
+      8 & 8 & 7 & 6 & 5 & \colorbox{blue!20!white}{4} & \colorbox{red!35!white}{3} & \colorbox{green!50!white}{2} & 1
+    \end{tabular}
+  \end{center}
+  Now if we just fill in the $5*6$ position with $5*6=2*6*6=2*1=\colorbox{red!35!white}{2}$ we obtain
+  that $7*6$ must be 3 by Sudoku, then that $7*5$ must be 4, then that $6*5$ must be 2, then that
+  $6*7$ must 4, and $5*7$ must be 3.
+  \begin{center}
+    \begin{tabular}{c | c c c c c c c c}
+      ~ & 1 & 2 & 3 & 4 & 5                          & 6 & 7 & 8 \\
+      \cline{1-9}
+      1 & 1 & 2 & 3 & 4 & 5                          & 6 & 7 & 8 \\
+      2 & 2 & 1 & 4 & 3 & 6                          & 5 & 8 & 7 \\
+      3 & 3 & 4 & 2 & 1 & 7                          & 8 & 6 & 5 \\
+      4 & 4 & 3 & 1 & 2 & 8                          & 7 & 5 & 6 \\
+      5 & 5 & 6 & 8 & 7 & 1                          & 2 & 4 & 3 \\
+      6 & 6 & 5 & 7 & 8 & \colorbox{red!35!white}{2} & 1 & 3 & 4 \\
+      7 & 7 & 8 & 5 & 6 & 3                          & 4 & 1 & 2 \\
+      8 & 8 & 7 & 6 & 5 & 4                          & 3 & 2 & 1
+    \end{tabular}
+  \end{center}
+  I think this is sufficient because we've only used the already known-to-be-a-group elements and Sudoku theorem so the new elements
+  should preserve associativity. Not entirely sure but pretty confident.
+\end{soln}
+
+% PROBLEM 2
+\begin{problem}
+Determine whether the given subset $H$ is a subgroup of the group
+$G$.
+\begin{enumerate}[label=(\alph*)]
+  \item Let
+        $$H=\left\{\left.\begin{pmatrix}
+            a & b \\
+            c & d
+          \end{pmatrix}\in\mathcal{M}_{2\cross 2}(\mathbb{Z})\right| a+b+c+d=0\right\}$$
+        and $G=\left(\mathcal{M}_{2\cross 2}, +\right)$.
+  \item Let $H=\left\{\left.\frac{1+2m}{1+2n}\right|m,n\in \mathbb{Z} \right\}$ and $G=\left(\mathbb{Q}\backslash \left\{0\right\},\cdot\right)$
+  \item Let $H=\left\{(0,0),(1,9),(2,6),(3,3)\right\}$ and $G=\left(\mathbb{Z}_4\cross\mathbb{Z}_{12},+\right)$
+\end{enumerate}
+\end{problem}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item Here we need: \begin{enumerate}[label=(\roman*)]
+            \item Closure: Let
+                  $$A,B\in S;\quad A=\begin{pmatrix}
+                      a & b \\
+                      c & d
+                    \end{pmatrix};\quad B=\begin{pmatrix}
+                      e & f \\
+                      g & h
+                    \end{pmatrix}.$$
+                  Then
+                  $$A+B=\begin{pmatrix}
+                      a & b \\
+                      c & d
+                    \end{pmatrix}+\begin{pmatrix}
+                      e & f \\
+                      g & h
+                    \end{pmatrix}=\begin{pmatrix}
+                      a+e & b+f \\
+                      c+g & d+h
+                    \end{pmatrix}$$
+                  and so
+                  $$(a+e)+(b+f)+(c+g)+(d+h)=(a+b+c+d)+(e+f+g+h)=0+0=0.$$
+                  Therefore $H$ is closed under $+$.
+            \item $H$ must contain the identity: The identity for matrix addition is just the zero matrix which is obviously
+                  contained in $H$ as its elements will sum to zero.
+            \item $H$ must contain inverses: For some
+                  $$A=\begin{pmatrix}
+                      a & b \\
+                      c & d
+                    \end{pmatrix}$$
+                  the inverse of $A$ is $-A$ whose elements sum to zero as their sum will just be the negative of the sum of the elements of $A$,
+                  which is zero by definition.
+          \end{enumerate}
+          As all of the subgroup criterion are satisfied, $H$ is a subgroup of $G$.
+    \item Again we need the following:
+          \begin{enumerate}[label=(\roman*)]
+            \item Closure: Let $a=\frac{1+2m}{1+2n}$ and $b=\frac{1+2k}{1+2q}$. Then
+                  $$a\cdot b =\frac{1+2m}{1+2n}\cdot \frac{1+2k}{1+2q}=\frac{1+2m+2k+4mk}{1+2n+2q+4nq}=\frac{1+2(m+k+2mk)}{1+2(n+q+2nq)}.$$
+                  Because both $m+k+2mk$ and $n+q+2nq$ will still be integers, $a\cdot b\in H$ and $H$ is therefore closed under $\cdot$.
+            \item $H$ must contain the identity: The identity for multiplication is
+                  $$1=\frac{1}{1}=\frac{1+2\cdot 0}{1+2\cdot 0}\in H.$$
+            \item $H$ must contain inverses: For any element $a=\frac{1+2m}{1+2n}$, $a^{-1}=\frac{1+2n}{1+2m}\in H.$
+          \end{enumerate}
+          As all subgroup criterion are satisfied, $H$ is a subgroup of $G$.
+    \item Again we need the following:
+          \begin{enumerate}[label=(\roman*)]
+            \item $H$ must contain inverses:
+                  \begin{align*}
+                    (1,9)+(3,3)=(0,0) \\
+                    (2,6)+(2,6)=(0,0) \\
+                    (3,3)+(1,9)=(0,0).
+                  \end{align*}
+            \item The identity here is obviously $(0,0)$ as the operation is addition.
+            \item Closure: Here we need to check that repeated addition of each element is closed
+                  and that adding each element to another element is closed (recursively).
+                  First  for $n\in \mathbb{Z}$,
+                  $$\begin{array}{ccccc}
+                              & n=2    & n=3    & n=4   &    \\
+                      n(1,9)= & (2,6), & (3,3), & (0,0) & ~  \\
+                      n(3,3)= & (2,6), & (1,9), & (0,0) & ~  \\
+                      n(2,6)= & (0,0)  & ~      & ~     & ~.
+                    \end{array}$$
+                  Then for addition of individual elements there are several we don't need to check because they are inverses
+                  and the operation here is commutative, all we need is:
+                  $$(1,9)+(2,6)=(3,3)$$
+                  and
+                  $$(2,6)+(3,3)=(1,9).$$
+                  These actually come up in checking the repeated addition but I find this a little more clear.
+          \end{enumerate}
+  \end{enumerate}
+\end{soln}
+
+% PROBLEM 3
+\begin{problem}
+Prove that any nonabelian group contains nontrivial subgroups.
+\end{problem}
+\begin{soln}
+  Any nonabelian group $G\neq \left\{e\right\}$ as the trivial group is abelian.
+  This means that there exists some $a \in G$ with $a\neq e$ which means that there
+  exists a subgroup $H=\langle a\rangle=\left\{a^n|n\in \mathbb{Z}\right\}$.
+\end{soln}
+
+% PROBLEM 4
+\begin{problem}
+Let $G$ be an abelian group. Show that the elements of finite order
+in $G$ form a subgroup.
+\end{problem}
+\begin{soln}
+  Let $H$ be the potential subgroup we are considering here. Following the subgroup criterion:
+  \begin{enumerate}
+    \item Identity: the identity, $e$, (whatever the operation may be) will have order 1 and therefore will be in $H$.
+    \item Closure: Let $a,b\in H$. Then $\abs{a}=n$ and $\abs{b}=m$ for some positive $n,m\in \mathbb{Z}$.
+          Then, by definition $a^n=e$ and $b^m=e$. We also have that, because $G$ is abelian, $(ab)^k=a^kb^k$ for all $k$.
+          So, $(ab)^{nm}=a^{nm}b^{nm}=(a^n)^m(b^m)^n=e^me^n=e\implies \abs{ab}\leq nm$ and so $ab\in H$.
+    \item Inverses: Let $a\in H$. Then $\abs{a}=n$ and $a^n=e$ for some positive $n\in \mathbb{Z}$.
+          $a^{-1}\in H$ because
+          $$(a^{-1})^n=(a^n)^{-1}=e^{-1}=e$$
+          which means that $a^{-1}$ has finite order $\abs{a^{-1}}\leq n$ and therefore belongs to $H$.
+  \end{enumerate}
+\end{soln}
+
+% PROBLEM 5
+\begin{problem}
+For $n\in \mathbb{N}$ define
+$$\mathcal{U}(n)=\left\{\left.x\in\mathbb{Z}_n\right|\gcd(x,n)=1\right\}.$$
+Find the order of the groups
+\begin{enumerate}[label=(\alph*)]
+  \item $\mathcal{U}(10)$
+  \item $\mathcal{U}(19)$
+  \item $\mathcal{U}(20)$
+  \item $\mathcal{U}(36)$
+\end{enumerate}
+\end{problem}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item This is the group of all integers coprime with 10. These are 9, 8, 7, 6, 4, 3, and 1. Therefore $\abs{\mathcal{U}(10)}=7$
+    \item 19 is prime so $\mathcal{U}(19)$ will be the group of all $n\in\mathbb{Z}$, $0< n< 19$. These
+          are $$\left\{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18\right\}$$ so $\abs{\mathcal{U}(19)}=18$.
+    \item The set of $n\in\mathbb{Z}$ which satisfy $\gcd(x,20)=1$ is $\left\{1,3,6,7,8,9,11,12,13,14,15,16,17,18,19\right\}$
+          so $\abs{\mathcal{U}(20)}=15$
+    \item While looking up coprime numbers to see if there's anything interesting about them (there is), I found out you can
+          calculate the number of numbers coprime to another number using Euler's (of course) ``totient function'':
+          $$n\prod_{p|n}(1-\frac{1}{p})$$
+          where $n$ is the number whose count of coprimes we want to know and the product runs over the  prime numbers $p$ which divide $n$.
+          In this case the prime factorization of 36 is $2^23^3$ so the product is
+          $$36\left[\left(1-\frac{1}{2}\right)\left(1-\frac{1}{3}\right)\right]=12\implies \abs{\mathcal{U}(36)}=12.$$
+  \end{enumerate}
+\end{soln}
+
+% PROBLEM 6
+\begin{problem}
+Let $G$ be a group and $a,b\in G$ such that $ab\neq ba$. Prove that $aba\neq e$.
+\end{problem}
+\begin{soln}
+  Assume, by way of contradiction, that $aba=e$. Then if we multiply $aba=e$ by $a^{-1}$ on the right we get $ab=a^{-1}$.
+  But if we multiply by $a^{-1}$ on the left we get $ba=a^{-1}\implies ba=ab$ which is in contradiction with our original statement.
+  Therefore $aba\neq e$ if $ab\neq ba$.
+\end{soln}
+\end{document}
