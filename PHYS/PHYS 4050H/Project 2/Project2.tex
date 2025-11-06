@@ -1,0 +1,183 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{changepage}
+\usepackage{circuitikz}
+\usepackage{pgfplots}
+\usepackage{physics}
+\usepackage{hyperref}
+\usepackage{siunitx}
+\usepackage{fontspec}
+\usepackage{relsize}
+\usepackage{subfig}
+\usepackage{minted}
+\usepackage{todonotes}
+\usepackage{adjustbox}
+\usepackage{pdfpages}
+\usepackage{multicol, multirow, booktabs}
+\usepackage[breakable]{tcolorbox}
+\usepackage[inline]{enumitem}
+\usepackage{etoolbox}
+\patchcmd{\thebibliography}{\section*{\refname}}{}{}{}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{soln}{Solution}
+
+\pgfplotsset{compat=newest}
+\usetikzlibrary{lindenmayersystems}
+\usetikzlibrary{arrows}
+\usetikzlibrary{calc}
+\usetikzlibrary{positioning, fit}
+\usetikzlibrary{3d, perspective}
+
+\definecolor{incolor}{HTML}{303F9F}
+\definecolor{outcolor}{HTML}{D84315}
+\definecolor{cellborder}{HTML}{CFCFCF}
+\definecolor{cellbackground}{HTML}{F7F7F7}
+\newcommand{\ui}{\hat{i}}
+\newcommand{\uj}{\hat{j}}
+\newcommand{\uk}{\hat{k}}
+\newcommand{\ux}{\hat{x}}
+\newcommand{\uy}{\hat{y}}
+\newcommand{\uz}{\hat{z}}
+\newcommand{\primed}[1]{#1^\prime}
+\pgfdeclarelayer{background}  
+\pgfsetlayers{background,main}
+\AtBeginDocument{\RenewCommandCopy\qty\SI}
+\definecolor{LightGray}{gray}{0.9}
+
+\makeatletter
+\newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+\makeatother
+\newcommand{\prompt}[4]{
+    \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+}
+
+\newcommand{\thevenin}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (2,0) to[battery1, l_=$V_{Th}\eq#1$] (2,2) 
+      to[resistor, l_=$R_{Th}\eq#2$] (0,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\norton}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (3,0) to[american current source, l_=$I_{N}\eq#1$] (3,2) -- (0,2) (2,0)
+      to[resistor, l=$R_{N}\eq#2$] (2,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+
+\newcommand{\highlight}[1]{\colorbox{yellow}{$\displaystyle #1$}}
+
+\newcommand{\ti}[1]{\widetilde{#1}}
+
+\newfontface{\Kaufmann}{Kaufmann}
+\DeclareTextFontCommand{\kf}{\Kaufmann}
+\newcommand{\scriptr}{\fontsize{12pt}{12pt}\kf{r}}
+
+\newfontface{\KaufmannB}{Kaufmann Bd BT}
+\DeclareTextFontCommand{\kfb}{\KaufmannB}
+\newcommand{\bscriptr}{\fontsize{12pt}{12pt}\kfb{r}}
+
+\newcommand{\bv}[1]{\mathbf{#1}}
+
+\title{Physics 4050H: Project 1}
+\author{Jeremy Favro (0805980), \\\emph{Department of Physics \& Astronomy}\\ Trent University, Peterborough, ON, Canada}
+\date{\today}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+  Blah Blah
+\end{abstract}
+\todo{Reference figures when they're done}
+\section{Introduction}
+Normal intro stuff. Discuss why we think the datasheet plot is sketchy (i.e. real world examples of high quality mics).
+Also consider units of the datasheet, dbU, dbV? Can we compare it to the freq. corr. curve from Dayton Audio??
+\section{Theory??}
+Idk, maybe talk about how electret mics work?? Not super relevant other than making it more evident
+that the datasheet is dodgy.
+\newpage
+\section{Methods}
+Give a general flowchart of the process
+\subsection{Noise Generation}
+\subsection{Constructing a Correction Profile}
+In order to determine the response of the unknown (untrusted) microphone a known sound source and receiver are required.
+Here a fairly trustworthy reference microphone was used in combination with a low quality speaker. The reference microphone,
+a Dayton Audio iMM-6,
+included a calibration file which mapped frequencies to dBV ($V=10^{dBV/20}$) correction values. Values were given with
+respect to a reference value of $\qty{39.9}{\decibel\volt}$ at $\qty{1}{\kilo\hertz}$. Without a known accurate calibrated microphone
+it is difficult to proceed \todo{Talk about reciprocity calibration as an option for \emph{creating} a reference mic} and so it
+was assumed that audio recorded within the range of the calibration curve was, after applying the calibration curve, ideal.
+\begin{figure}
+  \begin{tikzpicture}
+    \begin{axis}[
+        xmode=log,
+        log ticks with fixed point,
+        xlabel={$\unit{\hertz}$},
+        ylabel={$\unit{\decibel\volt}$},
+        width=\linewidth,
+        height=8cm]
+      \addplot[mark=none] table [x={*1000Hz}, y={-39.9}, col sep=comma] {day_cal_curve.csv};
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Manufacturer provided correction curve for the reference microphone}
+\end{figure}
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{demo.png}
+  \caption{White noise captured on the reference microphone at various processing stages.
+    The final plot is the difference between the raw and corrected signals, created by phase inversion.}
+\end{figure}
+With the recording microphone now assumed to be ideal any deviation from a signal with equal
+contribution from all frequencies over the chosen range should be in majority caused by the speaker
+with some environmental effects that remain effectively constant regardless of the recording device
+used \todo{Talk about the harmonics :(}.
+From here the audio recording/processing software Audacity was used to analyze the recorded audio 
+and create a frequency contribution plot and dataset. The dataset contains frequencies mapped to 
+decibel values representing the amount of a specific frequency present in the signal. In an
+ideal system with a perfect emitter perfectly coupled to a perfect receiver the recorded signal
+would contain equal amounts of every frequency emitted by the sound source. This is not the case here 
+but all frequencies are present in some amount. This allows the construction of another correction curve.
+By selecting a desired intensity we can add the difference between the recorded signal strength and the
+desired signal strength at each frequency. This generates a correction curve which equalizes the signal across a 
+desired frequency range. As, at this point, the only major influence on the signal is the quality of the speaker,
+this correction curve will eliminate these effects and can therefore be used to eliminate the effects of the speaker
+when testing non-ideal receivers.
+
+% \begin{figure}
+%   \begin{tikzpicture}
+%     \begin{axis}[
+%         xmode=log,
+%         log ticks with fixed point,
+%         xlabel={$\unit{\hertz}$},
+%         ylabel={$\unit{\decibel}$},
+%         width=\linewidth,
+%         height=8cm]
+%       \addplot[mark=none] table [x={Frequency (Hz)}, 
+%       y={Level (dB)}, 
+%       col sep=tab,
+%       each nth point={10}] {spectrum.txt};
+%     \end{axis}
+%   \end{tikzpicture}
+%   \caption{Time-averaged frequency ``amounts''.}
+% \end{figure}
+\section{Confounding Factors}
+\subsection{}
+\end{document}
