@@ -1,0 +1,340 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{changepage}
+\usepackage{circuitikz}
+\usepackage{pgfplots}
+\usepackage{physics}
+\usepackage{hyperref}
+\usepackage{siunitx}
+\usepackage{fontspec}
+\usepackage{relsize}
+\usepackage{subfig}
+\usepackage{todonotes}
+\usepackage{multicol, multirow, booktabs}
+\usepackage[breakable]{tcolorbox}
+\usepackage[inline]{enumitem}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{soln}{Solution}
+
+\pgfplotsset{compat=newest}
+\usetikzlibrary{lindenmayersystems}
+\usetikzlibrary{arrows}
+\usetikzlibrary{calc}
+\usetikzlibrary{positioning, fit}
+\usetikzlibrary{3d, perspective}
+
+\definecolor{incolor}{HTML}{303F9F}
+\definecolor{outcolor}{HTML}{D84315}
+\definecolor{cellborder}{HTML}{CFCFCF}
+\definecolor{cellbackground}{HTML}{F7F7F7}
+\newcommand{\ui}{\hat{i}}
+\newcommand{\uj}{\hat{j}}
+\newcommand{\uk}{\hat{k}}
+\newcommand{\ux}{\hat{x}}
+\newcommand{\uy}{\hat{y}}
+\newcommand{\uz}{\hat{z}}
+\newcommand{\uv}[1]{\hat{\mathbf{{#1}}}}
+\newcommand{\pr}[1]{{#1^\prime}}
+\pgfdeclarelayer{background}  
+\pgfsetlayers{background,main}
+\AtBeginDocument{\RenewCommandCopy\qty\SI}
+
+\makeatletter
+\newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+\makeatother
+\newcommand{\prompt}[4]{
+    \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+}
+
+\newcommand{\thevenin}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (2,0) to[battery1, l_=$V_{Th}\eq#1$] (2,2) 
+      to[resistor, l_=$R_{Th}\eq#2$] (0,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\norton}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (3,0) to[american current source, l_=$I_{N}\eq#1$] (3,2) -- (0,2) (2,0)
+      to[resistor, l=$R_{N}\eq#2$] (2,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\highlight}[1]{\colorbox{yellow}{$\displaystyle #1$}}
+
+\newcommand{\ti}[1]{\widetilde{#1}}
+
+\newfontface{\Kaufmann}{Kaufmann}
+\DeclareTextFontCommand{\kf}{\Kaufmann}
+\newcommand{\scriptr}{\fontsize{12pt}{12pt}\kf{r}}
+
+\newfontface{\KaufmannB}{Kaufmann Bd BT}
+\DeclareTextFontCommand{\kfb}{\KaufmannB}
+\newcommand{\bscriptr}{\fontsize{12pt}{12pt}\kfb{r}}
+
+\newcommand{\bv}[1]{\mathbf{#1}}
+
+\title{Physics 3610H: Assignment VIII}
+\author{Jeremy Favro (0805980) \\ Trent University, Peterborough, ON, Canada}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+% PROBLEM 0
+\setcounter{problem}{-1}
+\setcounter{soln}{-1}
+\begin{problem}
+Consider a particle in one dimension subject to the potential
+$V(x)=-V_0\delta(x).$
+\begin{enumerate}[label=(\alph*)]
+  \item Write the time-independent Schr\"odinger equation for this system
+  \item What is the functional form of the solutions in the region $x<0$? Explain
+        your reasoning.
+  \item What is the functional form of the solutions in the region $x>0$? Again, explain.
+  \item This potential has an infinite discontinuity which results in a discontinuity
+        in the first derivative of the wavefunction at $x=0$. Specifically,
+        $$\eval{\frac{d\psi}{dx}}_{x=0^-}-\eval{\frac{d\psi}{dx}}_{x=0^+}=\frac{2mV_0}{\hbar^2}\psi(x=0)$$
+        State all additional conditions which $\psi(x)$ must satisfy.
+  \item Is the energy quantized?
+  \item Fully determine one solution and its corresponding energy.
+\end{enumerate}
+\end{problem}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item $$\hat{H}\psi(x)=E\psi(x).$$
+          Here
+          $$\hat{H}=\frac{\hat{p}_x^2}{2m}+V(x)=-\frac{\hbar^2}{2m}\frac{\partial^2}{\partial x^2}-V_0\delta(x).$$
+    \item In order for the solutions in this region to be physical they must decay as $x\to -\infty$.
+          The easy way to do this is with a positive-valued exponential, some $e^x$. I'm skipping some
+          detail here because I was comfortable with these parts on the midterm.
+    \item Again so that solutions in this region are physical we must be able to normalize them
+          and so they must decay to zero as $x\to +\infty$. The way to have this is a negative-valued
+          exponential, some $e^{-x}$.
+    \item $\psi(x)$ must be normalizable as mentioned above. It must also be continuous (but not necessarily smooth)
+          at $x=0$ where the two solutions meet.
+    \item To determine if the energy is quantized I'll solve the T.I.S.E given above.
+          There are three regions in which we need to solve. Region 1 is $x<0$.
+          This was a point on the midterm where I tacked on an extra term which would not be normalizable
+          that I just dropped later. Here I'm being smarter so I'll just present that the T.I.S.E
+          in this region is
+          $$-\frac{\hbar^2}{2m}\frac{\partial\psi(x)}{\partial x}=E\psi(x)$$
+          so
+          $$\frac{\partial\psi(x)}{\partial x}=\frac{2m\abs{E}}{\hbar^2}\psi(x)$$
+          where we take $\abs{E}$ as $E<0$.
+          The solution to this is
+          $$\psi_1(x)=Ae^{kx}$$
+          where
+          $$k=\sqrt{\frac{2mE}{\hbar^2}}$$
+          and $A$ is a constant determined by boundary and normalization conditions.
+          Now in region 3 for $x>0$ we do the same process, noting our answer to part (d) which means
+          $$\psi_3(x)=Be^{-kx}.$$
+          Because these two have the same exponent, just differing in sign, we can note that
+          $A=B$ because the exponential is symmetric about $0$ for sign changes.
+          Now we must meet the condition on the discontinuity in the derivative.
+          Our wavefunction at this point is
+          $$
+            \psi(x)=\begin{cases}
+              Ae^{kx}  & x<0 \\
+              Ae^{-kx} & x>0
+            \end{cases}
+          $$
+          so the derivative is
+          $$
+            \pr{\psi}(x)=\begin{cases}
+              Ake^{kx}   & x<0 \\
+              -Ake^{-kx} & x>0
+            \end{cases}
+          $$
+          and so the condition becomes
+          $$
+            Ak+Ak=2Ak=\frac{2mV_0}{\hbar^2}\psi(x=0).
+          $$
+          Here $\psi(x=0)$ is the point at which the two exponentials meet. This value will
+          be either exponential at $x=0$ which will in both cases just be $A$, so
+          we can cancel the $A$ throughout,
+          \begin{align*}
+            k                                  & =\frac{mV_0}{\hbar^2}     \\
+            \implies \frac{2m\abs{E}}{\hbar^2} & =\frac{m^2V_0^2}{\hbar^4} \\
+            \implies \abs{E}                   & =\frac{mV_0^2}{2\hbar^2}
+          \end{align*}
+          so
+          $$E=-\frac{mV_0^2}{2\hbar^2}$$
+          because we know $E<0$ and all the other quantities on the LHS are positive.
+          Therefore the energy is not quantized per-se, but can only take on one specific value, dependent on the properties
+          of the particle and the well.
+    \item In order to fully determine the solution all that remains is to determine the value of $A$ such that
+          $\psi(x)$ is normalized.
+          To do this we solve
+          $$1=\int_{\mathbb{R}}\abs{\psi}^2\,dx$$
+          for $A$. Note that $\int_{\mathbb{R}}$ is my way of writing
+          an integral over all space to make things look a little neater in handwriting. It's like
+          the integral over a surface $\mathcal{S}$ for example, where you just subscript the integral with
+          $\mathcal{S}$ and figure out the bounds later. Solving the integral then,
+          \begin{align*}
+            1 & =\int_{\mathbb{R}}\abs{\psi}^2\,dx                                                       \\
+              & =\int_{-\infty}^0\abs{A}^2e^{2kx}\,dx+\int_{0}^\infty\abs{A}^2e^{-2kx}\,dx               \\
+              & =\abs{A}^2\left[\frac{1}{2k}+\frac{1}{2k}\right]=\frac{\abs{A}^2}{k}\implies A=\sqrt{k}.
+          \end{align*}
+          So a full state/the only state is
+          $$
+            \psi(x)=\begin{cases}
+              \sqrt{k}e^{kx}  & x<0 \\
+              \sqrt{k}        & x=0 \\
+              \sqrt{k}e^{-kx} & x>0
+            \end{cases}
+          $$
+          with, as noted above, energy
+          $$E=-\frac{mV_0^2}{2\hbar^2}$$
+  \end{enumerate}
+\end{soln}
+
+% PROBLEM 1
+\begin{problem}
+Show that if $\braket{h}{\hat{Q}h}=\braket{\hat{Q}h}{h}$ for all functions $h$ in Hilbert space then $\braket{f}{\hat{Q}g}=\braket{\hat{Q}f}{g}$
+where $f$ and $g$ are also functions in the Hilbert space.
+\end{problem}
+\begin{soln}
+  As given in the hint we'll start with $h=f+g$.
+  Note that
+  $$
+    \bra{\hat{Q}\left(f+g\right)}
+    =\left(\ket{\hat{Q}(f+g)}\right)^\dagger
+    =\left(\ket{\hat{Q}f}+\ket{\hat{Q}g}\right)^\dagger
+    =\ket{\hat{Q}f}^\dagger+\ket{\hat{Q}g}^\dagger
+    =\bra{\hat{Q}f}+\bra{\hat{Q}g}
+  $$
+  just to be explicit. Now, expanding $h=f+g$,
+  \begin{align*}
+    \braket{h}{\hat{Q}h}                                                                                  & =\braket{\hat{Q}h}{h}                                                                                  \\
+    \braket{f+g}{\hat{Q}\left(f+g\right)}                                                                 & =\braket{\hat{Q}\left(f+g\right)}{f+g}                                                                 \\
+    \braket{f}{\hat{Q}\left(f+g\right)}+\braket{g}{\hat{Q}\left(f+g\right)}                               & =\braket{\hat{Q}\left(f+g\right)}{f}+\braket{\hat{Q}\left(f+g\right)}{g}                               \\
+    \cancel{\braket{f}{\hat{Q}f}}+\braket{f}{\hat{Q}g}+\braket{g}{\hat{Q}f}+\cancel{\braket{g}{\hat{Q}g}} & =\cancel{\braket{\hat{Q}f}{f}}+\braket{\hat{Q}g}{f}+\braket{\hat{Q}f}{g}+\cancel{\braket{\hat{Q}g}{g}} \\
+    \braket{f}{\hat{Q}g}+\braket{g}{\hat{Q}f}                                                             & =\braket{\hat{Q}g}{f}+\braket{\hat{Q}f}{g}
+  \end{align*}
+  Now taking $h=f+ig$ and expanding,
+  \begin{align*}
+    \braket{h}{\hat{Q}h}                                                                                    & =\braket{\hat{Q}h}{h}                                                                                    \\
+    \braket{f+ig}{\hat{Q}\left(f+ig\right)}                                                                 & =\braket{\hat{Q}\left(f+ig\right)}{f+ig}                                                                 \\
+    \braket{f}{\hat{Q}\left(f+ig\right)}+\braket{ig}{\hat{Q}\left(f+ig\right)}                              & =\braket{\hat{Q}\left(f+ig\right)}{f}+\braket{\hat{Q}\left(f+ig\right)}{ig}                              \\
+    \braket{f}{\hat{Q}f}+\braket{f}{\hat{Q}ig}+\braket{ig}{\hat{Q}f}+\braket{ig}{\hat{Q}ig}                 & =\braket{\hat{Q}f}{f}+\braket{\hat{Q}ig}{f}+\braket{\hat{Q}f}{ig}+\braket{\hat{Q}ig}{ig}                 \\
+    \cancel{\braket{f}{\hat{Q}f}}+i\braket{f}{\hat{Q}g}-i\braket{g}{\hat{Q}f}+\cancel{\braket{g}{\hat{Q}g}} & =\cancel{\braket{\hat{Q}f}{f}}-i\braket{\hat{Q}g}{f}+i\braket{\hat{Q}f}{g}+\cancel{\braket{\hat{Q}g}{g}} \\
+    i\braket{f}{\hat{Q}g}-i\braket{g}{\hat{Q}f}                                                             & =-i\braket{\hat{Q}g}{f}+i\braket{\hat{Q}f}{g}                                                            \\
+    \braket{f}{\hat{Q}g}-\braket{g}{\hat{Q}f}                                                               & =-\braket{\hat{Q}g}{f}+\braket{\hat{Q}f}{g}
+  \end{align*}
+  Now adding these two equations,
+  \begin{align*}
+    \braket{f}{\hat{Q}g}-\braket{g}{\hat{Q}f}+\braket{f}{\hat{Q}g}+\braket{g}{\hat{Q}f} & =-\braket{\hat{Q}g}{f}+\braket{\hat{Q}f}{g}+\braket{\hat{Q}g}{f}+\braket{\hat{Q}f}{g} \\
+    2\braket{f}{\hat{Q}g}                                                               & =2\braket{\hat{Q}f}{g}                                                                \\
+    \braket{f}{\hat{Q}g}                                                                & =\braket{\hat{Q}f}{g}
+  \end{align*}
+\end{soln}
+
+% PROBLEM 2
+\begin{problem}~
+\begin{enumerate}[label=(\alph*)]
+  \item $\bv{a}_1=\frac{1}{2}\ux-\frac{\sqrt{3}}{2}\uy$ and $\bv{a}_2=\frac{1}{2}\ux+\frac{\sqrt{3}}{2}\uy$.
+        Use the procedure discussed in class to construct
+        a pair of vectors $\bv{b}_1$ and $\bv{b}_2$ which are orthogonal to each other and both normalized.
+  \item Demonstrate that $\bv{b}_1$ and $\bv{b}_2$ form a complete set, in terms of which any vector in two
+        dimensions may be expressed, by showing that
+        $$\ket{b_1}\bra{b_1}+\ket{b_2}\bra{b_2}=I_2=\begin{pmatrix}
+            1 & 0 \\
+            0 & 1
+          \end{pmatrix}$$
+\end{enumerate}
+\end{problem}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item The process mentioned is the Gram-Schmidt process wherein we remove the portion of each vector which
+          is colinear with the other vectors. Note that here $\bv{a}_1$ and $\bv{a}_2$ are both already normalized. So,
+          \begin{align*}
+            \bv{b}_1 & =\bv{a}_1=\uv{b}_1                                                                                 \\
+            \bv{b}_2 & =\bv{a}_2-\frac{\braket{b_2}{b_1}}{\braket{b_1}{b_1}}\bv{b}_1                                      \\
+                     & =\frac{1}{2}\ux-\frac{\sqrt{3}}{2}\uy+\frac{1}{2}\left(\frac{1}{2}\ux-\frac{\sqrt{3}}{2}\uy\right) \\
+                     & =\frac{3}{4}\ux-\frac{\sqrt{3}}{4}\uy
+          \end{align*}
+          Now to normalize $\bv{b}_2$
+          $$\uv{b}_2=\frac{\bv{b}_2}{\braket{b_2}{b_2}}=\frac{\sqrt{3}}{2}\ux+\frac{1}{2}\uy$$
+    \item It is convenient now to write $\uv{b}_1$ and $\uv{b}_2$ in their Dirac notation forms as column and row vectors,
+          $$
+            \ket{b_1}=\begin{pmatrix}
+              1/2 \\
+              -\sqrt{3}/2
+            \end{pmatrix};\quad
+            \bra{b_1}=\begin{pmatrix}
+              1/2 &
+              -\sqrt{3}/2
+            \end{pmatrix};\quad
+            \ket{b_2}=\begin{pmatrix}
+              \sqrt{3}/2 \\
+              1/2
+            \end{pmatrix};\quad
+            \bra{b_2}=\begin{pmatrix}
+              \sqrt{3}/2 &
+              1/2
+            \end{pmatrix}.
+          $$
+          Now computing the given expression,
+          $$\ket{b_1}\bra{b_1}=
+            \begin{pmatrix}
+              1/2 \\
+              -\sqrt{3}/2
+            \end{pmatrix}\begin{pmatrix}
+              1/2 &
+              -\sqrt{3}/2
+            \end{pmatrix}=
+            \begin{pmatrix}
+              1/4         & -\sqrt{3}/4 \\
+              -\sqrt{3}/4 & 3/4
+            \end{pmatrix},
+          $$
+          and
+          $$\ket{b_2}\bra{b_2}=
+            \begin{pmatrix}
+              \sqrt{3}/2 \\
+              1/2
+            \end{pmatrix}\begin{pmatrix}
+              \sqrt{3}/2 &
+              1/2
+            \end{pmatrix}=
+            \begin{pmatrix}
+              3/4        & \sqrt{3}/4 \\
+              \sqrt{3}/4 & 1/4
+            \end{pmatrix}.
+          $$
+          And summing the two,
+          $$
+            \begin{pmatrix}
+              3/4        & \sqrt{3}/4 \\
+              \sqrt{3}/4 & 1/4
+            \end{pmatrix}+
+            \begin{pmatrix}
+              1/4         & -\sqrt{3}/4 \\
+              -\sqrt{3}/4 & 3/4
+            \end{pmatrix}
+            =\begin{pmatrix}
+              1 & 0 \\
+              0 & 1
+            \end{pmatrix}
+          $$
+  \end{enumerate}
+\end{soln}
+\end{document}

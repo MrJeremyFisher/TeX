@@ -1,0 +1,352 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{changepage}
+\usepackage{circuitikz}
+\usepackage{pgfplots}
+\usepackage{physics}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{siunitx}
+\usepackage{relsize}
+\usepackage{subfig}
+\usepackage{minted}
+\usepackage{todonotes}
+\usepackage{adjustbox}
+\usepackage{pdfpages}
+\usepackage{multicol, multirow, booktabs}
+\usepackage[breakable]{tcolorbox}
+\usepackage[inline]{enumitem}
+\usepackage{etoolbox}
+\patchcmd{\thebibliography}{\section*{\refname}}{}{}{}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{soln}{Solution}
+
+\pgfplotsset{compat=newest}
+\usetikzlibrary{lindenmayersystems}
+\usetikzlibrary{arrows}
+\usetikzlibrary{calc}
+\usetikzlibrary{positioning, fit}
+\usetikzlibrary{3d, perspective}
+
+\definecolor{incolor}{HTML}{303F9F}
+\definecolor{outcolor}{HTML}{D84315}
+\definecolor{cellborder}{HTML}{CFCFCF}
+\definecolor{cellbackground}{HTML}{F7F7F7}
+\newcommand{\ui}{\hat{i}}
+\newcommand{\uj}{\hat{j}}
+\newcommand{\uk}{\hat{k}}
+\newcommand{\ux}{\hat{x}}
+\newcommand{\uy}{\hat{y}}
+\newcommand{\uz}{\hat{z}}
+\newcommand{\primed}[1]{#1^\prime}
+\pgfdeclarelayer{background}  
+\pgfsetlayers{background,main}
+\AtBeginDocument{\RenewCommandCopy\qty\SI}
+\definecolor{LightGray}{gray}{0.9}
+
+\makeatletter
+\newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+\makeatother
+\newcommand{\prompt}[4]{
+    \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+}
+
+\newcommand{\thevenin}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (2,0) to[battery1, l_=$V_{Th}\eq#1$] (2,2) 
+      to[resistor, l_=$R_{Th}\eq#2$] (0,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\norton}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (3,0) to[american current source, l_=$I_{N}\eq#1$] (3,2) -- (0,2) (2,0)
+      to[resistor, l=$R_{N}\eq#2$] (2,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+
+\newcommand{\highlight}[1]{\colorbox{yellow}{$\displaystyle #1$}}
+
+\newcommand{\ti}[1]{\widetilde{#1}}
+
+\newcommand{\bv}[1]{\mathbf{#1}}
+
+\title{Physics 4050H: Project II}
+\author{Jeremy Favro (0805980), Kallan Ronholm (0731586) \\\emph{Department of Physics \& Astronomy}\\ Trent University, Peterborough, ON, Canada}
+\date{\today}
+
+\begin{document}
+\maketitle
+\section{Introduction}
+During this task, our aim was to investigate the SparkFun Electret microphone breakout board
+\cite{mic:test-electret-mic-breakout}, which consists of an electret microphone
+\cite{mic:test-electret-mic}, hereon referred to as the microphone under test (MUT), and amplifier.
+Looking at the microphone datasheet, the frequency response immediately jumped out as too good to be true.
+The expected response is almost completely flat for a range of $\qty{50}{\hertz}$ to $\qty{15}{\kilo\hertz}$.
+Even high end mics struggle to achieve relatively flat frequency responses, casting into doubt the accuracy
+claimed by the cheap electret microphone.
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\linewidth]{sketchy_freq_response.png}
+  \caption{The frequency response curve for the microphone on the SparkFun breakout board, provided by Challenge Electronics on their datasheet \cite{mic:test-electret-mic}}
+  \label{fig:electret-resp}
+\end{figure}
+\newpage
+\subsection{Foil Electret Microphone Operating Theory}
+A foil electret microphone at its heart is a capacitor composed of a fixed plate and an electret diaphragm. An electret is a dielectric material with a baked in polarization that creates a voltage across the material, resulting in a permanent charge on the capacitor. Incident sound waves cause the diaphragm to stretch and change distance to the fixed plate, altering the capacitance as $C = \frac{\epsilon A}{d}$ (where $A$, is area of the plates, $\epsilon$ is the dielectric permittivity, and $d$ is the distance between plates. This in turn causes the voltage to fluctuate because $V =\frac{Q}{C}$ (where $V$ is voltage and $Q$ is charge), and Q is constant. The voltage fluctuation created by the capacitor is applied to the base of a JFET in a common emitter setup, to amplify the signal.
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\linewidth]{electret_mic.png}
+  \caption{Electret microphone schematic diagram.}
+  \label{fig:electret-diagram}
+\end{figure}
+\newpage
+\section{Methods}
+The general process followed to determine a response curve for the MUT is as follows:
+\begin{enumerate}[label=(\roman*)]
+  \item Place speaker and microphones in anechoic chamber.
+  \item Set signal generator \cite{function-generator:Siglent-SDG1022X} to white noise, 4 Vpp.
+  \item Send audio to speaker.
+  \item Listen to speaker with iMM-6 \cite{dayton:iMM6} connected to laptop (Microsoft Surface Pro 7 running Ubuntu).
+  \item Listen to speaker with MUT plugged into line-input DR100MKII \cite{TASCAM:DR-100MKII}.
+  \item Connect function generator directly to line-input of DR100MKII at 500 mVpp.
+  \item Apply Dayton correction curve to reference microphone audio sample.
+  \item Assume resulting signal is perfect, and any deviations are caused by speaker. So flatten the frequency response to generate ideal response curve.
+  \item Use difference between corrected signal and flattened signal to generate speaker correction curve.
+  \item Apply speaker correction curve to MUT audio sample.
+  \item Calculate difference between MUT sample and ideal reference audio sample, this is the curve given in the datasheet.
+\end{enumerate}
+
+
+\subsection{Apparatus}
+\begin{figure}
+  \centering
+  \begin{circuitikz}
+    \draw[]
+    (0,0) node[ground]{}
+    to[sV] ++(0,4) -- ++(2,0) to[loudspeaker, name=L] ++(0,-4)
+    ++(4,0)
+    to[tlmic, name=REF, label=Reference] ++(0,1.75) coordinate (REFO) ++(0,0.5) node[ground, rotate=90]{}
+    to[tlmic, name=UNK, label=Test] ++(0,1.75) coordinate (UNKO)
+    (0,0) -- (6,0)
+
+    (REFO) -- ++(2,0) node[right]{TRRS}
+    (UNKO) -- ++(2,0) node[right]{TRS}
+    ;
+    \node [waves, scale=0.7, right] at(L.north) {};
+
+    \begin{pgfonlayer}{background}
+      \draw
+      node[fit={($(L.west)+(0,.5)$)
+            ($(L.east)+(0,-.5)$)
+            ($(REF.west)+(0.5,-.5)$)
+            ($(UNK.east)+(0,.5)$)
+          }, draw, fill=blue, opacity=0.2, dashed, label={Foam lined box}, inner sep=10pt]{};
+    \end{pgfonlayer}
+  \end{circuitikz}
+  \caption{Block diagram of the recording setup. Note that some elements, such as the voltage follower placed between the MUT and its output cable are omitted.}
+  \label{fig:apparatus}
+\end{figure}
+The testing apparatus was constructed as seen in \cref{fig:apparatus}.
+A cardboard box was lined with dense foam and a speaker was attached to an unfixed piece of foam.
+The speaker was placed at one end of the box and holes were made in the other end of the box to allow for
+the microphone cable to be connected. Both microphones were closely aligned to the center of the speaker and
+the speaker was placed approximately $\qty{10}{\centi\meter}$
+from the microphones. Recordings on both microphones were made
+separately due to difficulty procuring a device which could record both microphones simultaneously,
+though recordings were made for a sufficient duration that aberrations should average out.
+\subsection{Noise Generation}
+A Siglent SDG1022X \cite{function-generator:Siglent-SDG1022X} arbitrary waveform generator was used
+to generate the white noise test signal. The accuracy of the device's noise function was verified
+using a fast Fourier Transform capable oscilloscope \cite{scope:Siglent-SDS1202XE} and was sufficiently close to true white noise.
+Noise was emitted by an unbranded low-cost speaker driven at the same peak-to-peak voltage during all tests.
+\subsection{Constructing a Correction Profile} \label{meth:corr-prof}
+In order to determine the response of the MUT a known sound source and receiver are required.
+Here a fairly trustworthy reference microphone was used in combination with a low quality speaker. The reference microphone,
+a Dayton Audio iMM-6 \cite{dayton:iMM6},
+included a calibration file which mapped frequencies to dBV ($V=10^{dBV/20}$) correction values. Values were given with
+respect to a reference value of $\qty{-39.9}{\decibel\volt}$ at $\qty{1}{\kilo\hertz}$. Without a known accurate calibrated microphone
+it is difficult to proceed (see \ref{reciprocity} for how a reference
+could be created) and so it
+was assumed that audio recorded within the range of the calibration curve was, after applying the calibration curve, ideal.
+\begin{figure}
+  \begin{tikzpicture}
+    \begin{axis}[
+        xmode=log,
+        log ticks with fixed point,
+        xlabel={$\unit{\hertz}$},
+        ylabel={$\unit{\decibel\volt}$},
+        width=\linewidth,
+        height=6cm]
+      \addplot[mark=none] table [x={*1000Hz}, y={-39.9}, col sep=tab] {day_cal_curve.txt};
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Manufacturer provided correction curve for the reference microphone.}
+\end{figure}
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{demo.png}
+  \caption{White noise captured on the reference microphone at various processing stages.
+    The final plot is the difference between the raw and corrected signals, created by phase inversion.}
+\end{figure}
+With the recording microphone now assumed to be ideal, any deviation from a signal with equal
+contribution from all frequencies over the chosen range should be in majority caused by the speaker
+with some environmental effects that remain effectively constant regardless of the recording device
+used.
+From here, the audio recording/processing software Audacity was used to analyze the recorded audio
+and create a frequency contribution plot and dataset. The dataset contains frequencies mapped to
+decibel values representing the amount of a specific frequency present in the signal. In an
+ideal system with a perfect emitter perfectly coupled to a perfect receiver the recorded signal
+would contain equal amounts of every frequency emitted by the sound source. This is not the case here,
+but all frequencies are present in some amount. This allows the construction of another correction curve.
+By selecting a desired intensity, we can add the difference between the recorded signal strength and the
+desired signal strength at each frequency. This generates a correction curve which equalizes the signal across a
+desired frequency range. As, at this point, the only major influence on the signal should be the quality of the speaker,
+this correction curve will eliminate these effects and can therefore be used to eliminate the effects of the speaker
+when testing non-ideal receivers.
+
+\begin{figure}
+  \begin{tikzpicture}
+    \begin{axis}[
+        title = {Comparison of frequency response between speakers and direct white noise},
+        xmode=log,
+        log ticks with fixed point,
+        xlabel={$\unit{\hertz}$},
+        ylabel={$\unit{\decibel}$},
+        xmax=12000,
+        width=\linewidth,
+        height=8cm]
+      \addplot[mark=none] table [x={Frequency (Hz)},
+          y={Level (dB)},
+          col sep=tab] {./spectra/ideal_spectrum.txt};
+      \addplot[mark=none, blue] table [x={Frequency (Hz)},
+          y={Level (dB)},
+          col sep=tab] {./spectra/corrected_reference_spectrum.txt};
+      \addplot[mark=none, red] table [x={Frequency (Hz)},
+          y={Level (dB)},
+          col sep=comma] {./spectra/corrected_test_spectrum.txt}; % Raw test mic data
+      \addplot[mark=none, green] table [x={Frequency (Hz)},
+          y={Corrected (dB)},
+          col sep=comma] {./spectra/corrected_test_spectrum.txt} ; % Corrected test mic data
+    \end{axis}
+  \end{tikzpicture}
+  \caption{~\\
+    Black curve: Noise recorded via external recorder directly from the wave generator.\\
+    Blue curve: Noise recorded via the Ubuntu laptop with the reference microphone and the applied manufacturer correction curve.\\
+    Red curve: Noise recorded via the external recorder with the MUT. No processing applied.\\
+    Green curve: Noise recorded via the external recorder with the MUT after applying the correction curve.
+  }
+\end{figure}
+\section{Confounding Factors}\label{confac}
+\subsection{Recording Devices}
+A significant struggle in determining the true frequency response of the MUT in this case
+is the unknown contributions of the recording devices. Here the personal laptops of both authors
+were used as recording devices. One laptop, a Microsoft Surface Pro 7 running a modern version of Ubuntu, was able to record audio up to
+approximately $\qty{20}{\kilo\hertz}$ with fairly low noise excepting a persistent but weak $\qty{60}{\hertz}$
+signal (mitigated by ensuring the reference and test microphones were properly grounded, but still present)
+likely caused by poor all around shielding. Recorded audio on the Ubuntu laptop was fairly representative
+of the signal emitted by the signal generator.
+The other laptop, a 2024 ROG STRIX running Windows 11 was unable to capture any audio on above
+$\qty{10}{\kilo\hertz}$ and had a significantly higher noise floor which made recording difficult.
+Recording on the Ubuntu laptop would be preferable due to this, however the MUT as well as the function generator were
+not recognized by the Ubuntu laptop and recordings could not be made using it.
+
+In order to somewhat circumvent the challenges present in recording to the previously mentioned devices an external recorder was used.
+Unfortunately the external recorder did not support the reference microphone despite
+efforts to adapt it to do so. Instead the reference microphone was recorded on the
+Ubuntu laptop and the test and direct-from-signal-generator signals were recorded
+using the external recorder. Additionally, the external recorder was only able to
+record up to approximately $\qty{16}{\kilo\hertz}$, limiting the test range.
+This is however not likely relevant as it is uncertain whether these high
+frequencies were recorded at all accurately on any of the other available devices.
+Future work in this area could attempt to use direct voltage sampling with a device
+more suited to the task in order to remove the influence of audio processing circuitry.
+\newpage
+\subsection{Harmonics}
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{harmonics.png}
+  \caption{Harmonics present in the frequency sweep. 0th harmonic plotted by inspection,
+    others plotted at integer multiples (harmonic number +1) of the 0th.
+    Note the strip at approximately $\qty{9}{\second}$. This is likely a sampling
+    artifact though it was not investigated deeply enough to determine an exact cause.}
+\end{figure}
+Initially, a frequency sweep from $\qty{10}{\hertz}$ to $\qty{10}{\kilo\hertz}$ was used to test the microphones
+and speaker. This idea was abandoned due to difficulty aligning the frequency analysis mentioned in \cref{meth:corr-prof}
+to a single frequency sweep and a noise signal was used instead. The frequency sweep did however highlight
+not-insignificant harmonics present in the recordings.
+These harmonics likely contribute significantly to the observed frequency spectrum, even in the case where noise is used instead of a
+sweep. Eliminating the harmonics is difficult as it is not clear from where they originate. Different correction strategies would be necessary
+depending on whether they originate from the recorders, the source, or are a property of the acoustic chamber.
+\newpage
+\section{Results}
+\begin{figure}
+  \begin{tikzpicture}
+    \begin{axis}[
+        xmode=log,
+        log ticks with fixed point,
+        xlabel={$\unit{\hertz}$},
+        ylabel={$\unit{\decibel}$},
+        xmax=12000,
+        width=\linewidth,
+        height=8cm]
+      \addplot[mark=none] table [x={Frequency (Hz)},
+          y={Relative Response (dB)},
+          col sep=comma] {./spectra/corrected_test_spectrum.txt}; % Relative test mci response, IDEAL-CORR_TEST=RELATIVE
+    \end{axis}
+  \end{tikzpicture}
+  \caption{
+    Microphone response relative to ideal noise response. Note that the significant jump at approximately $\qty{15}{\kilo\hertz}$ is due
+    to the external recorder having zero response at frequencies above this.
+  }
+  \label{fig:relative-response}
+\end{figure}
+The frequency response of the MUT was successfully determined.
+It is difficult to make any claims as to the precision of the measurements which led to
+the frequency response plot due to the factors detailed in \cref{confac}
+but we do see the approximate features we'd expect.
+The relative response seen in \cref{fig:relative-response} exhibits the expected
+flatness near $\qty{1}{\kilo\hertz}$ that is present in the datasheet \cite{mic:test-electret-mic}.
+It is unfortunate that the external recorder is unreliable in the higher frequency regions
+from $\qty{11}{\kilo\hertz}$ to $\qty{15}{\kilo\hertz}$
+as this is the a region in which the datasheet suggests there is some
+deviation from a perfect response.
+Despite the offset in \cref{fig:relative-response} it is
+evident that there is significant deviation from the datasheet near
+$\qty{5}{\kilo\hertz}$ which is well within the range of the external recorder
+and not a region of significant noise in either recording device or of high harmonic intensity.
+\section{Areas for Future Consideration}
+\subsection{Direct Voltage Sampling}
+As mentioned in \cref{confac} there is a not insignificant influence
+on the recorded audio by the device performing the recording. This can be caused by a number of factors in both the hardware of the device and the software. Many of these could be resolved by instead directly sampling the voltage values coming out of a microphone with a sufficiently fast analogue-to-digital converter. Determining how this affects the results in \cref{fig:relative-response} would be a worthwhile endeavour.
+\subsection{Reciprocity Calibration} \label{reciprocity}
+The creation of a reference microphone is an excellent example of a bootstrap paradox. To create a reference microphone requires a speaker with a known frequency response. To create such a speaker one needs a microphone with known characteristics.
+
+Reciprocity calibration is a technique designed to avoid this paradox. It exploits the ability of a microphone to act as a weak speaker to calculate the response curve of a single microphone using three similar microphones with unknown response curves. This is a fairly complex process but is accepted as the standard for the creation of reference microphones by many national standards institutions. Resources on the process are scarce but very thorough. Wikipedia gives an overview at \url{https://en.wikipedia.org/wiki/Measurement_microphone_calibration}.
+For more detailed desciptions of the process
+\cite{FF-recp-cal} is very comprehensive. \cite{WiesnerThallerZagar+2016+338+346} investigates reciprocal calibration of electret microphones specifically, though does not seem to be available in English.
+
+Reciprocity calibration is likely the best way to improve the results of this project when paired with something like the direct voltage sampling mentioned previously to minimize recording effects.
+\newpage
+\section{References}
+\bibliographystyle{plain}
+\bibliography{sources}
+\end{document}

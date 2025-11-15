@@ -109,8 +109,23 @@ Use this recursion relation to calculate $H_6(\xi)$. Be sure to scale your resul
 vention, such that the coefficient of $\xi^6$ is $2^6$.
 \end{problem}
 \begin{soln}
-
+  We want terms up to and including $\xi^6$ so we want $k$ up to and including $k=3$. This means
+  we'll have four terms total so $\lambda=4\cdot3+1=13$. Now applying the recursion relation,
+  \begin{align*}
+    c_0 & =c_0                                                                    \\
+    c_1 & =\frac{4\cdot 0+1-13}{2\left(0+1\right)\left(0+1\right)}c_0=-6c_0       \\
+    c_2 & =\frac{4+1-\lambda}{2\left(2\right)\left(3\right)}c_1=4c_0              \\
+    c_3 & =\frac{8+1-\lambda}{2\left(3\right)\left(5\right)}c_2=-\frac{8}{15}c_0.
+  \end{align*}
+  Higher terms are zero as $c_4$ is zero, as we wanted.
+  Now we use that
+  $$H_6(\xi)=\sum_{k=0}^3 c_k\xi^{2k}=c_0+c_1\xi^{2}+c_2\xi^{4}+c_3\xi^{6}.$$
+  by plugging in the obtained $c_k$s:
+  $$H_6(\xi)=c_0-6c_0\xi^{2}+4c_0 \xi^{4}-\frac{8}{15}c_0\xi^{6}.$$
+  We want $-\frac{8}{15}c_0=2^6\implies c_0=-120$ so we have
+  $$H_6(\xi)=-120+720\xi^{2}-480 \xi^{4}+64\xi^{6}.$$
 \end{soln}
+\newpage
 
 % PROBLEM 2
 \begin{problem}
@@ -121,7 +136,40 @@ coefficients in this series. Explain your steps. You should obtain
 $$d_{k+1}=\frac{4k+3-\lambda}{2\left(k+1\right)\left(2k+3\right)}d_k.$$
 \end{problem}
 \begin{soln}
-
+  In class we found that
+  $$H(\xi)=\sum_{k=0}^\infty d_k\xi^{2k+1}.$$
+  We also found that
+  $$\frac{d^2 H}{d\xi}-2\xi\frac{d H}{\xi}+H\left(\lambda-1\right)=0.$$
+  Setting up to plug in to our expression for $H$,
+  $$\frac{dH}{d\xi}=\sum_{k=0}^\infty \left(2k+1\right)d_k\xi^{2k}$$
+  $$\frac{d^2H}{d\xi^2}=\sum_{k=0}^\infty 2k\left(2k+1\right)d_k\xi^{2k-1}.$$
+  So we have
+  $$\sum_{k=0}^\infty 2k\left(2k+1\right)d_k\xi^{2k-1}-2\xi\sum_{k=0}^\infty \left(2k+1\right)d_k\xi^{2k}+\sum_{k=0}^\infty d_k\xi^{2k+1}\left(\lambda-1\right)=0.$$
+  We are trying to use Frobenius' method so we need to pull out the dependence on $\xi$ and turn all the coefficients
+  into one big coefficient so we can use the fact that
+  $$\sum_{k=0}^{\infty}C_k\xi^k=0\forall \xi\implies C_k=0\forall k.$$
+  We can start by simplifying a bit to obtain
+  $$\sum_{k=0}^\infty 2k\left(2k+1\right)d_k\xi^{2k-1}-2\sum_{k=0}^\infty \left(2k+1\right)d_k\xi^{2k+1}+\sum_{k=0}^\infty d_k\xi^{2k+1}\left(\lambda-1\right)=0$$
+  which means that it's only the first term,
+  $$\sum_{k=0}^\infty 2k\left(2k+1\right)d_k\xi^{2k-1},$$
+  preventing us from pulling out a $\xi^{2k+1}$. To get around this we first note that
+  the first term of this sum will be zero because of the $2k$ out front so we can change the starting
+  index without issue
+  $$\sum_{k=1}^\infty 2k\left(2k+1\right)d_k\xi^{2k-1}.$$
+  Now this is the tricky bit: We want to find a mapping for $k\to \pr{k}$ so that $\xi^{2k-1}\to\xi^{2\pr{k}+1}$. Obviously
+  we can do this by setting $\pr{k}=k-1$. We are actually able to make this change of index in the summation because
+  the new sum
+  $$\sum_{\pr{k}=0}^\infty 2\left(\pr{k}+1\right)\left(2\pr{k}+3\right)d_{\pr{k}+1}\xi^{2\pr{k}+1}$$
+  is the same as the old sum except we've just called the index something different. The indices still line up
+  so it's no problem to recombine the sums as
+  \begin{align*}
+    0 & =\sum_{k=0}^\infty 2\left(k+1\right)\left(2k+3\right)d_{k+1}\xi^{2k+1}-2\sum_{k=0}^\infty \left(2k+1\right)d_k\xi^{2k+1}+\sum_{k=0}^\infty d_k\xi^{2k+1}\left(\lambda-1\right) \\
+      & =\sum_{k=0}^\infty \left[2\left(k+1\right)\left(2k+3\right)d_{k+1}-2\left(2k+1\right)d_k+d_k\left(\lambda-1\right)\right]\xi^{2k+1}.
+  \end{align*}
+  As we know this means that, for all $k$,
+  $$2\left(k+1\right)\left(2k+3\right)d_{k+1}-2\left(2k+1\right)d_k+d_k\left(\lambda-1\right)=0$$
+  and so 
+  $$d_{k+1}=\frac{4k+3-\lambda}{2\left(k+1\right)\left(2k+3\right)}d_k$$
 \end{soln}
 
 % PROBLEM 3
@@ -134,20 +182,22 @@ Using Dirac notation:
 \end{enumerate}
 \end{problem}
 \begin{soln}~
-\begin{enumerate}[label=(\alph*)]
-  \item We know that for states $\psi$ and $\chi$ $\bra{\psi}\hat{A}\ket{\chi}=\braket{\hat{A}^\dagger\psi}{\chi}$. Applying this then to the
-  product we obtain
-  $$\bra{\psi}\hat{A}\hat{B}\ket{\chi}=\bra{\psi}\hat{A}\ket{\pr{\chi}}$$
-  where $\ket{\pr{\chi}}=\hat{B}\ket{\chi}$. Then,
-  $$\bra{\psi}\hat{A}\ket{\pr{\chi}}=\braket{\hat{A}^\dagger\psi}{\pr{\chi}}=\bra{\pr{\psi}}\hat{B}\ket{\chi}=\hat{B}^\dagger\bra{\pr{\psi}}\ket{\chi}.$$
-  Here we've written $\bra{\hat{A}^\dagger\psi}=\bra{\pr{\psi}}$
-  undoing this we obtain
-  $$\bra{\psi}\hat{A}\hat{B}\ket{\chi}=\hat{B}^\dagger\bra{\pr{\psi}}\ket{\chi}=\hat{B}^\dagger\hat{A}^\dagger\bra{\psi}\ket{\chi}.$$
-  Because $\ket{\psi}$ and $\ket{\chi}$ are generic we can say then that $\left(\hat{A}\hat{B}\right)^\dagger=\hat{B}^\dagger\hat{A}^\dagger$.
-  \item As we know from part (a) linear operators in general satisfy $\left(\hat{C}\hat{D}\right)^\dagger=\hat{D}^\dagger\hat{C}^\dagger$.
-  If this product were Hermitian we could say that $\left(\hat{C}\hat{D}\right)^\dagger=\hat{C}\hat{D}=\hat{C}^\dagger\hat{D}^\dagger$
-  which we know is not the case again from part (a). Therefore the product of two Hermitian operators is not necessarily Hermitian unless the operators commute.
-\end{enumerate}
+  \begin{enumerate}[label=(\alph*)]
+    \item We know that for states $\psi$ and $\chi$ $\bra{\psi}\hat{A}\ket{\chi}=\braket{\hat{A}^\dagger\psi}{\chi}$. Applying this then to the
+          product we obtain
+          $$\bra{\psi}\hat{A}\hat{B}\ket{\chi}=\bra{\psi}\hat{A}\ket{\pr{\chi}}$$
+          where $\ket{\pr{\chi}}=\hat{B}\ket{\chi}$. Then,
+          $$\bra{\psi}\hat{A}\ket{\pr{\chi}}=\braket{\hat{A}^\dagger\psi}{\pr{\chi}}=\bra{\pr{\psi}}\hat{B}\ket{\chi}=\hat{B}^\dagger\bra{\pr{\psi}}\ket{\chi}.$$
+          Here we've written $\bra{\hat{A}^\dagger\psi}=\bra{\pr{\psi}}$.
+          undoing this we obtain
+          $$\bra{\psi}\hat{A}\hat{B}\ket{\chi}=\hat{B}^\dagger\bra{\pr{\psi}}\ket{\chi}=\hat{B}^\dagger\hat{A}^\dagger\bra{\psi}\ket{\chi}.$$
+          Because $\ket{\psi}$ and $\ket{\chi}$ are generic we can say then that $\left(\hat{A}\hat{B}\right)^\dagger=\hat{B}^\dagger\hat{A}^\dagger$.
+    \item As we know from part (a) linear operators in general satisfy $(\hat{C}\hat{D})^\dagger=\hat{D}^\dagger\hat{C}^\dagger$.
+          If this product were Hermitian we could say that $(\hat{C}\hat{D})^\dagger=\hat{C}\hat{D}$
+          because we could remove the $\dagger$ directly by saying $\hat{C}\hat{D}=\hat{F}$ and $\hat{F}$ Hermitian would mean that 
+          $\hat{F}^\dagger=\hat{F}$. Provided these operators do not commute then we have no guarantee that 
+          the product will be Hermitian.
+  \end{enumerate}
 \end{soln}
 
 \end{document}
