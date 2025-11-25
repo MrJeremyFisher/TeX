@@ -15,7 +15,7 @@
 \usepackage{relsize}
 \usepackage{subfig}
 \usepackage{todonotes}
-\usepackage{sagetex}
+% \usepackage{sagetex}
 \usepackage{multicol, multirow, booktabs}
 \usepackage[breakable]{tcolorbox}
 \usepackage[inline]{enumitem}
@@ -122,6 +122,17 @@
 Show that $\abs{\exp(z^2)} \leq \exp(|z|^2)$.
 \end{problem}
 \begin{soln}
+  With $z=x+iy$ we have that
+  $$\abs{\exp(z^2)}=\abs{\exp(x^2+2ixy-y^2)}=\abs{\exp(x^2-y^2)}\abs{\exp(2ixy)}=\abs{\exp(x^2-y^2)}$$
+  because
+  $$\abs{\exp(2ixy)}=\abs{\cos(2xy)+i\sin(2xy)}=\sqrt{\cos^2(2xy)+\sin^2(2xy)}=1.$$
+  We also have that
+  $$\exp(|z|^2)=\exp(x^2+y^2).$$
+  Since these are both real-valued exponentials they are increasing functions
+  and since their arguments satisfy
+  $$x^2-y^2\leq x^2+y^2$$
+  then
+  $$\abs{\exp(z^2)} \leq \exp(|z|^2).$$
 \end{soln}
 
 % PROBLEM 2
@@ -135,17 +146,50 @@ Find the principal value of
   \end{enumerate*}
 \end{center}
 \end{problem}
-\begin{soln}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item \begin{align*}
+            (-i)^i & =(e^{i3\pi/2})^i \\
+                   & =e^{-3\pi/2}
+          \end{align*}
+    \item \begin{align*}
+            \left[\frac{e}{2}\left(-1-\sqrt{3}i\right)\right]^{3\pi i} & =e^{3\pi i}\left[\left(-\frac{1}{2}-\frac{\sqrt{3}}{2}i\right)\right]^{3\pi i} \\
+                                                                       & =e^{3\pi i}\left[e^{i2\pi/3}\right]^{3\pi i}                                   \\
+                                                                       & =-e^{-2\pi^2}
+          \end{align*}
+    \item \begin{align*}
+            \left(1-i\right)^{4i} & =\left(\sqrt{2}e^{-i\pi/4}\right)^{4i} \\
+                                  & =\sqrt{2}e^{\pi}
+          \end{align*}
+  \end{enumerate}
 \end{soln}
+\newpage 
 
 % PROBLEM 3
 \begin{problem}
 Derive expression (9), Sec. 40, for $\cosh^{-1}(z)$.
 \end{problem}
 \begin{soln}
-  Expression (9) says 
-  $$\cosh^{-1}(z)=\log\left[z+(z^2-1)^{1/2}\right].$$
+  If $\cosh^{-1}(z)\implies z=\cosh(\theta)$.
+  Then
+  \begin{align*}
+    z                                & =\cosh(\theta)=\cos(i\theta)    \\
+    \implies z                       & =\frac{e^\theta+e^{-\theta}}{2} \\
+    \implies 2z                      & =e^\theta+e^{-\theta}           \\
+    \implies 2ze^\theta              & =e^2\theta+1                    \\
+    \implies -e^2\theta+2ze^\theta-1 & =0
+  \end{align*}
+  which is a quadratic in $e^\theta$ and can be solved using the quadratic formula,
+  $$e^\theta=\frac{-2z\pm\sqrt{4z^2-4(-1)(-1)}}{2(-1)}=\frac{2z\mp2\sqrt{z^2-1}}{2}=z\mp\sqrt{z^2-1}.$$
+  so, taking the logarithm,
+  $$\theta=\cosh^{-1}(z)=\ln\left(z\mp\sqrt{z^2-1}\right)$$
+  which isn't quite right as we've still got the $\pm$.
+  To get rid of it we can (or rather, I did) look at the graph of $\cosh^{-1}(x)$ for real values
+  and note that it is only defined for positive $x$. We can also note that
+  $$\ln\left(z\mp\sqrt{z^2-1}\right)=\ln\left(z+\sqrt{z^2-1}\right)^\mp=\mp\ln\left(z+\sqrt{z^2-1}\right).$$
+  So we must remove the negative case to obey the definition of $\cosh^{-1}$.
 \end{soln}
+\newpage
 
 % PROBLEM 4
 \begin{problem}
@@ -157,24 +201,108 @@ value of the integral tends to zero as $R$ tends to infinity. (Compare with Exam
 Sec. 47.)
 \end{problem}
 \begin{soln}
+  Note that
+  $$
+    \frac{2z^2-1}{z^4+5z^2+4}=\frac{2z^2-1}{(z^2+4)(z^2+1)}
+  $$
+  and that
+  $$\abs{2z^2-1}\leq \abs{2z^2}-1=2R^2-1$$
+  and that
+  $$\abs{z^2+4}\geq \abs{\abs{z}^2-4}=R^2-4$$
+  and that
+  $$\abs{z^2+1}\geq \abs{\abs{z}^2-1}=R^2-1$$
+  by the triangle inequality.
+  And so the absolute value of the integrand is bounded as
+  $$\abs{\frac{2z^2-1}{z^4+5z^2+4}}=\frac{\abs{2z^2-1}}{\abs{z^2+4}\abs{z^2+1}}\leq\frac{2R^2-1}{\left(R^2-4\right)\left(R^2-1\right)}.$$
+  So by the theorem presented in section 47 regarding the relationship between the bounds on integrands and their integrals we can say that
+  $$\abs{\int_{C_R}\frac{2z^2-1}{(z^2+4)(z^2+1)}\,dz}\leq\frac{2R^2-1}{\left(R^2+4\right)\left(R^2+1\right)}L=\frac{\pi R\left(2R^2-1\right)}{\left(R^2-4\right)\left(R^2-1\right)}$$
+  as the length of $C_R$ here is half the length of a circle.
+  Now note that
+  \begin{align*}
+    \lim_{R\to\infty}\frac{\pi R\left(2R^2-1\right)}{\left(R^2-4\right)\left(R^2-1\right)} & =\lim_{R\to\infty}\frac{\pi R\left(2R^2-1\right)}{\left(R^2-4\right)\left(R^2-1\right)}\frac{1/R^4}{1/R^4}                                            \\
+                                                                                           & =\lim_{R\to\infty}\frac{\pi \left(\frac{2}{R}-\frac{1}{R^3}\right)}{\left(\frac{1}{R^2}-\frac{4}{R^4}\right)\left(\frac{1}{R^2}-\frac{1}{R^4}\right)} \\
+                                                                                           & =\lim_{R\to{\infty}}{\frac{\pi\left(\frac{2}{R}-\frac{1}{R^{3}}\right)}{-\frac{5}{R^{2}}+\frac{4}{R^{4}}+1}}                                          \\
+                                                                                           & =0/1=0.
+  \end{align*}
 \end{soln}
+\newpage
 
 % PROBLEM 5
 \begin{problem}
 Apply the Cauchy-Goursat theorem to show that
 $$\int_C f(z)\,dz=0$$
 when the contour $C$ is the unit circle $|z| = 1$, in either direction, and when\\
+
 \begin{center}
-    \begin{enumerate*}[label=(\alph*)]
-      \item $\displaystyle f(z)=\frac{z^2}{z+3}$;\qquad~
-      \item $\displaystyle f(z)=ze^{-z}$;\qquad~
-      \item $\displaystyle f(z)=\frac{1}{z^2+2z+2}$;\newline
-      \item $\displaystyle f(z)=\sech(z)$;\qquad~
-      \item $\displaystyle f(z)=\tan(z)$;\qquad~
-      \item $\displaystyle f(z)=\Log(z+2)$ 
-    \end{enumerate*}
+  \begin{multicols}{3}
+    \begin{enumerate}[label=(\alph*)]
+      \item $\displaystyle f(z)=\frac{z^2}{z+3}$;
+      \item $\displaystyle f(z)=ze^{-z}$;
+      \item $\displaystyle f(z)=\frac{1}{z^2+2z+2}$;
+      \item $\displaystyle f(z)=\sech(z)$;
+      \item $\displaystyle f(z)=\tan(z)$;
+      \item $\displaystyle f(z)=\Log(z+2)$
+    \end{enumerate}
+  \end{multicols}
+\end{center}
+\end{problem}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item Since this function is analytic everywhere except at $z=3$ its integral is zero over the given contour.
+    \item Since this function is the product of two entire functions it is itself entire and its integral is therefore zero.
+    \item Using the quadratic formula the denominator here factors as $z^2+2z+2=(z+1+i)(z+1-i)$. Since both
+          of these points lie at distance $\sqrt{2}$ from the origin they are not contained in or on the border of $C$ and
+          the integral of the function is therefore zero.
+    \item Here note that $\sech(z)=\frac{1}{\cosh(z)}=\frac{1}{\cos(iz)}=\frac{2}{e^{z}+e^{-z}}$ which is undefined for $z=\frac{\pi}{2}\left(2k+1\right)$ for
+          $k\in \mathbb{Z}$ as $\cos$ is zero. These points are however at a distance of $\pi/2\approx 1.57>1$ and so do not lie in or on $C$ meaning the integral
+          is zero.
+    \item Note that $\tan(z)=\frac{\sin(z)}{\cos(z)}$ which is analytic in $C$, only diverging for $z=\left(2k+1\right)\frac{\pi}{2}$, which is, as above, not in or
+          on the edge of $C$ and therefore integral is zero.
+    \item Note that $\Log(z+2)=\ln\abs{z+2}+i\Arg(z)$. $\Log(z)$ is analytic everywhere except on the real axis where $z\leq 0$ and
+          so $\Log(z+2)$ is analytic except for $z+2\leq 0$. The points on or inside $C$ do not satisfy this inequality (the closest we can get is
+          $z=-1$) and so the function is analytic in the region and the integral is zero.
+  \end{enumerate}
+\end{soln}
+\newpage
+
+% PROBLEM 6
+\begin{problem}
+Let $C$ denote the positively oriented boundary of the square whose sides lie along the
+lines $x =\pm 2$ and $y = \pm 2$. Evaluate each of these integrals:
+\begin{center}
+  \begin{multicols}{3}
+    \begin{enumerate}[label=(\alph*)]
+      \item $\displaystyle \int_C\frac{e^{-z}}{z-i\pi/2}\,dz$;
+      \item $\displaystyle \int_C\frac{\cos(z)}{z\left(z^2+8\right)}\,dz$;
+      \item $\displaystyle \int_C\frac{z}{2z+1}\,dz$;
+      \item $\displaystyle \int_C\frac{\cosh(z)}{z^4}\,dz$;
+      \item $\displaystyle \int_C\frac{\tan(z/2)dz}{\left(z-x_0\right)^2}\quad (-2<x_0<2)$
+    \end{enumerate}
+  \end{multicols}
 \end{center}
 \end{problem}
 \begin{soln}
+  \begin{enumerate}[label=(\alph*)]
+    \item Using Cauchy's integral formula,
+          $$f(z_0)=\frac{1}{2\pi i}\int_C\frac{f(z)}{z-z_0}\,dz,$$
+          here we have $f(z)=e^{-z}$ and $z_0=i\pi/2$. So
+          $$\int_C\frac{e^{-z}}{z-i\pi/2}\,dz=2\pi i e^{-i\pi/2}=2\pi i (-i)=2\pi.$$
+    \item Using the extended form of Cauchy's integral formula,
+          $$\int_C\frac{f(z)}{(z-z_0)^{n+1}}\,dz=\frac{n!}{2\pi i}f^(n)(z_0),$$
+          and rewriting our integral as
+          $$\int_C\frac{(\cos(z)/\left(z^2+8\right))}{(z-0)^{0+1}}\,dz$$
+          we can clearly see that
+          $n=1$, $z_0=0$, and $f(z)=\cos(z)/\left(z^2+8\right)$. Evaluating then we obtain that the integral is equal to
+          $$\frac{\cos(0)}{8}\cdot\frac{2\pi i}{0!}=\frac{\pi i}{4}.$$
+    \item The integral can be rewritten as
+          $$\int_C\frac{z/2}{z+1/2}\,dz=\int_C\frac{z/2}{(z-(-1/2))^{0+1}}\,dz$$
+          and so by Cauchy's extended integral formula we obtain
+          $$\int_C\frac{z}{2z+1}\,dz=\frac{(-1/4)\cdot2\pi i}{0!}=-\frac{\pi i}{2}.$$
+    \item Here we can directly see that $f(z)=\cosh(z)$, $z_0=0$, and $n=3$. The third derivative
+          of $\cosh(z)$ is $\sinh(z)$ and so the integral evaluates to zero as $\sinh(0)=0$ in the numerator.
+    \item Here we have that $f(z)=\tan(z/2)$, $z_0=x_0$, and $n=1$. The first derivative of $\tan(z/2)$
+          is $\sec^2(z/2)/2$ and so by Cauchy's extended integral formula we have
+          $$\int_C\frac{\tan(z/2)}{\left(z-x_0\right)^2}\,dz=\frac{2\pi i \sec^2(x_0/2)}{2\cdot0!}=\pi i \sec^2(x_0/2).$$
+  \end{enumerate}
 \end{soln}
 \end{document}
