@@ -295,7 +295,11 @@ $$\lambda(z)=\begin{cases}
             =\frac{\lambda_0}{4\pi\epsilon_0}\left[-(\ln(-z)-\ln(-a-z))+\ln(a-z)-\ln(-z)\right]
             =\frac{\lambda_0}{4\pi\epsilon_0}\left[\ln(-a-z)+\ln(a-z)-2\ln(-z)\right]
           $$
-    \item This problem has azimuthal symmetry, which means that the potential can also be represented by
+    \item Eq. (3.65) is 
+    $$V=\sum_\ell A_\ell r^\ell+\frac{B_\ell}{r^{\ell+1}}$$
+    
+    
+    This problem has azimuthal symmetry, which means that the potential can also be represented by
           Eq. (3.65). Find the unknown coefficients by matching the potential to the one you found in part (a).
           Make sure your solution works for both $z > 0$ and $z < 0$.
     \item Bonus. Plot your potential in the $xz$ plane. You will find the \texttt{scipy.special.legendre} module to be
