@@ -1,22 +1,36 @@
 import matplotlib.pyplot as pyplot
 import numpy as np
 import matplotlib
-
-font = {'size'   : 22}
+import os 
+import itertools
+font = {'size': 22}
 matplotlib.rc('font', **font)
 
+directory = "PHYS/PHYS 4050H/Project 3/data/"
+    
 
-data = np.genfromtxt("PHYS/PHYS 4050H/Project 3/largepanel.csv", delimiter=",")
-fig = pyplot.figure()
-ax = fig.add_subplot(111)
-ax.scatter(data[:, 1], data[:, 0], label="I(V)", color="blue")
-ax.set_ylabel("Current (mA)")
-ax.set_xlabel("Voltage (V)")
+marker = itertools.cycle((',', '+', '.', 'o', '*', '^', 'v', '>', '<')) 
+for fname in os.listdir(directory):
+    print(fname)
+    data = np.genfromtxt(directory + fname, delimiter=",")
+    title = fname.replace(".csv", "")
+    xo = np.flip(data[:, 1])
+    yo = np.flip(data[:, 0])
+    x = [xo[0]]
+    y = [yo[0]]
+    for i, xv in enumerate(xo): # Filter non-increasing data
+        if xv > x[-1]:
+            x.append(xv)
+            y.append(yo[i])
+    pyplot.figure(0)
+    pyplot.plot(x, y, label=f"I(V) ({int(title)/100}mm)" , marker=next(marker), markersize=12)
+    pyplot.ylabel("Current (mA)")
+    pyplot.xlabel("Voltage (V)")
+    pyplot.legend(loc=1)
 
-
-ax1 = ax.twinx()
-ax1.scatter(data[:, 1], (data[:, 0] / 1000) * data[:, 1] *
-            1000, label="P(V)", color="red")
-ax1.set_ylabel("Power (mW)")
-
+    pyplot.figure(1)
+    pyplot.plot(x, np.array(x)*np.array(y), label=f"P(V) ({int(title)/100}mm)", marker=next(marker), markersize=12)
+    pyplot.ylabel("Power (mW)")
+    pyplot.xlabel("Voltage (V)")
+    pyplot.legend()
 pyplot.show()

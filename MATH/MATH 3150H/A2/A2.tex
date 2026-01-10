@@ -14,8 +14,9 @@
 \usepackage{fontspec}
 \usepackage{relsize}
 \usepackage{subfig}
-% \usepackage{sagetex}
+\usepackage{sagetex}
 \usepackage{minted}
+\usepackage{pdfpages}
 \usepackage{todonotes}
 \usepackage{multicol, multirow, booktabs}
 \usepackage[breakable]{tcolorbox}
@@ -39,10 +40,13 @@
 \newcommand{\ui}{\hat{i}}
 \newcommand{\uj}{\hat{j}}
 \newcommand{\uk}{\hat{k}}
-\newcommand{\ux}{\hat{x}}
-\newcommand{\uy}{\hat{y}}
-\newcommand{\uz}{\hat{z}}
-\newcommand{\primed}[1]{#1^\prime}
+\newcommand{\ux}{\hat{\mathbf{x}}}
+\newcommand{\uy}{\hat{\mathbf{y}}}
+\newcommand{\uz}{\hat{\mathbf{z}}}
+\newcommand{\uv}[1]{\hat{\bm{{#1}}}}
+\newcommand{\pr}[1]{{#1^\prime}}
+\newcommand{\pd}[2][]{{\frac{\partial^{#1}}{\partial {{#2}^{#1}}}}}
+\newcommand{\dif}[2][]{{\frac{d^{#1}}{d{{#2}^{#1}}}}}
 \pgfdeclarelayer{background}  
 \pgfsetlayers{background,main}
 \AtBeginDocument{\RenewCommandCopy\qty\SI}
@@ -95,7 +99,7 @@
 
 \newcommand{\bv}[1]{\mathbf{#1}}
 
-\title{Math 3150H: Assignment I}
+\title{Math 3150H: Assignment II}
 \author{Jeremy Favro (0805980) \\ Trent University, Peterborough, ON, Canada}
 \date{\today}
 
@@ -107,10 +111,351 @@ My student number is 0805980 so $p=9$, $q=5$, and $r=22$.
 Solve for $u(x,t)$.
 
 $$\frac{\partial u}{\partial t}=2\frac{\partial^2 u}{\partial x^2}-8\frac{\partial u}{\partial x},\qquad 0<x<2,\quad t>0,$$
-$$u(t,0)=0,\quad u(2,t)=0,\quad t>0,\quad \text{and}\quad u(x,0)=(x^2-2x)e^{2x}$$
+$$u(0,t)=0,\quad u(2,t)=0,\quad t>0,\quad \text{and}\quad u(x,0)=(x^2-2x)e^{2x}$$
 
 \end{problem}
 \begin{soln}
+  Since this problem is already homogenous we can go directly to separation of variables. Let
+  $$u(x,t)=\phi(x)T(t).$$
+  Then our PDE becomes
+  $$\frac{\partial \phi(x)T(t)}{\partial t}=2\frac{\partial^2 \phi(x)T(t)}{\partial x^2}-8\frac{\partial \phi(x)T(t)}{\partial x}$$
+  which we divide through by
+  $\phi(x)T(t)$ to obtain
+  $$\frac{1}{T(t)}\frac{\partial T(t)}{\partial t}=\frac{2}{\phi(x)}\frac{\partial^2 \phi(x)}{\partial x^2}-\frac{8}{\phi(x)}\frac{\partial \phi(x)}{\partial x}=P.$$
+  Which gives us two ODEs to solve,
+  $$2\frac{\partial^2 \phi(x)}{\partial x^2}-8\frac{\partial \phi(x)}{\partial x}=P\phi(x),\qquad\phi(0)=\phi(2)=0$$
+  and
+  $$\frac{\partial T(t)}{\partial t}=PT(t).$$
+  Let's start with the $\phi$ equation. We have three cases to check:
+  \begin{enumerate}[label=(\arabic*)]
+    \item $P=0$: Here our ODE becomes
+          $$\frac{\partial^2 \phi(x)}{\partial x^2}-4\frac{\partial \phi(x)}{\partial x}=0$$
+          which is constant coefficient with characteristic polynomial
+          $$m^2-4m=0\implies m=0,4$$
+          and so our solution is
+          $$\phi(x)=C_1e^{4x}+C_2.$$
+          Applying initial conditions,
+          $$\phi(0)=C_1+C_2=0\implies C_1=-C_2$$
+          and
+          $$\phi(2)=C_1e^8-C_1=0\implies C_1=C_2=0$$
+          and so this is a trivial case and $P=0$ is not an eigenvalue.
+    \item $P>0\implies P=\lambda^2$: Here our ODE becomes
+          $$2\frac{\partial^2 \phi(x)}{\partial x^2}-8\frac{\partial \phi(x)}{\partial x}-\phi\lambda^2=0$$
+          which is again constant coefficient now with characteristic polynomial
+          $$2m^2-8m-\lambda^2=0$$
+          which has roots
+          $$m=\frac{8\pm\sqrt{64-4(2)(-\lambda^2)}}{4}=\frac{4\pm\sqrt{16+2\lambda^2}}{2}$$
+          and so
+          $$\phi(x)=C_1e^{(\frac{4+\sqrt{16+2\lambda^2}}{2})x}+C_2e^{(\frac{4-\sqrt{16+2\lambda^2}}{2})x}.$$
+          Applying initial conditions then,
+          $$\phi(0)=C_1+C_2=0\implies C_1=-C_2$$
+          and
+          $$\phi(2)=C_1e^{4+\sqrt{16+2\lambda^2}}-C_1e^{4-\sqrt{16+2\lambda^2}}=0\implies
+            C_1e^{4+\sqrt{16+2\lambda^2}}=C_1e^{4-\sqrt{16+2\lambda^2}}\implies C_1=C_2=0
+          $$
+          and so this is a trivial case and $P=\lambda^2$ is not an eigenvalue.
+    \item $P<0\implies P=-\lambda^2$: Here our ODE becomes
+          $$2\frac{\partial^2 \phi(x)}{\partial x^2}-8\frac{\partial \phi(x)}{\partial x}+\phi\lambda^2=0$$
+          which is again constant coefficient with characteristic polynomial
+          $$2m^2-8m+\lambda^2=0$$
+          which has roots
+          $$m=\frac{8\pm\sqrt{64-8\lambda^2}}{4}=\frac{4\pm\sqrt{16-2\lambda^2}}{2}$$
+          which only produces something unique from the previous two cases when
+          $$16-2\lambda^2\leq 0\implies \lambda \geq\sqrt{8}.$$
+          We must again check cases for $\lambda$ in this range then,
+          \begin{enumerate}[label=(\roman*)]
+            \item $\lambda=\sqrt{8}$ gives us one value for $m$, $m=2$ and hence
+                  $$\phi(x)=C_1e^{2x}+C_2xe^{2x}.$$
+                  Applying initial conditions then,
+                  $$\phi(0)=C_1=0$$
+                  and
+                  $$\phi(2)=2C_2e^4=0\implies C_2=0$$
+                  and so this is a trivial case.
+            \item $\lambda>\sqrt{8}$ means we obtain
+                  $$m=\frac{4\pm i\sqrt{2\lambda^2-16}}{2}=2\pm\frac{\sqrt{2\lambda^2-16}}{2}i$$
+                  because the discriminant becomes negative.
+                  This gives us
+                  $$\phi(x)  =e^{2x}\left(C_1\cos(\frac{\sqrt{2\lambda^2-16}}{2}x)+C_2\sin(\frac{\sqrt{2\lambda^2-16}}{2}x)\right).$$
+                  Applying initial conditions,
+                  $$\phi(0)=C_1=0$$
+                  and
+                  $$\phi(2)=C_2e^{4}\sin(\sqrt{2\lambda^2-16})=0$$
+                  which means that either $C_2$ is zero and we obtain another trivial case, or
+                  $$\sqrt{2\lambda^2-16}=n\pi\implies \lambda=\sqrt{\frac{(n\pi)^2+16}{2}}$$
+                  a non trivial solution!
+          \end{enumerate}
+          So we obtain, finally, a nontrivial solution:
+          $$\phi_n(x)=Ce^{2x}\sin(\frac{n\pi}{2}x)$$
+          we've also obtained that
+          $$P=-\lambda^2=-\frac{(n\pi)^2+16}{2}.$$
+          We can also now write our full $\phi$ as a sum of the $\phi_n$s:
+          $$\phi(x)=\sum_{n=1}^\infty C_ne^{2x}\sin(\frac{n\pi}{2}x)$$
+  \end{enumerate}
+  Now we have to solve
+  $$\frac{\partial T(t)}{\partial t}=PT(t)$$
+  which is easy,
+  $$T(t)=Ce^{Pt}=C\exp(-\frac{(n\pi)^2+16}{2}t).$$
+  We can now recombine our solutions to obtain
+  $$u=\phi(x)T(t)=\sum_{n=1}^\infty C_ne^{2x}\sin(\frac{n\pi}{2}x)\exp(-\frac{(n\pi)^2+16}{2}t)$$
+  and use our last initial condition to determine $C$:
+  $$u(x,0)=(x^2-2x)\cancel{e^{2x}}=\sum_{n=1}^\infty C_n\cancel{e^{2x}}\sin(\frac{n\pi}{2}x)$$
+  which gives
+  $$C_n=\int_0^2(x^2-2x)\sin(\frac{n\pi}{2}x)\,dx$$
+  which I threw into Sage:
+  \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+    \prompt{In}{incolor}{1}{\boxspacing}
+    \begin{minted}[breaklines, autogobble]{sage}
+x, n = var('x n')
+assume(n, "integer")
 
+fn = (x^2-2*x)*sin((n*pi*x)/2)
+
+show(integral(fn, x, 0, 2).full_simplify())
+              \end{minted}
+  \end{tcolorbox}
+  \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+    \prompt{Out}{outcolor}{1}{\boxspacing}
+    $\displaystyle \frac{16 \, {\left(\left(-1\right)^{n} - 1\right)}}{\pi^{3} n^{3}}$
+  \end{tcolorbox}
+  So the problem is solved,
+  $$u(x,t)=\sum_{n=1}^\infty \frac{16{\left(\left(-1\right)^{n} - 1\right)}}{\pi^{3} n^{3}}e^{2x}\sin(\frac{n\pi}{2}x)\exp(-\frac{(n\pi)^2+16}{2}t)$$
+\end{soln}
+
+% PROBLEM 2
+\begin{problem}
+Solve for $u(x,t)$.
+$$\frac{\partial u}{\partial t}=2q^2t\frac{\partial^2 u}{\partial x^2},\qquad 0<x<1,\quad t>0,$$
+$$u(0,t)=t^2,\quad u(1,t)=1+t^2,\quad t>0, \quad\text{and}\quad u(x,0)=1$$
+\end{problem}
+\begin{soln}
+  Here we start with
+  $$u(x,t)=v(x,t)+w(x,t)$$
+  with $$w(x,t)=t^2+x$$ so that
+  $$w(0,t)=u(0,t)=t^2\implies v(0,t)=0$$
+  and
+  $$w(1,t)=u(1,t)=t^2+1\implies v(1,t)=0.$$
+  Now we are solving
+  $$\frac{\partial}{\partial t}\left(v(x,t)+w(x,t)\right)=2q^2t\frac{\partial^2}{\partial x^2}\left(v(x,t)+w(x,t)\right)$$
+  with boundary conditions
+  $$v(0,t)=v(1,t)=0,\quad v(x,0)=u(x,0)-w(x,0)=1-x.$$
+  We begin by simplifying the PDE to
+  $$\frac{\partial v}{\partial t}=2q^2t\frac{\partial^2 v}{\partial x^2}-2t$$
+  and we write
+  $$v(x,t)=\sum_{n=1}^\infty b_n(t)\sin(n\pi x)$$
+  which when plugged into our PDE gives
+  $$\sum_{n=1}^\infty \frac{db_n}{dt}\sin(n\pi x)=\left(-\frac{2q^2t}{n^2\pi^2}\sum_{n=1}^\infty \frac{db_n}{dt}\sin(n\pi x)\right)-2t$$
+  so
+  $$\sum_{n=1}^\infty \left[\frac{db_n}{dt}+2(qn\pi)^2tb_n\right]\sin(n\pi x)=-2t$$
+  which is a Fourier sine series for $-2t$
+  and hence the coefficient in the series, a differential equation here, is given by the usual integral,
+  $$\frac{db_n}{dt}+2(qn\pi)^2tb_n=2\int_0^1(-2t)\sin(n\pi x)\,dx=-4t\left[\frac{(-1)^n-1}{n\pi}\right]$$
+  which is linear with integrating factor
+  $$\mu=\exp(\int 2(qn\pi)^2t\,dt)=\exp((qn\pi)^2t^2)$$
+  and therefore has solution
+  $$b_n=\exp(-(qn\pi)^2t^2)\int -4t\exp((qn\pi)^2t^2)\left[\frac{(-1)^n-1}{n\pi}\right]\,dt+C\exp(-(qn\pi)^2t^2)$$
+  which I solved with Sage to obtain
+  $$b_n= -\frac{2{((-1)^{n} - 1)} }{\pi^{3} n^{3} q^{2}}+C\exp(-(qn\pi)^2t^2)$$
+  so we have now
+  $$v(x,t)=\sum_{n=1}^\infty \left(-\frac{2{((-1)^{n} - 1)} }{\pi^{3} n^{3} q^{2}}+C\exp(-(qn\pi)^2t^2)\right)\sin(n\pi x).$$
+  We can now apply our initial conditions:
+  $$v(0,t)=\sum_{n=1}^\infty \left(-\frac{2{((-1)^{n} - 1)} }{\pi^{3} n^{3} q^{2}}+C\exp(-(qn\pi)^2t^2)\right)\cdot \sin(0)=0$$
+  and
+  $$v(1,t)=\sum_{n=1}^\infty \left(-\frac{2{((-1)^{n} - 1)} }{\pi^{3} n^{3} q^{2}}+C\exp(-(qn\pi)^2t^2)\right)\cdot \sin(n\pi)=0$$
+  and our boundary condition:
+  $$v(x,0)=\sum_{n=1}^\infty \left(-\frac{2{((-1)^{n} - 1)} }{\pi^{3} n^{3} q^{2}}+C\right)\sin(n\pi x)=1-x$$
+  which is another Fourier sine series and must satisfy
+  $$-\frac{2{((-1)^{n} - 1)} }{\pi^{3} n^{3} q^{2}}+C=2\int_0^1(1-x)\sin(n\pi x)\,dx=\frac{2}{n\pi}\implies C=\frac{2}{n\pi}+\frac{2{((-1)^{n} - 1)} }{\pi^{3} n^{3} q^{2}}=\frac{2n^2\pi^2q^2+2((-1)^{n} - 1)}{n^{3}\pi^{3}q^{2}}$$
+  so
+  $$v(x,t)=\sum_{n=1}^\infty\frac{2}{n\pi}\exp(-(qn\pi)^2t^2)\sin(n\pi x).$$
+  So we have our full solution (with my $q=5$),
+  $$u(x,t)=v(x,t)+w(x,t)=t^2+x+\sum_{n=1}^\infty\frac{2}{n\pi}\exp(-(5n\pi)^2t^2)\sin(n\pi x)$$
+\end{soln}
+\newpage
+
+% PROBLEM 3
+\begin{problem}
+Solve for $u(x,t)$.
+$$\frac{\partial^2u}{\partial t^2}=q^2\frac{\partial^2 u }{\partial x^2}+6q^2(x-x^2),\qquad 0<x<1,\quad t>0,$$
+$$u(0,t)=2,\quad \frac{\partial u}{\partial x}(1,t)=1,\quad t>0,\quad \text{and}\quad u(x,0)=\frac{1}{2}x^4-x^3+x^2+(2+p)x,\quad \frac{\partial u}{\partial t}(x,0)=0$$
+\end{problem}
+\begin{soln}
+  Let
+  $$u(x,t)=w(x,t)+v(x)$$
+  so we get that
+  $$w_{tt}=q^2(w_{xx}+v_{xx})+6q^2(x-x^2).$$
+  We want $$q^2v_{xx}+6q^2(x-x^2)=0$$
+  so $$v(x)=-x^3+\frac{1}{2}x^4-Cx-C_1.$$
+  Our boundary conditions on $u(x,t)$ are that
+  $$u(0,t)=w(0,t)+v(0)=2$$
+  and we want $w(0,t)=0$ so we say that
+  $v(0)=2$. We do the same for
+  $u_x(1,t)=w_x(1,t)+v_x(1)=1$ so
+  $v_x(1)=1$. Applying these,
+  $v(0)=-C_1=2$ and $v_x(1)=-3+2-C=1\implies C=2$
+  so $v(x)=\frac{1}{2}x^4-x^3+2x-2$. Now our pde becomes
+  $$w_{tt}=q^2w_{xx}+6q^2(x^2-x)+6q^2(x-x^2)=q^2w_{xx}$$
+  with conditions
+  $$w(0,t)=0,\quad \frac{\partial w}{\partial x}(1,t)=0,\quad t>0,\quad \text{and}\quad w(x,0)=x^2+px+2,\quad \frac{\partial w}{\partial t}(x,0)=0.$$
+  Now we can do separation of variables with
+  $$w(x,t)=\phi(x)T(t)$$
+  which gives us
+  $$\frac{1}{T}\frac{\partial^2T}{\partial t^2}=\frac{q^2}{\phi}\frac{\partial^2 \phi}{\partial x^2}=P$$
+  which gives us two equations,
+  $$\phi_{xx}-\frac{P}{q^2}\phi(x)=0$$
+  and
+  $$\frac{\partial^2T}{\partial t^2}-PT=0.$$
+  Solving the position equation first we look at the usual cases:
+  \begin{enumerate}[label=(\arabic*)]
+    \item $P=0$: this gives us $\phi_{xx}=0\implies\phi=Cx$
+          and $\phi(1)=0\implies C=0$.
+    \item $P>0\implies P=\lambda^2$: $\phi_{xx}-\frac{\lambda^2}{q^2}\phi(x)=0$
+          which gives $\phi(x)=C_1e^{\lambda x/q}+C_2e^{-\lambda x/q}$
+          and
+          $\phi(0)=C_1+C_2\implies C_1=-C_2$
+          and
+          $\phi(1)=C_1e^{\lambda/q}-C_1e^{-\lambda/q}\implies C_1=C_2=0$.
+    \item $P<0\implies P=-\lambda^2$: $\phi_{xx}+\frac{\lambda^2}{q^2}\phi(x)=0$
+          which gives $\phi(x)=C_1\cos\left(\frac{\lambda}{q}x\right)+C_2\sin\left(\frac{\lambda}{q}x\right)$
+          and
+          $\phi(0)=C_2=0$
+          and
+          $\phi(1)=C_1\sin\left(\frac{\lambda}{q}\right)=0\implies \lambda=qn\pi$
+  \end{enumerate}
+  Now solving 
+  $$\frac{\partial^2T}{\partial t^2}+q^2n^2\pi^2 T=0$$
+  which gives
+  $$T=C_3\cos(qn\pi t)+C_4\sin(qn\pi t)$$
+  so our full solution is 
+  $$w(x,t)=\sum_{n=1}^\infty (C_1\cos(qn\pi t)+C_2\sin(qn\pi t))\sin\left(n\pi x\right).$$
+  Now we apply our initial conditions:
+  $$w(x,0)=\sum_{n=1}^\infty C_1\sin\left(n\pi x\right)=x^2+px+2$$
+  so
+  $$C_1=2\int_{0}^{1}(x^2+px+2)\sin(n\pi x)\,dx$$
+  which Sage evaluates as 
+  $$ -\frac{2(\pi^2(-1)^n n^2 p - 2 \pi^2 n^2 + (3 \pi^2 n^2 - 2) (-1)^n + 2)}{\pi^3 n^3}$$
+  and the other condition on 
+  $$\frac{\partial}{\partial t}\sum_{n=1}^\infty qn\pi(-C_1\sin(qn\pi t)+C_2\cos(qn\pi t))\sin\left(n\pi x\right)$$
+  gives 
+  $$w_t(x,0)=\sum_{n=1}^\infty C_2qn\pi\cos(qn\pi t)\sin\left(n\pi x\right)\implies C_2=0$$
+  so 
+  $$w(x,t)=-2\sum_{n=1}^\infty \frac{\pi^2(-1)^n n^2 p - 2 \pi^2 n^2 + (3 \pi^2 n^2 - 2) (-1)^n + 2}{\pi^3 n^3}\cos(qn\pi t)\sin\left(n\pi x\right)$$
+  so
+  $$u(x,t)=w(x,t)+v(x)=
+  \frac{1}{2}x^4-x^3+2x-2-2\sum_{n=1}^\infty \frac{\pi^2(-1)^n n^2 p - 2 \pi^2 n^2 + (3 \pi^2 n^2 - 2) (-1)^n + 2}{\pi^3 n^3}\cos(qn\pi t)\sin\left(n\pi x\right)
+  $$
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  % Let
+  % $$u(x,t)=v(x,t)+w(x,t)$$
+  % with
+  % $$w(x,t)=2+x\implies w(0,t)=2,\quad \frac{\partial w}{\partial x}(1,t)=1,\quad w(x,0)=2+x,\quad\frac{\partial w}{\partial t}(x,0)=0$$
+  % and so
+  % $$v(0,t)=\frac{\partial v}{\partial x}(1,t)=0,\quad v(x,0)=u(x,0)-w(x,0)=\frac{1}{2}x^4-x^3+x^2+(1+p)x-2,\quad \frac{\partial v}{\partial t}(x,0)=\frac{\partial u}{\partial t}(x,0)-\frac{\partial w}{\partial t}(x,0)=0$$
+  % and so our PDE simplifies to
+  % $$\frac{\partial^2v}{\partial t^2}=q^2\frac{\partial^2 v }{\partial x^2}+6q^2(x-x^2)$$
+  % with the above (homogenous) initial/boundary conditions.
+  % Now we say that
+  % $$v(x,t)=\sum_{n=1}^{\infty}b_n(t)\sin(n\pi x)$$
+  % will be the solution as $v(x,t)$ can be expanded by Fourier series. Plugging this into the PDE we obtain that
+  % $$\sum_{n=1}^{\infty}\frac{\partial^2 b_n}{\partial t^2}\sin(n\pi x)=q^2\sum_{n=1}^{\infty}-n^2\pi^2b_n(t)\sin(n\pi x)+6q^2(x-x^2)$$
+  % rearranging,
+  % $$\sum_{n=1}^{\infty}\left[\frac{\partial^2 b_n}{\partial t^2}+q^2n^2\pi^2b_n(t)\right]\sin(n\pi x)=6q^2(x-x^2)$$
+  % which is a Fourier series for the left hand side.
+  % We know that the coefficient for this series, an ODE in $t$ here, is given by
+  % $$\frac{\partial^2 b_n}{\partial t^2}+q^2n^2\pi^2b_n(t)=2\int_{0}^{1}6q^2(x-x^2)\sin(n\pi x)\,dx=-\frac{24q^2\left((-1)^n - 1\right) }{n^3\pi^3}.$$
+  % which has solution
+  % $$b_n(t)=C_{1}\sin\left(\pi nqt\right)+C_{2}\cos\left(\pi nqt\right)-\frac{24\left((-1)^{n}-1\right)}{{\pi}^{5}{n}^{5}}.$$
+  % So our solution is
+  % $$v(x,t)=\sum_{n=1}^{\infty}\left[C_{1}\sin\left(\pi nqt\right)+C_{2}\cos\left(\pi nqt\right)-\frac{24\left((-1)^{n}-1\right)}{{\pi}^{5}{n}^{5}}\right]\sin(n\pi x).$$
+  % Applying initial conditions we obtain that
+  % $$v(x,0)=\frac{1}{2}x^4-x^3+x^2+(1+p)x-2=\sum_{n=1}^{\infty}\left[C_{2}-\frac{24\left((-1)^{n}-1\right)}{{\pi}^{5}{n}^{5}}\right]\sin(n\pi x)$$
+  % Which is yet again a Fourier series whose coefficient is given by
+  % $$C_{2}-\frac{24\left((-1)^{n}-1\right)}{{\pi}^{5}{n}^{5}}=2\int_{0}^{1}\left(\frac{1}{2}x^4-x^3+x^2+(1+p)x-2\right)\sin(n\pi x)\,dx.$$
+  % Giving this integral to Sage an having it do all the work for us we get
+  % $$C_2=-\frac{2  \pi^{4} \left(-1\right)^{n} n^{4} p + 4  \pi^{4} n^{4} + 4\pi^{2} n^{2} - {\left(\pi^{4} n^{4} + 4\pi^{2} n^{2} + 24\right)} \left(-1\right)^{n} + 24}{2\pi^{5} n^{5}}$$
+  % and applying the other condition
+  % $$\frac{\partial v}{\partial t}=v(x,t)=\sum_{n=1}^{\infty}\left[C_{1}\pi nq\cos\left(\pi nqt\right)-C_{2}\pi nq\sin\left(\pi nqt\right)\right]\sin(n\pi x)$$
+  % and
+  % $$\frac{\partial v}{\partial t}(0)=\sum_{n=1}^{\infty}C_{1}\pi nq\sin(n\pi x)=0\implies C_1=0.$$
+  % So we have that
+  % $$v(x,t)=\sum_{n=1}^{\infty}\left[C_n\cos\left(\pi nqt\right)-\frac{24\left((-1)^{n}-1\right)}{{\pi}^{5}{n}^{5}}\right]\sin(n\pi x).$$
+  % where
+  % $$C_n=-\frac{2  \pi^{4} \left(-1\right)^{n} n^{4} p + 4  \pi^{4} n^{4} + 4\pi^{2} n^{2} - {\left(\pi^{4} n^{4} + 4\pi^{2} n^{2} + 24\right)} \left(-1\right)^{n} + 24}{2\pi^{5} n^{5}}$$
+  % and so our final solution
+  % $$u(x,t)=w(x,t)+v(x,t)$$
+  % is, with my values for $p$ and $q$,
+  % $$u(x,t)=2+x+\sum_{n=1}^{\infty}\left[C_n\cos\left(5\pi nt\right)-\frac{24\left((-1)^{n}-1\right)}{{\pi}^{5}{n}^{5}}\right]\sin(n\pi x)$$
+  % with
+  % $$C_n=-\frac{18  \pi^{4} \left(-1\right)^{n} n^{4}  + 4  \pi^{4} n^{4} + 4\pi^{2} n^{2} - {\left(\pi^{4} n^{4} + 4\pi^{2} n^{2} + 24\right)} \left(-1\right)^{n} + 24}{2\pi^{5} n^{5}}$$
+\end{soln}
+
+% PROBLEM 4
+\begin{problem}
+Consider your own homogeneous convection problem with:
+$$u(x,0)=10x(L-x)\sin\left(\frac{\pi x}{L}\right)$$
+$$h=q,\quad \kappa=p,\quad L=qp,\quad k=\frac{p}{q+p}$$
+where $p$ is the largest digit and $q$ is the smallest nonzero digit of the last four digits of your student
+I.D. number. Using SAGE to carry out an investigation of the temperature distribution in the bar:
+\begin{enumerate}[label=(\alph*)]
+  \item Find the first 20 eigenvalues of the problem
+  \item Obtain the temperature distribution as a function of $x$ and $t$.
+  \item Plot the temperature of the right end of the bar for the first 120 seconds.
+  \item Plot the temperature of the right end of the bar for the first 120 seconds and determine the
+        maximum temperature that the right of the bar.
+  \item Obtain the time(s) at which the middle of the bar temperature is 25 degrees.
+  \item Plot the temperature distribution in the bar at time(s) found in part (e).
+\end{enumerate}
+\end{problem}
+\begin{soln}
+  \includepdf[
+    %% Include all pages of the PDF
+    pages=-,
+    %% make this page have the usual page style
+    %% (you can change it to plain etc). By default pdfpages
+    %% sets the pagecommand to \pagestyle{empty}
+    pagecommand={\pagestyle{headings}},
+    %% Add a "section" entry to the ToC with the heading
+    %% "Quilling Shapes" and the label "sec:shapes"
+    addtotoc={1,section,1,Quilling Shapes,sec:shapes}]
+  %% The pdf file itself
+  {q4.pdf}
 \end{soln}
 \end{document}

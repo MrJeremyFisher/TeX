@@ -92,15 +92,96 @@
 \date{\today}
 
 \begin{document}
+LAMP AT 10cm!!
 \maketitle
-Initial ideas:
-I want to generate P-V and I-V curves for both solar panels. Maybe do this with the solar sim, maybe not.
-From here we could look at MPP. See some solar datasheets for other stuff. It would be cool
-to run the solar cell in reverse w/the monochromator to try to determine the band gap (apparently there's some
-statistics here that make it not just direct between the band gap and emitted photon energy. Out of my wheelhouse for now.).
-To carry on a big focus of one of the groups I'd like to look at measuring the characteristics of the batteries of 
-the solar lamps. Apparently resistance is usually measured with an ``AC ohmmeter''.
-\cite{mic:test-electret-mic} % to stop bibtex complaining
+
+\section{Introduction}
+The goal was to determine current voltage and power voltage for the solar cell(s) at varying loads
+from an open circuit (maximum voltage, zero current) to a short (minimum voltage, maximum current).
+A circuit was successfully constructed to automatically accomplish this task and one of the solar cells
+was tested using the circuit with a range of incident light intensities.
+\section{Methods}
+It is very time consuming to manually measure both current and voltage produced by a solar panel (or any device)
+repeatedly under varying conditions. Instead of connected a voltmeter and ammeter to a solar panel with some kind of
+manually variable load in order to perform data collection a circuit containing an Arduino Uno R3 microcontroller was employed
+to handle load control and current-voltage measurement simultaneously. The circuit is comprised of two main ``segments''
+one of which is responsible for measuring the voltage output, and one of which is responsible for measuring the current.
+Both segments share a MOSFET transistor connected in (almost) parallel with the solar cell (hereon referred to as the cell)
+which acts as a voltage controlled resistor with a very large resistance range.
+The positive terminal of the cell is connected to the drain of the MOSFET and to an analog read pin on the Arduino
+to measure the voltage produced by the cell. The negative terminal of the cell is connected to an op-amp
+wired as a current-to-voltage converter (also called a transimpedance amplifier, hereon referred to as the converter) as the Arduino cannot directly measure current.
+The output from the converter is then fed to the Arduino where it is converted back to the corresponding current in software.
+\subsection{Voltage Measurement}
+It is not quite possible to directly measure the voltage output of the solar cell with the arduino
+due both to the fact that the arduino itself can act as a load on the panel, influencing the results,
+and that the panel is capable of outputting more than $\qty{5}{\volt}$ which is beyond the measurement
+range for the Arduino. The first issue of measurement influencing the cell was solved by passing the output of the cell
+through a buffering voltage-follower op-amp. The second issue was solved by placing a voltage divider (configured in this case
+with a $1/2$ division factor) before the voltage-follower. By passing the voltage produced by the cell through these stages
+its output was both stabilized against loading and withing the measurement range of the Arduino. The effects of the voltage divider
+were undone in the software running on the Arduino.
+\subsection{Current Measurement}
+As previously mentioned, the Arduino is not capable of directly measuring current. This was solved
+using a converter with a $\qty{100}{\ohm}$ feedback resistor. Such a converter will have output
+$V_{out}=-I_{in}R_f$, however in this case the converter was wired to the negative terminal of the cell
+so that the op-amp acted as a current source rather than a sink which means it gave
+$V_{out}=I_{in}R_f$. This is important as the Arduino is restricted to positive voltage measurements.
+As the output voltage of the converter would never exceed a value which the Arduino was capable of measuring
+the output was fed directly into an analog pin on the Arduino and converted back to a current in software.
+\subsection{Software}
+The measurement and control software is fairly \todo{Formalize} simple.
+The core program waits for a button press from a user on the breadboard to signal that it should begin measurement.
+When the button is pressed the program enters a loop which runs through voltages which are set across the gate and source
+pins of the MOSFET and control the resistance between the drain and source pins of the MOSFET. At each iteration of this loop
+the program measures both the current and voltage (in that order, though order is inconsequential) and outputs them over serial.
+The only complication in the program is that the default analog write resolution of the Arduino Uno R3 is
+8 bits which means the voltage step is $V_{ref}\cdot2^{-8}$ which, for the standard analog reference voltage which was used in this report
+of $\qty{5}{\volt}$, means a step of only $\qty{0.02}{\volt}$ which did not produce a satisfactorily high resolution
+for the resistance step on the MOSFET. The code at \cite{AR:12718} was used to increase this resolution to
+10 bits giving a voltage step of approximately $\qty{0.005}{\volt}$ which produced high enough resolution.
+The full program is available in the appendix.
+\subsection{Physical Setup}
+To perform the measurements with a range of incident intensities a dimmable incandescent bulb was used. Due to 
+challenges relating to accurate measurement of the emitted ``useful''\todo{Integrate} power of the incandescent 
+bulb an intensity system based off of the position of the dimmer on the lamp housing the bulb was used. Results 
+presented later use this system to indicate incident light intensity. Throughout all measurements the lamp and cell
+were held at a fixed distance of $\qty{10}{\centi\meter}$ and were axially aligned relative to one another.
+\begin{figure}
+  \begin{circuitikz}
+    \draw[] (0,0) node[left]{Arduino D9 PWM}
+    to[resistor, l=$\qty{5}{\kilo\ohm}$] ++ (2,0) coordinate(RCJ)
+    (RCJ) to[capacitor, l=$\qty{10}{\micro\farad}$] ++(0,-2) coordinate(GP)
+    (RCJ) -- ++(1,0) node[nigfete, anchor=G](fet){} ++(2,0)
+    (fet.S) |- (GP)
+    (fet.D) |- ++(3.5,1) coordinate(temp) ++(0,-2) to[pD] (temp)
+    ++(0,-2) -- ++(1.5,0) node[op amp, anchor=-, scale=0.75](converter){}
+    (converter.-) -- ++(0,1) to[resistor, l=$\qty{100}{\ohm}$] ++(1.75,0) -| (converter.out)
+    (converter.out) to[short, -o] ++(1,0) node[right]{Arduino A0, current read}
+    (converter.+) |- (GP)
+    (temp) -- ++(0,1) to[resistor] ++(-1.5,0) coordinate(MP) to[resistor] ++(-1.5,0) coordinate(t2)
+    (temp) ++ (-3,-1) coordinate(t1) to[crossing] (t2) (t1) |- (GP)
+    (MP) |- ++(2,1) -- ++(0,-1) -- ++(1,0)  node[op amp, anchor=+, scale=0.75](follower){}
+    (follower.-) -- ++(0,0.65) -| (follower.out) to[short, -o] ++(1,0) node[right]{Arduino A1, voltage read}
+    ;
+  \end{circuitikz}
+  \caption{The measurement circuit. Note that the capacitor-resistor before the gate of the FET is
+    a reconstruction filter to convert the PWM output from the Arduino to a DC voltage.}
+\end{figure}
+\section{Results}
+Both current and voltage were successfully collected automatically
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.85\linewidth]{I(V).png}
+        \caption{Current as a function of voltage of the cell. Indicated distance is the distance of the end of the lamp intensity control from its maximum position, $\qty{0}{\milli\meter}$ being the maximum intensity.}
+        \label{fig:current-voltage-plot}
+    \end{figure}
+        \begin{figure}
+        \centering
+        \includegraphics[width=0.85\linewidth]{P(V).png}
+        \caption{Power as a function of voltage of the cell. Indicated distance is the distance of the end of the lamp intensity control from its maximum position, $\qty{0}{\milli\meter}$ being the maximum intensity. Calculated directly from \cref{fig:current-voltage-plot} with $P=IV$.}
+        \label{fig:power-voltage-plot}
+    \end{figure}
 \section{References}
 \bibliographystyle{plain}
 \bibliography{sources}

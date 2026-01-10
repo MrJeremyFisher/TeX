@@ -1,0 +1,308 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{changepage}
+\usepackage{circuitikz}
+\usepackage{pgfplots}
+\usepackage{physics}
+\usepackage{hyperref}
+\usepackage{siunitx}
+\usepackage{fontspec}
+\usepackage{relsize}
+\usepackage{subfig}
+\usepackage{todonotes}
+% \usepackage{sagetex}
+\usepackage{multicol, multirow, booktabs}
+\usepackage[breakable]{tcolorbox}
+\usepackage[inline]{enumitem}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{soln}{Solution}
+\makeatletter
+\newenvironment{subtheorem}[1]{%
+  \def\subtheoremcounter{#1}%
+  \refstepcounter{#1}%
+  \protected@edef\theparentnumber{\csname the#1\endcsname}%
+  \setcounter{parentnumber}{\value{#1}}%
+  \setcounter{#1}{0}%
+  \expandafter\def\csname the#1\endcsname{\theparentnumber.\Alph{#1}}%
+  \ignorespaces
+}{%
+  \setcounter{\subtheoremcounter}{\value{parentnumber}}%
+  \ignorespacesafterend
+}
+\makeatother
+\newcounter{parentnumber}
+
+\pgfplotsset{compat=newest}
+\usetikzlibrary{lindenmayersystems}
+\usetikzlibrary{arrows}
+\usetikzlibrary{calc}
+\usetikzlibrary{positioning, fit}
+\usetikzlibrary{3d, perspective}
+\usetikzlibrary{patterns.meta}
+
+\definecolor{incolor}{HTML}{303F9F}
+\definecolor{outcolor}{HTML}{D84315}
+\definecolor{cellborder}{HTML}{CFCFCF}
+\definecolor{cellbackground}{HTML}{F7F7F7}
+\newcommand{\ui}{\hat{i}}
+\newcommand{\uj}{\hat{j}}
+\newcommand{\uk}{\hat{k}}
+\newcommand{\ux}{\hat{x}}
+\newcommand{\uy}{\hat{y}}
+\newcommand{\uz}{\hat{z}}
+\newcommand{\pr}[1]{#1^\prime}
+\pgfdeclarelayer{background}  
+\pgfsetlayers{background,main}
+\AtBeginDocument{\RenewCommandCopy\qty\SI}
+\newcommand{\justif}[2]{&{#1}&\text{#2}}
+\DeclareMathOperator\Arg{Arg}
+\DeclareMathOperator\Log{Log}
+\DeclareMathOperator\res{Res}
+
+\makeatletter
+\newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+\makeatother
+\newcommand{\prompt}[4]{
+    \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+}
+
+\newcommand{\thevenin}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (2,0) to[battery1, l_=$V_{Th}\eq#1$] (2,2) 
+      to[resistor, l_=$R_{Th}\eq#2$] (0,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\norton}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (3,0) to[american current source, l_=$I_{N}\eq#1$] (3,2) -- (0,2) (2,0)
+      to[resistor, l=$R_{N}\eq#2$] (2,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\highlight}[1]{\colorbox{yellow}{$\displaystyle #1$}}
+
+\newcommand{\ti}[1]{\widetilde{#1}}
+
+\newfontface{\Kaufmann}{Kaufmann}
+\DeclareTextFontCommand{\kf}{\Kaufmann}
+\newcommand{\scriptr}{\fontsize{12pt}{12pt}\kf{r}}
+
+\newfontface{\KaufmannB}{Kaufmann Bd BT}
+\DeclareTextFontCommand{\kfb}{\KaufmannB}
+\newcommand{\bscriptr}{\fontsize{12pt}{12pt}\kfb{r}}
+
+\newcommand{\bv}[1]{\mathbf{#1}}
+
+\title{Math 3770H: Assignment IV}
+\author{Jeremy Favro (0805980) \\ Trent University, Peterborough, ON, Canada}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+% PROBLEM 1
+\begin{problem}
+Let $f (z) = u(x, y)+iv(x, y)$ be a function that is continuous on a closed bounded region
+$R$ and analytic and not constant throughout the interior of $R$. Prove that the component
+function $u(x, y)$ has a minimum value in $R$ which occurs on the boundary of $R$ and never
+in the interior. (See Exercise 2.)
+\end{problem}
+\begin{soln}
+  By the corollary in section 59 $f(z)$ being continuous on a closed bounded region
+  $R$ and analytic and not constant throughout the interior of $R$ is sufficient to
+  guarantee us that the maximum value of $\abs{f(z)}$ occurs on the boundary of $R$.
+  Consider now the function
+  $$g(z)=e^{f(z)}$$
+  which is strictly increasing and will obtain its maximum at the same point as $f(z)$, on the boundary.
+  Note that
+  $$g(z)=e^{f(z)}=g(z)=e^{u(x,y)+iv(x,y)}=e^ue^{iv}=e^u\left[\cos(v)+i\sin(v)\right]$$
+  and so
+  $$\abs{g(z)}=\sqrt{e^{2u}\left[\cos^2(v)+\sin^2(v)\right]}=e^u.$$
+  We already know that $g(z)$ attains its maximum on the boundary and because the maximum is governed
+  by $e^u$ which has its maximum at the same point as $u(x,y)$ we know that $u(x,y)$ must have its
+  maximum on the boundary. Hence the function
+  $$h(z)=\frac{1}{g(z)}$$
+  will obtain its \emph{minimum} when $g(z)$ obtains its maximum which we know is only at the maximum
+  of $u(x,y)$, on the boundary.
+\end{soln}
+\newpage
+
+% PROBLEM 2
+\begin{problem}
+Write $z = r e^{i\theta}$, where $0 < r < 1$, in the summation formula (10), Sec. 61. Then, with
+the aid of the theorem in Sec. 61, show that
+$$\sum_{n=1}^\infty r^n\cos(n\theta)=\frac{r\cos\theta-r^2}{1-2r\cos\theta+r^2}\quad\text{and}\quad\sum_{n=1}^{\infty}r^n\sin(n\theta)=\frac{r\sin\theta}{1-2r\cos\theta+r^2}$$
+when $0 < r < 1$. (Note that these formulas are also valid when $r = 0$.)
+\end{problem}
+\begin{soln}
+  We know that
+  $$z = r e^{i\theta}=r\cos\theta+i\sin\theta\implies z^n=r^n\cos n\theta+ir^n\sin n\theta$$
+  and so the formula given
+  $$\sum_{n=0}^\infty z^n=\frac{1}{1-z}=\frac{1}{1-re^{i\theta}}$$
+  and by the theorem because this converges we can write its component sums
+  $$\sum_{n=0}^\infty z^n=\sum_{n=1}^\infty r^n\cos(n\theta)+i\sum_{n=1}^{\infty}r^n\sin(n\theta)$$
+  and we can expand
+  \begin{align*}
+    \frac{1}{1-re^{i\theta}} & =\frac{1}{1-r(\cos\theta+i\sin\theta)}                                                                             \\
+                             & =\frac{1}{1-r\cos\theta-ir\sin\theta}                                                                              \\
+                             & =\frac{1-r\cos\theta+ir\sin\theta}{\left(1-r\cos\theta-ir\sin\theta\right)\left(1-r\cos\theta+ir\sin\theta\right)} \\
+                             & =\frac{1-r\cos\theta+ir\sin\theta}{\left(1-r\cos\theta\right)^2+\left(r\sin\theta\right)^2}                        \\
+                             & =\frac{1-r\cos\theta+ir\sin\theta}{1-2r\cos\theta+r^2\cos^2\theta+r^2\sin^2\theta}                                 \\
+                             & =\frac{1-r\cos\theta+ir\sin\theta}{1-2r\cos\theta+r^2}                                                             \\
+                             & =\frac{1-r\cos\theta}{1-2r\cos\theta+r^2}+i\frac{r\sin\theta}{1-2r\cos\theta+r^2}                                  \\
+                             & =\sum_{n=1}^\infty r^n\cos(n\theta)+i\sum_{n=1}^{\infty}r^n\sin(n\theta)
+  \end{align*}
+  Hence we obtain the desired equalities.
+\end{soln}
+\newpage
+
+% PROBLEM 3
+\begin{problem}
+Show that when $0<\abs{z-1}<2$,
+$$\frac{z}{(z-1)(z-3)}=-3\sum_{n=0}^\infty\frac{(z-1)^n}{2^{n+2}}-\frac{1}{2(z-1)}.$$
+\end{problem}
+\begin{soln}
+  First we want to break up
+  $$\frac{z}{(z-1)(z-3)}$$
+  with partial fractions.
+  $$\frac{z}{(z-1)(z-3)}=\frac{A}{z-1}+\frac{B}{z-3}$$
+  where
+  \begin{align*}
+    A(z-3)+B(z-1) & =z                                 \\
+                  & \implies Az-3A+Bz-B=z              \\
+                  & \implies A+B=1\text{ and } -3A-B=0 \\
+                  & \implies -3A=B                     \\
+                  & \implies A-3A=1                    \\
+                  & \implies A=-1/2,B=3/2
+  \end{align*}
+  So we have
+  \begin{align*}
+    \frac{z}{(z-1)(z-3)} & =-\frac{1}{2(z-1)}+\frac{3}{2(z-3)}                                                                                                                                 \\
+                         & =-\frac{1}{2(z-1)}+\frac{3}{2}\frac{1}{z-1-2}                                                                                                                       \\
+                         & =-\frac{1}{2(z-1)}-\frac{3}{2^2}\frac{1}{1-\frac{z-1}{2}}                                                                                                           \\
+                         & =-\frac{1}{2(z-1)}-\frac{3}{2^2}\sum_{n=0}^{\infty}\frac{(z-1)^n}{2^n}\justif{\quad}{$\frac{1}{a(1-b/a)}=\frac{1}{a}\sum_{n=0}^{\infty}\left(\frac{b}{a}\right)^n$} \\
+                         & =-\frac{1}{2(z-1)}-3\sum_{n=0}^{\infty}\frac{(z-1)^n}{2^{n+2}}
+  \end{align*}
+\end{soln}
+\newpage
+
+% PROBLEM 4
+\begin{problem}
+Prove that if $f$ is analytic at $z_0$ and $f (z_0 ) = \pr{f} (z_0 ) = \dots = f^{(m)} (z_0 ) = 0$, then the
+function $g$ defined by means of the equations
+$$g(z)=\displaystyle\begin{cases}
+    \displaystyle\frac{f(z)}{(z-z_0)^{m+1}}    & \text{when }z\neq z_0 \\
+    \displaystyle\frac{f^{(m+1)}(z_0)}{(m+1)!} & \text{when }z=z_0
+  \end{cases}$$
+is analytic at $z_0$
+\end{problem}
+\begin{soln}
+  For the two cases,
+  \begin{enumerate}[label=(\arabic*)]
+    \item $z\neq z_0$: here since we already know that $f(z)$ is analytic and $1/(z-z_0)^{m+1}$ is analytic for
+          $z\neq z_0$ $g(z\neq z_0)$ is analytic because it is the quotient of two other analytic functions.
+    \item $z=z_0$: In this neighbourhood we can expand $g(z\neq z_0)$ as a Taylor series about $z_0$
+          where we start at $m+1$ because all the other derivatives at $z_0$ are zero:
+          \begin{align*}
+            g(z) & =\frac{f(z)}{(z-z_0)^{m+1}}                                                                                   \\
+                 & =\frac{1}{(z-z_0)^{m+1}}\sum_{k=m+1}^{\infty}\frac{f^{(k)}(z_0)}{k!}(z-z_0)^k                                 \\
+                 & =\frac{1}{\cancel{(z-z_0)^{m+1}}}\sum_{k=0}^{\infty}\frac{f^{(k+m+1)}(z_0)}{(k+m+1)!}(z-z_0)^{k+\cancel{m+1}} \\
+                 & =\sum_{k=0}^{\infty}\frac{f^{(k+m+1)}(z_0)}{(k+m+1)!}(z-z_0)^{k}
+          \end{align*}
+          which is convergent by definition and hence $g(z)$ is analytic at $z=z_0$.
+  \end{enumerate}
+\end{soln}
+\newpage
+
+% PROBLEM 5
+\begin{problem}
+Use multiplication of series to show that
+$$\frac{e^z}{z(z^2+1)}=\frac{1}{z}+1-\frac{1}{2}z-\frac{5}{6}z^2+\dots\quad (0<\abs{z}<1).$$
+\end{problem}
+\begin{soln}
+  We have that
+  $$e^z=1+z+\frac{z^2}{2!}+\frac{z^3}{3!}+\dots$$
+  and
+  $$\frac{1}{1+z^2}=1-z^2+z^4-z^6+\dots$$
+  so
+  \begin{align*}
+    e^z\frac{1}{1+z^2} & =\left(1+z+\frac{z^2}{2!}+\frac{z^3}{3!}+\dots\right)\left(1-z^2+z^4-z^6+\dots\right)                          \\
+                       & =\left(1+z+\frac{z^2}{2!}+\frac{z^3}{3!}+\dots\right)-\left(z^2+z^3+\frac{z^4}{2!}+\frac{z^5}{3!}+\dots\right)
+    +\left(z^4+z^5+\frac{z^6}{2!}+\frac{z^7}{3!}+\dots\right)-\left(z^6+z^7+\frac{z^8}{2!}+\frac{z^9}{3!}+\dots\right)                  \\
+                       & =1+z+\frac{z^2}{2!}+\frac{z^3}{3!}-z^2-z^3-\frac{z^4}{2!}-\frac{z^5}{3!}
+    +z^4+z^5+\frac{z^6}{2!}+\frac{z^7}{3!}-z^6-z^7-\frac{z^8}{2!}-\frac{z^9}{3!}+\dots                                                  \\
+                       & =1+z-\frac{z^2}{2}-\frac{5z^3}{6}+\frac{z^4}{2}-\frac{2z^5}{3}
+    -\frac{z^6}{2}-\frac{5z^7}{6}-\frac{z^8}{2}-\frac{z^9}{6}+\dots                                                                     \\
+                       & =1+z-\frac{z^2}{2}-\frac{5z^3}{6}+\dots                                                                        \\
+  \end{align*}
+  which we multiply by $1/z$ to obtain
+  $$\frac{1}{z}+1-\frac{z}{2}-\frac{5z^2}{6}+\dots.$$
+\end{soln}
+\newpage
+
+% PROBLEM 6
+\begin{problem}
+Use Cauchy's residue theorem (Sec. 76) to evaluate the integral of each of these functions
+around the circle $|z| = 3$ in the positive sense:\\
+\begin{center}
+  \begin{enumerate*}[label=(\alph*)]
+    \item $\displaystyle\frac{\exp(-z)}{z^2}$;\qquad~
+    \item $\displaystyle\frac{\exp(-z)}{(z-1)^2}$;\qquad~
+    \item $\displaystyle z^2\exp(\frac{1}{z})$;\qquad~
+    \item $\displaystyle\frac{z+1}{z^2-2z}$.
+  \end{enumerate*}
+\end{center}
+\end{problem}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item We are trying to evaluate
+          $$\int_{C}\frac{\exp(-z)}{z^2}\,dz$$
+          which is analytic inside and on $C$ except a $z=0$
+          so we can apply Cauchy's residue theorem by expanding the integrand as a series:
+          $$e^{-z}\frac{1}{z^2}=\frac{1}{z^2}\sum_{n=0}^{\infty}\frac{(-z)^n}{n!}=\sum_{n=0}^{\infty}\frac{(-1)^nz^{n-2}}{n!}.$$
+          The coefficent of the $1/z$ term in this series will be the coefficient when $n-2=-1\implies n=1$ so
+          $$\res_{z=0}=-1/1!=-1$$
+          so
+          $$\int_{C}\frac{\exp(-z)}{z^2}\,dz=-2\pi i$$
+    \item We are trying to evaluate
+          $$\int_{C}\frac{\exp(-z)}{(z-1)^2}\,dz$$
+          which is analytic inside and on $C$ except at $z=1$, where it has a pole of order 2. 
+          We can write the integrand as 
+          $$\frac{\phi(z)}{(z-1)^2},\quad \phi(z)=\exp(-z)$$
+          and so we can directly apply the formula
+          $$\Res_{z=1}f(z)=\frac{\phi^{(2-1)}(1)}{(2-1!)}=-\frac{1}{e}.$$
+          We multiply this by $2\pi i$ to obtain the value of the integral, $-2\pi i/e$.
+    \item $$\frac{z+1}{z^2-2z}=\frac{z+1}{z(z-2)}$$
+          which has singularities at $z=0,2$. We can rewrite the fraction as the only terms in its series expansion using
+          partial fractions,
+          $$\frac{z+1}{z(z-2)}=\frac{A}{z}+\frac{B}{z-2}$$
+          where
+          $$A(z-2)+Bz=z+1\implies A=-1/2,B=3/2$$
+          so
+          $$\frac{z+1}{z(z-2)}=-\frac{1}{2}\frac{1}{z}+\frac{3}{2}\frac{1}{z-2}$$
+          which immediately gives us the residues at the two singularities. By the theorem we just sum these and multiply
+          by $2\pi i$ to obtain the result of the integral which is
+          $2\pi i$.
+  \end{enumerate}
+\end{soln}
+
+
+\end{document}

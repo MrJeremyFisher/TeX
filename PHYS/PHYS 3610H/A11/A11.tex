@@ -1,0 +1,302 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{changepage}
+\usepackage{circuitikz}
+\usepackage{pgfplots}
+\usepackage{physics}
+\usepackage{hyperref}
+\usepackage{siunitx}
+\usepackage{minted}
+\usepackage{fontspec}
+\usepackage{relsize}
+\usepackage{subfig}
+\usepackage{todonotes}
+\usepackage{multicol, multirow, booktabs}
+\usepackage[breakable]{tcolorbox}
+\usepackage[inline]{enumitem}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{soln}{Solution}
+
+\pgfplotsset{compat=newest}
+\usetikzlibrary{lindenmayersystems}
+\usetikzlibrary{arrows}
+\usetikzlibrary{calc}
+\usetikzlibrary{positioning, fit}
+\usetikzlibrary{3d, perspective}
+
+\definecolor{incolor}{HTML}{303F9F}
+\definecolor{outcolor}{HTML}{D84315}
+\definecolor{cellborder}{HTML}{CFCFCF}
+\definecolor{cellbackground}{HTML}{F7F7F7}
+\newcommand{\ui}{\hat{i}}
+\newcommand{\uj}{\hat{j}}
+\newcommand{\uk}{\hat{k}}
+\newcommand{\ux}{\hat{x}}
+\newcommand{\uy}{\hat{y}}
+\newcommand{\uz}{\hat{z}}
+\newcommand{\uv}[1]{\hat{\mathbf{{#1}}}}
+\newcommand{\pr}[1]{{#1^\prime}}
+\newcommand{\justif}[2]{&{#1}&\text{#2}}
+\newcommand{\dul}[1]{\underline{\underline{#1}}}
+\pgfdeclarelayer{background}  
+\pgfsetlayers{background,main}
+\AtBeginDocument{\RenewCommandCopy\qty\SI}
+
+\makeatletter
+\newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+\makeatother
+\newcommand{\prompt}[4]{
+    \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+}
+
+\newcommand{\thevenin}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (2,0) to[battery1, l_=$V_{Th}\eq#1$] (2,2) 
+      to[resistor, l_=$R_{Th}\eq#2$] (0,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\norton}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (3,0) to[american current source, l_=$I_{N}\eq#1$] (3,2) -- (0,2) (2,0)
+      to[resistor, l=$R_{N}\eq#2$] (2,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\highlight}[1]{\colorbox{yellow}{$\displaystyle #1$}}
+
+\newcommand{\ti}[1]{\widetilde{#1}}
+
+\newfontface{\Kaufmann}{Kaufmann}
+\DeclareTextFontCommand{\kf}{\Kaufmann}
+\newcommand{\scriptr}{\fontsize{12pt}{12pt}\kf{r}}
+
+\newfontface{\KaufmannB}{Kaufmann Bd BT}
+\DeclareTextFontCommand{\kfb}{\KaufmannB}
+\newcommand{\bscriptr}{\fontsize{12pt}{12pt}\kfb{r}}
+
+\newcommand{\bv}[1]{\mathbf{#1}}
+
+\title{Physics 3610H: Assignment XI}
+\author{Jeremy Favro (0805980) \\ Trent University, Peterborough, ON, Canada}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+% PROBLEM 1
+\begin{problem}
+Express the operator $\hat{x}$ as a matrix using as a basis the eigenstates of the harmonic
+oscillator Hamiltonian. Show the upper left $5 \times 5$ elements.
+\end{problem}
+\begin{soln}
+  First we need to obtain $\hat{x}$ in terms of operators that we can easily act on the given basis.
+  These are the raising and lowering operators,
+  $$\hat{a}_{\pm}=\frac{1}{\sqrt{2}}\left[\left(\frac{m\omega}{\hbar}\right)^{1/2}\hat{x}\mp i\frac{\hat{p}_x}{(m\hbar\omega)^{1/2}}\right].$$
+  Rearranging these we can see that
+  \begin{align*}
+    \hat{a}_{+}+\hat{a}_{-} & =\frac{1}{\sqrt{2}}\left[\left(\frac{m\omega}{\hbar}\right)^{1/2}\hat{x}- i\frac{\hat{p}_x}{(m\hbar\omega)^{1/2}}
+    +\left(\frac{m\omega}{\hbar}\right)^{1/2}\hat{x}+ i\frac{\hat{p}_x}{(m\hbar\omega)^{1/2}}\right]                                            \\
+                            & =2\left(\frac{m\omega}{2\hbar}\right)^{1/2}\hat{x}
+  \end{align*}
+  so
+  $$\hat{x}=\left(\frac{\hbar}{2m\omega}\right)^{1/2}\left(\hat{a}_{+}+\hat{a}_{-}\right).$$
+  Now we can evaluate
+  $$\bra{E_i}\left(\frac{\hbar}{2m\omega}\right)^{1/2}\left(\hat{a}_{+}+\hat{a}_{-}\right)\ket{E_j}$$
+  to obtain the $ij$th element of the matrix representation.
+  Calculating the value for a generic $ij$ element,
+  \begin{align*}
+    X_{ij} & =\bra{E_i}\left(\frac{\hbar}{2m\omega}\right)^{1/2}\left(\hat{a}_{+}+\hat{a}_{-}\right)\ket{E_j}                        \\
+           & =\left(\frac{\hbar}{2m\omega}\right)^{1/2}\left(\bra{E_i}\hat{a}_{+}\ket{E_j}+\bra{E_i}\hat{a}_{-}\ket{E_j}\right)      \\
+           & =\left(\frac{\hbar}{2m\omega}\right)^{1/2}\left(\sqrt{j+1}\bra{E_i}\ket{E_{j+1}}+\sqrt{j}\bra{E_i}\ket{E_{j-1}}\right).
+  \end{align*}
+  \newpage
+  I did the actual writing out of the elements with SageMath as it's just algebra from this point,
+  \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+    \prompt{In}{incolor}{1}{\boxspacing}
+    \begin{minted}[breaklines, autogobble]{sage}
+        clear_vars()
+        x, m = var('x m')
+        w = var('w', latex_name=r'\omega')
+        hbar = var('hbar', latex_name=r'\hbar') 
+
+        coeff = sqrt(hbar/(2*m*w))
+
+        M = matrix(SR, 5,5)
+
+        def delta(a,b):
+            if (a==b):
+                return 1
+            else: 
+                return 0
+
+        for i in range(0, 5): # row
+            for j in range(0,5):
+                M[i,j] = (coeff * (sqrt(j+1)*delta(i,j+1)+ sqrt(j)*delta(i,j-1))).full_simplify()
+
+        show(M)
+    \end{minted}
+  \end{tcolorbox}
+  \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+    \prompt{Out}{outcolor}{1}{\boxspacing}
+    $\displaystyle \left(\begin{array}{rrrrr}
+          0                                                         & \frac{1}{2} \, \sqrt{2} \sqrt{\frac{{\hbar}}{m {\omega}}} & 0                                                                  & 0                                                                  & 0                                          \\
+          \frac{1}{2} \, \sqrt{2} \sqrt{\frac{{\hbar}}{m {\omega}}} & 0                                                         & \sqrt{\frac{{\hbar}}{m {\omega}}}                                  & 0                                                                  & 0                                          \\
+          0                                                         & \sqrt{\frac{{\hbar}}{m {\omega}}}                         & 0                                                                  & \frac{1}{2} \, \sqrt{3} \sqrt{2} \sqrt{\frac{{\hbar}}{m {\omega}}} & 0                                          \\
+          0                                                         & 0                                                         & \frac{1}{2} \, \sqrt{3} \sqrt{2} \sqrt{\frac{{\hbar}}{m {\omega}}} & 0                                                                  & \sqrt{2} \sqrt{\frac{{\hbar}}{m {\omega}}} \\
+          0                                                         & 0                                                         & 0                                                                  & \sqrt{2} \sqrt{\frac{{\hbar}}{m {\omega}}}                         & 0
+        \end{array}\right)$
+  \end{tcolorbox}
+\end{soln}
+
+% PROBLEM 2 
+\begin{problem}
+Suppose the operator $\hat{A}$ acting on the state $\ket{\Psi}$ results in the state $\ket{X}$: $\hat{A}\ket{\Psi}=\ket{X}$.
+What is the corresponding equation in matrix representation using the basis $\left\{\ket{\phi_i}\right\}$? What
+are the elements of each matrix and vector in your equation?
+\end{problem}
+\begin{soln}
+  I believe the corresponding equation is just
+  $$\dul{A}\ket{\Psi}=\ket{X}$$
+  where $\dul{A}$ is the matrix representation of $\hat{A}$,
+  $$A_{ij}=\bra{\phi_i}\hat{A}\ket{\phi_j}.$$
+  $\ket{\Psi}$ and $\ket{X}$ are column vectors of the coefficients in the eigenfunction expansions of their respective states.
+\end{soln}
+\newpage
+
+% PROBLEM 3
+\begin{problem}
+~
+$$\dul{M}=\begin{pmatrix}
+    2  & i \\
+    -i & 3
+  \end{pmatrix}$$
+\begin{enumerate}[label=(\alph*)]
+  \item Find the eigenvalues and eigenvectors of this matrix.
+  \item Construct a matrix for which the columns are the eigenvectors found in (a). Show this
+        matrix is unitary.
+\end{enumerate}
+\end{problem}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item For eigenvalues we solve the expression
+          \begin{align*}
+            0 & =\left|\dul{M}-\lambda \dul{I}\right|                                                          \\
+              & =\begin{vmatrix}
+                   2-\lambda & i         \\
+                   -i        & 3-\lambda
+                 \end{vmatrix}                                                                         \\
+              & =(2-\lambda)(3-\lambda)-1                                                                      \\
+              & =\lambda^2-5\lambda+5\implies \lambda=\frac{5\pm \sqrt{25-4(1)(5)}}{2}=\frac{5\pm\sqrt{5}}{2}.
+          \end{align*}
+          Eigenvectors are vectors which satisfy
+          $$\dul{M}\vec{v}=\lambda \vec{v}$$
+          so for eigenvector $\vec{v}_+$ corresponding to $\lambda=\frac{5+\sqrt{5}}{2}$
+          we want a $\vec{v}_+$ where
+          $$\begin{pmatrix}
+              2  & i \\
+              -i & 3
+            \end{pmatrix}\begin{pmatrix}
+              v_{+1} \\
+              v_{+2}
+            \end{pmatrix}=\frac{5+\sqrt{5}}{2}\begin{pmatrix}
+              v_{+1} \\
+              v_{+2}
+            \end{pmatrix}
+          $$
+          evaluating the left hand side,
+          $$\begin{pmatrix}
+              2  & i \\
+              -i & 3
+            \end{pmatrix}\begin{pmatrix}
+              v_{+1} \\
+              v_{+2}
+            \end{pmatrix}=\begin{pmatrix}
+              2v_{+1}+iv_{+2} \\
+              3v_{+2}-iv_{+1}
+            \end{pmatrix}$$
+          so we have the two equation system
+          \begin{equation}
+            2v_{+1}+iv_{+2}=\frac{5+\sqrt{5}}{2}v_{+1}
+          \end{equation}
+          \begin{equation}
+            3v_{+2}-iv_{+1}=\frac{5+\sqrt{5}}{2}v_{+2}.
+          \end{equation}
+          (1) tells us that
+          $$v_{+2}=-i\left(\frac{5+\sqrt{5}}{2}-2\right)v_{+1}=-i\left(\frac{1+\sqrt{5}}{2}\right)v_{+1}.$$
+          Choosing
+          $v_{+1}=1$ then gives us, with $\sim$ representing normalization,
+          $$\vec{v}_+=\begin{pmatrix}
+              1 \\
+              -\dfrac{(1+\sqrt{5})i}{2}
+            \end{pmatrix}\sim \begin{pmatrix}
+              \sqrt{\frac{\sqrt{5}-1}{2\sqrt{5}}} \\
+              -i\frac{\sqrt{5}\sqrt{10+2\sqrt{5}}}{10}
+            \end{pmatrix}.$$
+          We can apply the same process to obtain
+          $$\vec{v}_-=\begin{pmatrix}
+              1 \\
+              \dfrac{(-1+\sqrt{5})i}{2}
+            \end{pmatrix}\sim
+            \begin{pmatrix}
+              \sqrt{\frac{\sqrt{5}+1}{2\sqrt{5}}} \\
+              i\frac{\sqrt{5}\sqrt{10-2\sqrt{5}}}{10}
+            \end{pmatrix}$$
+    \item Our constructed matrix is
+          $$\dul{U}=\begin{pmatrix}
+              \sqrt{\frac{\sqrt{5}-1}{2\sqrt{5}}}      & \sqrt{\frac{\sqrt{5}+1}{2\sqrt{5}}}     \\
+              -i\frac{\sqrt{5}\sqrt{10+2\sqrt{5}}}{10} & i\frac{\sqrt{5}\sqrt{10-2\sqrt{5}}}{10}
+            \end{pmatrix}.$$
+          To show this is unitary we evaluate
+          \begin{align*}
+            \dul{U}\dul{U}^\dagger & =\begin{pmatrix}
+                                        \sqrt{\frac{\sqrt{5}-1}{2\sqrt{5}}}      & \sqrt{\frac{\sqrt{5}+1}{2\sqrt{5}}}     \\
+                                        -i\frac{\sqrt{5}\sqrt{10+2\sqrt{5}}}{10} & i\frac{\sqrt{5}\sqrt{10-2\sqrt{5}}}{10}
+                                      \end{pmatrix}
+            \begin{pmatrix}
+              \sqrt{\frac{\sqrt{5}-1}{2\sqrt{5}}} & i\frac{\sqrt{5}\sqrt{10+2\sqrt{5}}}{10}  \\
+              \sqrt{\frac{\sqrt{5}+1}{2\sqrt{5}}} & -i\frac{\sqrt{5}\sqrt{10-2\sqrt{5}}}{10}
+            \end{pmatrix}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   \\
+                                   & =\begin{pmatrix}\sqrt{\frac{\sqrt{5}-1}{2\sqrt{5}}}\sqrt{\frac{\sqrt{5}-1}{2\sqrt{5}}}+\sqrt{\frac{\sqrt{5}+1}{2\sqrt{5}}}\sqrt{\frac{\sqrt{5}+1}{2\sqrt{5}}}                       & \sqrt{\frac{\sqrt{5}-1}{2\sqrt{5}}}i\frac{\sqrt{5}\sqrt{10+2\sqrt{5}}}{10}+\sqrt{\frac{\sqrt{5}+1}{2\sqrt{5}}}\left(-i\frac{\sqrt{5}\sqrt{10-2\sqrt{5}}}{10}\right)                       \\
+               \left(-i\frac{\sqrt{5}\sqrt{10+2\sqrt{5}}}{10}\right)\sqrt{\frac{\sqrt{5}-1}{2\sqrt{5}}}+i\frac{\sqrt{5}\sqrt{10-2\sqrt{5}}}{10}\sqrt{\frac{\sqrt{5}+1}{2\sqrt{5}}} & \left(-i\frac{\sqrt{5}\sqrt{10+2\sqrt{5}}}{10}\right)i\frac{\sqrt{5}\sqrt{10+2\sqrt{5}}}{10}+i\frac{\sqrt{5}\sqrt{10-2\sqrt{5}}}{10}\left(-i\frac{\sqrt{5}\sqrt{10-2\sqrt{5}}}{10}\right)\end{pmatrix}\\
+               &=\begin{pmatrix}
+                1 & 0 \\
+                0 & 1
+               \end{pmatrix}
+          \end{align*}
+          where that last step is done mostly on inspection of signs in the huge matrix. I verified it with SageMath and it does come out to $\dul{I}$.
+  \end{enumerate}
+\end{soln}
+
+% PROBLEM 4
+\begin{problem}
+Consider the Hamiltonian
+$$\hat{H}=\frac{\hat{p}_x^2}{2m}+\frac{1}{2}k\hat{x}^2+\beta\hat{x}^3$$
+Describe how you could, using a computer, find approximate results for the lowest energy
+eigenvalue and its corresponding eigenstate.
+\end{problem}
+\begin{soln}
+  To my understanding the idea here is to construct a truncated Hamiltonian matrix for
+  the given $\hat{H}$ in the basis of the eigenstates of the ``standard'' harmonic oscillator for
+  which $\beta=0$. We then use this matrix to find the approximate (due to the truncated matrix) eigenvalues and eigenvectors of the system.
+  We can then use the eigenvector to write the state corresponding to the found eigenvalue as an eigenfunction expansion where the entries of the
+  eigenvector are the coefficients.
+\end{soln}
+\end{document}

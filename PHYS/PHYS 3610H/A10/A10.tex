@@ -149,11 +149,11 @@ Use the raising operator to find $\psi_1(x)$.
   $$
   Applying this to $\psi_0$,
   \begin{align*}
-    \hat{a}_+\psi_0(x)&=\frac{1}{\sqrt{2}}\left[\sqrt{\frac{m\omega}{\hbar}}x-\sqrt{\frac{\hbar}{m\omega}}\frac{\partial}{\partial x}\right]\left(\frac{m\omega}{\pi\hbar}\right)^{1/4} e^{-m\omega x^2/2\hbar}\\
-    &=\left(\frac{m\omega}{4\pi\hbar}\right)^{1/4}\left[\sqrt{\frac{m\omega}{\hbar}}xe^{-m\omega x^2/2\hbar}-\sqrt{\frac{\hbar}{m\omega}}\frac{\partial}{\partial x}e^{-m\omega x^2/2\hbar}\right] \\
-    &=\left(\frac{m\omega}{4\pi\hbar}\right)^{1/4}\left[\sqrt{\frac{m\omega}{\hbar}}xe^{-m\omega x^2/2\hbar}+\sqrt{\frac{\hbar}{m\omega}}\frac{m\omega}{\hbar}xe^{-m\omega x^2/2\hbar}\right] \\
-    &=\left(\frac{m\omega}{4\pi\hbar}\right)^{1/4}\left[\sqrt{\frac{m\omega}{\hbar}}xe^{-m\omega x^2/2\hbar}+\sqrt{\frac{m\omega}{\hbar}}xe^{-m\omega x^2/2\hbar}\right] \\
-    &=\left(\frac{m\omega}{\pi\hbar}\right)^{1/4}\sqrt{\frac{2m\omega}{\hbar}}xe^{-m\omega x^2/2\hbar}.
+    \hat{a}_+\psi_0(x) & =\frac{1}{\sqrt{2}}\left[\sqrt{\frac{m\omega}{\hbar}}x-\sqrt{\frac{\hbar}{m\omega}}\frac{\partial}{\partial x}\right]\left(\frac{m\omega}{\pi\hbar}\right)^{1/4} e^{-m\omega x^2/2\hbar}      \\
+                       & =\left(\frac{m\omega}{4\pi\hbar}\right)^{1/4}\left[\sqrt{\frac{m\omega}{\hbar}}xe^{-m\omega x^2/2\hbar}-\sqrt{\frac{\hbar}{m\omega}}\frac{\partial}{\partial x}e^{-m\omega x^2/2\hbar}\right] \\
+                       & =\left(\frac{m\omega}{4\pi\hbar}\right)^{1/4}\left[\sqrt{\frac{m\omega}{\hbar}}xe^{-m\omega x^2/2\hbar}+\sqrt{\frac{\hbar}{m\omega}}\frac{m\omega}{\hbar}xe^{-m\omega x^2/2\hbar}\right]      \\
+                       & =\left(\frac{m\omega}{4\pi\hbar}\right)^{1/4}\left[\sqrt{\frac{m\omega}{\hbar}}xe^{-m\omega x^2/2\hbar}+\sqrt{\frac{m\omega}{\hbar}}xe^{-m\omega x^2/2\hbar}\right]                           \\
+                       & =\left(\frac{m\omega}{\pi\hbar}\right)^{1/4}\sqrt{\frac{2m\omega}{\hbar}}xe^{-m\omega x^2/2\hbar}.
   \end{align*}
 \end{soln}
 
@@ -164,21 +164,108 @@ eigenfunctions of the infinite square well.
 What is the wavefunction for this system in position representation?
 \end{problem}
 \begin{soln}
-  Recall that the eigenfunction of the infinite square well are of the form 
+  Recall that the eigenfunction of the infinite square well are of the form
   $$\psi_n(x)=\sqrt{\frac{2}{a}}\sin(\frac{n\pi x}{a}).$$
-The given state vector represents the coefficients of the eigenfunction expansion of a full solution in these eigenfunctions,
-$$\Psi(x)=\sum_nc_n\psi_n(x).$$
-So the full expansion is 
-$$\Psi(x)=\sqrt{\frac{2}{9a}}\left[\sin(\frac{\pi x}{a})+\sin(\frac{2\pi x}{a})+\frac{\sqrt{3}}{3}\sin(\frac{3\pi x}{a})+2\sin(\frac{4\pi x}{a})\right].$$
+  The given state vector represents the coefficients of the eigenfunction expansion of a full solution in these eigenfunctions,
+  $$\Psi(x)=\sum_nc_n\psi_n(x).$$
+  So the full expansion is
+  $$\Psi(x)=\sqrt{\frac{2}{a}}\left[\frac{1}{3}\sin(\frac{\pi x}{a})+\frac{1}{3}\sin(\frac{2\pi x}{a})+\frac{1}{\sqrt{3}}\sin(\frac{3\pi x}{a})+\frac{2}{3}\sin(\frac{4\pi x}{a})\right].$$
 \end{soln}
 
 % PROBLEM 4
 \begin{problem}
 Consider the matrix $\dunderline{M}$ corresponding to the operator $\hat{x}^4$ in the basis of eigenstates
-of the harmonic oscillator, i.e. $\left\{\bra{E_n}\right\}$. Using
+of the harmonic oscillator, i.e. $\left\{\ket{E_n}\right\}$. Using
 $$\hat{x}=\sqrt{\frac{\hbar}{2m\omega}}\left[\hat{a}_++\hat{a}_-\right]$$
+\begin{enumerate}[label=(\alph*)]
+  \item Find $M_{54}$.
+  \item Find $M_{53}$.
+  \item Find $M_{n+2,n}$.
+\end{enumerate}
 \end{problem}
 \begin{soln}
+  \begin{enumerate}[label=(\alph*)]
+    \item To obtain elements of the form $n+1,n$ we would need an odd power of $\hat{x}$. With an even power we can only obtain states corresponding
+          to even energy shifts. Hence $M_{54}=0$.
+    \item Writing $\hat{x}^4$ as a matrix we obtain
+          $i,j$ elements
+          \begin{align*}
+            M_ij & =\bra{E_i}\hat{x}^4\ket{E_j}                                                                                                                                                                                                            \\
+                 & =\left(\frac{\hbar}{2m\omega}\right)^2\bra{E_i}\left[\hat{a}_++\hat{a}_-\right]^4\ket{E_j}                                                                                                                                              \\
+                 & =\left(\frac{\hbar}{2m\omega}\right)^2\bra{E_i}
+            \left[\hat{a}_+^2\left[\hat{a}_+^2+\hat{a}_+\hat{a}_-+\hat{a}_-\hat{a}_++\hat{a}_-^2\right]\right.                                                                                                                                             \\
+                 & \qquad+\hat{a}_+\hat{a}_-\left[\hat{a}_+^2+\hat{a}_+\hat{a}_-+\hat{a}_-\hat{a}_++\hat{a}_-^2\right]                                                                                                                                     \\
+                 & \qquad+\hat{a}_-\hat{a}_+\left[\hat{a}_+^2+\hat{a}_+\hat{a}_-+\hat{a}_-\hat{a}_++\hat{a}_-^2\right]                                                                                                                                     \\
+                 & \qquad+\left.\hat{a}_-^2\left[\hat{a}_+^2+\hat{a}_+\hat{a}_-+\hat{a}_-\hat{a}_++\hat{a}_-^2\right]
+            \right]\ket{E_j}                                                                                                                                                                                                                               \\
+                 & =\left(\frac{\hbar}{2m\omega}\right)^2\bra{E_i}
+            \left[
+            \left[\hat{a}_+^4+\hat{a}_+^2\hat{a}_+\hat{a}_-+\hat{a}_+^2\hat{a}_-\hat{a}_++\hat{a}_+^2\hat{a}_-^2\right]\right.                                                                                                                             \\
+                 & \qquad+\left[\hat{a}_+\hat{a}_-\hat{a}_+^2+\hat{a}_+\hat{a}_-\hat{a}_+\hat{a}_-+\hat{a}_+\hat{a}_-\hat{a}_-\hat{a}_++\hat{a}_+\hat{a}_-\hat{a}_-^2\right]                                                                               \\
+                 & \qquad+\left[\hat{a}_-\hat{a}_+\hat{a}_+^2+\hat{a}_-\hat{a}_+\hat{a}_+\hat{a}_-+\hat{a}_-\hat{a}_+\hat{a}_-\hat{a}_++\hat{a}_-\hat{a}_+\hat{a}_-^2\right]                                                                               \\
+                 & \qquad+\left.\left[\hat{a}_-^2\hat{a}_+^2+\hat{a}_-^2\hat{a}_+\hat{a}_-+\hat{a}_-^2\hat{a}_-\hat{a}_++\hat{a}_-^2\hat{a}_-^2\right]
+            \right]\ket{E_j}                                                                                                                                                                                                                               \\
+                 & =\left(\frac{\hbar}{2m\omega}\right)^2
+            \left[
+            \left[\bra{E_i}\hat{a}_+^4\ket{E_j} + \bra{E_i}\hat{a}_+^2\hat{a}_+\hat{a}_-\ket{E_j} + \bra{E_i}\hat{a}_+^2\hat{a}_-\hat{a}_+\ket{E_j} + \bra{E_i}\hat{a}_+^2\hat{a}_-^2\ket{E_j}\right]\right.                                               \\
+                 & \qquad+\left[\bra{E_i}\hat{a}_+\hat{a}_-\hat{a}_+^2\ket{E_j} + \bra{E_i}\hat{a}_+\hat{a}_-\hat{a}_+\hat{a}_-\ket{E_j} + \bra{E_i}\hat{a}_+\hat{a}_-\hat{a}_-\hat{a}_+\ket{E_j} + \bra{E_i}\hat{a}_+\hat{a}_-\hat{a}_-^2\ket{E_j}\right] \\
+                 & \qquad+\left[\bra{E_i}\hat{a}_-\hat{a}_+\hat{a}_+^2\ket{E_j} + \bra{E_i}\hat{a}_-\hat{a}_+\hat{a}_+\hat{a}_-\ket{E_j} + \bra{E_i}\hat{a}_-\hat{a}_+\hat{a}_-\hat{a}_+\ket{E_j} + \bra{E_i}\hat{a}_-\hat{a}_+\hat{a}_-^2\ket{E_j}\right] \\
+                 & \qquad+\left.\left[\bra{E_i}\hat{a}_-^2\hat{a}_+^2\ket{E_j} + \bra{E_i}\hat{a}_-^2\hat{a}_+\hat{a}_-\ket{E_j} + \bra{E_i}\hat{a}_-^2\hat{a}_-\hat{a}_+\ket{E_j} + \bra{E_i}\hat{a}_-^2\hat{a}_-^2\ket{E_j}\right]
+              \right].
+          \end{align*}
+          We can then skip ahead a bit to part (c) as it asks for a general formula for the $n+2,n$ elements to which $M_{53}$ belongs.
+          Here $n=3$ and so
+          $$M_{53}=\left(\frac{\hbar}{2m\omega}\right)^2(4\cdot 3-2)\sqrt{3}\sqrt{3-1}=\left(\frac{\hbar}{2m\omega}\right)^210\sqrt{6}.$$
+    \item $M_{n+2,n}$ will be the result of all the terms in
+          \begin{align*}
+             & \left(\frac{\hbar}{2m\omega}\right)^2
+            \left[
+            \left[\bra{E_n}\hat{a}_+^4\ket{E_n} + \bra{E_n}\hat{a}_+^2\hat{a}_+\hat{a}_-\ket{E_n} + \bra{E_n}\hat{a}_+^2\hat{a}_-\hat{a}_+\ket{E_n} + \bra{E_n}\hat{a}_+^2\hat{a}_-^2\ket{E_n}\right]\right.                                           \\
+             & \qquad+\left[\bra{E_n}\hat{a}_+\hat{a}_-\hat{a}_+^2\ket{E_n} + \bra{E_n}\hat{a}_+\hat{a}_-\hat{a}_+\hat{a}_-\ket{E_n} + \bra{E_n}\hat{a}_+\hat{a}_-\hat{a}_-\hat{a}_+\ket{E_n} + \bra{E_n}\hat{a}_+\hat{a}_-\hat{a}_-^2\ket{E_n}\right] \\
+             & \qquad+\left[\bra{E_n}\hat{a}_-\hat{a}_+\hat{a}_+^2\ket{E_n} + \bra{E_n}\hat{a}_-\hat{a}_+\hat{a}_+\hat{a}_-\ket{E_n} + \bra{E_n}\hat{a}_-\hat{a}_+\hat{a}_-\hat{a}_+\ket{E_n} + \bra{E_n}\hat{a}_-\hat{a}_+\hat{a}_-^2\ket{E_n}\right] \\
+             & \qquad+\left.\left[\bra{E_n}\hat{a}_-^2\hat{a}_+^2\ket{E_n} + \bra{E_n}\hat{a}_-^2\hat{a}_+\hat{a}_-\ket{E_n} + \bra{E_n}\hat{a}_-^2\hat{a}_-\hat{a}_+\ket{E_n} + \bra{E_n}\hat{a}_-^2\hat{a}_-^2\ket{E_n}\right]
+              \right]
+          \end{align*}
+          which yield a net $-2$ change in energy (because the operators apply to the left). All others will result in inner products which evaluate to zero.
+          Removing all the terms we know will be zero then we obtain
+          \begin{align*}
+             & \left(\frac{\hbar}{2m\omega}\right)^2
+            \left[\bra{E_n}\hat{a}_+\hat{a}_-\hat{a}_-^2\ket{E_n} + bra{E_n}\hat{a}_-\hat{a}_+\hat{a}_-^2\ket{E_n} + \bra{E_n}\hat{a}_-^2\hat{a}_+\hat{a}_-\ket{E_n} + \bra{E_n}\hat{a}_-^2\hat{a}_-\hat{a}_+\ket{E_n}
+              \right].
+          \end{align*}
+          Now we simplify using the relations
+          $$\hat{a}_+\ket{E_n}=\sqrt{n+1}\ket{E_{n+1}};\qquad\hat{a}_-\ket{E_n}=\sqrt{n}\ket{E_{n-1}},$$
+          \begin{align*}
+            M_{n+2,n} & =\left(\frac{\hbar}{2m\omega}\right)^2
+            \left[\bra{E_n}\hat{a}_+\hat{a}_-\hat{a}_-^2\ket{E_n} + bra{E_n}\hat{a}_-\hat{a}_+\hat{a}_-^2\ket{E_n} + \bra{E_n}\hat{a}_-^2\hat{a}_+\hat{a}_-\ket{E_n} + \bra{E_n}\hat{a}_-^2\hat{a}_-\hat{a}_+\ket{E_n}
+            \right]                                                                                \\
+                      & =\left(\frac{\hbar}{2m\omega}\right)^2
+            \left[\sqrt{n}\sqrt{n-1}(n-2)\bra{E_n}\ket{E_{n-2}}\right.                             \\
+                      & \qquad+\sqrt{n}\sqrt{n-1}(n-1)\bra{E_n}\ket{E_{n-2}}                       \\
+                      & \qquad+ n\sqrt{n}\sqrt{n-1}\bra{E_n}\ket{E_{n-2}}                          \\
+                      & \qquad\left.+ \sqrt{n+1}\sqrt{n+1}\sqrt{n}\sqrt{n-1}\bra{E_n}\ket{E_{n-2}}
+            \right]                                                                                \\
+                      & =\left(\frac{\hbar}{2m\omega}\right)^2(4n-2)\sqrt{n}\sqrt{n-1}
+          \end{align*}
 
+
+          % \begin{align*}
+          %   &\left(\frac{\hbar}{2m\omega}\right)^2
+          %         \left[\bra{E_n}\hat{a}_+^2\hat{a}_+\hat{a}_-\ket{E_n} + \bra{E_n}\hat{a}_+^2\hat{a}_-\hat{a}_+\ket{E_n}+\bra{E_n}\hat{a}_+\hat{a}_-\hat{a}_+^2\ket{E_n}+\bra{E_n}\hat{a}_-\hat{a}_+\hat{a}_+^2\ket{E_n}\right]                                              
+          % \end{align*}
+          % Now we simplify using the relations
+          % $$\hat{a}_+\ket{E_n}=\sqrt{n+1}\ket{E_{n+1}};\qquad\hat{a}_-\ket{E_n}=\sqrt{n}\ket{E_{n-1}},$$
+          % \begin{align*}
+          %   M_{n,n+2}&=\left(\frac{\hbar}{2m\omega}\right)^2
+          %         \left[\bra{E_n}\hat{a}_+^2\hat{a}_+\hat{a}_-\ket{E_n} + \bra{E_n}\hat{a}_+^2\hat{a}_-\hat{a}_+\ket{E_n}+\bra{E_n}\hat{a}_+\hat{a}_-\hat{a}_+^2\ket{E_n}+\bra{E_n}\hat{a}_-\hat{a}_+\hat{a}_+^2\ket{E_n}\right]  \\
+          %         &= \left(\frac{\hbar}{2m\omega}\right)^2
+          %         \left[n\sqrt{n+1}\sqrt{n+2}\bra{E_n}\ket{E_{n+2}}\right.\\
+          %         &\qquad+(n+1)\sqrt{n+1}\sqrt{n+2}\bra{E_n}\ket{E_{n+2}}\\
+          %         &\qquad+\sqrt{n+1}(n+2)\sqrt{n+2}\bra{E_n}\ket{E_{n+2}}\\
+          %         &\qquad\left.+\sqrt{n+1}\sqrt{n+2}(n+3)\bra{E_n}\ket{E_{n+2}}\right]                 \\
+          %         &= \left(\frac{\hbar}{2m\omega}\right)^2
+          %         \left[(4n+6)\sqrt{n+1}\sqrt{n+2}\right]                            
+          % \end{align*}
+  \end{enumerate}
 \end{soln}
 \end{document}

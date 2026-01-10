@@ -1,0 +1,305 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{changepage}
+\usepackage{circuitikz}
+\usepackage{pgfplots}
+\usepackage{physics}
+\usepackage{hyperref}
+\usepackage{siunitx}
+\usepackage{fontspec}
+\usepackage{relsize}
+\usepackage{subfig}
+\usepackage{todonotes}
+\usepackage{emoji}
+\usepackage{minted}
+\usepackage{multicol, multirow, booktabs}
+\usepackage[breakable]{tcolorbox}
+\usepackage[inline]{enumitem}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{soln}{Solution}
+
+\pgfplotsset{compat=newest}
+\usetikzlibrary{lindenmayersystems}
+\usetikzlibrary{arrows}
+\usetikzlibrary{calc}
+\usetikzlibrary{positioning, fit}
+\usetikzlibrary{3d, perspective}
+
+\definecolor{incolor}{HTML}{303F9F}
+\definecolor{outcolor}{HTML}{D84315}
+\definecolor{cellborder}{HTML}{CFCFCF}
+\definecolor{cellbackground}{HTML}{F7F7F7}
+\newcommand{\ui}{\hat{i}}
+\newcommand{\uj}{\hat{j}}
+\newcommand{\uk}{\hat{k}}
+\newcommand{\ux}{\hat{x}}
+\newcommand{\uy}{\hat{y}}
+\newcommand{\uz}{\hat{z}}
+\newcommand{\primed}[1]{#1^\prime}
+\pgfdeclarelayer{background}  
+\pgfsetlayers{background,main}
+\AtBeginDocument{\RenewCommandCopy\qty\SI}
+\newcommand{\justif}[2]{&{#1}&\text{#2}}
+
+\makeatletter
+\newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+\makeatother
+\newcommand{\prompt}[4]{
+    \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+}
+
+\newcommand{\thevenin}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (2,0) to[battery1, l_=$V_{Th}\eq#1$] (2,2) 
+      to[resistor, l_=$R_{Th}\eq#2$] (0,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\norton}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (3,0) to[american current source, l_=$I_{N}\eq#1$] (3,2) -- (0,2) (2,0)
+      to[resistor, l=$R_{N}\eq#2$] (2,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\highlight}[1]{\colorbox{yellow}{$\displaystyle #1$}}
+
+\newcommand{\ti}[1]{\widetilde{#1}}
+
+\newfontface{\Kaufmann}{Kaufmann}
+\DeclareTextFontCommand{\kf}{\Kaufmann}
+\newcommand{\scriptr}{\fontsize{12pt}{12pt}\kf{r}}
+
+\newfontface{\KaufmannB}{Kaufmann Bd BT}
+\DeclareTextFontCommand{\kfb}{\KaufmannB}
+\newcommand{\bscriptr}{\fontsize{12pt}{12pt}\kfb{r}}
+
+\newcommand{\bv}[1]{\mathbf{#1}}
+
+\title{Math 3310H: Assignment V}
+\author{Jeremy Favro (0805980) \\ Trent University, Peterborough, ON, Canada}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+% PROBLEM 1
+\begin{problem}
+Find all abelian groups (up to isomorphism) of the given order.
+\begin{enumerate}[label=(\alph*)]
+  \item 2025
+  \item 1234
+\end{enumerate}
+\end{problem}
+\begin{soln}
+  \begin{enumerate}[label=(\alph*)]
+    \item Note that $2025=3^4\cdot5^2$.
+          So we get
+          $$\mathbb{Z}_{2025}$$
+          $$ \mathbb{Z}_3\times \mathbb{Z}_3 \times \mathbb{Z}_3 \times \mathbb{Z}_3 \times \mathbb{Z}_5 \times \mathbb{Z}_5$$
+          $$ \mathbb{Z}_9 \times \mathbb{Z}_3 \times \mathbb{Z}_3 \times \mathbb{Z}_5 \times \mathbb{Z}_5$$
+          $$ \mathbb{Z}_{27} \times \mathbb{Z}_3 \times \mathbb{Z}_5 \times \mathbb{Z}_5$$
+          $$ \mathbb{Z}_{81} \times \mathbb{Z}_5 \times \mathbb{Z}_5$$
+          $$ \mathbb{Z}_3\times \mathbb{Z}_3 \times \mathbb{Z}_3 \times \mathbb{Z}_3 \times \mathbb{Z}_{25}$$
+          $$ \mathbb{Z}_9 \times \mathbb{Z}_3 \times \mathbb{Z}_3 \times \mathbb{Z}_{25}$$
+          $$ \mathbb{Z}_{27} \times \mathbb{Z}_3 \times \mathbb{Z}_{25}$$
+          $$ \mathbb{Z}_9 \times \mathbb{Z}_9 \times \mathbb{Z}_{25}$$
+          $$ \mathbb{Z}_9 \times \mathbb{Z}_9 \times \mathbb{Z}_5 \times \mathbb{Z}_5$$
+    \item Note that $1234=2\cdot617$.
+          So we get just
+          $$\mathbb{Z}_{1234}.$$
+  \end{enumerate}
+\end{soln}
+
+% PROBLEM 2
+\begin{problem}
+Determine whether or not $U (8)$ is isomorphic to $U (5)$.
+\end{problem}
+\begin{soln}
+  Well,
+  $$U(8)=\left\{1,3,5,7\right\}$$
+  and
+  $$U(5)=\left\{1,2,3,4\right\}$$
+  so they are both of order 4. They are also both abelian and so must both be isomorphic to
+  $\mathbb{Z}_4$ or $\mathbb{Z}_2\times\mathbb{Z}_2$ respectively. If one is cyclic then it will be
+  $\mathbb{Z}_4$, otherwise it will be $\mathbb{Z}_2\times\mathbb{Z}_2$.
+  $U(8)$ is not cyclic as none of its elements are of order $8$. $U(5)$ is cyclic with generator $2$.
+  Since these two are not isomorphic to the same groups (and those groups are not isomorphic) the groups themselves are not isomorphic.
+\end{soln}
+
+% PROBLEM 3 
+\begin{problem}
+Find all homomorphisms $\phi$ between the given groups.
+\begin{enumerate}[label=(\alph*)]
+  \item $\phi:\mathbb{Z}_6\to \mathbb{Z}_9$
+  \item $\phi:\mathbb{Z}_{18}\to \mathbb{Z}_{12}$
+  \item $\phi:\mathbb{Z}_{30}\to \mathbb{Z}_{13}$
+  \item $\phi:\mathbb{Z}_4\to \mathbb{Z}_2\times \mathbb{Z}_2$
+\end{enumerate}
+\end{problem}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item We know that a map $\phi:\mathbb{Z}_n\to\mathbb{Z}_m$ where $\phi(x)=kx$ will only be a homomorphism iff
+          $\abs{k}$ in $\mathbb{Z}_n$ is a divisor of both $n$ and $m$. Here the divisors of the first group are
+          $1,2,3,6$ and the divisors of the second group are $1,3,9$. The common divisors are $1,3$ so we need to find elements of
+          $\mathbb{Z}_{6}$ with orders $1$ or $3$. We know that elements $k$ of order $3$ will satisfy
+          $$3=\frac{6}{\gcd(k,6)}\implies 2=\gcd(k,6).$$
+          The elements in $\mathbb{Z}_6$ which satisfy this are $2,4$. Now for $1$
+          we need elements which satisfy $6=\gcd(k,6)$ which is just $0$. So all the homomorphisms are
+          $\phi_{0}(x)=0$, $\phi_2(x)=2x$, $\phi_4(x)=4x$.
+    \item Following same steps as previously we have common divisors of the order of both groups
+          $1,2,3,6$ and hence we need all elements of these orders in $\mathbb{Z}_{18}$
+          so
+          $$6=\frac{18}{\gcd(k,18)}\implies k=3,15$$
+          $$3=\frac{18}{\gcd(k,18)}\implies k=6,12$$
+          $$2=\frac{18}{\gcd(k,18)}\implies k=9$$
+          $$1=\frac{18}{\gcd(k,18)}\implies k=0$$
+          so we have all homomorphisms being all
+          $\phi_k(x)=kx$ where $k\in\left\{0,3,6,9,12,15\right\}$.
+    \item As $13$ is prime, the only common divisor here is $1$ and the only element of order $1$ is zero, hence the only homomorphism
+          here is the trivial one.
+    \item Since all the elements of $\mathbb{Z}_2\times \mathbb{Z}_2$ are of order 1 (the identity) or 2, both of which divide the order
+          of $\mathbb{Z}_4$, all the elements of $\mathbb{Z}_2\times \mathbb{Z}_2$ form homomorphisms. So we have
+          $\phi_k(x)=kx$ where $k\in \mathbb{Z}_2\times \mathbb{Z}_2=\left\{(0,0),(1,0),(0,1),(1,1)\right\}$.
+  \end{enumerate}
+\end{soln}
+
+% PROBLEM 4 
+\begin{problem}
+Suppose $\phi:\mathbb{Z}_{50}\to\mathbb{Z}_{15}$ is a group homomorphism with $\phi(7)=6$.
+\begin{enumerate}[label=(\alph*)]
+  \item Determine $\phi(x)$ where $x\in\mathbb{Z}_{50}$.
+  \item Find $\phi\left[\mathbb{Z}_{50}\right]$.
+  \item Find $\ker \phi$.
+  \item Find $\phi^{-1}(3)$.
+\end{enumerate}
+\end{problem}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item Because $\gcd(7,50)=1$, $\langle 7\rangle=\mathbb{Z}_{50}$ so
+          $\phi(7+7+\dots)=\phi(7)+\phi(7)+\dots=6+6+\dots\implies \phi(7n)=6n$, mod their respective
+          group orders of course. Hence for $k\in\mathbb{Z}_{50}$ where $k=7n$, $\phi(k)=6n$. Note that
+          $n$ for $1$ is 43 and so $\phi(1)=6\cdot_{15}43=3\implies \phi(x)=3\cdot_{15}x$.
+    \item Under the definition above this is just
+          $$\phi\left[\mathbb{Z}_{50}\right]=\langle 3\rangle=\left\{0,3,6,9,12\right\}.$$
+    \item By definition,
+          \begin{align*}
+            \ker \phi & =\left\{x\in \mathbb{Z}_{50}|3x\equiv_{15}0 \right\} \\
+                      & =\left\{0,5,10,15,20,25,30,35,40,45\right\}
+          \end{align*}
+    \item Recalling that if $\phi(g)=h$ then $\phi^{-1}(h)=g\ker\phi$ we have that because
+          $\phi(1)=3$, $\phi^{-1}(3)=\ker\phi$.
+  \end{enumerate}
+\end{soln}
+
+% PROBLEM 5
+\begin{problem}
+Let $G$ be a group of order 24, and suppose $\phi:\mathbb{Z}_{36}\to G$ is a group homomorphism.
+\begin{enumerate}[label=(\alph*)]
+  \item Find all possible images $\phi\left[\mathbb{Z}_{36}\right]$ for such a map $\phi$.
+  \item What is $\ker\phi$ for each of the maps in part (a)?
+\end{enumerate}
+\end{problem}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item Since $\phi(1)=k$ defines $\phi(x)=kx$ and we know that $\abs{k}$ must divide the order of
+          the input and output groups, $k$ must take on one of the values $1,2,3,4,6,12$ as these are the common divisors
+          of $36$ and $24$. Additionally, since homomorphisms preserve the cyclic and abelian nature of a group in its image
+          we know that the image must be both cyclic and abelian, as $\mathbb{Z}_{36}$ is both of these. As all cyclic groups
+          of order $n$ are isomorphic to $\mathbb{Z}_n$, the image $\mathbb{Z}_{36}$ under $\phi$ could be
+          $\mathbb{Z}_k$ for $k\in \left\{1,2,3,4,6,12\right\}$.
+    \item For $\phi_1:\mathbb{Z}_{36}\to \mathbb{Z}_1$ we know that $\ker\phi_1 < \mathbb{Z}_{36}$
+          and hence that $\mathbb{Z}_{36}/\ker\phi_1\cong \mathbb{Z}_1$. The order of $\mathbb{Z}_1$ is 1 as it
+          contains only the identity and hence $\abs{\mathbb{Z}_{36}/\ker\phi}=1\implies \abs{\ker\phi_1 }=36$. We also know that this
+          kernel group should be cyclic and generated by an element of order $36$. We know that
+          for $k\in\mathbb{Z}_{36}$ $k$ must satisfy $\abs{\langle k\rangle}=36=\frac{36}{\gcd(k,36)}\implies \gcd(k,36)=1$
+          so we can pick anything relatively prime to $36$. $1$ will work and so $\ker\phi_1=\mathbb{Z}_{36}$.
+
+          Now for
+          $\phi_2:\mathbb{Z}_{36}\to \mathbb{Z}_2$ we repeat the same process: $\abs{\mathbb{Z}_2}=2\implies
+            \abs{\mathbb{Z}_{36}/\ker\phi}=2\implies \abs{\ker\phi_2 }=18$, so we seek a $k$ of order $18$ in $\mathbb{Z}_{36}$. $k$ will
+          satisfy $18=\frac{36}{\gcd(k,36)}\implies 2=\gcd(k,36)$ so we can pick $2$ as a generator which gives
+          $$\ker\phi_2=\left\{0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34\right\}.$$
+
+
+          Again we go by the same process for $\phi_3:\mathbb{Z}_{36}\to \mathbb{Z}_3$:
+          $\abs{\mathbb{Z}_3}=3\implies
+            \abs{\mathbb{Z}_{36}/\ker\phi}=3\implies \abs{\ker\phi_3 }=12$, so want a $k$ of order $12$ which will satisfy
+          $12=\frac{36}{\gcd(k,36)}\implies 3=\gcd(k,36)$ so we can pick $3$ as a generator which gives
+          $$\ker\phi_3=\left\{0,3,6,9,12,15,18,21,24,27,30,33\right\}.$$
+
+
+          Again for $\phi_4:\mathbb{Z}_{36}\to \mathbb{Z}_4$: $\abs{\mathbb{Z}_4}=4\implies
+            \abs{\mathbb{Z}_{36}/\ker\phi}=4\implies \abs{\ker\phi_4 }=9$ so we want $k$ such that
+          $9=\frac{36}{\gcd(k,36)}\implies 4=\gcd(k,36)\implies k=4$ so
+          $$\ker\phi_4=\left\{0,4,8,12,16,20,24,28,32\right\}.$$
+
+          Again for $\phi_6:\mathbb{Z}_{36}\to \mathbb{Z}_6$: $\abs{\mathbb{Z}_6}=6\implies
+            \abs{\mathbb{Z}_{36}/\ker\phi}=6\implies \abs{\ker\phi_6 }=6$ so we want $k$ such that
+          $6=\frac{36}{\gcd(k,36)}\implies 6=\gcd(k,36)\implies k=6$ so 
+          $$\ker\phi_6=\left\{0,6,12,18,24,30\right\}.$$
+
+          And one last time for $\phi_6:\mathbb{Z}_{36}\to \mathbb{Z}_{12}$: $\abs{\mathbb{Z}_{12}}=12\implies
+            \abs{\mathbb{Z}_{36}/\ker\phi}=12\implies \abs{\ker\phi_{12} }=3$ so we want $k$ such that
+          $3=\frac{36}{\gcd(k,36)}\implies 12=\gcd(k,36)\implies k=12$ so 
+          $$\ker\phi_{12}=\left\{0,12,24\right\}.$$
+
+
+  \end{enumerate}
+\end{soln}
+
+% PROBLEM 6
+\begin{problem}
+Find the isomorphism class of the following factor groups:
+\begin{enumerate}[label=(\alph*)]
+  \item $U(32)/H$ where $H=\left\{1,15\right\}$.
+  \item $\mathbb{Z}_{18}\times \mathbb{Z}_{24}/\langle\left(2,12\right)\rangle$.
+\end{enumerate}
+\end{problem}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item We know that $\abs{U(32)/\left\{1,15\right\}}=16/2=8$. Since this group is abelian
+          it is isomorphic to $\mathbb{Z}_2\times\mathbb{Z}_2\times\mathbb{Z}_2$, or
+          $\mathbb{Z}_2\times \mathbb{Z}_4$, or $\mathbb{Z}_8$. We can look at the orders of the elements of the factor
+          group to determine which these it is. Consider
+          the $3\cdot\left\{1,15\right\}$ coset where we'll check the orders that would determine which of the previous groups
+          this is isomorphic to
+          \begin{align*}
+            3\cdot \left\{1,15\right\}  & =\left\{3,13\right\}  \\
+            3^2\cdot\left\{1,15\right\} & =\left\{9,4\right\}   \\
+            3^4\cdot\left\{1,15\right\} & =\left\{17,31\right\} \\
+            3^8\cdot\left\{1,15\right\} & =\left\{1,15\right\}.
+          \end{align*}
+          So $U(32)/\left\{1,15\right\}$ contains an element of order $8$ and can therefore only be isomorphic to $\mathbb{Z}_8$
+    \item We know that $\abs{\mathbb{Z}_{18}\times \mathbb{Z}_{24}/\langle\left(2,12\right)\rangle}=432/9=48$
+          since
+          $$\langle\left(2,12\right)\rangle=\left\{
+            (0,0), (2,12), (4,0), (6,12),
+            (8,0), (10, 12), (12, 0), (14, 12),
+            (16, 12)
+            \right\}.$$
+          This could be isomorphic to quite a few things however we can see that
+          the element $(1,0) + \langle\left(2,12\right)\rangle$ has order 18 and so we can drop all potential groups
+          that could not produce an element of such an order. This cuts us down to just
+          $\mathbb{Z}_{48}$ as $48=2^4\cdot3$ so there is no other way we can construct a group containing elements of
+          order $18$ that is abelian.
+  \end{enumerate}
+\end{soln}
+\end{document}

@@ -8,6 +8,7 @@
 \usepackage{changepage}
 \usepackage{circuitikz}
 \usepackage{pgfplots}
+\usepackage{minted}
 \usepackage{physics}
 \usepackage{hyperref}
 \usepackage{siunitx}
@@ -81,6 +82,7 @@
 
 \DeclareMathOperator{\Div}{div}
 \DeclareMathOperator{\Curl}{curl}
+\DeclareMathOperator{\sgn}{sgn}
 
 \newcommand{\highlight}[1]{\colorbox{yellow}{$\displaystyle #1$}}
 
@@ -254,31 +256,36 @@ and the induced field due to the pipe. To solve this problem,
           $$
           We have our full solution now,
           $$V(s,\phi)=E_0\left(-s+\frac{a^2}{s}\right)\cos(\phi)$$
-    \item Apply the boundary conditions to find the coefficients in your solution.
-    \item Your final answer will look like
-          $$V(s,\theta)=\sum_nA_nf_n(s,\phi)$$
-          where $A_n$ are your coefficients and $f_n(s,\phi)$ are the orthogonal functions you obtained from Laplace's equation.
-          \begin{enumerate}[label=\roman*.]
-            \item Write a python function that takes as input $n$, $s$, and $\phi$ and returns the value of $f_n(s,\phi)$.
-            \item Write a python code that uses this function to make a plot of the potential in the $xy$ plane for $s > a$.
-          \end{enumerate}
+    \item Done in (b)
+          \newpage
+    \item Note that the colorbar is only included to show sign and relative magnitude.\\
+          \includegraphics[scale=0.5]{q2.png}
+          \inputminted[
+            frame=lines,
+            framesep=2mm,
+            baselinestretch=1.2,
+            fontsize=\footnotesize,
+            linenos,
+            breaklines
+          ]{python3}{potential_plot.py}
   \end{enumerate}
 \end{soln}
+\newpage
 
 % PROBLEM 3
 \begin{problem}
-line of charge extends along the $z$-axis from $z = -a$ to $z = a$. The linear charge density is
+A line of charge extends along the $z$-axis from $z = -a$ to $z = a$. The linear charge density is
 $$\lambda(z)=\begin{cases}
     -\lambda_0 & z<0 \\
     \lambda_0  & z>0
   \end{cases}$$
 \begin{enumerate}[label=(\alph*)]
-  \item Find, by direct integration of Griffiths Eq. (2.30), the potential $V (z)$ for $|z| > a$. Note that you have to
+  \item Find, by direct integration of Griffiths Eq. (2.30), the potential $V(z)$ for $|z| > a$. Note that you have to
         handle positive and negative values of $z$ separately.
   \item This problem has azimuthal symmetry, which means that the potential can also be represented by
         Eq. (3.65). Find the unknown coefficients by matching the potential to the one you found in part (a).
         Make sure your solution works for both $z > 0$ and $z < 0$.
-  \item Bonus. Plot your potential in the $xz$ plane. You will find the \texttt{scipy.special.legendre} module to be
+  \item \textbf{Bonus}. Plot your potential in the $xz$ plane. You will find the \texttt{scipy.special.legendre} module to be
         useful.
 \end{enumerate}
 \end{problem}
@@ -288,22 +295,100 @@ $$\lambda(z)=\begin{cases}
           $$V=\frac{1}{4\pi\epsilon_0}\int\frac{\lambda(\pr{\bv{r}})}{\scriptr}\,d\pr{l}.$$
           In our case this integral splits up over the interval $[-a,a]$ as
           $$V=\frac{\lambda_0}{4\pi\epsilon_0}\left[-\int_{-a}^{0}\frac{1}{\abs{z-\pr{z}}}\,d\pr{z}+\int_0^a\frac{1}{\abs{z-\pr{z}}}\,d\pr{z}\right]$$
-          which for $z<0$ becomes
-          $$
-            V=\frac{\lambda_0}{4\pi\epsilon_0}\left[-\int_{-a}^{0}\frac{1}{\pr{z}-z}\,d\pr{z}+\int_0^a\frac{1}{\pr{z}-z}\,d\pr{z}\right]
-            =\frac{\lambda_0}{4\pi\epsilon_0}\left[-\eval{\ln(\pr{z}-z)}_{-a}^{0}+\eval{\ln(\pr{z}-z)}_{0}^{a}\right]
-            =\frac{\lambda_0}{4\pi\epsilon_0}\left[-(\ln(-z)-\ln(-a-z))+\ln(a-z)-\ln(-z)\right]
-            =\frac{\lambda_0}{4\pi\epsilon_0}\left[\ln(-a-z)+\ln(a-z)-2\ln(-z)\right]
-          $$
-    \item Eq. (3.65) is 
-    $$V=\sum_\ell A_\ell r^\ell+\frac{B_\ell}{r^{\ell+1}}$$
-    
-    
-    This problem has azimuthal symmetry, which means that the potential can also be represented by
-          Eq. (3.65). Find the unknown coefficients by matching the potential to the one you found in part (a).
-          Make sure your solution works for both $z > 0$ and $z < 0$.
-    \item Bonus. Plot your potential in the $xz$ plane. You will find the \texttt{scipy.special.legendre} module to be
-          useful.
+          which for $z<-a$ (we are restricted to $|z| > a$, so we remove the infinite ``puck'' which runs from $-a$ to $a$) becomes
+          \begin{align*}
+            V & =\frac{\lambda_0}{4\pi\epsilon_0}\left[-\int_{-a}^{0}\frac{1}{\pr{z}-z}\,d\pr{z}+\int_0^a\frac{1}{\pr{z}-z}\,d\pr{z}\right] \\
+              & =\frac{\lambda_0}{4\pi\epsilon_0}\left[-\ln(-z)+\ln(-a-z)+\ln(a-z)-\ln(-z)\right]                                           \\
+              & =\frac{\lambda_0}{4\pi\epsilon_0}\left[-\ln(z^2)+\ln(z^2-a^2)\right]                                                        \\
+              & =\frac{\lambda_0}{4\pi\epsilon_0}\ln(\frac{z^2-a^2}{z^2})
+          \end{align*}
+          and for $z>a$,
+          \begin{align*}
+            V & =\frac{\lambda_0}{4\pi\epsilon_0}\left[-\int_{-a}^{0}\frac{1}{z-\pr{z}}\,d\pr{z}+\int_0^a\frac{1}{z-\pr{z}}\,d\pr{z}\right] \\
+              & =\frac{\lambda_0}{4\pi\epsilon_0}\left[\ln(z)-\ln(z+a)-\ln(z-a)+\ln(z)\right]                                               \\
+              & =\frac{\lambda_0}{4\pi\epsilon_0}\left[\ln(z^2)-\ln(z^2-a^2)\right]                                                         \\
+              & =\frac{\lambda_0}{4\pi\epsilon_0}\ln(\frac{z^2}{z^2-a^2}).
+          \end{align*}
+    \item Eq. (3.65) is
+          $$V=\sum_{\ell=0}^\infty (A_\ell r^\ell+\frac{B_\ell}{r^{\ell+1}})P_\ell(\cos\theta).$$
+          I'm not sure if it's appropriate to match these two without saying that $r=z$ which I'm also not sure is correct (we'd also have $\cos\theta=1\implies P_\ell(1)=1$).
+          However it feels okay enough so we'll do that and see where it goes.
+          We are trying to match up the expressions
+          $$V=\sum_{\ell=0}^\infty  (A_\ell z^\ell+\frac{B_\ell}{z^{\ell+1}})$$
+          and (let's start with $z<-a$)
+          $$V=\frac{\lambda_0}{4\pi\epsilon_0}\ln(\frac{z^2-a^2}{z^2}).$$
+          The best way I can figure to do this is to expand both as sums,
+          the first directly and the second as a Taylor series. We actually need to match the
+          term-by-term integration of the series for the original integrand because doing it for the
+          result of the integral is a mess (or I didn't figure out the right way to do it).
+          This is
+          \begin{align*}
+            V & =\frac{\lambda_0}{4\pi\epsilon_0}\left[-\int_{-a}^{0}\frac{1}{\pr{z}-z}\,d\pr{z}+\int_0^a\frac{1}{\pr{z}-z}\,d\pr{z}\right]                                                                                \\
+              & =\frac{\lambda_0}{4\pi\epsilon_0}\left[\int_{-a}^{0}\sum_{n=0}^{\infty}\left(\frac{\pr{z}^{n}}{z^{n+1}}\right)\,d\pr{z}-\int_0^a\sum_{n=0}^{\infty}\left(\frac{\pr{z}^{n}}{z^{n+1}}\right)\,d\pr{z}\right] \\
+              & =\frac{\lambda_0}{4\pi\epsilon_0}\left[\eval{\sum_{n=0}^{\infty}\frac{\pr{z}^{n+1}}{(n+1)z^{n+1}}}_{-a}^{0}-\eval{\sum_{n=0}^{\infty}\frac{\pr{z}^{n+1}}{(n+1)z^{n+1}}}_{0}^{a}\right]                     \\
+              & =\frac{\lambda_0}{4\pi\epsilon_0}\left[-\sum_{n=0}^{\infty}\frac{(-a)^{n+1}}{(n+1)z^{n+1}}-\sum_{n=0}^{\infty}\frac{a^{n+1}}{(n+1)z^{n+1}}\right]                                                          \\
+              & =-\frac{\lambda_0}{4\pi\epsilon_0}\sum_{n=0}^{\infty}\frac{(-a)^{n+1}+a^{n+1}}{(n+1)z^{n+1}}
+          \end{align*}
+          which is zero for even $n$ and
+          $$V=-\frac{\lambda_0}{4\pi\epsilon_0}\sum_{n=1,3,5,\dots}^{\infty}\frac{2a^{n+1}}{(n+1)z^{n+1}}$$
+          otherwise.
+          We can now match to the spherical solution potential!
+          It is evident that $A_\ell=0$ as we have no terms where $z$ is in the numerator. Then
+          $$B_\ell=-\frac{\lambda_0}{4\pi\epsilon_0}\frac{2a^{\ell+1}}{\ell+1}$$
+          from our expression. So our solution in spherical is
+          $$V=-\frac{\lambda_0}{4\pi\epsilon_0}\sum_{\ell=1,3,5,\dots}^{\infty}\frac{2a^{\ell+1}}{(\ell+1)z^{\ell+1}}$$
+          for $z<-a$. For $z>a$ the process is much the same, we just have to flip the sign of the Taylor series in the integrals,
+          \begin{align*}
+            V & =\frac{\lambda_0}{4\pi\epsilon_0}\left[-\int_{-a}^{0}\frac{1}{\pr{z}-z}\,d\pr{z}+\int_0^a\frac{1}{\pr{z}-z}\,d\pr{z}\right]                                                                                 \\
+              & =\frac{\lambda_0}{4\pi\epsilon_0}\left[-\int_{-a}^{0}\sum_{n=0}^{\infty}\left(\frac{\pr{z}^{n}}{z^{n+1}}\right)\,d\pr{z}+\int_0^a\sum_{n=0}^{\infty}\left(\frac{\pr{z}^{n}}{z^{n+1}}\right)\,d\pr{z}\right] \\
+              & =\frac{\lambda_0}{4\pi\epsilon_0}\left[-\eval{\sum_{n=0}^{\infty}\frac{\pr{z}^{n+1}}{(n+1)z^{n+1}}}_{-a}^{0}+\eval{\sum_{n=0}^{\infty}\frac{\pr{z}^{n+1}}{(n+1)z^{n+1}}}_{0}^{a}\right]                     \\
+              & =\frac{\lambda_0}{4\pi\epsilon_0}\left[\sum_{n=0}^{\infty}\frac{(-a)^{n+1}}{(n+1)z^{n+1}}+\sum_{n=0}^{\infty}\frac{a^{n+1}}{(n+1)z^{n+1}}\right]                                                            \\
+              & =\frac{\lambda_0}{4\pi\epsilon_0}\sum_{n=0}^{\infty}\frac{(-a)^{n+1}+a^{n+1}}{(n+1)z^{n+1}}
+          \end{align*}
+          which is again zero for even $n$ and so we write it as
+          $$V=\frac{\lambda_0}{4\pi\epsilon_0}\sum_{n=1,3,5,\dots}^{\infty}\frac{2a^{n+1}}{(n+1)z^{n+1}}$$
+          which gives
+          $$B_\ell=\frac{\lambda_0}{4\pi\epsilon_0}\frac{2a^{\ell+1}}{\ell+1}$$
+          and gives the full solution to be
+          $$V=\frac{\lambda_0}{4\pi\epsilon_0}\sum_{\ell=1,3,5,\dots}^{\infty}\frac{2a^{\ell+1}}{(\ell+1)z^{\ell+1}}.$$
+          Since the signs of these expressions correspond nicely to the signs of $z$ we can just tack on a $\sgn(z)=z/\abs{z}$ out
+          front and obtain a single solution which works for both regions:
+          $$V=\frac{z}{\abs{z}}\frac{\lambda_0}{4\pi\epsilon_0}\sum_{\ell=1,3,5,\dots}^{\infty}\frac{2a^{\ell+1}}{(\ell+1)z^{\ell+1}}.$$
+          \newpage
+    \item Note that the potential axis is just to show relative scale and sign. The constant out front
+          in the real potential would have a significant effect on the magnitude.\\
+          \includegraphics[scale=0.5]{q3.png}
+          \inputminted[
+            frame=lines,
+            framesep=2mm,
+            baselinestretch=1.2,
+            fontsize=\footnotesize,
+            linenos,
+            breaklines
+          ]{python3}{potential_plot2.py}
+  \end{enumerate}
+\end{soln}
+
+% PROBLEM 4
+\begin{problem}
+A sphere of radius $R$ carries a polarization
+$$\bv{P}(\bv{r})=k\bv{r},$$
+where $k$ is a constant and $\bv{r}$ the vector from the center of the sphere.
+\begin{enumerate}[label=(\alph*)]
+  \item Calculate the bound charges $\sigma_b$ and $\rho_b$.
+  \item Find the electric field inside and outside the sphere.
+\end{enumerate}
+\end{problem}
+\begin{soln}
+  \begin{enumerate}[label=(\alph*)]
+    \item $$\sigma_b=\bv{P}\cdot \hat{n}=\bv{P}\cdot\hat{r}=kR$$
+          $$\rho_b=-\div{\bv{P}}=-\frac{1}{r^2}\pd{r}(kr^3)=-3k.$$
+    \item For the inside of the sphere, $r<R$, we only consider the volume charge
+          as the surface charge will self-cancel everywhere.
+          The electric field due to $\rho_b$ is then, by Gauss' law,
+          $$\bv{E}=\frac{1}{4\pi\epsilon_0}\frac{-3k\cdot\frac{4}{3}\pi r^3}{r^2}\uv{r}=-\frac{kr}{\epsilon_0}.$$
+          Outside the sphere the field is zero as, again, by Gauss' law, $Q_{enc}$ is zero as the sphere has no net
+          charge.
   \end{enumerate}
 \end{soln}
 \end{document}
