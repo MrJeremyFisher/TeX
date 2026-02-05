@@ -1,0 +1,321 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsmath,amsthm,amssymb,bm}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{changepage}
+\usepackage{circuitikz}
+\usepackage{pgfplots}
+\usepackage{physics}
+\usepackage{hyperref}
+\usepackage{siunitx}
+\usepackage{minted}
+\usepackage{fontspec}
+\usepackage{relsize}
+\usepackage{subfig}
+\usepackage{mhchem}
+\usepackage{todonotes}
+\usepackage{biblatex}
+\usepackage{multicol, multirow, booktabs}
+\usepackage[breakable]{tcolorbox}
+\usepackage[inline]{enumitem}
+\patchcmd{\thebibliography}{\section*{\refname}}{}{}{}
+\addbibresource{sources.bib}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{soln}{Solution}
+
+\pgfplotsset{compat=newest}
+\usetikzlibrary{lindenmayersystems}
+\usetikzlibrary{arrows}
+\usetikzlibrary{calc}
+\usetikzlibrary{positioning, fit}
+\usetikzlibrary{3d, perspective}
+
+\definecolor{incolor}{HTML}{303F9F}
+\definecolor{outcolor}{HTML}{D84315}
+\definecolor{cellborder}{HTML}{CFCFCF}
+\definecolor{cellbackground}{HTML}{F7F7F7}
+\newcommand{\ui}{\hat{i}}
+\newcommand{\uj}{\hat{j}}
+\newcommand{\uk}{\hat{k}}
+\newcommand{\ux}{\hat{x}}
+\newcommand{\uy}{\hat{y}}
+\newcommand{\uz}{\hat{z}}
+\newcommand{\uv}[1]{\hat{\bm{{#1}}}}
+\newcommand{\pr}[1]{{#1^\prime}}
+\newcommand{\justif}[2]{&{#1}&\text{#2}}
+\newcommand{\dul}[1]{\underline{\underline{#1}}}
+\pgfdeclarelayer{background}  
+\pgfsetlayers{background,main}
+\AtBeginDocument{\RenewCommandCopy\qty\SI}
+
+\makeatletter
+\newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+\makeatother
+\newcommand{\prompt}[4]{
+    \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+}
+
+\newcommand{\thevenin}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (2,0) to[battery1, l_=$V_{Th}\eq#1$] (2,2) 
+      to[resistor, l_=$R_{Th}\eq#2$] (0,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\norton}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (3,0) to[american current source, l_=$I_{N}\eq#1$] (3,2) -- (0,2) (2,0)
+      to[resistor, l=$R_{N}\eq#2$] (2,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\highlight}[1]{\colorbox{yellow}{$\displaystyle #1$}}
+
+\newcommand{\ti}[1]{\widetilde{#1}}
+
+\newfontface{\Kaufmann}{Kaufmann}
+\DeclareTextFontCommand{\kf}{\Kaufmann}
+\newcommand{\scriptr}{\fontsize{12pt}{12pt}\kf{r}}
+
+\newfontface{\KaufmannB}{Kaufmann Bold}
+\DeclareTextFontCommand{\kfb}{\KaufmannB}
+\newcommand{\bscriptr}{\fontsize{12pt}{12pt}\kfb{r}}
+
+\newcommand{\bv}[1]{\vec{#1}}
+
+\title{Physics 4605H: Assignment IV}
+\author{Jeremy Favro (0805980) \\ Trent University, Peterborough, ON, Canada}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+% PROBLEM 1
+
+\begin{problem}
+Find the eigenvalues and eigenstates of $\hat{\sigma}_y$.
+\end{problem}
+\begin{soln}
+  We solve the equation $\hat{\sigma}_y\bv{v}=\lambda\bv{v}$ (the eigenvalue equation) by taking
+  $$\abs{\hat{\sigma}_y-\lambda I}=0\implies \begin{vmatrix}
+      -\lambda & -i       \\
+      i        & -\lambda
+    \end{vmatrix}=0\implies \lambda^2-1=0\implies \lambda=\pm 1$$. We then evaluate the eigenvalue equation for each $\lambda$,
+  $$\begin{pmatrix}
+      0 & -i \\
+      i & 0
+    \end{pmatrix}\begin{pmatrix}
+      a \\b
+    \end{pmatrix}=\begin{pmatrix}
+      a \\
+      b
+    \end{pmatrix}\implies -ib=a,\,ia=b.$$
+  This doesn't tell us much on its own, however we also have that (or rather, we want that) the eigenvectors should be normalized, hence we choose
+  $$a=\frac{1}{\sqrt{2}}\implies \bv{v}_1=\frac{1}{\sqrt{2}}\begin{pmatrix}
+      1 \\i
+    \end{pmatrix}.$$
+  We follow the same process for $\lambda=-1$,
+  $$\begin{pmatrix}
+      0 & -i \\
+      i & 0
+    \end{pmatrix}\begin{pmatrix}
+      -a \\-b
+    \end{pmatrix}=\begin{pmatrix}
+      a \\
+      b
+    \end{pmatrix}\implies ib=a,\,-ia=b$$
+  and again enforce normalization to obtain that, with $a=1/\sqrt{2}$,
+  $$\bv{v}_{-1}=\begin{pmatrix}
+      1 \\
+      -i
+    \end{pmatrix}$$
+\end{soln}
+
+% PROBLEM 2
+\begin{problem}
+For each of the scenarios below, find the corresponding density operator, both (i) in
+Dirac notation and (ii) in matrix notation. Also, in each case (iii) evaluate the trace.
+\begin{enumerate}[label=(\alph*)]
+  \item A single-qubit system which is in the pure quantum state $\ket{0}$.
+  \item A single-qubit system which is in the pure quantum state $\ket{+}\equiv \left(\ket{0}+\ket{1}\right)/\sqrt{2}$.
+  \item A single-qubit system is in a mixed state in which there is a probability $1/4$ of the state
+        $\ket{0}$ and probability $3/4$ of the state $\ket{+}$.
+\end{enumerate}
+\end{problem}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item We defined the density operator to be $\hat{\rho}=\ket{0}\bra{0}$. In matrix notation this is given as
+          $$\begin{pmatrix}
+              1 \\0
+            \end{pmatrix}\begin{pmatrix}
+              1 & 0
+            \end{pmatrix}=\begin{pmatrix}
+              1 & 0 \\
+              0 & 0
+            \end{pmatrix}.$$
+          Here $\tr(\rho)=1+0=1$.
+    \item Again,
+          $$\hat{\rho}=\frac{1}{2}\left(\ket{0}+\ket{1}\right)\left(\bra{0}+\bra{1}\right)
+            =\frac{1}{2}\left[\ket{0}\bra{0}+\ket{0}\bra{1}+\ket{1}\bra{0}+\ket{1}\bra{1}\right]
+          $$ and
+          $$
+            \dul{\rho}=\frac{1}{2}\begin{pmatrix}
+              1 \\1
+            \end{pmatrix}\begin{pmatrix}
+              1 & 1
+            \end{pmatrix}
+            =\frac{1}{2}\begin{pmatrix}
+              1 & 1 \\
+              1 & 1
+            \end{pmatrix}.
+          $$
+          Here $\tr(\rho)=\frac{1}{2}\left(1+1\right)=1$.
+    \item The density matrix here will be a weighted average of the pure-state density operators for each state, which we found in the previous question, and with
+          weights given by the probabilities we are given here. Hence,
+          $$\hat{\rho}=\frac{1}{4}\hat{\rho_{\ket{0}}}+\frac{3}{4}\hat{\rho}_{\ket{+}}
+            =\frac{1}{4}\ket{0}\bra{0}+\frac{3}{8}\left[\ket{0}\bra{0}+\ket{0}\bra{1}+\ket{1}\bra{0}+\ket{1}\bra{1}\right]
+          $$
+          which is, in matrix form,
+          $$\frac{1}{4}\begin{pmatrix}
+              1 & 0 \\
+              0 & 0
+            \end{pmatrix}+\frac{3}{8}\begin{pmatrix}
+              1 & 1 \\
+              1 & 1
+            \end{pmatrix}=\begin{pmatrix}
+              5/8 & 3/8 \\
+              3/8 & 3/8
+            \end{pmatrix}.$$
+          Here $\tr(\rho)=\left(5/8+3/8\right)=1$.
+  \end{enumerate}
+\end{soln}
+
+% PROBLEM 3
+\begin{problem}
+Consider a system consisting of two qubits, $A$ and $B$. Qubit $A$ is in the state described
+in (2a). Qubit $B$ is in the state described by (2b).
+\begin{enumerate}[label=(\alph*)]
+  \item What is the density matrix $\rho_{AB}$ of the combined system? Give the result both in Dirac
+        notation and in matrix notation (using the basis $\ket{00},\ket{01},\ket{10},\ket{11}$).
+  \item Calculate the partial trace $\rho_A=\tr_B(\rho_{AB})$
+\end{enumerate}
+\end{problem}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item In Dirac notation
+          \begin{align*}
+            \rho_{AB} & =\rho_A\otimes \rho_B                                                                                                                                                    \\
+                      & =(\ket{0}\bra{0})\otimes\frac{1}{2}\left[\ket{0}\bra{0}+\ket{0}\bra{1}+\ket{1}\bra{0}+\ket{1}\bra{1}\right]                                                              \\
+                      & =\frac{1}{2}\left[\ket{0}\bra{0}\otimes\ket{0}\bra{0}+\ket{0}\bra{0}\otimes\ket{0}\bra{1}+\ket{0}\bra{0}\otimes\ket{1}\bra{0}+\ket{0}\bra{0}\otimes\ket{1}\bra{1}\right] \\
+                      & =\frac{1}{2}\left[\ket{00}\bra{00}+\ket{00}\bra{01}+\ket{01}\bra{00}+\ket{01}\bra{01}\right]                                                                             \\
+          \end{align*}
+          and in matrix notation,
+          $$\rho_{AB}=\rho_A\otimes \rho_B
+            =\frac{1}{2}\begin{pmatrix}
+              1 & 0 \\
+              0 & 0
+            \end{pmatrix}\otimes\begin{pmatrix}
+              1 & 1 \\
+              1 & 1
+            \end{pmatrix}=\frac{1}{2}\begin{pmatrix}
+              1 & 1 & 0 & 0 \\
+              1 & 1 & 0 & 0 \\
+              0 & 0 & 0 & 0 \\
+              0 & 0 & 0 & 0
+            \end{pmatrix}
+          $$
+    \item This I'll do in Dirac notation because I can't make sense of my notes (or the textbook) on this for how it would work in matrix notation. I think I'll remember to ask about it at some point.
+          The general expression for \emph{tracing out} $B$ to obtain $\rho_A$ is
+          $$\rho_A=\tr_B(\rho_{AB})=\sum_i\bra{B_i}\rho_{AB}\ket{B_i}$$
+          which I think here is
+          \begin{align*}
+            \rho_A & =\sum_i\bra{B_i}\rho_{AB}\ket{B_i}                                                                                                                                                                  \\
+                   & =\frac{1}{2}\left(\bra{0}\left[\ket{0}\bra{0}\otimes\ket{0}\bra{0}+\ket{0}\bra{0}\otimes\ket{0}\bra{1}+\ket{0}\bra{0}\otimes\ket{1}\bra{0}+\ket{0}\bra{0}\otimes\ket{1}\bra{1}\right]\ket{0}\right. \\
+                   & \quad+\left.\bra{1}\left[\ket{0}\bra{0}\otimes\ket{0}\bra{0}+\ket{0}\bra{0}\otimes\ket{0}\bra{1}+\ket{0}\bra{0}\otimes\ket{1}\bra{0}+\ket{0}\bra{0}\otimes\ket{1}\bra{1}\right]\ket{1}\right)
+            % &=\frac{1}{2}\left(\bra{00}\left[\ket{00}\bra{00}+\ket{00}\bra{01}+\ket{01}\bra{00}+\ket{01}\bra{01}\right]\ket{00}\right.\\
+            % &\quad+\bra{01}\left[\ket{00}\bra{00}+\ket{00}\bra{01}+\ket{01}\bra{00}+\ket{01}\bra{01}\right]\ket{01}\\
+            % &\quad+\bra{10}\left[\ket{00}\bra{00}+\ket{00}\bra{01}+\ket{01}\bra{00}+\ket{01}\bra{01}\right]\ket{10}\\
+            % &\quad+\left.\bra{11}\left[\ket{00}\bra{00}+\ket{00}\bra{01}+\ket{01}\bra{00}+\ket{01}\bra{01}\right]\ket{11}\right)
+          \end{align*}
+          This is where I got tripped up. After doing some reading I've realised that when I act on the states in the square brackets I can only act on the states in $B$ as the states
+          I'm acting with are in $B$. I'll dissassemble the tensor product to make this more clear,
+          \begin{align*}
+            &=\frac{1}{2}(\ket{0}\bra{0})\otimes
+            \left(\bra{0}\left[\ket{0}\bra{0}+\ket{0}\bra{1}+\ket{1}\bra{0}+\ket{1}\bra{1}\right]\ket{0}+
+             \bra{1}\left[\ket{0}\bra{0}+\ket{0}\bra{1}+\ket{1}\bra{0}+\ket{1}\bra{1}\right]\ket{1}\right)\\
+             &=\frac{1}{2}(\ket{0}\bra{0})\otimes
+            \left(\left[\bra{0}\ket{0}\bra{0}\ket{0}+\bra{0}\ket{0}\bra{1}\ket{0}+\bra{0}\ket{1}\bra{0}\ket{0}+\bra{0}\ket{1}\bra{1}\ket{0}\right]+
+             \left[\bra{1}\ket{0}\bra{0}\ket{1}+\bra{1}\ket{0}\bra{1}\ket{1}+\bra{1}\ket{1}\bra{0}\ket{1}+\bra{1}\ket{1}\bra{1}\ket{1}\right]\right)\\
+             &=\frac{1}{2}(\ket{0}\bra{0})\otimes
+            \left(\left[1+0+0+0\right]+
+             \left[0+0+0+1\right]\right)=\frac{2}{2}\begin{pmatrix}
+              1&0\\
+              0&0
+             \end{pmatrix}
+          \end{align*}
+          which successfully recovers our original matrix.
+
+          % which obviously isn't the same as the $\rho_A$ we had previously. I have no idea where I'm going wrong here as combined $\rho_{AB}$ gives the correct(? I think)
+          % matrix. Maybe I am misunderstanding what $\left\{\ket{B_i}\right\}$ is. I am under the impression that it is the set of basis vectors for the $B$ state,
+          % which is why I can't make sense of how it would work in matrix notation as that would be a 4x4 operating on a 2x1. I think in Dirac that the basis would be
+          % $\left\{\ket{0},\ket{1}\right\}$ as I tried above, but maybe it's $\left\{\ket{+},\ket{-}\right\}$? I'll try that,
+          % \begin{align*}
+          %   \rho_A & =\sum_i\bra{B_i}\rho_{AB}\ket{B_i}                                                                                                                                                                                      \\
+          %          & =\frac{1}{4}\left((\bra{0}+\bra{1})\left[\ket{0}\bra{0}\otimes\ket{0}\bra{0}+\ket{0}\bra{0}\otimes\ket{0}\bra{1}+\ket{0}\bra{0}\otimes\ket{1}\bra{0}+\ket{0}\bra{0}\otimes\ket{1}\bra{1}\right](\ket{0}+\ket{1})\right. \\
+          %          & \quad+\left.(\bra{0}-\bra{1})\left[\ket{0}\bra{0}\otimes\ket{0}\bra{0}+\ket{0}\bra{0}\otimes\ket{0}\bra{1}+\ket{0}\bra{0}\otimes\ket{1}\bra{0}+\ket{0}\bra{0}\otimes\ket{1}\bra{1}\right](\ket{0}-\ket{1})\right)
+          % \end{align*}
+          % I've just realized this won't work as I'll jsut get twice the original matrix, times $1/4$ which will give me back the original because the $\ket{1}$ cases are all zero again and so I just have two of the $\ket{0}$ ones.
+          % So no luck.
+  \end{enumerate}
+\end{soln}
+
+% PROBLEM 4
+\begin{problem}
+Determine the Bloch sphere angles $\theta$ and $\phi$ for the eigenstates of each Pauli matrix.
+\end{problem}
+\begin{soln}
+  The eigenvectors of the Pauli matrices are
+  \begin{align*}
+    \psi_{x+} & = \frac{1}{\sqrt{2}} \begin{pmatrix} 1 \\  1 \end{pmatrix}, &
+    \psi_{x-} & = \frac{1}{\sqrt{2}} \begin{pmatrix} 1 \\ -1 \end{pmatrix},   \\
+    \psi_{y+} & = \frac{1}{\sqrt{2}} \begin{pmatrix} 1 \\  i \end{pmatrix}, &
+    \psi_{y-} & = \frac{1}{\sqrt{2}} \begin{pmatrix} 1 \\ -i \end{pmatrix},   \\
+    \psi_{z+} & =                  \begin{pmatrix} 1 \\  0 \end{pmatrix},   &
+    \psi_{z-} & =                  \begin{pmatrix} 0 \\  1 \end{pmatrix}.
+  \end{align*}
+  We express state vectors on the Bloch sphere as
+  $$\ket{\psi}=\cos(\theta/2)\ket{0}+e^{i\phi}\sin(\theta/2)\ket{1}.$$
+  We can then consider which values of $\theta$ and $\phi$ will give us the desired states from above. This is not hugely complex so I will just tabulate my results:
+
+  \begin{table}[ht!]
+    \centering%
+    \begin{tabular}{lll}
+      \toprule
+      State       & $\theta$ & $\phi$   \\
+      \midrule
+      $\psi_{x+}$ & $\pi/2$  & $0$      \\
+      $\psi_{x-}$ & $\pi/2$  & $\pi$    \\
+      $\psi_{y+}$ & $\pi/2$  & $\pi/2$  \\
+      $\psi_{y-}$ & $\pi/2$  & $3\pi/2$ \\
+      $\psi_{z+}$ & $0$      & Free     \\
+      $\psi_{z-}$ & $\pi$    & $0$      \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+\end{soln}
+\end{document}

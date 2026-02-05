@@ -1,0 +1,189 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsmath,amsthm,amssymb,bm}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{changepage}
+\usepackage{circuitikz}
+\usepackage{pgfplots}
+\usepackage{minted}
+\usepackage{physics}
+\usepackage{hyperref}
+\usepackage{siunitx}
+\usepackage{fontspec}
+\usepackage{relsize}
+\usepackage{subfig}
+\usepackage{todonotes}
+\usepackage{multicol, multirow, booktabs}
+\usepackage[breakable]{tcolorbox}
+\usepackage[inline]{enumitem}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{soln}{Solution}
+
+\pgfplotsset{compat=newest}
+\usetikzlibrary{lindenmayersystems}
+\usetikzlibrary{arrows}
+\usetikzlibrary{calc}
+\usetikzlibrary{positioning, fit}
+\usetikzlibrary{3d, perspective}
+
+\definecolor{incolor}{HTML}{303F9F}
+\definecolor{outcolor}{HTML}{D84315}
+\definecolor{cellborder}{HTML}{CFCFCF}
+\definecolor{cellbackground}{HTML}{F7F7F7}
+\newcommand{\ui}{\hat{i}}
+\newcommand{\uj}{\hat{j}}
+\newcommand{\uk}{\hat{k}}
+\newcommand{\ux}{\hat{\mathbf{x}}}
+\newcommand{\uy}{\hat{\mathbf{y}}}
+\newcommand{\uz}{\hat{\mathbf{z}}}
+\newcommand{\uv}[1]{\hat{\bv{{#1}}}}
+\newcommand{\pr}[1]{{#1^\prime}}
+\newcommand{\pd}[2][]{{\frac{\partial^{#1}}{\partial {{#2}^{#1}}}}}
+\newcommand{\dif}[2][]{{\frac{d^{#1}}{d{{#2}^{#1}}}}}
+\pgfdeclarelayer{background}  
+\pgfsetlayers{background,main}
+\AtBeginDocument{\RenewCommandCopy\qty\SI}
+
+\makeatletter
+\newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+\makeatother
+\newcommand{\prompt}[4]{
+    \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+}
+
+\newcommand{\thevenin}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (2,0) to[battery1, l_=$V_{Th}\eq#1$] (2,2) 
+      to[resistor, l_=$R_{Th}\eq#2$] (0,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\norton}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (3,0) to[american current source, l_=$I_{N}\eq#1$] (3,2) -- (0,2) (2,0)
+      to[resistor, l=$R_{N}\eq#2$] (2,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\DeclareMathOperator{\Div}{div}
+\DeclareMathOperator{\Curl}{curl}
+\DeclareMathOperator{\sgn}{sgn}
+
+\DeclareSIUnit\foot{ft}
+
+\newcommand{\highlight}[1]{\colorbox{yellow}{$\displaystyle #1$}}
+
+\newcommand{\ti}[1]{\widetilde{#1}}
+
+\newfontface{\Kaufmann}{Kaufmann}
+\DeclareTextFontCommand{\kf}{\Kaufmann}
+\newcommand{\scriptr}{\fontsize{12pt}{12pt}\kf{r}}
+
+\newfontface{\KaufmannB}{Kaufmann Bold}
+\DeclareTextFontCommand{\kfb}{\KaufmannB}
+\newcommand{\bscriptr}{\fontsize{12pt}{12pt}\kfb{r}}
+\newcommand{\justif}[2]{&{#1}&\text{#2}}
+\newcommand{\bv}[1]{\bm{\mathrm{#1}}}
+
+
+\title{Physics 3200Y: Lab III Prelab}
+\author{Jeremy Favro (0805980) \\ Trent University, Peterborough, ON, Canada}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+% PROBLEM 1
+\begin{problem}
+For a circular coil of $N$ turns that is mounted on a shaft that rotates about the axis that is along
+the shaft: Estimate the minimum number of turns $N$ required (and its equivalent length of wire $L$) for a $2.5,
+  3.0,3.5,\dots,\qty{9.0}{\centi\meter}$ diameter coil $d$ to produce $> \qty{0.02}{\newton\meter}$ instantaneous torque $\tau$ driven by $\qty{1.5}{\ampere}$ pulsed current
+$I$ (regardless of AWG) under a uniform $B$-field (along the coil plane) from an AlNiCo magnet. Assume that the
+force, wire/current direction, and $B$-field are all perpendicular to each other at the time of pulse/contact.
+\end{problem}
+\begin{soln}
+  As given in the manual,
+  $$\bv{F}=I\bv{L}\cross\bv{B}$$
+  and the cross product of perpendicular vectors is
+  $$F=ILB.$$
+  We can get the torque then as
+  $\tau=I\frac{\pi d^2B}{4}$ and the torque felt by $N$ loops as $N$ times the torque felt by one,
+  $$\tau=IN\frac{\pi d^2B}{4}.$$
+  So if want a specific torque we need
+  $$N=\frac{4\tau}{I\pi d^2B}=\frac{8}{I\pi d^2 B}$$
+  where $d$ is in meters.
+  Hence we obtain,
+
+  \begin{table}[ht!]
+    \centering%
+    \begin{tabular}{ll}
+      \toprule
+      $d\,\unit{\centi\meter}$ & $N$    \\
+      \midrule
+      2.5                      & 181.08 \\
+      3                        & 125.75 \\
+      3.5                      & 92.39  \\
+      4                        & 70.74  \\
+      4.5                      & 55.89  \\
+      5                        & 45.27  \\
+      5.5                      & 37.41  \\
+      6                        & 31.44  \\
+      6.5                      & 26.79  \\
+      7                        & 23.1   \\
+      7.5                      & 20.12  \\
+      8                        & 17.68  \\
+      8.5                      & 15.66  \\
+      9                        & 13.97  \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+\end{soln}
+
+% PROBLEM 2
+\begin{problem}
+or a circular coil of $\pr{N}$ turns as a voice coil that is $\qty{1.6}{\centi\meter}$ in diameter $\pr{d}$: Estimate the minimum
+length of wire $\pr{L}$ (and its equivalent number of turns $\pr{N}$) required for the AWG sizes $30,32,\dots, 38$ to build a
+$\qty{2}{\watt}$ loudspeaker using the audio amplifier as the voltage source ($\qty{1.5}{\volt}$ RMS). Reference the parameters/tables
+necessary for your calculated estimates.
+\end{problem}
+\begin{soln}
+  We know that $P=V^2/R$. Using the hyperphysics AWG resistance table \url{http://hyperphysics.phy-astr.gsu.edu/hbase/Tables/wirega.html} and a feet-to-meters conversion factor of $3.281$ we obtain that, for a coil of
+  length $L$ and resistance per foot of $K$, $R= 3.281KL$ so
+  $$\frac{V^2}{3.281 KP}=L$$
+  and we know that
+  $$L=CN=N\pi d\implies \frac{L}{\pi d}=N=\frac{V^2}{3.281 KP\pi d}.$$
+
+  \begin{table}[ht!]
+    \centering%
+    \begin{tabular}{lll}
+      \toprule
+      AWG & $\unit{\ohm\per\foot}$ & N     \\
+      \midrule
+      30  & 0.1032                 & 66.1  \\
+      32  & 0.1641                 & 41.57 \\
+      34  & 0.2609                 & 26.15 \\
+      36  & 0.4148                 & 16.45 \\
+      38  & 0.6596                 & 10.34 \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+
+
+
+\end{soln}
+\end{document}

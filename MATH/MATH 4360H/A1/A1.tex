@@ -1,0 +1,272 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{changepage}
+\usepackage{circuitikz}
+\usepackage{pgfplots}
+\usepackage{physics}
+\usepackage{hyperref}
+\usepackage{siunitx}
+\usepackage{fontspec}
+\usepackage{relsize}
+\usepackage{subfig}
+\usepackage{todonotes}
+\usepackage{multicol, multirow, booktabs}
+\usepackage[breakable]{tcolorbox}
+\usepackage[inline]{enumitem}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{soln}{Solution}
+
+\pgfplotsset{compat=newest}
+\usetikzlibrary{lindenmayersystems}
+\usetikzlibrary{arrows}
+\usetikzlibrary{calc}
+\usetikzlibrary{positioning, fit}
+\usetikzlibrary{3d, perspective}
+
+\definecolor{incolor}{HTML}{303F9F}
+\definecolor{outcolor}{HTML}{D84315}
+\definecolor{cellborder}{HTML}{CFCFCF}
+\definecolor{cellbackground}{HTML}{F7F7F7}
+\newcommand{\ui}{\hat{i}}
+\newcommand{\uj}{\hat{j}}
+\newcommand{\uk}{\hat{k}}
+\newcommand{\ux}{\hat{x}}
+\newcommand{\uy}{\hat{y}}
+\newcommand{\uz}{\hat{z}}
+\newcommand{\pr}[1]{{#1}^\prime}
+\pgfdeclarelayer{background}  
+\pgfsetlayers{background,main}
+\AtBeginDocument{\RenewCommandCopy\qty\SI}
+\newcommand{\justif}[2]{&{#1}&\text{#2}}
+
+\makeatletter
+\newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+\makeatother
+\newcommand{\prompt}[4]{
+    \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+}
+
+\newcommand{\thevenin}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (2,0) to[battery1, l_=$V_{Th}\eq#1$] (2,2) 
+      to[resistor, l_=$R_{Th}\eq#2$] (0,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\norton}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (3,0) to[american current source, l_=$I_{N}\eq#1$] (3,2) -- (0,2) (2,0)
+      to[resistor, l=$R_{N}\eq#2$] (2,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\highlight}[1]{\colorbox{yellow}{$\displaystyle #1$}}
+
+\newcommand{\ti}[1]{\widetilde{#1}}
+
+\newfontface{\Kaufmann}{Kaufmann}
+\DeclareTextFontCommand{\kf}{\Kaufmann}
+\newcommand{\scriptr}{\fontsize{12pt}{12pt}\kf{r}}
+
+\newfontface{\KaufmannB}{Kaufmann Bd BT}
+\DeclareTextFontCommand{\kfb}{\KaufmannB}
+\newcommand{\bscriptr}{\fontsize{12pt}{12pt}\kfb{r}}
+
+\newcommand{\bv}[1]{\mathbf{#1}}
+
+\title{Math 4360H: Assignment I}
+\author{Jeremy Favro (0805980) \\ Trent University, Peterborough, ON, Canada}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+% PROBLEM 1
+\begin{problem}
+\begin{enumerate}[label=(\alph*)]
+  \item Let $a,b,c\in \mathbb{Z}$. Show that the linear Diophantine equation
+        $$ax+by=c$$
+        has a solution iff $\gcd(a,b)$ divides $c$.
+  \item Find a solution to the linear Diophantine equation
+        $$816x+2260y=44$$
+        by applying the Euclidean Algorithm to $a=816$ and $b=2260$ to find their greatest common divisor.
+  \item Suppose $(x_0,y_0)$ is a solution to $ax+by=c$, i.e. $ax_0+by_0=c$. Then
+        $$ax+by=ax_0+by_0\iff a(x-x_0)=b(y_0-y).$$
+        Let $d=\gcd(a,b)$, then
+        $$\frac{a}{d}(x-x_0)=\frac{b}{d}(y_0-y).$$
+        Since $\gcd(a/d,b/d)=1$ this implies $b/d$ divides $(x-x_0)$ and so
+        $$x-x_0=k\left(\frac{b}{d}\right)\iff x=x_0+\left(\frac{b}{d}\right)$$
+        for some $k\in \mathbb{Z}$. Subbing this into $a(x-x_0)=b(y_0-y)$ we get
+        that $$ak\left(\frac{b}{d}\right)=b(y_0-y)\iff y=y_0-k\left(\frac{a}{d}\right)$$
+        This shows that every solution has the form
+        $$x=x_0+k\left(\frac{b}{d}\right),\quad y=y_0-k\left(\frac{a}{d}\right)$$
+        Verify that this gives a solution for every $k\in\mathbb{Z}$, and therefore
+        finds all solutions to $ax_0 + by_0 = c$.
+        Find the complete set of solutions to each of the following Diophantine equations.
+        \begin{enumerate}[label=(\roman*)]
+          \item $816x+2260y=44$
+          \item $42x+36y=25$
+          \item $348x+228y=1044$
+        \end{enumerate}
+\end{enumerate}
+\end{problem}
+\begin{soln}
+  \begin{enumerate}[label=(\alph*)]
+    \item Suppose the equation has a solution. Then we have that
+          $$ax_0+by_0=c.$$
+          Since the left hand side of the above equation is divided by $\gcd(a,b)$ by the definition of a gcd, so must be the right hand side
+          to preserve equality. Conversely, suppose that $\gcd(a,b)|c$. Then $c=\gcd(a,b)s$ for $s\in\mathbb{Z}$ and by the extended Euclidean algorithm we can write
+          $$\gcd(a,b)=ax_0+by_0$$ with non-unique $(x_0,y_0)\in\mathbb{Z}\cross\mathbb{Z}$. Multiplying by $s$ then
+          $$\gcd(a,b)s=c=ax_0 s+by_0 s$$ which gives a solution for $x=x_0s$, $y=y_0s$. Using part (b) as a bit of a hint we can then solve for these solutions in terms of $\gcd(a,b)$
+          Since the $(x_0,y_0)$ are not unique we'll set up two equations,
+          $$ax_0+by_0=c\quad\text{and}\quad ax_1+by_1=c$$
+          and subtract them to obtain
+          $$a(x_0-x_1)+b(y_0-y_1)=0\implies a(x_0-x_1)=b(y_1-y_0).$$
+          which means $a$ divides $b(y_1-y_0)$ because $(x_0-x_1)\in\mathbb{Z}$, so we can pull out the common divisor
+          to get that $a/\gcd(a,b)$ divides $y_1-y_0$ so by the division algorithm $$y_1=y_0+r\frac{a}{\gcd(a,b)}.$$
+          Substituting this back into our equality gives
+          $$a(x_0-x_1)=br\frac{a}{\gcd(a,b)}\implies x_1=x_0-r\frac{b}{\gcd(a,b)}$$
+          (I didn't see this in part (c), whoops).
+
+    \item \begin{align*}
+            2260 & =2\cdot816+628                       \\
+            \midrule
+            816  & =1\cdot628+188                       \\
+            \midrule
+            628  & =3\cdot188+64                        \\
+            \midrule
+            188  & =2\cdot64+60                         \\
+            \midrule
+            64   & =1\cdot60+4                          \\
+            \midrule
+            60   & =15\cdot4+0\implies \gcd(816,2260)=4
+          \end{align*}
+          Since $4\mid 44$ the equation has solutions by part (a). Now we find a way to write $4=2260x_0+816y_0$, which we can do from the
+          steps we did in the algorithm above,
+          \begin{align*}
+            4 & =64-60                                                      \\
+              & =64-(188-2\cdot64)=3\cdot64-188                             \\
+              & =3\cdot(628-3\cdot188)-188=3\cdot628-10\cdot188             \\
+              & =3\cdot628-10\cdot(816-628)=-10\cdot816+13\cdot628          \\
+              & =-10\cdot816+13\cdot(2260-2\cdot816)=13\cdot2260-36\cdot816
+          \end{align*}
+          Now we can mutliply through by $44/4=11$,
+          $$143\cdot2260-396\cdot816=44.$$
+          So our solution is $x=143$, $y=-396$.
+    \item Substituting $$x=x_0+k\left(\frac{b}{d}\right),\quad y=y_0-k\left(\frac{a}{d}\right)$$
+          into $ax+by$ we obtain
+          $$a(x_0+k\left(\frac{b}{d}\right))+b(y_0-k\left(\frac{a}{d}\right))=ax_0+\cancel{ak\left(\frac{b}{d}\right)}+by_0-\cancel{bk\left(\frac{a}{d}\right)}=ax_0+by_0=c$$
+          \begin{enumerate}[label=(\roman*)]
+            \item We saw in (b) that $x_0=143$, $y_0=-396$ is a solution and that $\gcd(2260,816)=4$, so our solution set is
+                  $$x=143+k\left(\frac{816}{4}\right)=143+204k,\quad y=-396-k\left(\frac{2260}{4}\right)=-396-565k,\, k\in\mathbb{Z}.$$
+            \item Since $\gcd(42,36)=6\nmid 25$ we do not have integer solutions.
+                  % \begin{align*}
+                  %   42 & =36(1)+6 \\
+                  %   36 & =6(6)
+                  % \end{align*}
+                  % so we have $\gcd(42,36)=6$ and we can write
+                  % $$6=42-36$$
+                  % so $$\frac{25}{6}(42-36=6)=\frac{}{}$$
+            \item $348x+228y=1044$
+                  \begin{align*}
+                    348 & =228(1)+120 \\
+                    \midrule
+                    228 & =120(1)+108 \\
+                    \midrule
+                    120 & =108(1)+12  \\
+                    \midrule
+                    108 & =12(9)
+                  \end{align*}
+                  so $\gcd(348,228)=12\mid 1044$ so $\exists$ integer solutions. We can write
+                  \begin{align*}
+                    12 & =120-108                       \\
+                       & =120-(228-120)=2(120)-228      \\
+                       & =2(348-228)-228=-3(228)+2(348)
+                  \end{align*}
+                  which we can multiply through by $1044/12$ to obtain that
+                  $$-261(228)+174(348)=1044$$
+                  and hence that the full solution set is
+                  $$x=174+k\left(\frac{228}{12}\right)=174+19k,\quad y=-261-k\left(\frac{348}{12}\right)=-261-29k,\, k\in\mathbb{Z}.$$
+          \end{enumerate}
+  \end{enumerate}
+\end{soln}
+
+% PROBLEM 2
+\begin{problem}
+Let $R$ be a ring that contains at least two elements. Suppose for each
+nonzero $r\in R$, there is a unique element $\overline{r}\in R$  such that $r\overline{r}r=r$.
+\begin{enumerate}[label=(\alph*)]
+  \item Show that $R$ has no zero divisors.
+  \item Show that $\overline{r}r\overline{r}=\overline{r}$.
+  \item Show that $R$ has a multiplicative identity element.
+  \item Show that $R$ is a division ring.
+\end{enumerate}
+\end{problem}
+\begin{soln}
+  \begin{enumerate}[label=(\alph*)]
+    \item Let $r,s \in R$ such that $r\neq 0_R$ and $rs=0_R$. Then by definition we have an element $\overline{r}$ such that
+          $r\overline{r}r=r$. Then,
+          \begin{align*}
+            r & = r\overline{r}r                                           \\
+              & = r\overline{r}r + (rs)r \justif{\quad}{$rs=0$}            \\
+              & = (r\overline{r} + (rs))r \justif{\quad}{Distributive law} \\
+              & = r(\overline{r} + (s))r \justif{\quad}{Distributive law}
+          \end{align*}
+          by definition the element $\overline{r}$ which satisfies $r\overline{r}r=r$ is unique so $\overline{r}+s=\overline{r}\implies s=0$, hence
+          there are no zero divisors.
+    \item \begin{align*}
+            \overline{r}r\overline{r}           & =\overline{r}r\overline{r}r\overline{r} \justif{\quad}{$r=r\overline{r}r$}   \\
+            \implies r\overline{r}r\overline{r} & =r\overline{r}r\overline{r}r\overline{r}\justif{\quad}{Left multiply by $r$} \\
+            \implies \overline{r}               & =\overline{r}r\overline{r}\justif{\quad}{$r\overline{r}r=r$}
+          \end{align*}
+    \item Here we rely on $R$ having left/right cancellation laws which it does by having no zero divisors. Let $x\in R$, $r\overline{r}r=r\implies xr\overline{r}r=xr$
+          and we cancel the right $r$ to obtain that $x r\overline{r}=x$. We also have that $\overline{r}r\overline{r}=\overline{r}$ and, in similar fashion,
+          $\overline{r}r\overline{r}=\overline{r}\implies \overline{r}r\overline{r}x=\overline{r}x\implies r\overline{r}x=x$ so
+          $r\overline{r}x=xr\overline{r}=x$, hence $r\overline{r}=1_R$. This was troubling for a while until I realised that it's fine (I think), because,
+          though $r\overline{r}$ is not unique, that is no problem as for any such combination we arrive at the same identity.
+    \item If the previous proof holds, it is evident that all elements have inverses (and hence are units) as $r\overline{r}=1_R \implies r^{-1}=\overline{r}$. THis
+          was all we needed to prove that $R$ is a division ring.
+  \end{enumerate}
+\end{soln}
+
+% PROBLEM 3
+\begin{problem}
+Let $R$ be a set, with binary operations $+$ and $\cdot$ such that
+\begin{enumerate}[label=(\arabic*)]
+  \item $(R, +)$ is a group,
+  \item $(R \setminus \left\{0_R\right\}, \cdot)$ is a group, (where $0_R$ is the additive identity element),
+  \item For any $a, b, c \in R$, $a(b + c) = (ab) + (ac)$ and $(a + b)c =
+          (ac) + (bc)$.
+\end{enumerate}
+Show that $(R, +, \cdot)$ is a division ring.
+\end{problem}
+\begin{soln}
+  A ring is a structure with two operations, $+$ and $\cdot$, such that $(R,+)$ is an abelian group under addition, $\cdot$ is associative, and the distributive laws
+  hold. A division ring is a ring where division is defined for every (nonzero) element, e.g. every (nonzero) element has a multiplicative inverse. Since $(R\setminus \left\{0_R\right\},\cdot)$ is a group
+  we get associativity and multiplicative inverses for free, and we are given that $(R,+)$ is a group and that the distributive laws hold. Hence all we must show is that $(R,+)$ is abelian.
+  Let $a,b\in R$. Then
+  \begin{align*}
+    (a+b)+(-1)\cdot(b+a) & =a+b-b-a \justif{\quad}{We have -1 from (2) and distributive law from (3)} \\
+                         & =a-a\justif{\quad}{Additive inverses are defined from (1)}                 \\
+                         & =0_R
+  \end{align*}
+  Hence $(R, +, \cdot)$ is a division ring.
+\end{soln}
+\end{document}

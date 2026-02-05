@@ -27,3 +27,4 @@ _autosave*
 *.sage.py
 *.scmd
 *.sout
+.venv/

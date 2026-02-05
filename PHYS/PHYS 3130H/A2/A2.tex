@@ -1,0 +1,286 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsmath,amsthm,amssymb,bm}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{changepage}
+\usepackage{circuitikz}
+\usepackage{pgfplots}
+\usepackage{physics}
+\usepackage{hyperref}
+\usepackage{siunitx}
+\usepackage{fontspec}
+\usepackage{relsize}
+\usepackage{subfig}
+\usepackage{todonotes}
+\usepackage{multicol, multirow, booktabs}
+\usepackage[breakable]{tcolorbox}
+\usepackage[inline]{enumitem}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{soln}{Solution}
+
+\pgfplotsset{compat=newest}
+\usetikzlibrary{lindenmayersystems}
+\usetikzlibrary{arrows}
+\usetikzlibrary{calc}
+\usetikzlibrary{positioning, fit}
+\usetikzlibrary{3d, perspective}
+
+\definecolor{incolor}{HTML}{303F9F}
+\definecolor{outcolor}{HTML}{D84315}
+\definecolor{cellborder}{HTML}{CFCFCF}
+\definecolor{cellbackground}{HTML}{F7F7F7}
+\newcommand{\ui}{\hat{i}}
+\newcommand{\uj}{\hat{j}}
+\newcommand{\uk}{\hat{k}}
+\newcommand{\ux}{\hat{x}}
+\newcommand{\uy}{\hat{y}}
+\newcommand{\uz}{\hat{z}}
+\newcommand{\uv}[1]{\hat{\bv{{#1}}}}
+\newcommand{\pr}[1]{{#1}^\prime}
+\pgfdeclarelayer{background}  
+\pgfsetlayers{background,main}
+\AtBeginDocument{\RenewCommandCopy\qty\SI}
+\newcommand{\justif}[2]{&{#1}&\text{#2}}
+
+\makeatletter
+\newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+\makeatother
+\newcommand{\prompt}[4]{
+    \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+}
+
+\newcommand{\thevenin}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (2,0) to[battery1, l_=$V_{Th}\eq#1$] (2,2) 
+      to[resistor, l_=$R_{Th}\eq#2$] (0,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\norton}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (3,0) to[american current source, l_=$I_{N}\eq#1$] (3,2) -- (0,2) (2,0)
+      to[resistor, l=$R_{N}\eq#2$] (2,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\DeclareMathOperator{\Div}{div}
+\DeclareMathOperator{\Curl}{curl}
+
+\DeclareSIUnit\mile{m}
+
+\newcommand{\highlight}[1]{\colorbox{yellow}{$\displaystyle #1$}}
+
+\newcommand{\ti}[1]{\widetilde{#1}}
+
+\newcommand{\bv}[1]{\bm{\mathrm{#1}}}
+
+\title{Physics 3130H: Assignment II}
+\author{Jeremy Favro (0805980) \\ Trent University, Peterborough, ON, Canada}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+% PROBLEM 1
+\begin{problem}~
+\begin{enumerate}[label=(\roman*)]
+  \item Calculate the centrifugal acceleration due to Earth's rotation on a particle on the surface of Earth at the equator.
+  \item Compute the centrifugal acceleration due to the motion of Earth about the Sun.
+  \item Compare these two values and discuss why one is greater than the other.
+\end{enumerate}
+\end{problem}
+\begin{soln}~
+  \begin{enumerate}[label=(\roman*)]
+    \item If we assume that the Earth is rotating such that the vector pointing from its axis of rotation to the equator forms a right angle with
+          the axis, then we obtain
+          \begin{align*}
+            \bv{a}_c & =-\bv{\omega}\cross(\bv{\omega}\cross\bv{r})                              \\
+                     & =-\omega\uz\cross(-\omega r\ux)                                           \\
+                     & =\omega^2r=\frac{v_t^2}{r}\approx \qty{0.0332}{\meter\per\second\squared}
+          \end{align*}
+    \item Again making the right-angle approximation and assume Earth's orbit is circular we arrive at the same formula though with different values.
+          We obtain a centrifugal acceleration of something on the surface of the Earth to be approximately $\qty{0.006}{\meter\per\second\squared}$.
+    \item The centrifugal acceleration due to the Earth's rotation is significantly larger because the Earth's rotational velocity is significantly larger compared
+          to its radius than the Earth's orbital velocity and it's orbital distance.
+  \end{enumerate}
+\end{soln}
+
+% PROBLEM 2
+\begin{problem}
+If a projectile is fired due east from a point on the surface of Earth at a northern latitude $\lambda$ with
+a velocity $v_0$ and at an angle of inclination to the horizontal of $\alpha$, show that the lateral deflection
+when the projectile strikes Earth is given by
+$$d=\frac{4v_0^3}{g^2}\omega\sin\lambda\sin^2\alpha\cos\alpha,$$ where $\omega$ is the rotation frequency of Earth.
+\end{problem}
+\begin{soln}
+  It was (and still kind of isn't) intuitive to me \emph{why} there is any Coriolis ``force'' on an eastward moving object other than the one
+  which ``pushes'' its point of impact to the west due to the rotation of the Earth. I found this physics stack exchange post helpful in understanding what is happening.
+  \url{https://physics.stackexchange.com/questions/43124/is-there-an-intuitive-explanation-for-the-southward-force-caused-by-the-coriolis}.
+  The force experienced by the particle will be
+  $$\bv{F}=\bv{S}+m\bv{g}_0-2m \bv{\omega}\times \bv{v}_r$$
+  where $\bv{S}$ is zero as there is no external force and hence
+  $$\ddot{x}=g_x-2\left(\omega_yv_z-\omega_zv_y\right)$$
+  $$\ddot{y}=g_y+2\left(\omega_xv_z-\omega_zv_x\right)$$
+  $$\ddot{z}=-g_z-2\left(\omega_xv_y-\omega_yv_x\right)$$
+  and if we make the approximation that the earth rotates purely about $\uz$ in the fixed frame then $\omega_y$ is zero and
+  $\omega_x=-\omega\cos(\lambda)$ and $\omega_z=\omega\sin(\lambda)$. We can also see that, as measured from the rotating frame on the surface of the earth,
+  $v$ is constant in all components except $v_z=v_{0,z}-gt$
+  \begin{align*}
+    \ddot{x} & =2\omega\sin(\lambda)v_{0,y}       \\
+    \ddot{y} & =-2\omega\cos(\lambda)(v_{0,z}-gt) \\
+    \ddot{z} & =2\omega\cos(\lambda)v_{0,y}-g
+  \end{align*}
+  and hence
+  \begin{align}
+    x & =\omega\sin(\lambda)v_{0,y}t^2                          \\
+    y & =-\omega\cos(\lambda)(v_{0,z}-\frac{gt}{3})t^2+v_{0,y}t \\
+    z & =\omega\cos(\lambda)v_{0,y}t^2-\frac{gt^2}{2}+v_{0,z}t.
+  \end{align}
+  Though I believe solving this for the time of impact and substituting that into $x(t)$ would work it is unpleasant and so I will make the approximation
+  that this projectile only travels a short distance over which the curvature of the Earth is negligible and so we can make a first-order approximation in
+  $\omega$ which neglects rotation and gives a time of impact of $$t_f=\frac{2v_0\sin(\alpha)}{g}$$
+  which when plugged into (1) gives
+  $$x(t_f)=\omega\sin(\lambda)v_{0}\cos(\alpha)\left[\frac{2v_0\sin(\alpha)}{g}\right]^2
+    =\omega\sin(\lambda)\cos(\alpha)\frac{4v_0^3\sin^2(\alpha)}{g^2}$$
+  as we wanted.
+\end{soln}
+
+% PROBLEM 3
+\begin{problem}
+A British warship fires a projectile due south near the Falkland Islands during World War I at
+latitude $\qty{50}{\degree}$ S. If the shells are fired at $\qty{37}{\degree}$ elevation with a speed of $\qty{800}{\meter\per\second}$, by how much do
+the shells miss their target and in what direction? Ignore air resistance.
+\end{problem}
+\begin{soln}
+
+\end{soln}
+
+% PROBLEM 4
+\begin{problem}
+In class we said that Plumb line is along the $g$. But this $g$ is not along the true vertical.
+Your task is to show that the small angular deviation $\epsilon$ of a plumb line from the true vertical at a
+point on Earth's surface at a latitude $\lambda$ is given by
+$$\epsilon=\frac{R\omega^2\sin\lambda\cos\lambda}{g_0-R\omega^2\cos^2\lambda}$$
+where $R$ is the radius of the earth.
+\end{problem}
+\begin{soln}
+  We know that the deflection from ``true'' gravity, $\bv{g}_0$ is given by
+  $$\bv{g}=\bv{g}_0-\bv{\omega}\times\left(\bv{\omega}\times \bv{r}\right).$$
+  I.e. the only force deflecting is the centrifugal force which is what we expect as Coriolis will have to affect here on a fixed object.
+  For some arbitrary latitude $\lambda$ we have that
+  $$\bv{\omega}=-\omega\cos(\lambda)\ux+0\uy+\omega\sin(\lambda)\uz$$
+  in the rotating frame (this was shown in class and on a quiz and is fairly easy to derive).
+  And hence the cross product with the $\bv{r}$ vector which represents the position of the rotating frame on the surface of the earth ($\bv{r}=\pr{\bv{r}}
+    +\bv{R}$, but $\bv{R}\gg \pr{\bv{r}}$) is
+  $$\begin{vmatrix}
+      \ux                & \uy & \uz               \\
+      -\omega\cos\lambda & 0   & \omega\sin\lambda \\
+      0                  & 0   & R_z
+    \end{vmatrix}=0\ux+\left[\omega R_z\cos\lambda \right]\uy+0\uz
+  $$
+  where we've implicitly rotated our coordinate system so $R_y=R_x=0$, which we can do without loss of generality.
+  Then we take the cross product again,
+  $$
+    \begin{vmatrix}
+      \ux                & \uy                   & \uz               \\
+      -\omega\cos\lambda & 0                     & \omega\sin\lambda \\
+      0                  & \omega R_z\cos\lambda & 0
+    \end{vmatrix}=\omega^2\sin\lambda\left[ R_z\cos\lambda\right]\ux
+    -0\uy-\omega^2\cos\lambda\left[ R_z\cos\lambda\right]\uz
+  $$
+  so
+  $$\bv{g}=-\omega^2\sin\lambda\left[ R_z\cos\lambda\right]\ux
+    +\left(\omega^2\cos\lambda\left[ R_z\cos\lambda\right]-g_0\right)\uz.$$
+  Now if we take the cross product of this with $\bv{g}_0$
+  \begin{equation}
+    gg_0\sin\epsilon\uy=
+    \begin{vmatrix}
+      \ux                                              & \uy & \uz                                                              \\
+      -\omega^2\sin\lambda\left[ R_z\cos\lambda\right] & 0   & \left(\omega^2\cos\lambda\left[ R_z\cos\lambda\right]+g_0\right) \\
+      0                                                & 0   & g_0
+    \end{vmatrix}=0\ux+\omega^2g_0\sin\lambda\left[ R_z\cos\lambda\right]\uy+0\uz
+  \end{equation}
+  
+  and since
+  \begin{align*}
+    g&=\sqrt{\left(\omega^2\sin\lambda\left[ R_z\cos\lambda\right]\right)^2
+      +\left(\omega^2\cos\lambda\left[ R_z\cos\lambda\right]-g_0\right)^2}\\
+      &=\sqrt{\left(\omega^2\sin\lambda\left[ R_z\cos\lambda\right]\right)^2
+      +(\omega^2\cos\lambda\left[ R_z\cos\lambda\right])^2-2g_0\omega^2\cos\lambda\left[ R_z\cos\lambda\right]
+      +g_0^2}\\
+      &=\sqrt{\omega^4R_z^2\cos^2\lambda-2g_0\omega^2R_z\cos^2\lambda
+      +g_0^2}\\
+      &\approx\sqrt{g_0^2-2g_0\omega^2R_z\cos^2\lambda}\justif{\quad}{$\omega^4\approx 0$}\\
+      &\approx g_0-\omega^2r\cos^2\lambda\justif{\quad}{$(1+x)^\alpha\approx1+\alpha x$}\\
+  \end{align*}
+  Dividing through by $g_0g$ in (4) and substituting in our previous result,
+  $$\sin\epsilon=\frac{\omega^2\sin\lambda\left[ R_z\cos\lambda\right]}{g_0-\omega^2r\cos^2\lambda}$$
+  and since, for small angles, $\sin\theta=\theta$ and $\epsilon$ is indeed a very small angle, we obtain the result! 
+\end{soln}
+
+% PROBLEM 5
+\begin{problem}
+Calculate the gravitational field vector $\bv{g}$ at Earth's surface at the poles and at the equator. You
+must take into account the following (i) The equatorial and polar radius are different and (ii)
+the centrifugal force. The general formula for $\bv{g}$ as a function of latitude is given in problem
+10.20. Compare your answers with the answers from the general formula.
+\end{problem}
+\begin{soln}
+
+\end{soln}
+
+% PROBLEM 6
+\begin{problem}~
+\begin{enumerate}[label=(\roman*)]
+  \item Find the Coriolis force on an automobile of mass $\qty{1300}{\kilo\gram}$ driving north near Fairbanks,
+        Alaska. (latitude $\qty{65}{\degree}$ N) at a speed of $\qty{100}{\kilo\meter\per\hour}$.
+  \item At the same location if we consider a hyperloop train which is anticipated to hit about $\qty{760}{\mile\per\hour}$,
+        will the Coriolis force have any effect on the train?
+\end{enumerate}
+\end{problem}
+\begin{soln}
+
+\end{soln}
+
+% PROBLEM 7
+\begin{problem}Shot towers: They were popular in the 18th and 19th centuries for dropping melted lead down
+tall towers to form spheres for bullets. The lead solidified while falling and often landed in water
+to cool the lead bullets. Many such shot towers were built in New York State. Assume a shot
+tower was constructed at latitude $\qty{42}{\degree}$  N, and the lead fell a distance of $\qty{27}{\meter}$. In what direction and
+how far did the lead bullets land from the direct vertical?
+\end{problem}
+\begin{soln}
+
+\end{soln}
+
+% PROBLEM 8
+\begin{problem}The following question is based on the “Turntable Paradox”. Here is the link:
+\url{https://www.youtube.com/watch?v=3oM7hX3UUEU}.
+\begin{enumerate}[label=(\roman*)]
+  \item Explain why the ratio of turntable rotation to the number of orbits is $7/2$ for solid
+        spheres and $5/2$ for hollow sphere.
+  \item Why does the object move slowly when it reaches closer to the center than far
+        from the center during its orbital motion?
+  \item Explain the role of Coriolis force in this turntable paradox? Is it really a paradox?
+\end{enumerate}
+\end{problem}
+\begin{soln}
+
+\end{soln}
+
+\end{document}

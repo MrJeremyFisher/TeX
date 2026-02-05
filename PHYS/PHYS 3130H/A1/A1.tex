@@ -1,7 +1,7 @@
 \documentclass[10pt]{article}
 
 \usepackage[margin=0.75in]{geometry}
-\usepackage{amsmath,amsthm,amssymb}
+\usepackage{amsmath,amsthm,amssymb,bm}
 \usepackage{xcolor}
 \usepackage{cancel}
 \usepackage{graphicx}
@@ -40,7 +40,8 @@
 \newcommand{\ux}{\hat{x}}
 \newcommand{\uy}{\hat{y}}
 \newcommand{\uz}{\hat{z}}
-\newcommand{\primed}[1]{#1^\prime}
+\newcommand{\uv}[1]{\hat{\bv{{#1}}}}
+\newcommand{\pr}[1]{{#1}^\prime}
 \pgfdeclarelayer{background}  
 \pgfsetlayers{background,main}
 \AtBeginDocument{\RenewCommandCopy\qty\SI}
@@ -83,7 +84,7 @@
 
 \newcommand{\ti}[1]{\widetilde{#1}}
 
-\newcommand{\bv}[1]{\mathbf{#1}}
+\newcommand{\bv}[1]{\bm{\mathrm{#1}}}
 
 \title{Physics 3130H: Assignment I}
 \author{Jeremy Favro (0805980) \\ Trent University, Peterborough, ON, Canada}
@@ -170,7 +171,9 @@ Find the coefficient of kinetic friction between the skis and the snow. What is 
           $$y(x)=-\frac{gx^2}{2v_{0x}^2}+\frac{v_{0y}x}{v_{0x}}.$$
           Now we just solve
           $$\tan(\beta)x=-\frac{g}{2v_{0x}^2}x^2+\frac{v_{0y}}{v_{0x}}x\implies \frac{2v_{0x}}{g}\left[v_{0x}\tan(\beta)-v_{0y}\right]=x$$
-
+          Hence, using $x(t)=v_{0x}t$ we get that 
+          $$\frac{2v_{0x}}{g}\left[v_{0x}\tan(\beta)-v_{0y}\right]=v_{0x}t\implies t=
+          \frac{2}{g}\left[v_0\cos\beta\tan(\beta)-v_0\sin\beta\right]=\frac{2v_0}{g}\left[\cos(\alpha)\tan(\beta)-\sin(\alpha)\right]$$
     \item To do this we just shift down the trajectory by $h$ so that $P$ and $Q$ are zeroes, so
           \begin{align*}
             0           & =-\frac{g}{2v_{0x}^2}x^2+\frac{v_{0y}}{v_{0x}}x-h                                                                                                                 \\
@@ -178,17 +181,17 @@ Find the coefficient of kinetic friction between the skis and the snow. What is 
                         & =\frac{v_{0y}v_{0x}\mp v_{0x}\sqrt{2gh+v_{0y}^2}}{g}
           \end{align*}
           then we can take the difference $Q-P$. With $Q$ being the greater,
-          $$\frac{v_{0y}v_{0x}+ v_{0x}\sqrt{2gh+v_{0y}^2}}{g}-\frac{v_{0y}v_{0x}- v_{0x}\sqrt{2gh+v_{0y}^2}}{g}=\frac{2v_{0x}\sqrt{2gh+v_{0y}^2}}{g}$$
+          $$\frac{v_{0y}v_{0x}+ v_{0x}\sqrt{2gh+v_{0y}^2}}{g}-\frac{v_{0y}v_{0x}- v_{0x}\sqrt{2gh+v_{0y}^2}}{g}=\frac{2v_0\cos(\alpha)\sqrt{2gh+v_0^2\sin^2(\alpha)}}{g}$$
 
   \end{enumerate}
 \end{soln}
 
 % PROBLEM 3
 \begin{problem}
-A particle is under the influence of a force $F=-kx+\frac{k}{\alpha}x^3$, where $k$ and $\alpha$
+A particle is under the influence of a force $F=-kx+\frac{k}{\alpha^2}x^3$, where $k$ and $\alpha$
 are constants and $k$ is positive.
 \begin{enumerate}[label=(\alph*)]
-  \item Determine $U(x)$ and plot $U(x)$ as a function of x using
+  \item Determine $U(x)$ and plot $U(x)$ as a function of $x$ using
         computer graphing tools (if you use python, three cheers
         to you).
   \item Look at the figure carefully. Determine the
@@ -200,24 +203,106 @@ are constants and $k$ is positive.
 \end{problem}
 \begin{soln}~
   \begin{enumerate}[label=(\alph*)]
-    \item $$U(x)=\int F\,dx=\int -kx+\frac{k}{\alpha}x^3\,dx=-\frac{k}{2}x^2+\frac{k}{4\alpha}x^4$$
+    \item $$U(x)=-\int F\,dx=-\int -kx+\frac{k}{\alpha^2}x^3\,dx=\frac{k}{2}x^2-\frac{k}{4\alpha^2}x^4$$
           \begin{center}
             \begin{tikzpicture}
               \begin{axis}[
                   xmin=-2, xmax=2,
                   ymin=-0.5, ymax=1,
                   domain=-2:2,
-                  samples=500
+                  samples=500,
+                  ylabel=$U(x)\,\,(\unit{\joule})$,
+                  xlabel=$x\,\,(\unit{\meter})$
                 ]
-                \addplot [mark=none, blue] {-(2.5/2)*x^2+(2.5/(4*0.3))*x^4};
+                \addplot [mark=none, blue] {(2.5/2)*x^2-(2.5/(4*1.2^2))*x^4};
+                \draw [dashed, gray] (-2,0) -- (2,0);
+
+                \node at (-1.2,0.9)[circle,fill,inner sep=2pt, red]{};
+                \node at (-1.15,0.9)[right]{$x=-\alpha$};
+
+                \node at (1.2,0.9)[circle,fill,inner sep=2pt, red]{};
+                \node at (1.15,0.9)[left]{$x=\alpha$};
               \end{axis}
             \end{tikzpicture}
           \end{center}
-    \item Look at the figure carefully. Determine the
-          energy $E_1$ in terms of $k$ and $\alpha$, based on the discussion
-          we had in the class.
-    \item If the particle has the energy $E_2$
-          discuss the motion of the particle.
+    \item The points at $E_1$ are unstable equilibrium points in the potential, i.e. zeroes in the force. Hence we solve
+          $$-kx+\frac{k}{\alpha}x^3=0\implies -k+\frac{k}{\alpha}x^2=0\, (x=0\text{ is a solution})\implies x=\pm\alpha$$
+          So $U(\alpha)=E_1=\frac{k}{2}\alpha^2-\frac{k}{4\alpha^2}\alpha^4=\frac{2k\alpha^2}{4}-\frac{k\alpha^2}{4}=\frac{k\alpha^2}{4}$ for $x=\pm\alpha$. These points are marked on the graph in red.
+    \item With energy $E_2$ the particle oscillates in the ``well'' between $\pm x_1$
+  \end{enumerate}
+\end{soln}
+\newpage
+
+% PROBLEM 4
+\begin{problem}
+A block of mass $m=\qty{1.62}{\kilo\gram}$ slides down a frictionless incline
+which has a loop at the end as shown in the figure. The block is
+released at a height $h=\qty{3.91}{\meter}$ above the bottom of the loop.
+\begin{enumerate}[label=(\alph*)]
+  \item What is the force of the inclined track on the block at the
+        bottom (Point A)?
+  \item What is the force of the track on the block at point B?
+        And hence at what speed does the block leave the track?
+\end{enumerate}
+\end{problem}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item At point A the block is in circular motion, hence the net force must be the centripetal force
+          $$F_{net}=F_{C}=\frac{mv_A^2}{R}$$
+          The only force actually acting on the block is the force of gravity pointing straight down so
+          $$F_{net}=F_{N}-mg=\frac{mv_A^2}{R}\implies F_{N}=m\left(\frac{v_A^2}{R}+g\right).$$
+          By conservation of energy we know that at this point all the potential energy that the block had at the beginning of the track,
+          $mgh$, has been converted into kinetic energy, so
+          $$mgh=\frac{1}{2}mv_A^2\implies 2gh=v_A^2$$
+          which we can substitute back into our equation for $F_N$ to obtain
+          $$F_{N}=m\left(\frac{v_A^2}{R}+g\right)=mg\left(\frac{2h}{R}+1\right)$$
+    \item Again we make the argument that as the block is in circular motion, the net force must be $F_C=\frac{mv_B^2}{R}$. Here however the
+          reaction force of the ramp due to gravity is lessend due to the slope. Hence $F_g=mg\cos\theta$ so
+          $$F_{net}=F_C=F_N-F_g\implies \frac{mv_B^2}{R}=F_N-mg\cos\theta\implies m\left(\frac{v_B^2}{R}+g\cos(\pi/4)\right)=F_N.$$
+          Now we must determine $v_B$. This can be done with conservation of energy. By conservation of energy then
+          $$\frac{1}{2}mv_A^2=\frac{1}{2}mv_B^2+mg\pr{h}\implies v_B^2=v_A^2-2g\pr{h},$$
+          i.e. the kinetic energy at A is equal to the kinetic energy at B plus the little bit of loss to the height in the form of gravitational potential.
+          To find $\pr{h}$ we use some geometry. We know that the right triangle formed by
+          the line of length $R$ intersecting $A$ has hypotenuse $H$ such that $H\cos\theta=R$. $H$ is $R$ plus a little bit that we get from sweeping out the circle.
+          This little bit is the hypotenuse of a smaller (similar) triangle whose upright portion is $\pr{h}$ and whose hypotenuse is $K$. From sine law we know that
+          this smaller triangle obeys $$\frac{\pr{h}}{\sin(\pi/4)}=K$$ so
+          $$H=R+\frac{\pr{h}}{\sin(\pi/4)}$$ and hence
+          $$R=\cos(\pi/4)\left[R+\frac{\pr{h}}{\sin(\pi/4)}\right]=R\cos(\pi/4)+\pr{h}\implies \pr{h}=R\left(1-\frac{1}{\sqrt{2}}\right).$$
+          Putting this back into our expression for the velocity we obtain
+          $$v_B^2=v_A^2-2gR\left(1-\frac{1}{\sqrt{2}}\right)=2gh-2gR\left(1-\frac{1}{\sqrt{2}}\right)=2g\left[h-R\left(1-\frac{1}{\sqrt{2}}\right)\right]$$
+          which we put into our expression for the normal force to obtain
+          $$F_N=m\left(\frac{1}{R}2g\left[h-R\left(1-\frac{1}{\sqrt{2}}\right)\right]+g\cos(\pi/4)\right)=mg\left(\frac{2h}{R}-2+\frac{3}{\sqrt{2}}\right)$$
+          which I don't believe can be evaluated further as I can't figure out a way to determine $R$.
+  \end{enumerate}
+\end{soln}
+
+% PROBLEM 5
+\begin{problem}
+Determine if the following forces are conservative. If so find $U(\bv{r})$
+\begin{enumerate}[label=(\alph*)]
+  \item $\bv{F}=(ayz+bx+c)\ux+(axz+bz)\uy+(axy+by)\uz$; $a,b,c$ are constants.
+  \item $\bv{F}=\dfrac{a\uv{r}}{r}$
+\end{enumerate}
+\end{problem}
+\begin{soln}Assuming we are in a simply connected domain (i.e. real physical space) then it is sufficient to show that $\nabla\cross\bv{F}=0$ to imply a
+  conservative force field. So,
+  \begin{enumerate}[label=(\alph*)]
+    \item $$\curl{\bv{F}}=
+            \begin{vmatrix}
+              \ux        & \uy        & \uz        \\
+              \partial_x & \partial_y & \partial_z \\
+              ayz+bx+c   & axz+bz     & axy+by
+            \end{vmatrix}=[(ax+b)-(ax+b)]\ux-[(ay)-(ay)]\uy+[(az)-(az)]\uz=\bv{0}
+          $$
+          and 
+          $$U=-\int F\implies U(\bv{r})=-(axyz+\frac{bx^2}{2}+cx+K)\ux-(axyz+byz+Q)\uy-(axyz+byz+T)\uz$$
+          where $K,Q,T$ are constants of integration.
+    \item Here I will use the formula given in the front cover of Griffiths' Electrodynamics for curl in spherical coordinates. This formula is quite long. Thankfully here
+    we only have a dependence on $r$ so other partials will be zero. This means we obtain 
+    $$\curl{\bv{F}}=-\frac{1}{r}\partial_r(rF_r)\uv{\theta}$$
+    which is just the derivative of a constant ($a$) thanks to the multiplication by $r$, so this field is indeed conservative. The potential is 
+    $$U(\bv{r})=U(r)=-a\ln(r)+C$$
+    where we can directly integrate in spherical without fear as the gradient does not feature any multiplications inside of derivative arguments which might cause us trouble.
   \end{enumerate}
 \end{soln}
 \end{document}

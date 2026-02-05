@@ -49,7 +49,7 @@ fig, axes = plt.subplots(1, 3)
 axes[0].plot(freqs, np.imag(caps))
 axes[0].set_xscale("log")
 
-axes[1].plot(freqs, np.real(caps))
+axes[1].plot(freqs, np.abs(caps))
 axes[1].set_xscale("log")
 
 axes[2].plot(freqs, res)

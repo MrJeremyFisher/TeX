@@ -41,7 +41,7 @@
 \newcommand{\ux}{\hat{\mathbf{x}}}
 \newcommand{\uy}{\hat{\mathbf{y}}}
 \newcommand{\uz}{\hat{\mathbf{z}}}
-\newcommand{\uv}[1]{\hat{\bm{{#1}}}}
+\newcommand{\uv}[1]{\hat{\bv{{#1}}}}
 \newcommand{\pr}[1]{{#1^\prime}}
 \newcommand{\pd}[2][]{{\frac{\partial^{#1}}{\partial {{#2}^{#1}}}}}
 \newcommand{\dif}[2][]{{\frac{d^{#1}}{d{{#2}^{#1}}}}}
@@ -92,11 +92,11 @@
 \DeclareTextFontCommand{\kf}{\Kaufmann}
 \newcommand{\scriptr}{\fontsize{12pt}{12pt}\kf{r}}
 
-\newfontface{\KaufmannB}{Kaufmann Bd BT}
+\newfontface{\KaufmannB}{Kaufmann Bold}
 \DeclareTextFontCommand{\kfb}{\KaufmannB}
 \newcommand{\bscriptr}{\fontsize{12pt}{12pt}\kfb{r}}
 \newcommand{\justif}[2]{&{#1}&\text{#2}}
-\newcommand{\bv}[1]{\mathbf{#1}}
+\newcommand{\bv}[1]{\bm{\mathrm{#1}}}
 
 \title{Physics 3200Y: Assignment V}
 \author{Jeremy Favro (0805980) \\ Trent University, Peterborough, ON, Canada}
@@ -104,14 +104,87 @@
 
 \begin{document}
 \maketitle
-
+Please try to overlook any missing rs and ts. I am having keyboard trouble.
 % PROBLEM 1
 \begin{problem}
-Griffiths 4.13
+A very long cylinder, of radius $a$, carries a uniform polarization $\bv{P}$ perpendicular to its axis. Find the electric field inside the cylinder. Show that
+the field outside the cylinder can be expressed in the form
+$$\bv{E}(\bv{r})=\frac{a^2}{2\epsilon_0s^2}\left[2(\bv{P}\cdot\uv{s})\uv{s}-\bv{P}\right]$$
 \end{problem}
 \begin{soln}
 
+
+  % Since $\bv{P}$ is uniform, $\rho_b=\bv{\nabla}\cdot{\bv{P}}=0$ and since it is perpendicular to the long axis of the cylinder $\sigma_b=\bv{P}\cdot\uv{n}=\bv{P}\cdot\uv{s}=\abs{\bv{P}}\cos\theta$.
+  % So we can treat this as, like is done in the text, two cylinders slightly displaced from the original, one positively charged and the other negatively charged. The electric field inside one of
+  % these cylinders is given by Gauss' law as
+  % $$\int \bv{E}\cdot d\bv{a}=\frac{Q_{enc}}{\epsilon_0}$$
+  % where here since we are dealing with single, uniformly charged cylinders of charge density $\rho$ we can extract the field, which
+  % $$\abs{\bv{E}}2\pi sL=\frac{\rho\pi s^2L}{\epsilon_0}\implies \bv{E}=\frac{\rho}{2\epsilon_0}\bv{s}$$
+  % where $\bv{s}$ is the direction vector offset as the cylinders are and the radius of the Gaussian surface.
+  % We can superimpose the fields for the positive and negative cylinders then to obtain that the total field is
+  % $$\bv{E}=\frac{\rho}{2\epsilon_0}\bv{s}_+-\frac{\rho}{2\epsilon_0}\bv{s}_-=\frac{\rho}{2\epsilon_0}(\bv{s}_+-\bv{s}_-).$$
+  % $\bv{s}_+-\bv{s}_-$ will cancel out any component other than the one indicating the separation between the two cylinders, pointing
+  % from the $+$ cylinder to the $-$. This is the reverse of the direction of the polarization, which we defined as the dipole moment per unit volume, i.e.
+  % the total dipole moment of a slice of the cylinder of length $L$ is $\bv{P}\pi a^2L$ or $-\pi a^2 L \rho(\bv{s}_+-\bv{s}_-)$ (note the negative in the second one,
+  % the dipole displacement should point from $-$ to $+$, without the negative it points the other way)
+  % so $\bv{P}= -\rho(\bv{s}_+-\bv{s}_-)$, as we'd expect for a single dipole, which this is if you squint. This simplifies the field to 
+  % $$\bv{E}=\frac{-\bv{P}}{2\epsilon_0}.$$
+
+  % Zero idea what to do about the outside field. Gauss' law again?
+
+  We found the solution to Laplace's equation in cylindrical coordinates on the previous assignment so we'll reuse it here without derivation.
+  Enforcing the first logical boundary condition we obtain two solutions due to the fact that $V(s,\phi)$ must remain finite at infinity
+  and at the origin:
+  $$V_{i}(s,\phi)=A_{i}+\sum_{n=1}^{\infty}s^n\left[A_n\sin(n\phi)+B_n\cos(n\phi)\right]$$
+  and
+  $$V_{o}(s,\phi)=A_o+\sum_{n=1}^{\infty}s^{-n}\left[C_n\sin(n\phi)+D_n\cos(n\phi)\right].$$
+  Next we require that the potential be continuous at the surface of the cylinder, $V_i(a,\phi)=V_o(a,\phi)$,
+  $$A_o+\sum_{n=1}^{\infty}a^{-n}\left[C_n\sin(n\phi)+D_n\cos(n\phi)\right]=A_{i}+\sum_{n=1}^{\infty}a^n\left[A_n\sin(n\phi)+B_n\cos(n\phi)\right]$$
+  which tells, just by matching coefficients of the constants and the trig terms, says that
+  \begin{align*}
+    A_i & =A_o=A_0    \\
+    C_n & =A_na^{2n}  \\
+    D_n & =B_na^{2n}.
+  \end{align*}
+  so
+  $$V_i(s,\phi)=A_0+\sum_{n=1}^{\infty}s^n\left[A_n\sin(n\phi)+B_n\cos(n\phi)\right]$$
+  and
+  $$V_{o}(s,\phi)=A_0+\sum_{n=1}^{\infty}s^{-n}\left[A_na^{2n}\sin(n\phi)+B_na^{2n}\cos(n\phi)\right].$$
+  Next we require that
+  $$\eval{(\bv{E}_o-\bv{E}_i)}_{a}\cdot\uv{s}=\frac{\sigma}{\epsilon_0}=\frac{\sigma_b}{\epsilon_0}=\frac{\abs{\bv{P}}\cos\phi}{\epsilon_0}$$
+  where $\sigma=\sigma_b$ because the cylinder is not charged. Our electric fields (dotted with $\uv{s}$ so we don't have to do more work) are
+  $$\bv{E}_i\cdot\uv{s}=\sum_{n=1}^{\infty}-ns^{n-1}\left[A_n\sin(n\phi)+B_n\cos(n\phi)\right]$$
+  and
+  $$\bv{E}_o\cdot\uv{s}=\sum_{n=1}^{\infty}ns^{-n-1}\left[A_na^{2n}\sin(n\phi)+B_na^{2n}\cos(n\phi)\right]$$
+  which when evaluated at $a$ and plugged into our boundary condition gives
+  $$\sum_{n=1}^{\infty}na^{-n-1}\left[A_na^{2n}\sin(n\phi)+B_na^{2n}\cos(n\phi)\right]+na^{n-1}\left[A_n\sin(n\phi)+B_n\cos(n\phi)\right]=\frac{\abs{\bv{P}}\cos\phi}{\epsilon_0}$$
+  which works out to
+  $$\sum_{n=1}^{\infty}\left[2A_nna^{n-1}\sin(n\phi)+2B_nna^{n-1}\cos(n\phi)\right]=\frac{\abs{\bv{P}}\cos\phi}{\epsilon_0}$$
+  from which we can, again by matching coefficients, see that $A_n=0\forall n$ and $B_n=0\forall n\neq 1$.
+  When $n=1$ we get that
+  $$2B_1\cos(\phi)=\frac{\abs{\bv{P}}\cos\phi}{\epsilon_0}\implies B_1=\frac{\abs{\bv{P}}}{2\epsilon_0}$$
+  which, from our previous expression for $D_n$, gives
+  $$D_1=\frac{\abs{\bv{P}}a^{2}}{2\epsilon_0}$$
+  so we obtain an expression for the potential, after much suffering,
+  $$V(s,\phi)=\begin{cases}
+      \displaystyle \frac{\abs{\bv{P}}}{2\epsilon_0}s\cos\phi    & s<a \\
+      \displaystyle \frac{\abs{\bv{P}}a^2}{2s\epsilon_0}\cos\phi & s>a
+    \end{cases}$$
+  and so we obtain, through $\bv{E}=-\nabla V$, and noting that $\ux=\cos\phi\uv{s}-\sin\phi\uv{\phi}$,
+  $$
+    \bv{E}(s,\phi)=\begin{cases}
+      \displaystyle -(\frac{\abs{\bv{P}}}{2\epsilon_0}\cos\phi\uv{s}-\frac{\abs{\bv{P}}}{2\epsilon_0}\sin\phi\uv{\phi})=-\frac{\abs{\bv{P}}}{2\epsilon_0}\ux & s<a \\
+      \displaystyle \frac{a^2}{2s^2\epsilon_0}\left[\abs{\bv{P}}\cos(\phi)\uv{s}+\abs{\bv{P}}\sin(\phi)\uv{\phi}\right]                                      & s>a
+    \end{cases}
+  $$
+  Since no explicit direction for $\bv{P}$ is given we'll say it's along $\ux$. This means that it is oriented along $\phi=0$,
+  and we can write it using the coordinate transforms given in the back of Griffiths as
+  $$\bv{P}=\abs{\bv{P}}\cos(\phi)\uv{s}-\abs{\bv{P}}\sin(\phi)\uv{\phi}.$$
+  It is clear to see now that we can write the electric field outside as given in the problem statement as
+  $$\left[2(\bv{P}\cdot\uv{s})\uv{s}-\bv{P}\right]=(2\abs{\bv{P}}\cos(\phi)\uv{s})-\abs{\bv{P}}\cos(\phi)\uv{s}+\abs{\bv{P}}\sin(\phi)\uv{\phi}=\abs{\bv{P}}\cos(\phi)\uv{s}+\abs{\bv{P}}\sin(\phi)\uv{\phi}.$$
+
 \end{soln}
+\newpage
 
 % PROBLEM 2
 \begin{problem}
@@ -128,7 +201,7 @@ make sense of your data.
         \begin{enumerate}[label=\roman*]
           \item Find the electric field $E$ and the charge density $\sigma$ on the plates when the voltage across the capacitor
                 is $V$. Note that your answer will contain $\pm P_s$.
-          \item ketch a graph of $\sigma$ vs. $V$. Note that
+          \item Sketch a graph of $\sigma$ vs. $V$. Note that
                 \begin{enumerate}[label=\textbullet]
                   \item there are two branches, corresponding to the two signs of Ps;
                   \item the direction of $P_s$ will flip when the internal electric field exceeds the so-called “coercive
@@ -137,40 +210,74 @@ make sense of your data.
                           Ferroelectricity\#/media/File:Ferroelectric\_polarisation\_DE.svg}.
                 \end{enumerate}
                 Be sure to label the coercive fields on your graph and explain (in terms of the model introduced here)
-                the arrows that are shown in the figure I’ve linked to above.
+                the arrows that are shown in the figure I've linked to above.
         \end{enumerate}
   \item In a Sawyer-Tower circuit, the total charge that flows onto the unknown “sample” capacitor (i.e. the ferroelectric capacitor)
-        is equal to the charge that flows onto the reference capacitor, $Q = C_r V_r$ . Furthermore,
-        the voltage across the sample is $V_s = V - V_r \approx V$ . A graph of $V_r$ vs. $V$ should therefore look like your
+        is equal to the charge that flows onto the reference capacitor, $Q = C_r V_r$. Furthermore,
+        the voltage across the sample is $V_s = V - V_r \approx V$. A graph of $V_r$ vs. $V$ should therefore look like your
         sketch, assuming the capacitor really is ferroelectric. Make such a plot and try to interpret your data in
         terms of the model in part (a). How does your data agree or disagree with the model. I know that you
         measured your data at multiple frequencies, so choose one or two frequencies that illustrate the typical
         behaviour you observed.
 \end{enumerate}
 \end{problem}
-\begin{soln}
+\begin{soln}~\\
   \begin{enumerate}[label=(\alph*)]
-    \item Consider a parallel-plate capacitor of thickness $d$ and area $A$. The area between the capacitor plates is
-          filled with a ferroelectric, with polarization
-          $$P=\pm P_s +\epsilon_0\chi E,$$
-          where $P_s$ is the magnitude of the polarization when the electric field is zero, $\chi$ is the dielectric susceptibility
-          that tells you how the polarization changes when a field $E$ is applied, and $E$ is the electric field in the
-          capacitor. The ferroelectric polarization contains a factor $\pm$ to account for the two possible states, one
-          with polarization pointing up and one with polarization pointing down.
-          \begin{enumerate}[label=\roman*]
-            \item $Q=CV=$
+    \item
+          \begin{enumerate}[label=\roman*.]
+            \item We begin with
+                  $$\oint \bv{D}(\bv{r})\cdot d\bv{a}= Q_f=\sigma_fA$$
+                  and since $\bv{D}=D_z\uz$, $\bv{D}\cdot d\bv{a}=D_zdxdy$
+                  so
+                  $$\oint \bv{D}(\bv{r})\cdot d\bv{a}=2D_zA=\sigma_fA\implies D_z=\frac{\sigma_f}{2}.$$
+                  However inside the capacitor the electric field (and hence displacement) sums constructively to give us
+                  $D_z=\sigma_f.$ Since the polarization here has an extra term our usual expression for $D_z$ changes slightly,
+                  $$D_z=\epsilon_0E_z+P_z=\epsilon_0E_z+\epsilon_0\chi E_z\pm P_s=E_z\epsilon_0(1+\chi)\pm P_s=\epsilon E_z\pm P_s$$
+                  and so
+                  $$E=E_z=\frac{D_z\mp P_s}{\epsilon}=\frac{\sigma_f\mp P_s}{\epsilon}.$$
+                  We can now apply our definition of potential,
+                  $$V=-\int_d^0E_z\,dz=-\frac{1}{\epsilon}\int_d^0\sigma_f\mp P_s\,dz=\frac{1}{\epsilon}\left[\sigma_f\mp P_s\right]d$$
+                  so
+                  $$\sigma_f=\frac{V\epsilon}{d}\pm P_s$$
 
-            \item Sketch a graph of $\sigma$ vs. $V$. Note that
-                  \begin{enumerate}[label=\textbullet]
-                    \item there are two branches, corresponding to the two signs of Ps;
-                    \item the direction of $P_s$ will flip when the internal electric field exceeds the so-called “coercive
-                          field” $E_C$. Your graph should look something like this one: \href{https://en.wikipedia.org/wiki/
-                            Ferroelectricity#/media/File:Ferroelectric_polarisation_DE.svg}{https://en.wikipedia.org/wiki/
-                            Ferroelectricity\#/media/File:Ferroelectric\_polarisation\_DE.svg}.
-                  \end{enumerate}
-                  Be sure to label the coercive fields on your graph and explain (in terms of the model introduced here)
-                  the arrows that are shown in the figure I’ve linked to above.
+
+
+            \item ~\\\begin{tikzpicture}[xscale=2.0]
+                    % \draw[fill=green!70,-latex, line width=1] (-3,-3) to [out=0,in=200,looseness=1.1] (3,3)
+                    % to[out=180, in =20,looseness=1.1] (-3,-3);
+                    
+
+                    \draw[thick] (-1,1.5) -- (3,3.5);
+                    \draw[thick] (-3,-3.5) -- (1,-1.5);
+
+                    \draw[color=red,-latex, line width=1, dotted] (-1,1.5) to
+                    [out=206,in=26,looseness=0.25] (-2,-3);
+                    \draw[color=red,-latex, line width=1, dotted] (1,-1.5) to
+                    [out=26,in=206,looseness=0.25] (2,3);
+
+                    \node[above] at (-1,1.5) {$E_C$};
+                     \node[below] at (1,-1.5) {$E_C$};
+ 
+                    \draw[-latex] (-4,0) -- (4,0) node[below]{$V$};
+                    \draw[-latex] (0,-4) -- (0,4) node[left]{$\sigma_f$};
+                    % \draw[dashed] (-4,3) -- (4,3);
+                    % \draw[dashed] (-4,-3) -- (4,-3);
+                  \end{tikzpicture}
+                  The arrows on the provided figure indicate the direction of ``travel'' of the electric field. The line at the origin
+                  is a startup path, the electric field increasing from zero with no inherent polarization in the ferroelectric, then decreasing the field
+                  to a ``coercive point'' where the applied field strength is sufficient to flip the sign of $P_s$, moving onto the lower path,
+                  firther decrease just scales linearly, but increasing exhibits the reverse of the previous behaviour, scaing linearly up to a coercive point,
+                  where $P_s$ changes sign again and the net field again becomes positive. 
           \end{enumerate}
+          \item~
+          \begin{center}
+            \includegraphics[scale=0.3]{full_fig.png}
+          \end{center}
+          The lower frequencies agree better with the model, though plots with frequencies less than around $\qty{1}{\kilo\hertz}$ are straight lines. The very high frequency plot
+          is being swept at a lower input voltage range of $\pm\qty{3}{\volt}$ which would result in a weaker field and may account for the shape. We don't see the longer straight
+          sections that the model predicts, though the model also doesn't say anything about how the straight sections are joined so not much can be concluded there. Generally I think
+          the model migh work in some situations, though I'm not sure what they are, but isn't really sufficient here to have any actual modeling (predictive) power as the 
+          sigmoid-like portions of the graph aren't present in the model but are the only thing present in the real data.
   \end{enumerate}
 \end{soln}
 \end{document}
