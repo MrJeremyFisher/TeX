@@ -1,0 +1,223 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsmath,amsthm,amssymb,bm}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{changepage}
+\usepackage{circuitikz}
+\usepackage{pgfplots}
+\usepackage{physics}
+\usepackage{hyperref}
+\usepackage{siunitx}
+\usepackage{minted}
+\usepackage{fontspec}
+\usepackage{relsize}
+\usepackage{subfig}
+\usepackage{mhchem}
+\usepackage{todonotes}
+\usepackage{biblatex}
+\usepackage{multicol, multirow, booktabs}
+\usepackage[breakable]{tcolorbox}
+\usepackage[inline]{enumitem}
+\patchcmd{\thebibliography}{\section*{\refname}}{}{}{}
+\addbibresource{sources.bib}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{soln}{Solution}
+
+\pgfplotsset{compat=newest}
+\usetikzlibrary{lindenmayersystems}
+\usetikzlibrary{arrows}
+\usetikzlibrary{calc}
+\usetikzlibrary{positioning, fit}
+\usetikzlibrary{3d, perspective}
+
+\definecolor{incolor}{HTML}{303F9F}
+\definecolor{outcolor}{HTML}{D84315}
+\definecolor{cellborder}{HTML}{CFCFCF}
+\definecolor{cellbackground}{HTML}{F7F7F7}
+\newcommand{\ui}{\hat{i}}
+\newcommand{\uj}{\hat{j}}
+\newcommand{\uk}{\hat{k}}
+\newcommand{\ux}{\hat{x}}
+\newcommand{\uy}{\hat{y}}
+\newcommand{\uz}{\hat{z}}
+\newcommand{\uv}[1]{\hat{\bm{{#1}}}}
+\newcommand{\pr}[1]{{#1^\prime}}
+\newcommand{\justif}[2]{&{#1}&\text{#2}}
+\newcommand{\dul}[1]{\underline{\underline{#1}}}
+\newcommand{\pdiff}[2][]{{\frac{\partial^{#1}}{\partial {{#2}^{#1}}}}}
+% \newcommand{\dif}[2][]{{\frac{d^{#1}}{d{{#2}^{#1}}}}}
+\pgfdeclarelayer{background}  
+\pgfsetlayers{background,main}
+\AtBeginDocument{\RenewCommandCopy\qty\SI}
+
+\makeatletter
+\newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+\makeatother
+\newcommand{\prompt}[4]{
+    \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+}
+
+\newcommand{\thevenin}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (2,0) to[battery1, l_=$V_{Th}\eq#1$] (2,2) 
+      to[resistor, l_=$R_{Th}\eq#2$] (0,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\norton}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (3,0) to[american current source, l_=$I_{N}\eq#1$] (3,2) -- (0,2) (2,0)
+      to[resistor, l=$R_{N}\eq#2$] (2,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\highlight}[1]{\colorbox{yellow}{$\displaystyle #1$}}
+
+\newcommand{\ti}[1]{\widetilde{#1}}
+
+\newfontface{\Kaufmann}{Kaufmann}
+\DeclareTextFontCommand{\kf}{\Kaufmann}
+\newcommand{\scriptr}{\fontsize{12pt}{12pt}\kf{r}}
+
+\newfontface{\KaufmannB}{Kaufmann Bold}
+\DeclareTextFontCommand{\kfb}{\KaufmannB}
+\newcommand{\bscriptr}{\fontsize{12pt}{12pt}\kfb{r}}
+
+\newcommand{\bv}[1]{\vec{#1}}
+
+\title{Physics 4605H: Assignment V}
+\author{Jeremy Favro (0805980) \\ Trent University, Peterborough, ON, Canada}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+% PROBLEM 2
+\setcounter{problem}{1}
+\setcounter{soln}{1}
+\begin{problem}
+~
+\begin{enumerate}[label=(\alph*)]
+  \item Write out all the terms of $$\left(1+x/3\right)^3.$$
+  \item Write out $$(1+x/N)^N$$ for general $N$ showing up to $x^3$ terms.
+  \item Write $e^x$ as an expansion in powers, showing up to the $x^3$ term. As $N\to\infty$ in (b), do your answer to (b) and (c) match?
+  \item Write out all the terms of $$\prod_{i=1}^3(1+x_i).$$
+  \item What is $$\prod_{i=1}^N(1+x_i)$$ for general $N$ showing up to 2nd order terms?
+  \item Write $$e^{\sum_{i}x_i}$$
+        as an expansion, showing up to second order terms. As $N\to\infty$ in (e), do your answers to (e) and (f) match?
+\end{enumerate}
+\end{problem}
+\begin{soln}
+  \begin{enumerate}[label=(\alph*)]
+    \item \begin{align*}
+            \left(1+x/3\right)^3 & =\left(1+x/3\right)\left(1+x/3\right)\left(1+x/3\right)                  \\
+                                 & =\left(1+x/3+x/3+x^2/9\right)\left(1+x/3\right)                          \\
+                                 & =1+x/3+x/3+x^2/9+x/3+x^2/9+x^2/9+x^3/27=1+x+\frac{x^2}{3}+\frac{x^3}{27}
+          \end{align*}
+    \item The general expansion for such a binomial is
+          $$(1+x/N)^N=\sum_{k=0}^N\begin{pmatrix}
+              N \\
+              k
+            \end{pmatrix}\left(\frac{x}{N}\right)^k$$
+          which, up to $x^3$ expands as
+          $$
+            \begin{pmatrix}
+              N \\
+              0
+            \end{pmatrix}\left(\frac{x}{N}\right)^0
+            +
+            \begin{pmatrix}
+              N \\
+              1
+            \end{pmatrix}\left(\frac{x}{N}\right)^1+
+            \begin{pmatrix}
+              N \\
+              2
+            \end{pmatrix}\left(\frac{x}{N}\right)^2+
+            \begin{pmatrix}
+              N \\
+              3
+            \end{pmatrix}\left(\frac{x}{N}\right)^3
+          $$
+          which simpifies to
+          $$
+            1
+            +
+            \begin{pmatrix}
+              N \\
+              1
+            \end{pmatrix}\frac{x}{N}+
+            \begin{pmatrix}
+              N \\
+              2
+            \end{pmatrix}\frac{x^2}{N^2}+
+            \begin{pmatrix}
+              N \\
+              3
+            \end{pmatrix}\frac{x^3}{N^3}
+          $$
+    \item Using Taylor series about $x=0$ we obtain
+          $$e^x=\sum_{n=0}^3\frac{e^0}{n!}x^n=1+x+\frac{x^2}{2}+\frac{x^3}{6}$$
+          because $\frac{d}{dx}e^x=e^x$. Noting that
+          $$\begin{pmatrix}
+              N \\
+              k
+            \end{pmatrix}=\frac{N!}{(N-k)!k!}$$
+          which for large $N$, which we have, specifcally $N\gg k$ becomes approximately
+          $$\frac{N!}{N!k!}=\frac{1}{k!}$$ which recovers our result in (c).
+    \item We get
+          $$
+            (1+x_1)(1+x_2)(1+x_3)=1+x_1+x_2+x_3+x_1x_2+x_1x_3+x_2x_3+x_1x_2x_3
+          $$
+          provided whatever $x_i$ comes from is commutative.
+    \item I spent a while trying to figure out a general form for this but couldn't figure it out, so I'll just write the general terms,
+          $$1+x_1+x_2+\dots+x_N+x_1x_2+x_1x_3+\dots+x_1x_N+\dots x_2x_3+\dots x_2x_N+\dots x_{N-1}x_N$$
+    \item \begin{align*}
+            e^{\sum_{i}x_i} & =e^{x_1+x_2+x_3+\dots}      \\
+                            & =e^{x_1}e^{x_2}e^{x_3}\dots \\
+                            & =\left[\sum_{n=0}^{N}\frac{x_1^n}{n!}\right]\left[\sum_{n=0}^{N}\frac{x_2^n}{n!}\right]\left[\sum_{n=0}^{N}\frac{x_3^n}{n!}\right]\dots \\
+                            & =\left(1+x_1+\frac{x_1^2}{2!}+\frac{x_1^3}{3!}\right)\left(1+x_2+\frac{x_2^2}{2!}+\frac{x_2^3}{3!}\right)\left(1+x_3+\frac{x_3^2}{2!}+\frac{x_3^3}{3!}\right)\dots\left(1+x_N+\frac{x_N^2}{2!}+\frac{x_N^3}{3!}\right) \\
+                            & =\left(1+x_1+x_2+x_3+x_1x_2+x_1x_3+\dots x_1x_N+\dots\right)+\text{higher order terms} \\
+          \end{align*}
+          which agrees with my answer in (e).
+  \end{enumerate}
+\end{soln}
+
+% PROBLEM 3
+\begin{problem}
+The density matrix at time $t$ can be expressed as
+$$\hat{\rho}(t)=\sum_ip_i\ket{\psi_i(t)}\bra{\psi_i(t)}$$
+where $p_i$ are probabilities such that $\sum_ip_i=1$.
+$\left\{\ket{\psi_i(t)}\right\}$ are a set of pure quantum states which satisfy the time-dependent Schr\"odinger equation,
+$$i\hbar\frac{\partial}{\partial t}\ket{\psi_i(t)}=\hat{H}\ket{\psi_i(t)}.$$
+Show that
+$$i\hbar \frac{\partial}{\partial t}\hat{\rho}=\left[\hat{H},\hat{\rho}(t)\right]$$
+\end{problem}
+\begin{soln}
+  Okay,
+  \begin{align*}
+    i\hbar \frac{\partial}{\partial t}\hat{\rho} & =i\hbar \pdiff{t}\sum_ip_i\ket{\psi_i(t)}\bra{\psi_i(t)}                                                                                           \\
+                                                 & =i\hbar \sum_ip_i\pdiff{t}\ket{\psi_i(t)}\bra{\psi_i(t)}\justif{\quad}{The derivative is a linear operator}                                        \\
+                                                 & =i\hbar \sum_ip_i\left[\left(\pdiff{t}\ket{\psi_i(t)}\right)\bra{\psi_i(t)}+\ket{\psi_i(t)}\left(\pdiff{t}\bra{\psi_i(t)}\right)\right]\justif{\quad}{Product rule} \\
+                                                 & = \sum_ip_i\left[\left(i\hbar\pdiff{t}\ket{\psi_i(t)}\right)\bra{\psi_i(t)}+\ket{\psi_i(t)}\left(-i\hbar\pdiff{t}\bra{\psi_i(t)}\right)\right]     \\
+                                                 & = \sum_ip_i\left[\left(\hat{H}\ket{\psi_i(t)}\right)\bra{\psi_i(t)}+\ket{\psi_i(t)}\left(-\bra{\psi_i(t)}\hat{H}\right)\right]                     \\
+                                                 & =\hat{H}\left[\sum_ip_i\ket{\psi_i(t)}\bra{\psi_i(t)}\right]-\left[\sum_ip_i\ket{\psi_i(t)}\bra{\psi_i(t)}\right]\hat{H}                           \\
+                                                 & =\hat{H}\hat{\rho}-\hat{\rho}\hat{H}=\left[\hat{H},\hat{\rho}(t)\right]
+  \end{align*}
+\end{soln}
+\end{document}

@@ -1,0 +1,48 @@
+\documentclass[10pt,landscape,letterpaper]{cheatsheet}
+
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{physics}
+
+\newcommand{\PRLsep}{\noindent\makebox[\linewidth]{\resizebox{0.3333\linewidth}{1pt}{$\bullet$}}\bigskip}
+\newcommand{\laplace}[1]{\mathcal{L}\left\{#1\right\}}
+\newcommand{\laplacei}[1]{\mathcal{L}^{-1}\left\{#1\right\}}
+\newcommand{\highlight}[1]{\colorbox{yellow}{$\displaystyle #1$}}
+
+\title{Methods Cheat Sheet}
+\author{Jeremy Favro}
+\date{\today\\Revision 1}
+
+\begin{document}
+
+\maketitle
+
+\section{Power Series}
+For an ODE of the form 
+$y''+p(x)y'+q(x)y=0$, the solution is of the form
+$\sum_{n=0}^{\infty}a_nx(x-x_0)^n$ if $p,q$ are analytic at $x_0$. This power
+series is guaranteed to converge for $\abs{x-x_0}<R$ where $R$ is the distance from $x_0$ to the nearest singular point.
+\subsection{Solutions Around Singular Points}
+A point about which $p,q$ are \emph{not analytic} but 
+$(x-x_0)p(x)$ and $(x-x_0)^2q(x)$ are is called regular singular. 
+We are guaranteed one solution of the form 
+$\sum_{n=0}^{\infty}a_n(x-x_0)^{n+r}$ where 
+$r$ is determined using the \emph{indicial equation}
+$r(r-1)+\left[\lim_{x \to x_0}(x-x_0)p(x)  \right]r+\left[\lim_{x \to x_0}(x-x_0)^2q(x)  \right]=0$. We always use the larger $r$, $r_1$ first.
+This series is guaranteed to converge for $0<x-x_0<R$. If the difference between the roots, $r_1-r_2$ is not an integer
+then the series gives both linearly independent solutions. If the difference is an integer then the series gives at least one solution, with the other either
+give directly or given by $Cy_1\ln(x)+\sum_{n=0}^{\infty}b_n(x-x_0)^{n+r_2}$. When the roots are repeated our second solution is guaranteed to be 
+$y_1\ln(x)+\sum_{n=0}^{\infty}b_n(x-x_0)^{n+r_2}$
+\section{Special Functions}
+\subsection{Elementary Functions}
+\subsection{Gamma Function}
+$\Gamma(p)=\int_{0}^{\infty}x^{p-1}e^{-x}\,dx$\\
+$\Gamma(n+1)=n!\forall n\in\mathbb{N}$\\
+$\Gamma(p+1)=p\Gamma(p)$\\
+$\Gamma(1/2)=\sqrt{\pi}$\\
+$\Gamma(p)\Gamma(1-p)=\frac{\pi}{\sin(\pi p)}0<p<1$\\
+$\Gamma(p)\Gamma(1-p)=\int_{0}^{\infty}\frac{x^{p-1}}{1+x}\,dx\,0<p<1$\\
+$\Gamma(p)\approx\sqrt{\frac{2\pi}{p}}\left(\frac{p}{e}\right)^p,p\to\infty$
+\subsection{Beta Function}
+$\beta(p,q)=\beta(q,p)=\int_{0}^{1}x^{p-1}(1-x)^{q-1}\,dx\,p,q>0$\\
+$\beta(p,q)=\frac{1}{{b-a}^{p+q-1}}\int_{a}^{b}(x-a)^{p-1}(b-x)^{q-1}$
+\end{document}
