@@ -14,7 +14,6 @@
 \usepackage{fontspec}
 \usepackage{relsize}
 \usepackage{subfig}
-\usepackage{sagetex}
 \usepackage{minted}
 \usepackage{pdfpages}
 \usepackage{todonotes}
@@ -106,11 +105,84 @@
 \begin{document}
 \maketitle
 My student number is 0805980 so $p=9$, $q=5$, and $r=22$.
+% PROBLEM 1
+\begin{problem}~
+\begin{enumerate}[label=(\alph*)]
+  \item For each of the following find the recurrence relation and use it to generate at least the first
+        four nonzero terms in the power series expansion about $x = 0$ for the general solution of the
+        following equations. In each case specify the interval for which the power series is guaranteed
+        to converge.
+        \begin{enumerate}[label=\roman*.]
+          \item $x(1 -x)y'' + (1 - (p + q + 1)x)y' - pqy = 0$
+          \item $y'' + q^2x^2y = 0$
+          \item $2x(1 - x)y'' + (3 - (2p + 2q + 2)x)y' - pqy = 0$
+        \end{enumerate}
+  \item For each of the following find the recurrence relation and use it to generate at least the first
+        four nonzero terms in the power series expansion about x = 1 for the general solution of the
+        following equations. In each case specify the interval for which the power series is guaranteed
+        to converge.
+        \begin{enumerate}[label=\roman*.]
+          \item $(x - 1)y'' - xy' - 2y = 0$
+          \item $(x^2 - 2x + 1)y'' + (x - 1)^2y' - 2y = 0$
+          \item $(x - 1)y''- y = 0$
+        \end{enumerate}
+\end{enumerate}
+\end{problem}
+\begin{soln}~
+\begin{enumerate}[label=(\alph*)]
+  \item For each of the following find the recurrence relation and use it to generate at least the first
+        four nonzero terms in the power series expansion about $x = 0$ for the general solution of the
+        following equations. In each case specify the interval for which the power series is guaranteed
+        to converge.
+        \begin{enumerate}[label=\roman*.]
+          \item $x=0$ is a singular point here. We have that $$p_0=\lim_{x\to0}x\frac{(1 - (p + q + 1)x)}{x(1-x)}=1 \quad\text{and}\quad q_0=-\lim_{x\to 0}x^2pq=0.$$
+          This gives us an indicial equation of 
+          $$r(r-1)+r=0\implies r_1=1\,r_2=0.$$
+          So, as usual we take a solution of the form 
+          $$y=\sum_{n=0}^{\infty}a_nx^{n+r}\implies y'=\sum_{n=0}^{\infty}a_n(n+r)x^{n+r-1}\implies y''=\sum_{n=0}^{\infty}a_n(n+r)(n+r-1)x^{n+r-2}$$
+          which we sub into our ODE to obtain 
+          \begin{align*}
+            &x(1 -x)\sum_{n=0}^{\infty}a_n(n+r)(n+r-1)x^{n+r-2} + (1 - (p + q + 1)x)\sum_{n=0}^{\infty}a_n(n+r)x^{n+r-1} - pq\sum_{n=0}^{\infty}a_nx^{n+r} = 0\\
+            \implies &x(1 -x)\sum_{n=0}^{\infty}a_n(n+r)(n+r-1)x^{n-2} + (1 - (p + q + 1)x)\sum_{n=0}^{\infty}a_n(n+r)x^{n-1} - pq\sum_{n=0}^{\infty}a_nx^{n} = 0\\
+            \implies &\sum_{n=0}^{\infty}a_n(n+r)(n+r-1)x^{n-1}-\sum_{n=0}^{\infty}a_n(n+r)(n+r-1)x^{n}+\sum_{n=0}^{\infty}a_n(n+r)x^{n-1}\\
+            &  - (p + q + 1)\sum_{n=0}^{\infty}a_n(n+r)x^{n} - pq\sum_{n=0}^{\infty}a_nx^{n} = 0.
+          \end{align*}
+          Now we need to make the starting $x$ powers of each of these series the same by dropping terms where appropriate,
+          \begin{align*}
+            \implies &\sum_{n=0}^{\infty}a_n(n+r)(n+r-1)x^{n-1}-\sum_{n=0}^{\infty}a_n(n+r)(n+r-1)x^{n}+\sum_{n=0}^{\infty}a_n(n+r)x^{n-1}\\
+            &  - (p + q + 1)\sum_{n=0}^{\infty}a_n(n+r)x^{n} - pq\sum_{n=0}^{\infty}a_nx^{n} = 0.
+          \end{align*}
+          \item $y'' + q^2x^2y = 0$
+          \item $2x(1 - x)y'' + (3 - (2p + 2q + 2)x)y' - pqy = 0$
+        \end{enumerate}
+  \item For each of the following find the recurrence relation and use it to generate at least the first
+        four nonzero terms in the power series expansion about x = 1 for the general solution of the
+        following equations. In each case specify the interval for which the power series is guaranteed
+        to converge.
+        \begin{enumerate}[label=\roman*.]
+          \item $(x - 1)y'' - xy' - 2y = 0$
+          \item $(x^2 - 2x + 1)y'' + (x - 1)^2y' - 2y = 0$
+          \item $(x - 1)y''- y = 0$
+        \end{enumerate}
+\end{enumerate}
+\end{soln}
 
+% PROBLEM 2
 \begin{problem}
-  
+\begin{enumerate}[label=(\alph*)]
+  \item Determine all the ordinary points of $(x^3 -p^3)y'' + 5xy' + y = 0$.
+  \item Determine the regular and irregular singular point of $x^2(x^2 - q^2)2y'' - (x^2 - q^2)y' + xy = 0$.
+\end{enumerate}
 \end{problem}
 \begin{soln}
-  
+
+\end{soln}
+
+% PROBLEM 3
+\begin{problem}
+Find the full power series solution of the differential equation $xy'' + (p - q)^2y = 0$
+\end{problem}
+\begin{soln}
+
 \end{soln}
 \end{document}
