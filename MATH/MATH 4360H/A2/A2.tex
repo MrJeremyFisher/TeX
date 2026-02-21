@@ -111,7 +111,7 @@
 \begin{soln}~
   \begin{enumerate}[label=(\alph*)]
     \item If $f(x+\alpha)$ is irreducible over $F$ then $f(x+\alpha)=g(x+\alpha)h(x+\alpha)$ and one of $g$ or $h$ is constant. We can also write that
-          $f(x)=g(x)h(x)$ and since either $g$ or $h$ must be constant, $f$ is irreducible over $F$.
+          $f(x)=g(x)h(x)$ and since either $g(x+\alpha)$ or $h(x+\alpha)$ must be constant so must one of $g(x)$ or $h(x)$ so $f(x)$ is irreducible over $F$.
     \item $f(x)=x^4 + 4x + 1$, $f(x+1)=(x+1)^4 + 4(x+1) + 1=x^4+4x^3+6x^2+4x+1+4x+4+1=x^4+4x^3+6x^2+8x+6$ which is irreducible over $\mathbb{Q}$
           by Eisenstein's criterion with $p=2$.
   \end{enumerate}
@@ -269,7 +269,16 @@ over $\mathbb{Q}$.
 \end{problem}
 \begin{soln}
 Okay, taking the fact that I'm give Brauer's Criterion as a hint I'm going to try and make $f(x)=x^n+cx^{n-1}+cx^{n-2}+\dots+cx-1$ look like the polynomial in the theorem.
-We can do this by taking $$-x^nf(\frac{1}{x})=-1-cx-cx^{2}-\dots-cx^{n-1}+x^n.$$
-But where to from here? Well if we assume $c>0$ we meet the requirement that $a_0\leq a_1\leq\dots\leq a_{n-1}$
+We can do this by taking \begin{equation}
+  -x^nf(\frac{1}{x})=-1-cx-cx^{2}-\dots-cx^{n-1}+x^n.
+\end{equation}
+But where to from here? Well in the case that $c>0$ the action of taking $x^nf(\frac{1}{x})$ is the same as $\rho(f(x))$ from problem 4 and since (1) is irreducible by 
+Brauer's Criterion $f(x)$ is also irreducible by the properties we proved in question 4. For $c<0$ if we just take 
+\begin{equation}
+  x^nf(\frac{1}{x})=1+cx+cx^{2}+\dots+cx^{n-1}-x^n=1-kx-kx^{2}-\dots-kx^{n-1}-x^n
+\end{equation}
+for $k=\abs{c}$. If we take $\rho$ of this we get 
+$$-1-kx-kx^{2}-\dots-kx^{n-1}+x^n$$
+which is irreducible by Brauer's criterion, and hence $x^nf(\frac{1}{x})$ is irreducible by question 4 and so $f(x)$ is irreducible by question 4.
 \end{soln}
 \end{document}

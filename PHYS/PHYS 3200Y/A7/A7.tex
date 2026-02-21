@@ -379,7 +379,7 @@ directly integrating Eq. (5.42) from the textbook.
             \end{tikzpicture}
           \end{center}
     \item I will parametrize in terms of $z$ and $\phi$ with fixed $s=R$ with $z$ running from $-\infty$ to $\infty$ and $\phi$ from $0$ to $2\pi$ to sweep out the entire
-          surface of the cylinder.
+          surface of the cylinder. This gives an area element of $Rdz'd\phi'$.
     \item Since the integral mentioned in the question is
           $$\bv{B}(\bv{r})=\frac{\mu_0}{4\pi}\int\frac{\bv{K}(\bv{r}')\times \bscriptr}{\scriptr^3}d\pr{a}$$
           we need $\bv{r}$, $\bv{r}'$, and $\bscriptr$. Since we are only looking at points on the axis of the cylinder $\bv{r}=(0,0,z)$ and
@@ -403,31 +403,31 @@ directly integrating Eq. (5.42) from the textbook.
           And hence the integral becomes
           $$\bv{B}(\bv{r})=\frac{\mu_0}{4\pi}\int_{-\infty}^{\infty}\int_0^{2\pi}\frac{\left[K_\phi(z-z')\cos\phi'+RK_z\sin\phi'\right]\ux
               +\left[K_\phi(z-z')\sin\phi'-RK_z\cos\phi'\right]\uy
-              +RK_\phi\uz}{\left(R^2+(z-z')^2\right)^{3/2}}d\phi'dz'$$
+              +RK_\phi\uz}{\left(R^2+(z-z')^2\right)^{3/2}}Rd\phi'dz'$$
           which splits up into three integrals for each component of the field:
           \begin{align*}
-            I_1 & =\int_{-\infty}^{\infty}\int_0^{2\pi}\frac{K_\phi(z-z')\cos\phi'+RK_z\sin\phi'}{\left(R^2+(z-z')^2\right)^{3/2}}d\phi'dz'\ux                                             \\
-                & =\int_{-\infty}^{\infty}\int_0^{2\pi}\frac{K_\phi(z-z')\cos\phi'}{\left(R^2+(z-z')^2\right)^{3/2}}d\phi'dz'\ux \justif{\quad}{Integral of trig over full period is zero} \\
-                & =\int_{-\infty}^{\infty}\frac{K_\phi(z-z')}{\left(R^2+(z-z')^2\right)^{3/2}}dz'\int_0^{2\pi}\cos\phi'd\phi'\ux                                                           \\
+            I_1 & =\int_{-\infty}^{\infty}\int_0^{2\pi}\frac{K_\phi(z-z')\cos\phi'+RK_z\sin\phi'}{\left(R^2+(z-z')^2\right)^{3/2}}Rd\phi'dz'\ux                                             \\
+                & =\int_{-\infty}^{\infty}\int_0^{2\pi}\frac{K_\phi(z-z')\cos\phi'}{\left(R^2+(z-z')^2\right)^{3/2}}Rd\phi'dz'\ux \justif{\quad}{Integral of trig over full period is zero} \\
+                & =\int_{-\infty}^{\infty}\frac{K_\phi R(z-z')}{\left(R^2+(z-z')^2\right)^{3/2}}dz'\int_0^{2\pi}\cos\phi'd\phi'\ux                                                          \\
                 & =0\justif{\quad}{Integral of trig over full period is zero}
           \end{align*}
           and we obtain the same result for the integral in the $\uy$ direction. The only nonzero integral is the $\uz$ one,
           \begin{align*}
-            \bv{B}(\bv{r}) & =\frac{\mu_0}{4\pi}\int_{-\infty}^{\infty}\int_0^{2\pi}\frac{RK_\phi}{\left(R^2+(z-z')^2\right)^{3/2}}d\phi'dz'\uz  \\
-                           & =\frac{\mu_0RK_\phi}{2}\int_{-\infty}^{\infty}\frac{1}{\left(R^2+(z-z')^2\right)^{3/2}}dz'\uz                       \\
-                           & =\frac{\mu_0RK_\phi}{2}\int_{-\pi/2}^{\pi/2}\frac{-R\sec^2\theta}{\left(R^2+R^2\tan^2\theta\right)^{3/2}}d\theta\uz
+            \bv{B}(\bv{r}) & =\frac{\mu_0}{4\pi}\int_{-\infty}^{\infty}\int_0^{2\pi}\frac{RK_\phi}{\left(R^2+(z-z')^2\right)^{3/2}}Rd\phi'dz'\uz   \\
+                           & =\frac{\mu_0R^2K_\phi}{2}\int_{-\infty}^{\infty}\frac{1}{\left(R^2+(z-z')^2\right)^{3/2}}dz'\uz                       \\
+                           & =\frac{\mu_0R^2K_\phi}{2}\int_{-\pi/2}^{\pi/2}\frac{-R\sec^2\theta}{\left(R^2+R^2\tan^2\theta\right)^{3/2}}d\theta\uz
           \end{align*}
           Here $z-z'=R\tan\theta\implies z-R\tan\theta=z'\implies dz'=-R\sec^2\theta d\theta$ and the limits change to the asymptotes of $\tan\theta$,
           \begin{align*}
-             & =\frac{\mu_0RK_\phi}{2}\int_{-\pi/2}^{\pi/2}\frac{-R\sec^2\theta}{\left(R^2+R^2\tan^2\theta\right)^{3/2}}d\theta\uz           \\
-             & =-\frac{\mu_0K_\phi}{2R}\int_{-\pi/2}^{\pi/2}\frac{\sec^2\theta}{\left(1+\tan^2\theta\right)^{3/2}}d\theta\uz                 \\
-             & =-\frac{\mu_0K_\phi}{2R}\int_{-\pi/2}^{\pi/2}\frac{\sec^2\theta}{\sec^3\theta}d\theta\uz\justif{\quad}{$1+\tan^2 x=\sec^2 x$} \\
-             & =-\frac{\mu_0K_\phi}{2R}\int_{-\pi/2}^{\pi/2}\cos\theta d\theta\uz\justif{\quad}{$\sec\theta=1/\cos\theta$} \\
-             & =-\frac{\mu_0K_\phi}{2R}\left[\sin\frac{\pi}{2}+\sin\frac{\pi}{2}\right]\uz \\
-             & =-\frac{\mu_0K_\phi}{R}\uz \\
+             & =\frac{\mu_0R^2K_\phi}{2}\int_{-\pi/2}^{\pi/2}\frac{-R\sec^2\theta}{\left(R^2+R^2\tan^2\theta\right)^{3/2}}d\theta\uz        \\
+             & =-\frac{\mu_0K_\phi}{2}\int_{-\pi/2}^{\pi/2}\frac{\sec^2\theta}{\left(1+\tan^2\theta\right)^{3/2}}d\theta\uz                 \\
+             & =-\frac{\mu_0K_\phi}{2}\int_{-\pi/2}^{\pi/2}\frac{\sec^2\theta}{\sec^3\theta}d\theta\uz\justif{\quad}{$1+\tan^2 x=\sec^2 x$} \\
+             & =-\frac{\mu_0K_\phi}{2}\int_{-\pi/2}^{\pi/2}\cos\theta d\theta\uz\justif{\quad}{$\sec\theta=1/\cos\theta$}                   \\
+             & =-\frac{\mu_0K_\phi}{2}\left[\sin\frac{\pi}{2}+\sin\frac{\pi}{2}\right]\uz                                                   \\
+             & =-\mu_0K_\phi\uz
           \end{align*}
           Let's check units: The units of $\mu_0$ are $\unit{\newton\per\ampere\squared}$ and the units of $K_\phi$ must be $\unit{\ampere\per\meter}$ to satisfy the
-          definition of a surface current. Hence the units of the expression are $\unit{\newton\per\ampere\per\meter\squared}=\unit{\tesla\per\meter}$ which isn't right.
+          definition of a surface current. Hence the units of the expression are $\unit{\newton\per\ampere\per\meter}=\unit{\tesla}$ so the units work out.
   \end{enumerate}
 \end{soln}
 
@@ -439,10 +439,29 @@ A steady current $I$ flows down a long cylindrical wire of radius $a$. Find the 
   \item the current is distributed in such a way that $J$ is proportional to $s$, the distance from the axis.
 \end{enumerate}
 \end{problem}
-\begin{soln}
+\begin{soln}~
   \begin{enumerate}[label=(\alph*)]
-    \item the current is uniformly distributed over the surface of the wire;
-    \item the current is distributed in such a way that $J$ is proportional to $s$, the distance from the axis.
+    \item ~\begin{enumerate}[label=(\roman*)]
+            \item Inside the wire we set up an Amperian loop of radius $a$ along the surface of the cylinder. Since no current flows through this loop the magnetic field must be zero
+                  by Ampere's law.
+            \item Outside the wire we set up an Amperian loop of radius $r>a$. Since this loop encloses all the current an hence Ampere's law gives us that
+                  $$\int \bv{B}\cdot d\bv{l}=\mu_0 I$$
+                  and since $\bv{l}=rd\phi\uv{\phi}$ and by right hand rule we expect the field to only have a $\uv{\phi}$ component so the integral becomes
+                  $$B\int_{0}^{2\pi}d\phi=\mu_0 I\implies \bv{B}=\frac{\mu_0 I}{2\pi r}\uv{\phi}.$$
+          \end{enumerate}
+    \item I am going to operate under the assumption that this means $J=kr$ for constant $k$, i.e. \emph{linearly} proportional.
+          ~\begin{enumerate}[label=(\roman*)]
+            \item Inside we set up a loop of radius $r<a$. The current through this loop is given by the integral of $J$ over the area of the loop,
+                  $$I=\int_{0}^{2\pi}d\phi\int_{0}^{r}kr'^2dr'=\frac{2\pi k}{3} r^3.$$ We again use Ampere's law to determine the field,
+                  $$\int \bv{B}\cdot d\bv{l}=\mu_0 \frac{2\pi k}{3} r^3$$
+                  and again by symmetry we expect that the field is entirely in $\uv{\phi}$ so the integral becomes
+                  $$B r\int_0^{2\pi}d\phi=\mu_0 \frac{2\pi k}{3} r^3\implies \bv{B} = \frac{\mu_0 k r^2}{3}\uv{\phi} $$
+            \item Inside we set up a loop of radius $r>a$. The current through this loop is, similarly to part (a.i), just the entire current $I$ and so 
+            Ampere's law becomes
+                  $$\int \bv{B}\cdot d\bv{l}=\mu_0 I$$
+                  and again by symmetry we expect that the field is entirely in $\uv{\phi}$ so the integral becomes
+                  $$B r\int_0^{2\pi}d\phi=\mu_0 I\implies \bv{B} = \frac{\mu_0 I}{2\pi r}\uv{\phi} $$
+          \end{enumerate}
   \end{enumerate}
 \end{soln}
 \end{document}
