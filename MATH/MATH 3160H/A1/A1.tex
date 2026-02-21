@@ -84,7 +84,7 @@
   \end{center}
 }
 
-\newcommand{\highlight}[1]{\colorbox{yellow}{$\displaystyle #1$}}
+\newcommand{\highlight}[1]{{\colorbox{yellow}{#1}}}
 
 \newcommand{\ti}[1]{\widetilde{#1}}
 
@@ -129,53 +129,213 @@ My student number is 0805980 so $p=9$, $q=5$, and $r=22$.
 \end{enumerate}
 \end{problem}
 \begin{soln}~
-\begin{enumerate}[label=(\alph*)]
-  \item For each of the following find the recurrence relation and use it to generate at least the first
-        four nonzero terms in the power series expansion about $x = 0$ for the general solution of the
-        following equations. In each case specify the interval for which the power series is guaranteed
-        to converge.
-        \begin{enumerate}[label=\roman*.]
-          \item $x=0$ is a singular point here. We have that $$p_0=\lim_{x\to0}x\frac{(1 - (p + q + 1)x)}{x(1-x)}=1 \quad\text{and}\quad q_0=-\lim_{x\to 0}x^2pq=0.$$
-          This gives us an indicial equation of 
-          $$r(r-1)+r=0\implies r_1=1\,r_2=0.$$
-          So, as usual we take a solution of the form 
-          $$y=\sum_{n=0}^{\infty}a_nx^{n+r}\implies y'=\sum_{n=0}^{\infty}a_n(n+r)x^{n+r-1}\implies y''=\sum_{n=0}^{\infty}a_n(n+r)(n+r-1)x^{n+r-2}$$
-          which we sub into our ODE to obtain 
-          \begin{align*}
-            &x(1 -x)\sum_{n=0}^{\infty}a_n(n+r)(n+r-1)x^{n+r-2} + (1 - (p + q + 1)x)\sum_{n=0}^{\infty}a_n(n+r)x^{n+r-1} - pq\sum_{n=0}^{\infty}a_nx^{n+r} = 0\\
-            \implies &x(1 -x)\sum_{n=0}^{\infty}a_n(n+r)(n+r-1)x^{n-2} + (1 - (p + q + 1)x)\sum_{n=0}^{\infty}a_n(n+r)x^{n-1} - pq\sum_{n=0}^{\infty}a_nx^{n} = 0\\
-            \implies &\sum_{n=0}^{\infty}a_n(n+r)(n+r-1)x^{n-1}-\sum_{n=0}^{\infty}a_n(n+r)(n+r-1)x^{n}+\sum_{n=0}^{\infty}a_n(n+r)x^{n-1}\\
-            &  - (p + q + 1)\sum_{n=0}^{\infty}a_n(n+r)x^{n} - pq\sum_{n=0}^{\infty}a_nx^{n} = 0.
-          \end{align*}
-          Now we need to make the starting $x$ powers of each of these series the same by dropping terms where appropriate,
-          \begin{align*}
-            \implies &\sum_{n=0}^{\infty}a_n(n+r)(n+r-1)x^{n-1}-\sum_{n=0}^{\infty}a_n(n+r)(n+r-1)x^{n}+\sum_{n=0}^{\infty}a_n(n+r)x^{n-1}\\
-            &  - (p + q + 1)\sum_{n=0}^{\infty}a_n(n+r)x^{n} - pq\sum_{n=0}^{\infty}a_nx^{n} = 0.
-          \end{align*}
-          \item $y'' + q^2x^2y = 0$
-          \item $2x(1 - x)y'' + (3 - (2p + 2q + 2)x)y' - pqy = 0$
-        \end{enumerate}
-  \item For each of the following find the recurrence relation and use it to generate at least the first
-        four nonzero terms in the power series expansion about x = 1 for the general solution of the
-        following equations. In each case specify the interval for which the power series is guaranteed
-        to converge.
-        \begin{enumerate}[label=\roman*.]
-          \item $(x - 1)y'' - xy' - 2y = 0$
-          \item $(x^2 - 2x + 1)y'' + (x - 1)^2y' - 2y = 0$
-          \item $(x - 1)y''- y = 0$
-        \end{enumerate}
-\end{enumerate}
+  \begin{enumerate}[label=(\alph*)]
+    \item For each of the following find the recurrence relation and use it to generate at least the first
+          four nonzero terms in the power series expansion about $x = 0$ for the general solution of the
+          following equations. In each case specify the interval for which the power series is guaranteed
+          to converge.
+          \begin{enumerate}[label=\roman*.]
+            \item $x=0$ is a singular point here. We have that $$p_0=\lim_{x\to0}x\frac{(1 - (p + q + 1)x)}{x(1-x)}=1 \quad\text{and}\quad q_0=-\lim_{x\to 0}x^2pq=0.$$
+                  This gives us an indicial equation of
+                  $$r(r-1)+r=0\implies r_1=1\,r_2=0.$$
+                  So, as usual we take a solution of the form
+                  $$y=\sum_{n=0}^{\infty}a_nx^{n+r}\implies y'=\sum_{n=0}^{\infty}a_n(n+r)x^{n+r-1}\implies y''=\sum_{n=0}^{\infty}a_n(n+r)(n+r-1)x^{n+r-2}$$
+                  which we sub into our ODE to obtain
+                  \begin{align*}
+                             & x(1 -x)\sum_{n=0}^{\infty}a_n(n+r)(n+r-1)x^{n+r-2} + (1 - (p + q + 1)x)\sum_{n=0}^{\infty}a_n(n+r)x^{n+r-1} - pq\sum_{n=0}^{\infty}a_nx^{n+r} = 0 \\
+                    \implies & x(1 -x)\sum_{n=0}^{\infty}a_n(n+r)(n+r-1)x^{n-2} + (1 - (p + q + 1)x)\sum_{n=0}^{\infty}a_n(n+r)x^{n-1} - pq\sum_{n=0}^{\infty}a_nx^{n} = 0       \\
+                    \implies & \sum_{n=0}^{\infty}a_n(n+r)(n+r-1)x^{n-1}-\sum_{n=0}^{\infty}a_n(n+r)(n+r-1)x^{n}+\sum_{n=0}^{\infty}a_n(n+r)x^{n-1}                              \\
+                             & - (p + q + 1)\sum_{n=0}^{\infty}a_n(n+r)x^{n} - pq\sum_{n=0}^{\infty}a_nx^{n} = 0.
+                  \end{align*}
+                  Now we need to make the starting $x$ powers of each of these series the same by dropping terms where appropriate,
+                  \begin{align*}
+                    \implies & a_0(r)(r-1)x^{-1}+\sum_{n=1}^{\infty}a_n(n+r)(n+r-1)x^{n-1}-\sum_{n=0}^{\infty}a_n(n+r)(n+r-1)x^{n}+a_0(r)x^{-1}      \\
+                             & +\sum_{n=1}^{\infty}a_n(n+r)x^{n-1} - (p + q + 1)\sum_{n=0}^{\infty}a_n(n+r)x^{n} - pq\sum_{n=0}^{\infty}a_nx^{n} = 0
+                  \end{align*}
+                  here the first term will be zero for both $r$ values so it can go away. We the reindex our sums to obtain
+                  \begin{align*}
+                     & \sum_{n=0}^{\infty}a_{n+1}(n+r+1)(n+r)x^{n}-\sum_{n=0}^{\infty}a_n(n+r)(n+r-1)x^{n}+a_0(r)x^{-1}                          \\
+                     & +\sum_{n=0}^{\infty}a_{n+1}(n+r+1)x^{n} - (p + q + 1)\sum_{n=0}^{\infty}a_n(n+r)x^{n} - pq\sum_{n=0}^{\infty}a_nx^{n} = 0
+                  \end{align*}
+                  so by the identity principle we obtain that
+                  $a_0rx^{-1}=0\implies a_0=0$ when $r=1$, but for $r=0$ $a_0$ is undetermined by this equation. Now we look at the coefficients of the sums,
+                  \begin{align*}
+                             & a_{n+1}(n+r+1)(n+r)-a_n(n+r)(n+r-1) +a_{n+1}(n+r+1) - (p + q + 1)a_n(n+r) - pqa_n = 0          \\
+                    \implies & a_{n+1}\left[(n+r+1)(n+r)+(n+r+1)\right]-a_n\left[(n+r)(n+r-1)+ (p + q + 1)(n+r) + pq\right]=0 \\
+                    \implies & a_{n+1}=a_n\frac{(n+r)(n+r-1)+ (p + q + 1)(n+r) + pq}{(n+r+1)(n+r)+(n+r+1)}                    \\
+                    \implies & a_{n+1}=a_n\frac{(n+r)(n+r+p+q) + pq}{(n+r+1)^2}.
+                  \end{align*}
+                  As we determined from the $x^{-1}$ term, this gives $a_n=0\forall n$ when $r=1$. For $r=0$ it gives
+                  $$a_{n+1}=a_n\frac{(n)(n+p+q) + pq}{(n+1)^2}$$
+                  which says that
+                  \begin{align*}
+                             & a_{1}=a_0pq                                                                                                        \\
+                    \implies & a_{2}=a_1\frac{(1+p+q) + pq}{4}=a_0pq\frac{(1+p+q) + pq}{4}                                                        \\
+                    \implies & a_{3}=a_2\frac{(2)(2+p+q) + pq}{9}=a_0pq\frac{(1+p+q) + pq}{4}\frac{(2)(2+p+q) + pq}{9}                            \\
+                    \implies & a_{4}=a_3\frac{(3)(3+p+q) + pq}{16}=a_0pq\frac{(1+p+q) + pq}{4}\frac{(2)(2+p+q) + pq}{9}\frac{(3)(3+p+q) + pq}{16}
+                  \end{align*}
+                  which for my student number becomes
+                  \begin{align*}
+                             & a_{1}=45a_0     \\
+                    \implies & a_{2}=675a_0    \\
+                    \implies & a_{3}=5775a_0   \\
+                    \implies & a_{4}=34650a_0.
+                  \end{align*}
+                  Since the nearest singular point to $x=0$ other than itself is $x=1$, the series is guaranteed to converge for $0<x<1$.
+            \item Here we have no singular points and so we take the solution to be
+                  $$y=\sum_{n=0}^\infty a_nx^n\implies y'=\sum_{n=1}^\infty a_nnx^{n-1}\implies y''=\sum_{n=2}^\infty a_nn(n-1)x^{n-2}$$
+                  which gives us
+                  \begin{align*}
+                             & \sum_{n=2}^\infty a_nn(n-1)x^{n-2} + q^2\sum_{n=0}^\infty a_nx^{n+2} = 0                             \\
+                    \implies & 2a_2x^{0}+6a_3x^{1}+\sum_{n=4}^\infty a_nn(n-1)x^{n-2} + q^2\sum_{n=0}^\infty a_nx^{n+2} = 0         \\
+                    \implies & 2a_2x^{0}+6a_3x^{1}+\sum_{n=0}^\infty a_{n+4}(n+4)(n+3)x^{n+2} + q^2\sum_{n=0}^\infty a_nx^{n+2} = 0
+                  \end{align*}
+                  which tells us that
+                  $2a_2=0\implies a_2=0$ and that $6a_3=0\implies a_3=0$ and that
+                  $$a_{n+4}(n+4)(n+3)+a_nq^2=0\implies a_{n+4}=-a_n\frac{q^2}{(n+4)(n+3)}, n\geq 0$$
+                  which gives us
+                  \begin{align*}
+                             & a_4=-a_0\frac{q^2}{4\cdot 3}                                               \\
+                    \implies & a_{5}=-a_1\frac{q^2}{5\cdot 4}                                             \\
+                    \implies & a_{6}=-a_2\dots=0                                                          \\
+                    \implies & a_{7}=-a_3\dots=0                                                          \\
+                    \implies & a_{8}=-a_4\frac{q^2}{8\cdot 7}=a_0\frac{q^2}{4\cdot 3}\frac{q^2}{8\cdot 7} \\
+                    \implies & a_{9}=-a_5\frac{q^2}{9\cdot 8}=a_1\frac{q^2}{5\cdot 4}\frac{q^2}{9\cdot 8} \\
+                    \implies & a_{10}=-a_{6}\dots=0.
+                  \end{align*}
+                  Since there are no singular points this series converges $\forall \abs{x} \neq \infty$.
+            \item Since $x=0$ is singular but
+                  $$xp(x)=\frac{(3 - (2p + 2q + 2)x)}{2(1 - x)}\quad\text{and}\quad x^2q(x)=-\frac{xpq}{2(1 - x)}$$
+                  are analytic at $x=0$ we have a regular singular point. Hence we take our solution to be
+                  $$y=x^r\sum_{n=0}^{\infty}a_nx^n\implies y'=x^r\sum_{n=0}^{\infty}a_n(n+r)x^{n-1}\implies y''=x^r\sum_{n=0}^{\infty}a_n(n+r)(n+r-1)x^{n-2}$$
+                  which gives us
+                  \begin{align*}
+                             & 2x(1 - x)x^r\sum_{n=0}^{\infty}a_n(n+r)(n+r-1)x^{n-2} + (3 - (2p + 2q + 2)x)x^r\sum_{n=0}^{\infty}a_n(n+r)x^{n-1} - pqx^r\sum_{n=0}^{\infty}a_nx^n = 0 \\
+                    \implies & (2x^r\sum_{n=0}^{\infty}a_n(n+r)(n+r-1)x^{n-1} - 2x^r\sum_{n=0}^{\infty}a_n(n+r)(n+r-1)x^{n}) + (3x^r\sum_{n=0}^{\infty}a_n(n+r)x^{n-1}                \\
+                             & - (2p + 2q + 2)x^r\sum_{n=0}^{\infty}a_n(n+r)x^{n}) - pqx^r\sum_{n=0}^{\infty}a_nx^n = 0                                                               \\
+                    \implies & 2a_0(r)(r-1)x^{r-1}+2x^r\sum_{n=1}^{\infty}a_n(n+r)(n+r-1)x^{n-1} - 2x^r\sum_{n=0}^{\infty}a_n(n+r)(n+r-1)x^{n}                                        \\
+                             & + 3a_0(r)x^{r-1}+3x^r\sum_{n=1}^{\infty}a_n(n+r)x^{n-1}- (2p + 2q + 2)x^r\sum_{n=0}^{\infty}a_n(n+r)x^{n} - pqx^r\sum_{n=0}^{\infty}a_nx^n = 0         \\
+                    \implies & 2a_0(r)(r-1)x^{r-1}+2x^r\sum_{n=0}^{\infty}a_{n+1}(n+r+1)(n+r)x^{n} - 2x^r\sum_{n=0}^{\infty}a_n(n+r)(n+r-1)x^{n}                                      \\
+                             & + 3a_0(r)x^{r-1}+3x^r\sum_{n=0}^{\infty}a_{n+1}(n+r+1)x^{n}- (2p + 2q + 2)x^r\sum_{n=0}^{\infty}a_n(n+r)x^{n} - pqx^r\sum_{n=0}^{\infty}a_nx^n = 0     \\
+                  \end{align*}
+                  which tells us that
+                  $2a_0(r)(r-1)+ 3a_0(r)=0\implies r=0\text{ or }r=-\frac{1}{2}$
+                  and that
+                  $$2a_{n+1}(n+r+1)(n+r) - 2a_n(n+r)(n+r-1)+3a_{n+1}(n+r+1)- (2p + 2q + 2)a_n(n+r) - pqa_n = 0$$
+                  and so
+                  $$a_n\frac{2(n+r)(n+r+p+q) + pq}{(n+r+1)(2n+2r+3)}$$
+
+                  $$a_{n+1} = a_n\frac{2(n+r)(n+r+p+q) + pq}{(n+r+1)(2n+2r+3)},n\geq 0.$$
+                  Since we have found two different $r$ values which differ by a noninteger, we are guaranteed two linearly independent solutions. I will just list the coefficients
+                  for the $r=0$ case,
+                  \begin{align*}
+                     & a_1=15a_0               \\
+                     & a_2=\frac{225}{2}a_0    \\
+                     & a_3=\frac{8175}{14}a_0  \\
+                     & a_4=\frac{19075}{8}a_0.
+                  \end{align*}
+                  Since the nearest singular point to $x=0$ other than itself is $x=1$, the series is guaranteed to converge for $0<x<1$.
+          \end{enumerate}
+    \item For each of the following find the recurrence relation and use it to generate at least the first
+          four nonzero terms in the power series expansion about $x = 1$ for the general solution of the
+          following equations. In each case specify the interval for which the power series is guaranteed
+          to converge.
+          \begin{enumerate}[label=\roman*.]
+            \item Since this has a singular point at $x=1$ but
+                  $$(x-1)p(x)=-x\quad\text{and}\quad (x-1)^2q(x)=-2(x-1)$$
+                  are analytic we take a solution of the form
+                  $$y=\sum_{n=0}^{\infty}a_n(x-1)^{n+r}$$
+                  and let $t=x-1\implies dt=dx$ so that
+                  $$y=\sum_{n=0}^{\infty}a_n t^{n+r}\implies y'=\sum_{n=0}^{\infty}a_n(n+r) t^{n+r-1}\implies y''=\sum_{n=0}^{\infty}a_n(n+r)(n+r-1) t^{n+r-2}$$
+                  and so
+                  \begin{align*}
+                    \implies & t \sum_{n=0}^{\infty}a_n(n+r)(n+r-1) t^{n+r-2} - (t+1)\sum_{n=0}^{\infty}a_n(n+r) t^{n+r-1} - 2\sum_{n=0}^{\infty}a_n t^{n+r} = 0                                  \\
+                    \implies & t^r\sum_{n=0}^{\infty}a_n(n+r)(n+r-1) t^{n-1} - t^r\sum_{n=0}^{\infty}a_n(n+r) t^{n}-t^r\sum_{n=0}^{\infty}a_n(n+r) t^{n-1} - 2t^r\sum_{n=0}^{\infty}a_n t^{n} = 0 \\
+                    \implies & a_0(r)(r-1) t^{r-1}+t^r\sum_{n=1}^{\infty}a_n(n+r)(n+r-1) t^{n-1} - t^r\sum_{n=0}^{\infty}a_n(n+r) t^{n}-a_0(r) t^{r-1}                                            \\
+                             & -t^r\sum_{n=1}^{\infty}a_n(n+r) t^{n-1} - 2t^r\sum_{n=0}^{\infty}a_n t^{n} = 0                                                                                     \\
+                    \implies & a_0(r)(r-1) t^{r-1}+t^r\sum_{n=0}^{\infty}a_{n+1}(n+r+1)(n+r) t^{n} - t^r\sum_{n=0}^{\infty}a_n(n+r) t^{n}-a_0(r) t^{r-1}                                          \\
+                             & -t^r\sum_{n=0}^{\infty}a_{n+1}(n+r+1) t^{n} - 2t^r\sum_{n=0}^{\infty}a_n t^{n} = 0
+                  \end{align*}
+                  which says that
+                  $a_0r(r-1)-a_0r=0\implies r=0\text{ or }r=2$
+                  and that
+                  $$a_{n+1}(n+r+1)(n+r)-a_n(n+r)-a_{n+1}(n+r+1)-2a_n = 0\implies a_{n+1}=a_n\frac{n+r+2}{(n+r+1)(n+r-1)}n\geq 0$$
+                  which for the $r=2$ case gives coefficients
+                  $$a_{1}=a_0\frac{4}{3}$$
+                  $$a_{2}=a_1\frac{5}{8}=a_0\frac{5}{6}$$
+                  $$a_{3}=a_2\frac{6}{15}=a_0\frac{1}{3}$$
+                  $$a_{4}=a_3\frac{7}{24}=a_0\frac{7}{72}.$$
+                  Since the only singular point here is $x=1$, this series is guaranteed to converge for $0<x-1<\infty\implies x>1$.
+            \item First note that the leading coefficient factors as $(x-1)^2$. We see that $x=1$ is a singular point where
+                  $$(x-1)p(x)=(x-1)\quad\text{and}\quad (x-1)^2q(x)=-2$$
+                  are analytic and hence we take the solution to be
+                  $$y=\sum_{n=0}^{\infty}a_n t^{n+r}\implies y'=\sum_{n=0}^{\infty}a_n(n+r) t^{n+r-1}\implies y''=\sum_{n=0}^{\infty}a_n(n+r)(n+r-1) t^{n+r-2}$$
+                  with the same substitution as previous. This gives us
+                  \begin{align*}
+                             & t^r\sum_{n=0}^{\infty}a_n(n+r)(n+r-1) t^{n}+ t^r\sum_{n=0}^{\infty}a_n(n+r) t^{n+1} - 2t^r\sum_{n=0}^{\infty}a_n t^{n}=0                                  \\
+                    \implies & a_0(r)(r-1) t^{r}+t^r\sum_{n=1}^{\infty}a_n(n+r)(n+r-1) t^{n}+ t^r\sum_{n=0}^{\infty}a_n(n+r) t^{n+1} - 2a_0 t^{r}-2t^r\sum_{n=1}^{\infty}a_n t^{n}=0     \\
+                    \implies & a_0(r)(r-1) t^{r}+t^r\sum_{n=1}^{\infty}a_n(n+r)(n+r-1) t^{n}+ t^r\sum_{n=1}^{\infty}a_{n-1}(n+r-1) t^{n} - 2a_0 t^{r}-2t^r\sum_{n=1}^{\infty}a_n t^{n}=0
+                  \end{align*}
+                  which tells us that
+                  $a_0r(r-1)-2a_0=0\implies r=-1\text{ or } r=2$ and that
+                  $$a_n(n+r)(n+r-1)+a_{n-1}(n+r-1)-2a_n=0\implies a_n=-a_{n-1}\frac{(n+r-1)}{(n+r)(n+r-1)-2},n\geq 1.$$
+                  As usual we take the higher $r$ value just to save on writing,
+                  $$a_1=-a_{0}\frac{2}{(3)(2)-2}=-a_0\frac{1}{2}$$
+                  $$a_2=-a_{1}\frac{3}{(4)(3)-2}=a_0\frac{3}{20}$$
+                  $$a_3=-a_{2}\frac{4}{(5)(4)-2}=-a_0\frac{1}{30}$$
+                  $$a_4=-a_{3}\frac{5}{(6)(5)-2}=a_0\frac{1}{168}.$$
+                  Since the only singular point here is $x=1$, this series is guaranteed to converge for $x>1$.
+            \item Here $x=1$ is a singular point where
+                  $$(x-1)p(x)=0\quad\text{and}\quad (x-1)^2q(x)=-(x-1)$$
+                  are analytic. Hence we take the solution to be
+                  $$y=\sum_{n=0}^{\infty}a_n t^{n+r}\implies y'=\sum_{n=0}^{\infty}a_n(n+r) t^{n+r-1}\implies y''=\sum_{n=0}^{\infty}a_n(n+r)(n+r-1) t^{n+r-2}$$
+                  once again with the $t=x-1$ substitution,
+                  \begin{align*}
+                             & t^r\sum_{n=0}^{\infty}a_n(n+r)(n+r-1) t^{n-1}- \sum_{n=0}^{\infty}a_n t^{n}=0                          \\
+                    \implies & a_0(r)(r-1) t^{-1}+t^r\sum_{n=1}^{\infty}a_n(n+r)(n+r-1) t^{n-1}- t^r\sum_{n=0}^{\infty}a_n t^{n}=0    \\
+                    \implies & a_0(r)(r-1) t^{-1}+t^r\sum_{n=0}^{\infty}a_{n+1}(n+r+1)(n+r) t^{n}- t^r\sum_{n=0}^{\infty}a_n t^{n} =0
+                  \end{align*}
+                  which tells us that $a_0(r)(r-1)=0\implies r=1\text{ or } r=0$
+                  and that
+                  $$a_{n+1}(n+r+1)(n+r) - a_n=0\implies a_{n+1}=\frac{a_n}{(n+r+1)(n+r)}.$$
+                  For the $r=1$ case this gives coefficients
+                  $$a_{1}=\frac{a_0}{2}$$
+                  $$a_{2}=\frac{a_1}{(3)(2)}=\frac{a_0}{12}$$
+                  $$a_{3}=\frac{a_2}{(4)(3)}=\frac{a_0}{144}$$
+                  $$a_{4}=\frac{a_3}{(5)(4)}=\frac{a_0}{2880}$$
+                  Since the only singular point here is $x=1$, this series is guaranteed to converge for $x>1$.
+          \end{enumerate}
+  \end{enumerate}
 \end{soln}
 
 % PROBLEM 2
-\begin{problem}
+\begin{problem}~
 \begin{enumerate}[label=(\alph*)]
   \item Determine all the ordinary points of $(x^3 -p^3)y'' + 5xy' + y = 0$.
-  \item Determine the regular and irregular singular point of $x^2(x^2 - q^2)2y'' - (x^2 - q^2)y' + xy = 0$.
+  \item Determine the regular and irregular singular point of $x^2(x^2 - q^2)^2y'' - (x^2 - q^2)y' + xy = 0$.
 \end{enumerate}
 \end{problem}
-\begin{soln}
-
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item For me this looks like $(x^3 -729)y'' + 5xy' + y = 0$ which means that all points except $x=9$ are ordinary.
+    \item For me this looks like $x^2(x^2 - 25)^2y'' - (x^2 - 25)y' + xy =0$
+          which gives
+          $$y'' - \frac{(x^2 - 25)}{x^2(x^2 - 25)^2}y' + \frac{x}{x^2(x^2 - 25)^2}y =
+            y'' - \frac{1}{x^2(x^2 - 25)}y' + \frac{1}{x(x^2 - 25)^2}y
+          $$
+          which has singularities at $x=0,\pm 5$. Generally we have that
+          $$p(x)=- \frac{1}{x^2(x^2 - 25)}\quad\text{and}\quad q(x)=\frac{1}{x(x^2 - 25)^2}$$
+          and $$xp(x)=- \frac{1}{x(x^2 - 25)}$$
+          which is not analytic at $x=0$ so $x=0$ is in irregular singular point.
+          $$(x-5)p(x)= \frac{1}{x^2(x+5)}$$
+          and
+          $$(x-5)^2q(x)= \frac{1}{x(x+5)^2}$$
+          are both analytic at $x=5$ and so this is a regular singular point. Finally
+          $$(x+5)p(x)= \frac{1}{x^2(x-5)}$$
+          and
+          $$(x+5)^2q(x)= \frac{1}{x(x-5)^2}$$
+          are both analytic at $x=-5$ and so this is a regular singular point.
+  \end{enumerate}
 \end{soln}
 
 % PROBLEM 3
@@ -183,6 +343,144 @@ My student number is 0805980 so $p=9$, $q=5$, and $r=22$.
 Find the full power series solution of the differential equation $xy'' + (p - q)^2y = 0$
 \end{problem}
 \begin{soln}
+  For me this looks like $xy'' + 16y = 0$ which has a regular singular point at $x=0$ and hence we take our solution to be
+  of the form
+  $$y=\sum_{n=0}^{\infty}a_nx^{n+r}\implies y'=\sum_{n=0}^{\infty}a_n(n+r)x^{n+r-1}\implies y''=\sum_{n=0}^{\infty}a_n(n+r)(n+r-1)x^{n+r-2}$$
+  which when subbed into the ODE looks like
+  \begin{align*}
+             & \sum_{n=0}^{\infty}a_n(n+r)(n+r-1)x^{n+r-1} + 16\sum_{n=0}^{\infty}a_nx^{n+r} = 0                      \\
+    \implies & a_0(r)(r-1)x^{r-1}+\sum_{n=1}^{\infty}a_n(n+r)(n+r-1)x^{n+r-1} + 16\sum_{n=0}^{\infty}a_nx^{n+r} = 0   \\
+    \implies & a_0(r)(r-1)x^{r-1}+\sum_{n=0}^{\infty}a_{n+1}(n+r+1)(n+r)x^{n+r} + 16\sum_{n=0}^{\infty}a_nx^{n+r} = 0
+  \end{align*}
+  \newpage
+  which says that $a_0(r)(r-1)=0\implies r=0\text{ or } r=1$ and that
+  $$a_{n+1}(n+r+1)(n+r) + 16a_n=0\implies a_{n+1}  =-a_n\frac{16}{(n+r+1)(n+r)}$$
+  which in the case of $r=1$ gives coefficients
+  $$a_{n+1} =-a_n\frac{16}{(n+2)(n+1)}$$
+  which look like
+  $$a_{1} =-a_0\frac{16}{(2)(1)}$$
+  $$a_{2} =-a_1\frac{16}{(3)(2)}=a_0\frac{16^2}{3\cdot2\cdot 2\cdot 1}$$
+  $$a_{3} =-a_2\frac{16}{(4)(3)}=-a_0\frac{16^3}{4\cdot 3\cdot 3\cdot2\cdot 2\cdot 1}$$
+  from which we can see that the general form of a coefficient will be
+  $$a_n=a_0(-1)^n\frac{16^n}{(n+1)!n!}.$$
+  This gives us a solution,
+  $$y_1=\sum_{n=0}^{\infty}a_0(-1)^n\frac{16^n}{(n+1)!n!}x^{n+1}=a_0x\sum_{n=0}^{\infty}\frac{(-1)^n16^n}{(n+1)!n!}x^{n}$$
 
+
+
+  In the case of $r=0$ we get a recurrence relation which looks like
+  $$a_{n+1} =-a_n\frac{16}{n(n+1)}$$
+  which obviously blows up at $n=0$, so we seek another solution. We try the form
+  $$y_2=Cy_1\ln(x)+\sum_{n=0}^{\infty}b_nx^{n+0}$$
+  where $C$ is a constant. Taking the derivatives of this,
+  $$y_2'=C\left[y_1'\ln(x)+\frac{y_1}{x}\right]+\sum_{n=1}^{\infty}b_nnx^{n-1}$$
+  $$y_2''=C\left[y_1''\ln(x)+\frac{y_1'}{x}+\frac{y_1'}{x}-\frac{y_1}{x^2}\right]+\sum_{n=2}^{\infty}b_nn(n-1)x^{n-2}$$
+  so
+  \begin{align*}
+             & C\left[xy_1''\ln(x)+2y_1'-\frac{y_1}{x}\right]+\sum_{n=2}^{\infty}b_nn(n-1)x^{n-1} + 16Cy_1\ln(x)+16\sum_{n=0}^{\infty}b_nx^{n} = 0 \\
+    \implies & C\left[xy_1''\ln(x)+2y_1'-\frac{y_1}{x}+16y_1\ln(x)\right]+\sum_{n=2}^{\infty}b_nn(n-1)x^{n-1} +16\sum_{n=0}^{\infty}b_nx^{n} = 0   \\
+    \implies & C\left[xy_1''\ln(x)+16y_1\ln(x)+2y_1'-\frac{y_1}{x}\right]+\sum_{n=2}^{\infty}b_nn(n-1)x^{n-1} +16\sum_{n=0}^{\infty}b_nx^{n} = 0
+  \end{align*}
+  and
+  $$y_1'=a_0\sum_{n=0}^{\infty}\frac{(-1)^n16^n}{(n+1)!n!}(n+1)x^{n}$$
+  $$y_1''=a_0\sum_{n=0}^{\infty}\frac{(-1)^n16^n}{(n+1)!n!}(n+1)(n)x^{n-1}$$
+  so
+  \begin{align*}
+    \implies & Ca_0\left[x\ln(x)\sum_{n=0}^{\infty}\frac{(-1)^n16^n}{(n+1)!n!}(n+1)(n)x^{n-1}\right.            \\
+             & +16x\ln(x)\sum_{n=0}^{\infty}\frac{(-1)^n16^n}{(n+1)!n!}x^{n}                                    \\
+             & +2\sum_{n=0}^{\infty}\frac{(-1)^n16^n}{(n+1)!n!}(n+1)x^{n}                                       \\
+             & \left.-\frac{1}{x}x\sum_{n=0}^{\infty}\frac{(-1)^n16^n}{(n+1)!n!}x^{n}\right]
+    +\sum_{n=2}^{\infty}b_nn(n-1)x^{n-1}
+    +16\sum_{n=0}^{\infty}b_nx^{n} =0                                                                           \\
+    \implies & Ca_0\left[\ln(x)\sum_{\highlight{$n=1$}}^{\infty}\frac{(-1)^n16^n}{(n+1)!n!}(n+1)(n)x^{n}\right. \\
+             & +\ln(x)\sum_{n=0}^{\infty}\frac{(-1)^n16^{n+1}}{(n+1)!n!}x^{n+1}                                 \\
+             & +2\sum_{n=0}^{\infty}\frac{(-1)^n16^n}{(n+1)!n!}(n+1)x^{n}                                       \\
+             & \left.-\sum_{n=0}^{\infty}\frac{(-1)^n16^n}{(n+1)!n!}x^{n}\right]
+    +\sum_{n=2}^{\infty}b_nn(n-1)x^{n-1}
+    +16\sum_{n=0}^{\infty}b_nx^{n} =0                                                                           \\
+    \implies & Ca_0\left[\ln(x)\sum_{n=1}^{\infty}\frac{(-1)^n16^n}{n!(n-1)!}x^{n}\right.                       \\
+             & +\ln(x)\sum_{n=0}^{\infty}\frac{(-1)^n16^{n+1}}{(n+1)!n!}x^{n+1}                                 \\
+             & +2\sum_{n=0}^{\infty}\frac{(-1)^n16^n}{(n+1)!n!}(n+1)x^{n}                                       \\
+             & \left.-\sum_{n=0}^{\infty}\frac{(-1)^n16^n}{(n+1)!n!}x^{n}\right]
+    +\sum_{n=2}^{\infty}b_nn(n-1)x^{n-1}
+    +16\sum_{n=0}^{\infty}b_nx^{n} =0                                                                           \\
+    \implies & Ca_0\left[\cancel{\ln(x)\sum_{n=0}^{\infty}\frac{(-1)^{n+1}16^{n+1}}{n!(n+1)!}x^{n+1}}\right.    \\
+             & +\cancel{\ln(x)\sum_{n=0}^{\infty}\frac{(-1)^n16^{n+1}}{(n+1)!n!}x^{n+1}}                        \\
+             & +2\sum_{n=0}^{\infty}\frac{(-1)^n16^n}{(n+1)!n!}(n+1)x^{n}                                       \\
+             & \left.-\sum_{n=0}^{\infty}\frac{(-1)^n16^n}{(n+1)!n!}x^{n}\right]
+    +\sum_{n=2}^{\infty}b_nn(n-1)x^{n-1}
+    +16\sum_{n=0}^{\infty}b_nx^{n} =0                                                                           \\
+    \implies &
+    2Ca_0\sum_{n=0}^{\infty}\left[\frac{(-1)^n16^n}{(n+1)!n!}(n+1)-\frac{(-1)^n16^n}{(n+1)!n!}\right]x^{n}
+    +\sum_{n=2}^{\infty}b_nn(n-1)x^{n-1}
+    +16\sum_{n=0}^{\infty}b_nx^{n} =0                                                                           \\
+    \implies &
+    2Ca_0\sum_{n=0}^{\infty}\left[\frac{(-1)^n16^n(n+1)!}{(n+1)!n!^2}-\frac{(-1)^n16^nn!}{(n+1)!n!^2}\right]x^{n}
+    +\sum_{n=2}^{\infty}b_nn(n-1)x^{n-1}
+    +16\sum_{n=0}^{\infty}b_nx^{n} =0                                                                           \\
+    \implies &
+    2Ca_0\sum_{n=0}^{\infty}(-1)^n16^n\left[\frac{n}{(n+1)!n!}\right]x^{n}
+    +\sum_{n=2}^{\infty}b_nn(n-1)x^{n-1}
+    +16\sum_{n=0}^{\infty}b_nx^{n} =0                                                                           \\
+    \implies &
+    2Ca_0\sum_{n=1}^{\infty}\frac{(-1)^n16^n}{(n+1)!(n-1)!}x^{n}
+    +\sum_{n=1}^{\infty}b_{n+1}n(n+1)x^{n}
+    +16b_0+16\sum_{n=1}^{\infty}b_nx^{n} =0                                                                     \\
+  \end{align*}
+  which finally, after much suffering, says that $16b_0=0\implies b_0=0$ and that
+  $$2Ca_0\frac{(-1)^n16^n}{(n+1)!(n-1)!}+b_{n+1}n(n+1)+16b_n=0$$
+  and so
+  $$b_{n+1}=-\frac{16b_n}{n(n+1)}+2Ca_0\frac{(-1)^{n+1}16^n}{(n+1)!(n-1)!},n\geq 1$$
+  which gives coefficients
+  $$b_{2}=-\frac{16b_1}{2\cdot 1}+2Ca_0\frac{16}{(2)!(0)!}$$
+  \begin{align*}
+    b_{3} & =-\frac{16b_2}{3\cdot 2}-2Ca_0\frac{16^2}{(3)!(1)!}                                                       \\
+          & =\frac{16^2b_1}{3\cdot 2\cdot2\cdot 1}-2Ca_0\frac{16^2}{3\cdot 2\cdot(2)!(0)!}-2Ca_0\frac{16^2}{(3)!(1)!} \\
+          & =\frac{16^2b_1}{3\cdot 2\cdot2\cdot 1}-2Ca_0\frac{16^2}{3!\cdot 2\cdot (0)!}-2Ca_0\frac{16^2}{(3)!(1)!}   \\
+          & =\frac{16^2b_1}{3!2!}-2Ca_0\frac{16^2}{3!2!}-2Ca_0\frac{16^2}{(3)!(1)!}                                   \\
+          & =\frac{16^2b_1}{3!2!}-2Ca_016^2\left[\frac{1}{3!2!}+\frac{2}{(3)!(1)!2}\right]                            \\
+          & =\frac{16^2b_1}{3!2!}-Ca_016^2\left[\frac{1}{2!}\right]                                                   \\
+  \end{align*}
+  \begin{align*}
+    b_{4} & =-\frac{16b_3}{4\cdot 3}+2Ca_0\frac{16^3}{(4)!(2)!}                                                                                                                                            \\
+          & =-\frac{16}{4\cdot 3}\left[\frac{16^2b_1}{3\cdot 2\cdot2\cdot 1}-2Ca_0\frac{16^2}{3!\cdot 2\cdot (0)!}-2Ca_0\frac{16^2}{(3)!(1)!}\right]+2Ca_0\frac{16^3}{(4)!(2)!}                            \\
+          & =-\frac{16^3b_1}{4\cdot 3\cdot3\cdot 2\cdot2\cdot 1}+2Ca_0\frac{16^3}{4\cdot 3\cdot3!\cdot 2\cdot (0)!}+2Ca_0\frac{16^3}{4\cdot 3\cdot(3)!(1)!}+2Ca_0\frac{16^3}{(4)!(2)!}                     \\
+          & =-\frac{16^3b_1}{4\cdot 3\cdot3\cdot 2\cdot2\cdot 1}+2Ca_0\frac{16^3}{4\cdot 3\cdot3\cdot2\cdot 2\cdot 1\cdot 1}+2Ca_0\frac{16^3}{4\cdot 3\cdot3\cdot2\cdot1\cdot1}+2Ca_0\frac{16^3}{(4)!(2)!} \\
+          & =-\frac{16^3b_1}{4!3!}+2Ca_0\frac{16^3}{4!3!}+2Ca_0\frac{16^3}{4!\cdot 3}+2Ca_0\frac{16^3}{(4)!(2)!}                                                                                           \\
+          & =-\frac{16^3b_1}{4!3!}+2Ca_016^3\left[\frac{3}{4!3!}\right]                                                                                                                                    \\
+          & =-\frac{16^3b_1}{4!3!}+Ca_016^3\left[\frac{1}{4!}\right]                                                                                                                                       \\
+  \end{align*}
+  which I think gives a general form of
+  $$b_n=(-1)^{n}16^{n-1}\left[\frac{Ca_0}{n!}-\frac{b_1}{n!(n-1)!}\right]=(-1)^{n}16^{n-1}\left[\frac{Ca_0(n-1)!-b_1}{n!(n-1)!}\right].$$
+  And so, finally, we obtain a full solution:
+  $$y=a_0x\sum_{n=0}^{\infty}\frac{(-1)^n16^n}{(n+1)!n!}x^{n}+\sum_{n=1}^{\infty}(-1)^{n}16^{n-1}\left[\frac{Ca_0(n-1)!-b_1}{n!(n-1)!}\right]x^{n}$$
+
+
+
+
+  % $C$ must be zero here as we are expanding about $x=0$ and $\ln(0)$ is undefined. Hence the form we are actually trying is
+  % $$y_2=\sum_{k=0}^{\infty}b_kx^{k}\implies y_2'=\sum_{k=1}^{\infty}b_k kx^{k-1}\implies y_2''=\sum_{k=2}^{\infty}b_kk(k-1)x^{k-2}$$
+  % which when subbed into the ODE gives
+
+  % \begin{align*}
+  %            & \sum_{k=2}^{\infty}b_kk(k-1)x^{k-1} + 16\sum_{k=0}^{\infty}b_kx^{k} = 0         \\
+  %   \implies & \sum_{k=2}^{\infty}b_kk(k-1)x^{k-1} + 16b_0+16\sum_{k=1}^{\infty}b_kx^{k} = 0   \\
+  %   \implies & \sum_{k=1}^{\infty}b_{k+1}k(k+1)x^{k} + 16b_0+16\sum_{k=1}^{\infty}b_kx^{k} = 0 \\
+  %   \implies & 16b_0+\sum_{k=1}^{\infty}\left[b_{k+1}k(k+1) +16b_k\right]x^{k} = 0
+  % \end{align*}
+  % which says that
+  % $16b_0=0\implies b_0=0$ and that
+  % $$b_{k+1}k(k+1) +16b_k=0\implies b_{k+1}=b_k\frac{-16}{k(k+1)}k\geq 1$$
+  % so we obtain coefficients
+  % $$b_{2}=b_1\frac{-16}{2\cdot 1}$$
+  % $$b_{3}=b_2\frac{-16}{3\cdot 2}=b_1\frac{-16}{2\cdot 1}\frac{-16}{3\cdot 2}$$
+  % $$b_{4}=b_3\frac{-16}{4\cdot 3}=b_1\frac{-16}{4\cdot 3}\frac{-16}{2\cdot 1}\frac{-16}{3\cdot 2}$$
+  % $$b_{5}=b_4\frac{-16}{5\cdot 4}=b_1\frac{-16}{5\cdot 4}\frac{-16}{4\cdot 3}\frac{-16}{2\cdot 1}\frac{-16}{3\cdot 2}$$
+  % which gives a general form coefficient of 
+  % $$b_k=b_1\frac{(-1)^{k-1} 16^{k-1}}{k!(k-1)!}$$
+  % so 
+  % $$y_2=b_1\sum_{k=1}^{\infty}\frac{(-1)^{k-1} 16^{k-1}}{k!(k-1)!}x^{k}$$
+  % and so we have that 
+  % $$y=a_0x\sum_{n=0}^{\infty}\frac{(-1)^n16^n}{(n+1)!n!}x^{n}+b_1\sum_{k=1}^{\infty}\frac{(-1)^{k-1} 16^{k-1}}{k!(k-1)!}x^{k}$$
 \end{soln}
 \end{document}
