@@ -126,7 +126,7 @@ notation.
           $$\hat{\sigma}_x^{(1)}\otimes \ket{1}\bra{1}^{(2)}.$$
   \end{enumerate}
   Then sum these to create a two-condition operator. Note that order matters and qubit operators should be tensored
-  in ascending order.
+  in ascending order of qubit index.
   In matrix notation,
   $$\mathbb{I}^{(1)}\otimes \ket{0}\bra{0}^{(2)}=\begin{pmatrix}
       1 & 0 \\
@@ -184,19 +184,58 @@ notation.
 
 % PROBLEM 2
 \begin{problem}
-  We discussed in class how to implement a $\text{CNOT}_12$ gate using J coupling in NMR. We
+We discussed in class how to implement a $\text{CNOT}_12$ gate using J coupling in NMR. We
 concluded that
 $$\hat{R}_z^{(1)}(\pi/2)\hat{R}_y^{(2)}(-\pi/2)\hat{R}_z^{(2)}(-\pi/2)\hat{U}_J^{(2)}(1/2J_{12})\hat{R}_y^{(2)}(\pi/2)=e^{i\pi/4}\hat{U}_{CNOT}$$
-where 
+where
 $$\hat{U}_J^{(2)}(1/2J_{12})\equiv \ket{0}\bra{0}^{(1)}e^{-i(\pi/4)\hat{\sigma}_z^{(2)}}+\ket{1}\bra{1}^{(1)}e^{i(\pi/4)\hat{\sigma}_z^{(2)}}$$
 The goal of this problem is to demonstrate that this is true by writing out each of the rotation
 operators in terms of $\hat{\sigma}_i$ operators and multiplying the terms. Follow these steps:
 \begin{enumerate}[label=(\alph*)]
-  \item ee
+  \item Write out each of the rotation operators.
+        For example, $\hat{R}_y^{(2)}(\pi/2)=\cos(\pi/4)\mathbb{I}^{(2)}-i\sin(\pi/4)\hat{\sigma}^{(2)}_y=(\mathbb{I}^{(2)}-i\hat{\sigma}_y^{(2)})/\sqrt{2}$.
+  \item Calculate $\hat{U}_J^{(2)}(1/2J_{12})\hat{R}_y^{(2)}(\pi/2)$. Simplify such that each term contains no more than
+        one $\hat{\sigma}_i$ operator. Keep in mind that $\hat{\sigma}_i\hat{\sigma}_j = \delta_{ij} + i\hat{\sigma}_k \epsilon _{ijk}$.
+  \item Calculate $\hat{R}_z^{(2)}(-\pi/2)\hat{U}_J^{(2)}(1/2J_{12})\hat{R}_y^{(2)}(\pi/2)$. Simplify again.
+  \item Calculate $\hat{R}_y^{(2)}(-\pi/2)\hat{R}_z^{(2)}(-\pi/2)\hat{U}_J^{(2)}(1/2J_{12})\hat{R}_y^{(2)}(\pi/2)$. Simplify again.
+  \item Calculate $\hat{R}_z^{(1)}(\pi/2)\hat{R}_y^{(2)}(-\pi/2)\hat{R}_z^{(2)}(-\pi/2)\hat{U}_J^{(2)}(1/2J_{12})\hat{R}_y^{(2)}(\pi/2)$. Simplify and
+        demonstrate that your result equals $e^{i\pi/4}\hat{U}_{CNOT}$.
 \end{enumerate}
 \end{problem}
 \begin{soln}
- 
+  \begin{enumerate}[label=(\alph*)]
+    \item Recall that we defined the rotation operator as
+          $$\hat{R}_{\uv{j}}=\exp\left(-i\frac{\theta}{2}\uv{j}\cdot\vec{\hat{\sigma}}\right)=\cos\left(\frac{\theta}{2}\right)\hat{I}-i\sin\left(\frac{\theta}{2}\right)(\uv{j}\cdot \vec{\hat{\sigma}})$$
+          where $\uv{j}$ is the unit vector for the axis we want to rotate about. The operators we want are then:
+          \begin{enumerate}[label=(\roman*)]
+            \item $\hat{R}_z^{(1)}(\pi/2)=\exp\left(-i\frac{\pi}{4}\hat{\sigma}_z^{(1)}\right)
+            =\cos\left(\frac{\pi}{4}\right)\hat{I}^{(1)}-i\sin\left(\frac{\pi}{4}\right)\hat{\sigma}_z^{(1)}
+            =(\hat{I}^{(1)}-i\hat{\sigma}_z^{(1)})/\sqrt{2}$
+            \item $\hat{R}_y^{(2)}(-\pi/2)=\exp\left(i\frac{\pi}{4}\hat{\sigma}_y^{(2)}\right)
+            =\cos\left(\frac{\pi}{4}\right)\hat{I}^{(2)}+i\sin\left(\frac{\pi}{4}\right)\hat{\sigma}_y^{(2)}
+            =(\hat{I}^{(2)}+i\hat{\sigma}_y^{(2)})/\sqrt{2}
+            $
+            \item $\hat{R}_z^{(2)}(-\pi/2)=\exp\left(i\frac{\pi}{4}\hat{\sigma}_z^{(2)}\right)
+            =\cos\left(\frac{\pi}{4}\right)\hat{I}^{(2)}+i\sin\left(\frac{\pi}{4}\right)\hat{\sigma}_z^{(2)}
+            =(\hat{I}^{(2)}+i\hat{\sigma}_z^{(2)})/\sqrt{2}
+            $
+            \item $
+            \hat{R}_y^{(2)}(\pi/2)
+            =\exp\left(-i\frac{\pi}{4}\hat{\sigma}_y^{(2)}\right)
+            =\cos\left(\frac{\pi}{4}\right)\hat{I}^{(2)}-i\sin\left(\frac{\pi}{4}\right)\hat{\sigma}_y^{(2)}
+            =(\hat{I}^{(2)}-i\hat{\sigma}_y^{(2)})/\sqrt{2}
+            $
+          \end{enumerate}
+    \item \begin{align*}
+      \hat{U}_J^{(2)}(1/2J_{12})\hat{R}_y^{(2)}(\pi/2)&=\left[\ket{0}\bra{0}^{(1)}e^{-i(\pi/4)\hat{\sigma}_z^{(2)}}+\ket{1}\bra{1}^{(1)}e^{i(\pi/4)\hat{\sigma}_z^{(2)}}\right]\left[\hat{I}^{(2)}-i\hat{\sigma}_y^{(2)}\right]/\sqrt{2}\\
+      &=\frac{1}{2}\left[\ket{0}\bra{0}^{(1)}(\hat{I}^{(2)}-i\hat{\sigma}_z^{(2)})+\ket{1}\bra{1}^{(1)}(\hat{I}^{(2)}+i\hat{\sigma}_z^{(2)})\right]\left[\hat{I}^{(2)}-i\hat{\sigma}_y^{(2)}\right]\\
+      &=\frac{1}{2}\left[\ket{0}\bra{0}^{(1)}\hat{I}^{(2)}\left[\hat{I}^{(2)}-i\hat{\sigma}_y^{(2)}\right]-i\ket{0}\bra{0}^{(1)}\hat{\sigma}_z^{(2)}\left[\hat{I}^{(2)}-i\hat{\sigma}_y^{(2)}\right]+\ket{1}\bra{1}^{(1)}\hat{I}^{(2)}\left[\hat{I}^{(2)}-i\hat{\sigma}_y^{(2)}\right]+i\ket{1}\bra{1}^{(1)}\hat{\sigma}_z^{(2)}\left[\hat{I}^{(2)}-i\hat{\sigma}_y^{(2)}\right]\right]\\
+    \end{align*}
+    \item Calculate $\hat{R}_z^{(2)}(-\pi/2)\hat{U}_J^{(2)}(1/2J_{12})\hat{R}_y^{(2)}(\pi/2)$. Simplify again.
+    \item Calculate $\hat{R}_y^{(2)}(-\pi/2)\hat{R}_z^{(2)}(-\pi/2)\hat{U}_J^{(2)}(1/2J_{12})\hat{R}_y^{(2)}(\pi/2)$. Simplify again.
+    \item Calculate $\hat{R}_z^{(1)}(\pi/2)\hat{R}_y^{(2)}(-\pi/2)\hat{R}_z^{(2)}(-\pi/2)\hat{U}_J^{(2)}(1/2J_{12})\hat{R}_y^{(2)}(\pi/2)$. Simplify and
+          demonstrate that your result equals $e^{i\pi/4}\hat{U}_{CNOT}$.
+  \end{enumerate}
 \end{soln}
 
 \end{document}
