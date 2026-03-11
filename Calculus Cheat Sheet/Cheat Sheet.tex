@@ -1,20 +1,31 @@
 \documentclass[10pt,landscape,letterpaper]{cheatsheet}
 
-\usepackage{amsmath,amsthm,amssymb}
+\usepackage{amsmath,amsthm,amssymb,bm}
 \usepackage{graphicx,lipsum}
 \usepackage{enumitem}
+
+\usepackage{mdframed}
+\usepackage{cancel}
+
+
 \newcommand{\PRLsep}{\noindent\makebox[\linewidth]{\resizebox{0.3333\linewidth}{1pt}{$\bullet$}}\bigskip}
 \newcommand\longdiv[2]{%
 $\strut#1$\kern.25em\smash{\raise.3ex\hbox{$\big)$}}$\mkern-8mu
         \overline{\enspace\strut#2}$}
-\newcommand{\ui}{\mathbf{i}}
-\newcommand{\uj}{\mathbf{j}}
-\newcommand{\uk}{\mathbf{k}}
-\usepackage{mdframed}
-\usepackage{cancel}
+
+\newcommand{\bv}[1]{\bm{\mathrm{#1}}}     
+\newcommand{\uv}[1]{\hat{\bv{{#1}}}} 
+\newcommand{\ui}{\uv{i}}
+\newcommand{\uj}{\uv{j}}
+\newcommand{\uk}{\uv{k}}
+\newcommand{\ux}{\uv{x}}
+\newcommand{\uy}{\uv{y}}
+\newcommand{\uz}{\uv{z}}
+\newcommand{\grad}{\bv{\nabla}}
+
 \title{Calculus Cheat Sheet}
 \author{Jeremy Favro}
-\date{\today\\Revision 3}
+\date{\today\\Revision 4}
 
 \begin{document}
 
@@ -38,10 +49,10 @@ $ \text{If } \lim\limits_{x\to a}\left[\frac{f(x)}{g(x)}\right]=\frac{0}{0} \tex
 $ \text{ then } $
 $ \lim\limits_{x\to a}\left[\frac{f(x)}{g(x)}\right]=\lim\limits_{x\to a}\left[\frac{f^{\prime}(x)}{g^{\prime}(x)}\right] $
 
-\subsubsection*{Factoring at Infinity}
-If $p(x)$ and $q(x)$ are polynomials, to evaluate $\lim\limits_{x\to \pm \infty}\left[\frac{p(x)}{q(x)}\right]$ factor the greatest power of $x$ in $q(x)$ (the denominator) out of poth $p(x)$ and $q(x)$ then compute the limit, e.g.
-$ \lim\limits_{x\to -\infty}\left[\frac{3x^2-4}{5x-2x^2}\right]=\lim\limits_{x\to -\infty}\left[\frac{\cancel{x^2}(3-\frac{4}{x^2})}{\cancel{x^2}(\frac{5}{x}-2)}\right]$
-$ \frac{3-0}{0-2} = -\frac{3}{2} $
+% \subsubsection*{Factoring at Infinity}
+% If $p(x)$ and $q(x)$ are polynomials, to evaluate $\lim\limits_{x\to \pm \infty}\left[\frac{p(x)}{q(x)}\right]$ factor the greatest power of $x$ in $q(x)$ (the denominator) out of poth $p(x)$ and $q(x)$ then compute the limit, e.g.
+% $ \lim\limits_{x\to -\infty}\left[\frac{3x^2-4}{5x-2x^2}\right]=\lim\limits_{x\to -\infty}\left[\frac{\cancel{x^2}(3-\frac{4}{x^2})}{\cancel{x^2}(\frac{5}{x}-2)}\right]$
+% $ \frac{3-0}{0-2} = -\frac{3}{2} $
 \section*{Derivatives}
 \subsection*{Definition}
 $ \frac{d}{dx}f(x) = f^{\prime}(x) = \lim\limits_{h\to 0}\frac{f(x+h)-f(x)}{h}$.
@@ -67,25 +78,25 @@ $\frac{dy}{dx}=\frac{dy/dt}{dx/dt}$ recurse $y$ for $n$th derivative\\
 $(x,y)+(x^\prime,y^\prime)t$ for parametric tangent
 
 \subsection*{Common Derivatives}
-$ \frac{d}{dx}(x)=1                                                                                      $
+$ \frac{d}{dx}(x)=1                                                                                      $\\
 % Normal trig
-$ \frac{d}{dx}(\sin {x})=\cos {x}                                                                        $
-$ \frac{d}{dx}(\cos {x})=-\sin {x}                                                                       $
-$ \frac{d}{dx}(\tan {x})=\sec ^{2} {x}                                                                   $
+$ \frac{d}{dx}(\sin {x})=\cos {x}                                                                        $\\
+$ \frac{d}{dx}(\cos {x})=-\sin {x}                                                                       $\\
+$ \frac{d}{dx}(\tan {x})=\sec ^{2} {x}                                                                   $\\
 % Reciprocal
-$ \frac{d}{dx}(\sec {x})=\sec {x} \tan {x}                                                               $
-$ \frac{d}{dx}(\csc {x})=-\csc {x} \cot {x}                                                              $
-$ \frac{d}{dx}(\cot {x})=-\csc ^2 {x}                                                                    $
+$ \frac{d}{dx}(\sec {x})=\sec {x} \tan {x}                                                               $\\
+$ \frac{d}{dx}(\csc {x})=-\csc {x} \cot {x}                                                              $\\
+$ \frac{d}{dx}(\cot {x})=-\csc ^2 {x}                                                                    $\\
 % Inverse
-$ \frac{d}{dx}(\sin ^{-1} {x})=\frac{1}{\sqrt{1-x^2}} \sin^{-1} {x} \neq \frac{1}{\sin {x}} $
-$ \frac{d}{dx}(\cos ^{-1} {x})=-\frac{1}{\sqrt{1-x^2}}                                                   $
-$ \frac{d}{dx}(\tan ^{-1} {x})=\frac{1}{1+x^2}                                                           $
+$ \frac{d}{dx}(\sin ^{-1} {x})=\frac{1}{\sqrt{1-x^2}} \sin^{-1} {x} \neq \frac{1}{\sin {x}} $\\
+$ \frac{d}{dx}(\cos ^{-1} {x})=-\frac{1}{\sqrt{1-x^2}}                                                   $\\
+$ \frac{d}{dx}(\tan ^{-1} {x})=\frac{1}{1+x^2}                                                           $\\
 % Exponentials and Logarithms
-$ \frac{d}{dx}(a ^ {x})=a^{x} \ln {a}                                                                    $
-$ \frac{d}{dx}(e ^ {x})=e^{x}                                                                            $
-$ \frac{d}{dx}(\ln {x})=\frac{1}{x}, x > 0                                                               $
-$ \frac{d}{dx}(\ln {|x|})=\frac{1}{x}, x \neq 0                                                          $
-$ \frac{d}{dx}(\log {_a}{x})=\frac{1}{x \ln {a}}                                                         $
+$ \frac{d}{dx}(a ^ {x})=a^{x} \ln {a}                                                                    $\\
+$ \frac{d}{dx}(e ^ {x})=e^{x}                                                                            $\\
+$ \frac{d}{dx}(\ln {x})=\frac{1}{x}, x > 0                                                               $\\
+$ \frac{d}{dx}(\ln {|x|})=\frac{1}{x}, x \neq 0                                                          $\\
+$ \frac{d}{dx}(\log {_a}{x})=\frac{1}{x \ln {a}}                                                         $\\
 
 \subsection*{Common Chain Rule Derivatives}
 $ \frac{d}{dx}([f(x)]^n)=n[f(x)]^{n-1}f^{\prime}(x) $
@@ -124,8 +135,8 @@ $ \int \sec{x}\tan{x} \,dx = \sec{x} + C $ \\
 $ \int \csc{x}\cot{x} \,dx = -\csc{x} + C $ \\
 $ \int \csc^2{x} \,dx = -\cot{x} + C $ \\
 $ \int \sec{x} \,dx = \ln{\left\lvert \sec{x} + \tan{x} \right\rvert} + C $ \\
-$ \int \frac{1}{a^2+u^2} \,dx = \frac{1}{a}\tan^{-1}\left({\frac{x}{a}}\right) + C $ \\
-$ \int \frac{1}{\sqrt{a^2+u^2}} \,dx = \sin^{-1}\left({\frac{x}{a}}\right) + C $ \\
+$ \int \frac{1}{a^2+x^2} \,dx = \frac{1}{a}\tan^{-1}\left({\frac{x}{a}}\right) + C $ \\
+$ \int \frac{1}{\sqrt{a^2+x^2}} \,dx = \sin^{-1}\left({\frac{x}{a}}\right) + C $ \\
 
 \subsection*{Trig Reduction Formulae} (For $n \geq 2$) \\
 $\int \sin^n(x) \,dx = -\frac{1}{n}\sin^{n-1}(x)\cos(x)+\frac{n-1}{n}\int \sin^{n-2}(x) \,dx$\\
@@ -146,16 +157,16 @@ $\sqrt{a^2-x^2} \rightsquigarrow x=a\sin(\theta)$
 $\sqrt{a^2+x^2} \rightsquigarrow x=a\tan(\theta)$
 $\sqrt{x^2-a^2} \rightsquigarrow x=a\sec(\theta)$
 
-\subsection*{Partial Fractions \& Polynomial Division}
-If the degree of the numerator is greater than that of a the denominator, use polynomial division to
-divide the denominator into the numerator (\longdiv{denom}{numer}), then integrate the result. If the degree of the denominator is greater than
-that of the numerator, use partial fractions to decompose the integral as follows:
+% \subsection*{Partial Fractions \& Polynomial Division}
+% If the degree of the numerator is greater than that of a the denominator, use polynomial division to
+% divide the denominator into the numerator (\longdiv{denom}{numer}), then integrate the result. If the degree of the denominator is greater than
+% that of the numerator, use partial fractions to decompose the integral as follows:
 
-If the denominator contains different linear terms, break it down to $\frac{A}{ax+b}$ \\
-If it contains a repeated linear term ($(ax+b)^2$), break it down to $\frac{A}{ax+b}+\frac{B}{(ax+b)^2}$ \\
-If it contains an irreducible quadratic ($x^2+bx+c$), break it down to $\frac{A}{dx+o}+\frac{Bx+C}{x^2+bx+c}$ \\
+% If the denominator contains different linear terms, break it down to $\frac{A}{ax+b}$ \\
+% If it contains a repeated linear term ($(ax+b)^2$), break it down to $\frac{A}{ax+b}+\frac{B}{(ax+b)^2}$ \\
+% If it contains an irreducible quadratic ($x^2+bx+c$), break it down to $\frac{A}{dx+o}+\frac{Bx+C}{x^2+bx+c}$ \\
 
-Then, set up equations for the coefficients of the powers of $x$ in the numerator and solve them to determine $A,\,B,\,C$ and so on.
+% Then, set up equations for the coefficients of the powers of $x$ in the numerator and solve them to determine $A,\,B,\,C$ and so on.
 \subsection*{Applications}
 \subsubsection*{Centroids}
 $C = (\hat{x}, \hat{y})$,
@@ -164,11 +175,152 @@ $\hat{y} = \frac{\int yf(y) \,dy}{\int f(y) \,dy}$
 \subsubsection*{Arc Length}
 $L = \int_{a}^{b} \sqrt{1+[f^{\prime}(x)]^2} \,dx$
 $L = \int_{a}^{b} \sqrt{[f^{\prime}(t)]^2+[g^{\prime}(t)]^2+[h^{\prime}(t)]^2} \,dt$ for parametric. Area is just this times $2\pi x$ or $y$ for opposite of axis.
-\subsubsection*{Volume} Use the variable parallel to the axis of revolution.
-$V = \int_{a}^{b} A(x) \,dx$ where $A(x)$ is a function which gives the area
-of one ``slice'' of the solid. Slices are generally circular and may have holes in them, area
-of a circle is $\pi r^2$, and the area of a washer is $\pi (r_{outer}^2-r_{inner}^2)$
+% \subsubsection*{Volume} Use the variable parallel to the axis of revolution.
+% $V = \int_{a}^{b} A(x) \,dx$ where $A(x)$ is a function which gives the area
+% of one ``slice'' of the solid. Slices are generally circular and may have holes in them, area
+% of a circle is $\pi r^2$, and the area of a washer is $\pi (r_{outer}^2-r_{inner}^2)$
+\section*{Vector Calculus}
+% Cartesian
+\subsection*{Cartesian}
+$d\bv{l}=dx\ux+dy\ux+dz\uz$, $d\tau=dxdydz$\\
+\subsubsection*{Gradient}
+\begin{align*}
+        \grad t =\partial_xt\ux+\partial_yt\uy+\partial_zt\uz
+\end{align*}
+\subsubsection*{Divergence}
+\begin{align*}
+        \grad\cdot \bv{v}=\partial_x v_x\ux+\partial_yv_y\uy+\partial_zv_z\uz
+\end{align*}
+\subsubsection*{Curl}
+\begin{flalign*}
+        \grad\times \bv{v} & =\left(\partial_y v_z-\partial_z v_y\right)\ux \\
+                           & +\left(\partial_zv_x-\partial_x v_z\right)\uy  \\
+                           & +\left(\partial_xv_y-\partial_yv_x\right)\uz
+\end{flalign*}
+\subsubsection*{Laplacian}
+\begin{align*}
+        \grad^2t=\partial_{xx}t+\partial_{yy}t+\partial_{zz}t
+\end{align*}
+\newpage
+% Spherical
+\subsection*{Spherical}
+$d\bv{l}=dr\uv{r}+rd\theta\uv{\theta}+r\sin\theta d\phi\uv{\phi}$, $d\tau=r^2\sin\theta drd\theta d\phi$
+\subsubsection*{Gradient}
+\begin{align*}
+        \grad t =\partial_rt\uv{r}+\frac{1}{r}\partial_\theta t\uv{\theta}+\frac{1}{r\sin\theta}\partial_\phi t\uv{\phi}
+\end{align*}
+\subsubsection*{Divergence}
+\begin{align*}
+        \grad\cdot \bv{v} & =\frac{1}{r^2}\partial_r(r^2v_r)                           \\
+                          & +\frac{1}{r\sin\theta}\partial_\theta(\sin\theta v_\theta) \\
+                          & +\frac{1}{r\sin\theta}\partial_\phi v_\phi
+\end{align*}
+\subsubsection*{Curl}
+\begin{flalign*}
+        \grad\times \bv{v} & =\frac{1}{r\sin\theta}\left[\partial_\theta(\sin\theta v_\phi) -\partial_\phi v_\theta\right]\uv{r} \\
+                           & +\frac{1}{r}\left[\frac{1}{\sin\theta}\partial_\phi v_r-\partial_r(rv_\phi)\right]\uv{\theta}       \\
+                           & +\frac{1}{r}\left[\partial_r(rv_\theta)-\partial_\theta v_r\right]\uv{\phi}
+\end{flalign*}
+\subsubsection*{Laplacian}
+\begin{align*}
+        \grad^2t & =\frac{1}{r^2}\partial_r(r^2\partial_r t)                            \\
+                 & +\frac{1}{r^2\sin\theta}\partial_\theta(\sin\theta\partial_\theta t) \\
+                 & +\frac{1}{r^2\sin^2\theta}\partial_{\phi\phi}t
+\end{align*}
+% Cylindrical
+\subsection*{Cylindrical}
+$d\bv{l}=ds\uv{s}+sd\phi\uv{\phi}+dz\uz$, $d\tau=sds d\phi dz$
+\subsubsection*{Gradient}
+\begin{align*}
+        \grad t =\partial_st\uv{s}+\frac{1}{s}\partial_\phi t\uv{\phi}+\partial_z t\uz
+\end{align*}
+\subsubsection*{Divergence}
+\begin{align*}
+        \grad\cdot \bv{v} & =\frac{1}{s}\partial_s(sv_s)                      \\
+                          & +\frac{1}{s}\partial_\phi(v_\phi) +\partial_z v_z
+\end{align*}
+\subsubsection*{Curl}
+\begin{flalign*}
+        \grad\times \bv{v} & =\left[\frac{1}{s}\partial_\phi v_z-\partial_z v_\phi\right]\uv{s} \\
+                           & +\left[\partial_zv_s-\partial_sv_z\right]\uv{\phi}                 \\
+                           & +\frac{1}{s}\left[\partial_s(sv_\phi)-\partial_\phi v_s\right]\uz
+\end{flalign*}
+\subsubsection*{Laplacian}
+\begin{align*}
+        \grad^2t & =\frac{1}{s}\partial_s(s\partial_s t)+\frac{1}{s^2}\partial_{\phi\phi}t+\partial_{zz}t
+\end{align*}
+\subsection*{Vector Identities}
+$\bv{A}\cdot(\bv{B}\times \bv{C})=\bv{B}\cdot(\bv{C}\times \bv{A})=\bv{C}\cdot(\bv{A}\times \bv{B})$\\
+$\bv{A}\times(\bv{B}\times \bv{C})=\bv{B}(\bv{A}\cdot\bv{C})=\bv{C}(\bv{A}\cdot\bv{B})$\\
+etc.. will fill in later
+\subsection*{Theorems}
+\subsubsection*{Gradient Theorem}
+$$\int_{\bv{a}}^{\bv{b}}(\grad f)\cdot d\bv{l}=f(\bv{b})=f(\bv{a})$$
+\subsubsection*{Divergence Theorem}
+$$\int_\mathcal{V}\grad\cdot \bv{A}d\tau=\oint_\mathcal{S}\bv{A}\cdot d\bv{a}$$
+\subsubsection*{Curl (Stokes') Theorem}
+$$\int_\mathcal{S}(\grad\times A)\cdot d\bv{a}=\oint_\mathcal{C}\bv{A}\cdot d\bv{l}$$
+\subsection*{Coordinate Transforms}
+\subsubsection*{Spherical}
+$
+        \begin{cases}
+                x & =r\sin\theta\cos\phi \\
+                y & =r\sin\theta\sin\phi \\
+                z & =r\cos\theta
+        \end{cases}
+        \begin{cases}
+                \ux & =\sin\theta\cos\phi\uv{r}               \\
+                    & +\cos\theta\cos\phi\uv{\theta}          \\
+                    & -\sin\phi\uv{\phi}                      \\
+                \uy & =\sin\theta\sin\phi\uv{r}               \\
+                    & +\cos\theta\sin\phi\uv{\theta}          \\
+                    & +\cos\phi\uv{\phi}                      \\
+                \uz & =\cos\theta\uv{r}-\sin\theta\uv{\theta}
+        \end{cases}
+$
+$
+        \begin{cases}
+                r      & =\sqrt{x^2+y^2+z^2}                  \\
+                \theta & =\tan^{-1}(\frac{\sqrt{x^2+y^2}}{z}) \\
+                \phi   & =\tan^{-1}(\frac{y}{x})
+        \end{cases}
+        \begin{cases}
+                \uv{r}      & =\sin\theta\cos\phi\ux \\
+                            & +\sin\theta\sin\phi\uy \\
+                            & +\cos\theta\uz         \\
+                \uv{\theta} & =\cos\theta\cos\phi\ux \\
+                            & +\cos\theta\sin\phi\uy \\
+                            & -\sin\theta\uz         \\
+                \uv{\phi}   & =-\sin\phi\ux          \\
+                            & +\cos\phi\uy
+        \end{cases}
+$
+\subsubsection*{Cylindrical}
+$
+\begin{cases}
+        x&=s\cos\phi\\
+        y&=s\sin\phi\\
+        z&=z
+\end{cases}
+\begin{cases}
+        \ux&=\cos\phi\uv{s}-\sin\phi\uv{\phi}\\
+        \uy&=\sin\phi\uv{s}+\cos\phi\uv{\phi}\\
+        \uv{z}&=\uv{z}
+\end{cases}
+$
 
+$
+\begin{cases}
+s&=\sqrt{x^2+y^2}\\
+\phi&=\tan^{-1}(\frac{y}{x})\\
+z&=z
+\end{cases}
+\begin{cases}
+        \uv{s}&=\cos\phi\ux+\sin\phi\uy\\
+        \uv{\phi}&=-\sin\phi\ux+\cos\phi\uy\\
+        \uv{z}&=\uv{z}
+\end{cases}
+$
 % \section*{Sequences and Series}
 % \subsection*{Series With Nice Formulae}
 % The geometric series $\sum_{n=0}^{\infty}ar^n=\frac{a}{1-r}$ provided that $|r|<1$
@@ -228,41 +380,41 @@ of a circle is $\pi r^2$, and the area of a washer is $\pi (r_{outer}^2-r_{inner
 % defined as $R_n(x)=f(x)-T_n(x)$, which is how ``far off'' the Taylor Series $T_n(x)$ is from the function $f(x)$
 % for some $n$.
 
-\section*{Tidbits}
-$\vec{v}$ here is the velocity vector (duh)\\
-Unit tangent vector $\vec{T}=\frac{\vec{v}}{\left|\vec{v}\right|}$\\
-Curvature $\kappa=\left|\frac{d\vec{T}}{d\vec{s}}\right|=\frac{1}{\left|\vec{v}\right|}\left|\frac{d\vec{T}}{dt}\right|$\\
-Normal vector $\vec{N}=\frac{1}{\kappa}\frac{d\vec{T}}{ds}=\frac{d\vec{T}/dt}{\left|d\vec{T}/dt\right|}$\\
-For conservative fields
-$\frac{\partial M}{\partial y}=\frac{\partial N}{\partial x},
-        \frac{\partial N}{\partial z}=\frac{\partial P}{\partial y},
-        \frac{\partial P}{\partial x}=\frac{\partial M}{\partial z}.
-$
-\subsection{Line Integrals and Work}
-For variable force $f(x,y,z)$ along curve $r(t)=g(t)\ui+h(t)\uj+k(t)\uk$
-work is $\int_C\vec{F}\cdot dr=\int_{t_i}^{t_f}f(g,h,k)\left|\vec{v}(t)\right|\,dt$.\\
-For vector valued functions it simplifies to
-$\int_C\vec{F}\cdot dr\int_{t_i}^{t_f}\vec{F}(\vec{r}(t))\cdot\vec{v}(t)\,dt$.\\
-Alternatively for
-$\vec{F}=M\ui+N\uj+P\uk$
-we have $\int_CMdx+Ndy+Pdz$ where we change $dx,y,z$ as we do in integration by Substitution.
-\subsection{Flux}
-Flux of field $\vec{F}=M\ui+N\uj$ through curve $C=g(t)\ui+h(t)\uj$ is given by $\int_CMdy-Ndx$ which can be evaluated
-as seen above.
-\subsection{Green's Theorem}
-For $\vec{F}=M\mathbf{i}+N\mathbf{j}$:\\
-Divergence is $\frac{\partial M}{\partial x}+\frac{\partial N}{\partial y}$.\\
-$\oint_C\vec{F}\cdot d\vec{r}=\oint_CM\,dx+N\,dy=\iint_R\frac{\partial N}{\partial x}-\frac{\partial M}{\partial y}\,dx\,dy$\\
-and
-$\oint_C\vec{F}\cdot \vec{n}dS=\oint_CM\,dy-N\,dx=\iint_R\frac{\partial M}{\partial x}+\frac{\partial N}{\partial y}\,dx\,d$\\
-Integral of divergence over a region is the outward flux of the associated field over that region.
-\subsection{Surface Integrals}
-Area of $r(u,v)=f(u,v)\ui+g(u,v)\uj+h(u,v)\uk$
-is $\iint_R\left|r_u\times r_v\right|\,dA$
-remember that cross product is det of matrix with first row of unit vectors, second of first vector and third of second vector.
-For a surface given as $z=f(x,y)$ we get $A=\iint_R\sqrt{1+f_x^2+f_y^2}dA$.
-For integrating a scalar function $G$ over a surface if we have parametrized the surface we do 
-$\iint G(f(u,v),g,h)\left|r_u\times r_v\right|dudv$, if the surface is given as $z=f(x,y)$ we do
-$\iint G(x,y,f(x,y))\sqrt{f_x^2+f_y^2+1}dxdy$. For field $\vec{F}$ across surface $\vec{r}$ we do 
-$\iint_R \vec{F}\cdot\left(\vec{r}_x\times \vec{r}_z\right)\,dxdz$
+% \section*{Tidbits}
+% $\vec{v}$ here is the velocity vector (duh)\\
+% Unit tangent vector $\vec{T}=\frac{\vec{v}}{\left|\vec{v}\right|}$\\
+% Curvature $\kappa=\left|\frac{d\vec{T}}{d\vec{s}}\right|=\frac{1}{\left|\vec{v}\right|}\left|\frac{d\vec{T}}{dt}\right|$\\
+% Normal vector $\vec{N}=\frac{1}{\kappa}\frac{d\vec{T}}{ds}=\frac{d\vec{T}/dt}{\left|d\vec{T}/dt\right|}$\\
+% For conservative fields
+% $\frac{\partial M}{\partial y}=\frac{\partial N}{\partial x},
+%         \frac{\partial N}{\partial z}=\frac{\partial P}{\partial y},
+%         \frac{\partial P}{\partial x}=\frac{\partial M}{\partial z}.
+% $
+% \subsection{Line Integrals and Work}
+% For variable force $f(x,y,z)$ along curve $r(t)=g(t)\ui+h(t)\uj+k(t)\uk$
+% work is $\int_C\vec{F}\cdot dr=\int_{t_i}^{t_f}f(g,h,k)\left|\vec{v}(t)\right|\,dt$.\\
+% For vector valued functions it simplifies to
+% $\int_C\vec{F}\cdot dr\int_{t_i}^{t_f}\vec{F}(\vec{r}(t))\cdot\vec{v}(t)\,dt$.\\
+% Alternatively for
+% $\vec{F}=M\ui+N\uj+P\uk$
+% we have $\int_CMdx+Ndy+Pdz$ where we change $dx,y,z$ as we do in integration by Substitution.
+% \subsection{Flux}
+% Flux of field $\vec{F}=M\ui+N\uj$ through curve $C=g(t)\ui+h(t)\uj$ is given by $\int_CMdy-Ndx$ which can be evaluated
+% as seen above.
+% \subsection{Green's Theorem}
+% For $\vec{F}=M\mathbf{i}+N\mathbf{j}$:\\
+% Divergence is $\frac{\partial M}{\partial x}+\frac{\partial N}{\partial y}$.\\
+% $\oint_C\vec{F}\cdot d\vec{r}=\oint_CM\,dx+N\,dy=\iint_R\frac{\partial N}{\partial x}-\frac{\partial M}{\partial y}\,dx\,dy$\\
+% and
+% $\oint_C\vec{F}\cdot \vec{n}dS=\oint_CM\,dy-N\,dx=\iint_R\frac{\partial M}{\partial x}+\frac{\partial N}{\partial y}\,dx\,d$\\
+% Integral of divergence over a region is the outward flux of the associated field over that region.
+% \subsection{Surface Integrals}
+% Area of $r(u,v)=f(u,v)\ui+g(u,v)\uj+h(u,v)\uk$
+% is $\iint_R\left|r_u\times r_v\right|\,dA$
+% remember that cross product is det of matrix with first row of unit vectors, second of first vector and third of second vector.
+% For a surface given as $z=f(x,y)$ we get $A=\iint_R\sqrt{1+f_x^2+f_y^2}dA$.
+% For integrating a scalar function $G$ over a surface if we have parametrized the surface we do 
+% $\iint G(f(u,v),g,h)\left|r_u\times r_v\right|dudv$, if the surface is given as $z=f(x,y)$ we do
+% $\iint G(x,y,f(x,y))\sqrt{f_x^2+f_y^2+1}dxdy$. For field $\vec{F}$ across surface $\vec{r}$ we do 
+% $\iint_R \vec{F}\cdot\left(\vec{r}_x\times \vec{r}_z\right)\,dxdz$
 \end{document}

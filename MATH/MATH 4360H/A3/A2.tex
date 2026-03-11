@@ -1,0 +1,287 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{changepage}
+\usepackage{circuitikz}
+\usepackage{pgfplots}
+\usepackage{physics}
+\usepackage{hyperref}
+\usepackage{siunitx}
+\usepackage{fontspec}
+\usepackage{relsize}
+\usepackage{subfig}
+\usepackage{polynom}
+% \usepackage{polydiv}
+\usepackage{todonotes}
+\usepackage{multicol, multirow, booktabs}
+\usepackage[breakable]{tcolorbox}
+\usepackage[inline]{enumitem}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{soln}{Solution}
+\newtheorem{theorem}{Theorem}
+
+\pgfplotsset{compat=newest}
+\usetikzlibrary{lindenmayersystems}
+\usetikzlibrary{arrows}
+\usetikzlibrary{calc}
+\usetikzlibrary{positioning, fit}
+\usetikzlibrary{3d, perspective}
+
+\definecolor{incolor}{HTML}{303F9F}
+\definecolor{outcolor}{HTML}{D84315}
+\definecolor{cellborder}{HTML}{CFCFCF}
+\definecolor{cellbackground}{HTML}{F7F7F7}
+\newcommand{\ui}{\hat{i}}
+\newcommand{\uj}{\hat{j}}
+\newcommand{\uk}{\hat{k}}
+\newcommand{\ux}{\hat{x}}
+\newcommand{\uy}{\hat{y}}
+\newcommand{\uz}{\hat{z}}
+\newcommand{\pr}[1]{{#1}^\prime}
+\newcommand{\hull}[1]{\langle {#1}\rangle}
+\pgfdeclarelayer{background}  
+\pgfsetlayers{background,main}
+\AtBeginDocument{\RenewCommandCopy\qty\SI}
+\newcommand{\justif}[2]{&{#1}&\text{#2}}
+
+\makeatletter
+\newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+\makeatother
+\newcommand{\prompt}[4]{
+    \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+}
+
+
+\newcommand{\thevenin}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (2,0) to[battery1, l_=$V_{Th}\eq#1$] (2,2) 
+      to[resistor, l_=$R_{Th}\eq#2$] (0,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\norton}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (3,0) to[american current source, l_=$I_{N}\eq#1$] (3,2) -- (0,2) (2,0)
+      to[resistor, l=$R_{N}\eq#2$] (2,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\highlight}[1]{\colorbox{yellow}{$\displaystyle #1$}}
+
+\newcommand{\ti}[1]{\widetilde{#1}}
+
+\newfontface{\Kaufmann}{Kaufmann}
+\DeclareTextFontCommand{\kf}{\Kaufmann}
+\newcommand{\scriptr}{\fontsize{12pt}{12pt}\kf{r}}
+
+\newfontface{\KaufmannB}{Kaufmann Bd BT}
+\DeclareTextFontCommand{\kfb}{\KaufmannB}
+\newcommand{\bscriptr}{\fontsize{12pt}{12pt}\kfb{r}}
+
+\newcommand{\bv}[1]{\mathbf{#1}}
+
+\title{Math 4360H: Assignment III}
+\author{Jeremy Favro (0805980) \\ Trent University, Peterborough, ON, Canada}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+% PROBLEM 1
+\begin{problem} Find all ideals of the ring $\mathbb{Z}_{60}$. Identify the prime ideals and the
+maximal ideals (justify).
+\end{problem}
+\begin{soln}
+  We defined an ideal to be an additive subgroup. Since $(\mathbb{Z}_{60},+)$ is cyclic we know that there is a subgroup for each
+  divisor of $60$. These divisors are $1$,
+  $2$,
+  $3$,
+  $4$,
+  $5$,
+  $6$,
+  $10$,
+  $12$,
+  $15$,
+  $20$,
+  $30$, and
+  $60$. The subgroups $\hull{1}$ and $\hull{60}$ are obviously ideals, the rest must be checked.
+  Recall that an additive subgroup is an ideal $I$ if (in the commutative case) for $i\in I$ and $r\in R$,
+  $ri\in I$. This is clearly the case for every divisor we found as $ri$ will just be $kn$ for $k$ a divisor
+  and $n\in \mathbb{Z}$, $0\leq n < 60$ and $kn$ is hence an integer multiple of the divisor and will therefore belong to the
+  additive subgroup $\hull{k}$ which is the ideal. I will check the maximal ideals first as they will also be prime. Recall that a maximal
+  ideal of a ring $R$ is an ideal which is not properly contained in any other ideal of $R$. Borrowing from normal subgroups,
+  for generators $a$ and $b$, $\hull{a}\subset \hull{b}$ iff $a\in \hull{b}$. Clearly then the only maximal ideals will be those with prime
+  generators because $\hull{p}$ will only contain things like $np$ for $n\in \mathbb{Z}$. The only prime-generated ideals we found were
+  $\hull{2}$, $\hull{3}$, and $\hull{5}$ and so these are the only maximal ideals. We get for free the previously mentioned maximal ideals
+  as also being prime ideals. We can quickly show that others are not prime as
+  \begin{enumerate}[label=(\roman*)]
+    \item $2\cdot2=4\in\hull{4}$, $2\notin \hull{4}$
+    \item $3\cdot 2=6\in \hull{6}$, $2\notin \hull{6}$
+    \item $5\cdot 2=10\in \hull{10}$, $2\notin \hull{10}$
+    \item $2\cdot 6=12\in\hull{12}$, $2\notin \hull{12}$
+    \item $3\cdot 5=15\in\hull{15}$, $3\notin \hull{15}$
+    \item $2\cdot 10=20\in\hull{20}$, $2\notin \hull{20}$
+    \item $2\cdot 15=30\in\hull{30}$, $2\notin \hull{30}$
+  \end{enumerate}
+  however, $\hull{60}$ is a prime ideal as it contains only $\left\{0\right\}$ and the only way to get zero is to multiply by some multiple of
+  $60$, all of which are ``in'' $\hull{60}$ when under mod 60.
+\end{soln}
+
+% PROBLEM 2
+\begin{problem} Let
+$I = \left\{(3x, y)\mid x,y \in\mathbb{Z}\right\}$
+\begin{enumerate}[label=(\alph*)]
+  \item Show that $I$ is a maximal ideal of the ring $\mathbb{Z}\times \mathbb{Z}$.
+  \item What if $3x$ is replaced with $4x$?
+  \item Can we make a general statement about this?
+\end{enumerate}
+\end{problem}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item $\mathbb{Z}\times \mathbb{Z}/I$ is the set of remainders of element-wise division of tuples. Breaking this down across the direct product
+          this looks like $\mathbb{Z}/\left\{3x\mid x\in\mathbb{Z}\right\}=\mathbb{Z}/3\mathbb{Z}$ and $\mathbb{Z}/\left\{y\in\mathbb{Z}\right\}=\mathbb{Z}/\mathbb{Z}$
+          which is just $\mathbb{Z}_3\times \left\{0\right\}\cong \mathbb{Z}_3$. Since $p$ is prime, $\mathbb{Z}_3$ is a field which implies the quotienting
+          set $I$ is maximal.
+    \item Using the same tactic, $\mathbb{Z}\times \mathbb{Z}/\left\{(4x, y)\mid x,y\in\mathbb{Z}\right\}\cong \mathbb{Z}_4\times \left\{0\right\}\cong \mathbb{Z}_4$
+          which is not a field as $4$ is not prime and hence the ideal $\left\{(4x, y)\mid x,y\in\mathbb{Z}\right\}$ is not maximal.
+    \item Yes, ideals of the form $\left\{(px, y)\mid x,y \in\mathbb{Z}\right\}$ for prime $p\in\mathbb{Z}$ are maximal in
+          $\mathbb{Z}\times \mathbb{Z}$. This is because you end up with the $\mathbb{Z}_p$ structure which is a field and hence the ideal was maximal.
+  \end{enumerate}
+\end{soln}
+\newpage
+
+% PROBLEM 3
+\begin{problem}
+Consider the ring $R = \mathbb{Z}_8\times \mathbb{Z}_{30}$.
+\begin{enumerate}[label=(\alph*)]
+  \item Find all maximal ideals of the ring $R = \mathbb{Z}_8\times \mathbb{Z}_{30}$.
+  \item For each maximal ideal $I$, determine the size of the field $R/I$.
+\end{enumerate}
+\end{problem}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item Intuitively I want to say that the ideals of this will be the direct product of the ideals
+          of $\mathbb{Z}_8$ and $\mathbb{Z}_{30}$. I don't think we proved this in class so I'll attempt it here:
+          \begin{proof}
+            Let $I$ be an ideal of the ring $R\times S$.
+            We want to show that the set
+            $$I_{R}=\left\{x\in R\mid (x,y)\in I,y\in S\right\}$$
+            is an ideal of $R$ (and the same for $I_{S}=\left\{y\in S\mid (x,y)\in I,x\in R\right\}$ being an ideal of $S$). For some $r\in R$ and $(x,y)\in I$
+            $$(r,0_S)\cdot(x,y)=(rx,0_S)\in I$$
+            because $I$ is an ideal. $I_R$ is evidently an ideal of $R$ with the second element just tacked on.
+            The same can be shown for $I_S$.
+
+            Now that we have a definition for ideals of $R$ and $S$ which work,
+            we want to show that $I=I_R\times I_S$.
+            \begin{enumerate}
+              \item Clearly $I\subseteq I_R\times I_S$ as for some
+                    $(x,y)\in I$, $x\in I_R$ and $y \in I_S$.
+              \item For $I\supseteq  I_R\times I_S$ consider an $(x,y)\in I_R\times I_S$. Then since
+                    $x \in I_R$ there is a $y'\in I_S$ such that $(x,y')\in I$ as we defined $I_R$ that way. We can also find,
+                    for $y \in I_S$ an $x'\in I_R$ so that $(x',y)\in I$. Now if $R$ and $S$ have a multiplicative identity (which in our case
+                    they do) we can take $(1_R,0_S)\cdot(x,y')=(x,0_S)\in I$ since $I$ is an ideal. We can do the same for the $x'$ element,
+                    $(0_R,1_S)\cdot(x',y)=(0_R,y)\in I$ again because $I$ an ideal. If we sum these results we obtain that $(x,y)\in I$, i.e.
+                    all things in $I_R\times I_S$ are in $I$ so $I\supseteq  I_R\times I_S$.\qedhere
+            \end{enumerate}
+            I believe this is sufficient as a proof but I also think I may have overthought things after some discussion with classmates.
+            I'd be interested to see if there is an easier proof as I can't find anything online (I only looked it up after doing this)
+            that uses techniques I understand.
+          \end{proof}
+          Now we know that the maximal ideals of $\mathbb{Z}_k$ are the sets $\langle n\rangle$ for which
+          $n$ is one of the prime factors of $k$. Hence the only proper maximal ideal of $\mathbb{Z}_8$ is
+          $\hull{2}$ and the proper maximal ideals of $\mathbb{Z}_{30}$ are $\hull{2}$, $\hull{3}$, and $\hull{5}$.
+          If we want something that is maximal in the direct product
+          then the quotient would have to give us a field. This necessitates that one of
+          the parts of the direct product ideal, $I=I_R\times I_S$ is the entirety of one of the rings ($R\times S$) being quotiented else
+          we could take elements $(r,0)\in R$ and $(0,s)\in S$ and multiply their cosets in $R\times S/I$ as
+          $((r,0)+I)((0,s)+I)=0+I$ which means $((r,0)+I),((0,s)+I)$ would be zero divisors. If one of $I_R$ or $I_S$ is the entirety of $R$ or $S$
+          then we would end up quotienting out the whole of either $R$ or $S$ and end up with things that act like tuples with one entry
+          always zero, hence giving no zero divisors. This means that the maximal ideals of $\mathbb{Z}_8\times \mathbb{Z}_{30}$ can only
+          be
+          $\hull{2}\times \mathbb{Z}_{30}$, $\mathbb{Z}_8\times \hull{2},\hull{3},\hull{5}$.
+    \item \begin{enumerate}[label=(\roman*)]
+            \item $\mathbb{Z}_8\times \mathbb{Z}_{30}/\hull{2}\times \mathbb{Z}_{30}$:
+                  this will look like $\left\{(a,b)+\hull{2}\times \mathbb{Z}_{30}\mid a\in\mathbb{Z}_8, b\in\mathbb{Z}_{30}\right\}$
+                  which I believe is the direct product
+                  $\left\{a+\hull{2}\mid a\in\mathbb{Z}_8\right\}\times \left\{b+\mathbb{Z}_{30}\mid b\in\mathbb{Z}_{30}\right\}$
+                  which is a field (because the ideal is maximal) of two elements times a field of one element and is hence isomorphic to $\mathbb{Z}_2$.
+            \item $\mathbb{Z}_8\times \mathbb{Z}_{30}/\mathbb{Z}_8\times \hull{2}$:
+                  As above this is $(\mathbb{Z}_8/\mathbb{Z}_8)\times(\mathbb{Z}_{30}/\hull{2})\cong {0}\times \left\{a+\hull{2}\mid a\in\mathbb{Z}_{30}\right\}$.
+                  We can see that $\left\{a+\hull{2}\mid a\in\mathbb{Z}_{30}\right\}$ will have only two elements, repeated for odd and even $a$. This is again the two element
+                  structure $\mathbb{Z}_2$
+            \item $\mathbb{Z}_8\times \mathbb{Z}_{30}/\mathbb{Z}_8\times \hull{3}$: As previous we can break this down quickly to
+                  $\left\{a+\hull{3}\mid a\in\mathbb{Z}_{30}\right\}$ which will only have 3 unique elements, one which contains $0$, one which contains $1$ and one which contains $2$.
+                  Since this is a field it is isomorphic to $\mathbb{Z}_3$
+            \item $\mathbb{Z}_8\times \mathbb{Z}_{30}/\mathbb{Z}_8\times \hull{5}$: As previous this is isomorphic to $\mathbb{Z}_5$ and hence has 5 elements.
+          \end{enumerate}
+  \end{enumerate}
+\end{soln}
+
+% PROBLEM 4
+\begin{problem}
+Show by example that the intersection of two prime ideals need not
+be a prime ideal.
+\end{problem}
+\begin{soln}
+  The ring $\mathbb{Z}$ has prime ideals $\hull{2}$ and $\hull{3}$ since
+  $\hull{2}=2\mathbb{Z}$ and clearly any $ab\in 2\mathbb{Z}$ requires that either
+  $a$ or $b$ is a multiple of two and is hence in $2\mathbb{Z}$. The same can be argued for
+  $\hull{3}$. Their intersection is all things that are multiples of 3 \emph{and} 2, i.e.
+  multiples of $2\cdot 3=6$ so $\hull{6}=\hull{2}\cap \hull{3}$. $\hull{6}$ is not prime as
+  $2\cdot3=6\in \hull{6}$ but neither $3$ nor $2$ are in $\hull{6}$.
+\end{soln}
+
+% PROBLEM 5
+\begin{problem}
+Let $R$ be a principal ideal domain and $I$ an ideal of $R$. Show that
+every ideal of $R/I$ is principal.
+\end{problem}
+\begin{soln}
+  I'm not happy with this but it's the best I have:
+  We know that the map $\phi: R\to R/I$ given by $\phi(a)=a+I$ is a homomorphism. We also know that
+  (in the commutative case) and ideal of $R$ is a set where for $r\in R$ and $i \in I$, $ri\in I$. Consider an ideal
+  $J$ of $R$. Because $J$ is an ideal we have that for $j\in J$ and $r\in R$ $rj\in J\implies \phi(rj)\in \phi\left[J\right]$
+  so $\phi(r)\phi(j)\in \phi[J]$. This shows that $J+I$, i.e. $\left\{j+I\mid j\in J\right\}=J/I$ is an ideal of $R/I$ because
+  $\phi(r)\phi(j)\in \phi[J]$ satisfies the definition of an ideal for elements of the form $\phi(j)=j+I$ and $\phi(r)\in R/I$.
+  Since we chose $J$ as an ideal of $R$ it is principal as $R$ is a PID and since $J$ is arbitrary, all ideals of $R/I$ are
+  principal.
+\end{soln}
+
+% PROBLEM 6
+\begin{problem}
+Let $R = \left\{a+bi\mid a, b \in\mathbb{Z}\right\}$. Show that $R/\hull{1-i}$ is a field, and determine
+its number of elements.
+\end{problem}
+\begin{soln}
+  In $R/\hull{1-i}$ we can treat $i$ as $x$, an indeterminate. Then this becomes a polynomial ring quotiented by a polynomial ideal.
+  Specifically it is all integer coefficient polynomials of degree at most 1 quotiented by the ideal generated by a polynomial of degree 1. Since here,
+  with $I=\hull{1-i}$,
+  $1-i+I=I\equiv 0$ and so, working ``mod $1-i$'', $1-i\equiv 0\implies 1\equiv i$ however we define $i$ to be the number where $i^2=-1$
+  so $1^2\equiv-1\implies 2\equiv 0$. At this point this feels like $\mathbb{Z}_2$ but let's check. For a
+  general $a+bi\in R$ we've determined that, mod $1-i$, $a+bi\equiv a+b$. And we've shown that
+  if $a+b$ contains a factor of $2$, $a+b\equiv 0$. If $a+b$ does not contain a factor of $2$ we've shown that $a+b\equiv 1$.
+  This is in fact $\mathbb{Z}_2$ which we know to be a field with two elements.
+\end{soln}
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=\textwidth]{cats.jpg}
+  \caption{Space Filling Cat Picture. Schnitzel M. at left, Biscuit G. at right.}
+\end{figure}
+\end{document}

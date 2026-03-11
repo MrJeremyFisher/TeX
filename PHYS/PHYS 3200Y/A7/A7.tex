@@ -155,7 +155,7 @@ the surface in the following steps. Show your work, including integrals, explici
               \draw[thick,->] (0,0,0) -- (0,0,\mrvec) node[anchor=south]{$z$};
 
               \foreach \y in {-6,...,6}{
-                  \foreach \z in {-3,...,3}{
+                  \foreach \z in {-3,...,2}{
                       \tikzmath{
                         if \y != 0 then {
                             { \draw[vector] (-\y*\y/36, \y/6, \z) -- (\y*\y/36, \y/6, \z); };
@@ -170,6 +170,9 @@ the surface in the following steps. Show your work, including integrals, explici
               \tdplotsetcoord{P2}{\rvec}{90}{\phivec + \dphi}
               \draw[->, proj] (O) -- (P2xy);
 
+              \draw[->, proj] (0, 0, \dz) -- ({\rvec*sin(90-\phivec-\dphi)}, {\rvec*cos(90-\phivec-\dphi)}, \dz)
+              node[midway, above]{$R$};
+
               \draw[area]
               plot[domain=0:.99*\dphi]({\rvec*cos(\phivec+\x)},{\rvec*sin(\phivec+\x)},{-\dz}) --
               plot[domain=-.99*\dz:.99*\dz]({\rvec*cos(\phivec+\dphi)},{\rvec*sin(\phivec+\dphi)},{\x}) --
@@ -177,13 +180,13 @@ the surface in the following steps. Show your work, including integrals, explici
               plot[domain=.99*\dz:-.99*\dz]({\rvec*cos(\phivec)},{\rvec*sin(\phivec)},{\x}) --
               cycle;
 
-              \draw[black, opacity=1, <->]
+              \draw[proj, opacity=1, <->]
               ({(\rvec+0.1)*cos(\phivec+\dphi)},{(\rvec+0.1)*sin(\phivec+\dphi)},{-\dz})
               -- ({(\rvec+0.1)*cos(\phivec+\dphi)},{(\rvec+0.1)*sin(\phivec+\dphi)},{\dz})
               node [midway, right] {\contour{white}{$L$}};
 
               \foreach \y in {1,...,6}{
-                  \foreach \z in {-3,...,3}{
+                  \foreach \z in {-3,...,2}{
                       \tikzmath{
                         if \y != 0 then {
                             { \draw[vector] (0, \y/6, \z) -- (\y*\y/36, \y/6, \z); };
@@ -274,6 +277,8 @@ radius $R$, and carries a current $I$. The magnetic field is $\bv{B} = B_0(x-x_0
 
 
               \node[vector] at (0, -1.4, 1) {$\bv{B}$};
+              \draw[->, proj] (0, 0, \dz) -- (-{\rvec*sin(90-\phivec-\dphi)}, -{\rvec*cos(90-\phivec-\dphi)}, \dz)
+              node[midway, above]{$R$};
             \end{tikzpicture}
           \end{center}
           Note that I've drawn this with $x_0=0$ though it does not have to be this way. Changing $x_0$ would shift where the field's sign changes.
@@ -358,22 +363,27 @@ directly integrating Eq. (5.42) from the textbook.
               \draw[black,->] (-\lenvec-1,\rvec/2) -- (-\lenvec-1,\rvec+0.5) node[above]{$\phi$};
               \draw[black,->] (-\lenvec-1,\rvec/2) -- (\lenvec+1,\rvec/2) node[right]{$z$};
 
+
               % Cylinder
               \draw[metal] (-\lenvec,0) -- (\lenvec, 0) --
               plot[domain=0:\rvec, smooth]({\lenvec-0.1*sin(2*pi*\x r)}, {\x})
               -- (-\lenvec,\rvec) --
               plot[domain=\rvec:0, smooth]({-\lenvec-0.1*sin(2*pi*\x r)}, {\x});
 
+              \draw[proj,->] (\lenvec/2-1.5,\rvec/2) -- (\lenvec/2-1.5,\rvec) node[above]{$R$};
+
               \def\w{1}
               \def\L{\lenvec}
               \def\R{\rvec}
 
+              \draw[black,->, dashed] (-\lenvec,\rvec/2) -- (\lenvec,\rvec/2); % Dashed z
               \foreach \i [evaluate={\x=-\L/2+(\i-1)*\w;}] in {-1,...,8}{
                   \draw[veccol, very thick, ->] (\x,\R)-- ({\x+\w/2},0);
                   \begin{scope}[transparency group, opacity=0.2]
                     \draw[veccol, very thick, ->] ({\x+\w/2},0)-- ({\x+\w},\R);
                   \end{scope}
                 }
+
               \node[veccol] at (\lenvec-1, \rvec+0.235) {$\bv{K}$};
 
             \end{tikzpicture}
@@ -456,8 +466,8 @@ A steady current $I$ flows down a long cylindrical wire of radius $a$. Find the 
                   $$\int \bv{B}\cdot d\bv{l}=\mu_0 \frac{2\pi k}{3} r^3$$
                   and again by symmetry we expect that the field is entirely in $\uv{\phi}$ so the integral becomes
                   $$B r\int_0^{2\pi}d\phi=\mu_0 \frac{2\pi k}{3} r^3\implies \bv{B} = \frac{\mu_0 k r^2}{3}\uv{\phi} $$
-            \item Inside we set up a loop of radius $r>a$. The current through this loop is, similarly to part (a.i), just the entire current $I$ and so 
-            Ampere's law becomes
+            \item Inside we set up a loop of radius $r>a$. The current through this loop is, similarly to part (a.i), just the entire current $I$ and so
+                  Ampere's law becomes
                   $$\int \bv{B}\cdot d\bv{l}=\mu_0 I$$
                   and again by symmetry we expect that the field is entirely in $\uv{\phi}$ so the integral becomes
                   $$B r\int_0^{2\pi}d\phi=\mu_0 I\implies \bv{B} = \frac{\mu_0 I}{2\pi r}\uv{\phi} $$

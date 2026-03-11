@@ -14,6 +14,8 @@
 \usepackage{fontspec}
 \usepackage{relsize}
 \usepackage{subfig}
+\usepackage{polynom}
+% \usepackage{polydiv}
 \usepackage{todonotes}
 \usepackage{multicol, multirow, booktabs}
 \usepackage[breakable]{tcolorbox}
@@ -53,6 +55,7 @@
 \newcommand{\prompt}[4]{
     \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
 }
+
 
 \newcommand{\thevenin}[2]{
   \begin{center}
@@ -124,19 +127,33 @@ of Example 9.20 in the notes.
 \end{problem}
 \begin{soln}
   There are several ways this could factor. First let's eliminate the linear case. By corollary 9.16 the roots of $f(x)$ can be $\pm 1$. Since neither of these is a root
-  we cannot factor out a linear factor. So this must factor (if it is reducible) as an irreducible cubic and an irreducible quadratic. So,
-  $$f(x)=(ax^3+bx^2+cx+d)(ex^2+fx+g).$$
+  we cannot factor out a linear factor. So this must factor (if it is reducible) as an irreducible cubic and an irreducible quadratic, both of which are monic by the theorem referenced in the notes. So,
+  $$f(x)=(x^3+bx^2+cx+d)(x^2+fx+g).$$
   Multiplying this out we obtain that
-  $$f(x)=x^5 +3x^2 +1=aex^5 + (b e + a f)x^4 + (c e + b f + a g) x^3 + (d e + c f + b g) x^2  + (d f + c g) x + d g$$
+  $$f(x)=x^5 +3x^2 +1=x^5+(b + f)x^4  + (bf + c + g)x^3 + (cf + bg + d)x^2  + (df + cg)x+ dg$$
   which gives us the system of equations
   \begin{align*}
-    ae              & =1 \\
-    b e + a f       & =0 \\
-    c e + b f + a g & =0 \\
-    d e + c f + b g & =3 \\
-    d f + c g       & =0 \\
-    d g             & =1
+    b + f       & =0 \\
+    bf + c + g  & =0 \\
+    cf + bg + d & =0 \\
+    df + cg     & =3 \\
+    dg          & =1
   \end{align*}
+  so
+  \begin{align*}
+    b       & =-f             \\
+    c       & =f^2-g          \\
+    c       & =-\frac{d}{f}+g \\
+    d & =\frac{3-cg}{f}              \\
+    dg      & =1
+  \end{align*}
+  so
+  \begin{align*}
+    b       & =-f             \\
+    c       & =f^2-g          \\
+    c       & =-\frac{3-f^2g-g^2+gf^2}{f^2} 
+  \end{align*}
+  which cannot be the case as $\frac{3-f^2g-g^2+gf^2}{f^2}\neq f^2-g$ and hence $f(x)$ cannot be reduced over $\mathbb{Z}$ and therefore cannot be reduced over $\mathbb{Q}$.
 \end{soln}
 
 % PROBLEM 3
@@ -174,19 +191,21 @@ of Example 9.20 in the notes.
           \end{align*}
           and we know that $a_i+_nb_i=\left(a_i\mod n+b_i\mod n\right)\mod n$ and $c\mod n \mod n=c\mod n$ so
           \begin{align*}
-            \sum_{i=0}^{k}\left[\left(a_i+_nb_i\right)\mod n\right] x^i & =\sum_{i=0}^{k}\left[\left(a_i\mod n+b_i\mod n\right)\mod n\right] x^i           \\
-                                                                        & =\sum_{i=0}^{k}\left[\left(a_i\mod n+b_i\mod n \right)x^i\mod n\right]           \\
-                                                                        & =\sum_{i=0}^{k}\left(a_i\mod n\right)x^i+\sum_{i=0}^{k}\left(b_i\mod n\right)x^i \\
+            \sum_{i=0}^{k}\left[\left(a_i+_nb_i\right)\mod n\right] x^i & =\sum_{i=0}^{k}\left[\left(a_i\mod n+b_i\mod n\right)\mod n\right] x^i                                                                                                 \\
+                                                                        & =\sum_{i=0}^{k}\left[\left(a_i\mod n+b_i\mod n \right)x^i\mod n\right]                                                                                                 \\
+                                                                        & =\left(\sum_{i=0}^{k}\left(a_i\mod n\right)x^i+\sum_{i=0}^{k}\left(b_i\mod n\right)x^i\right)\mod n\justif{\quad}{$\mod n$ because this is coefficient addition $+_n$} \\
                                                                         & =\phi_n\left(\sum_{i=0}^{k}a_ix^i\right)+\phi_n\left(\sum_{i=0}^{k}b_ix^i\right)
           \end{align*}
           Now under multiplication,
           \begin{align*}
-            \phi_n\left(\sum_{i=0}^{k}a_ix^i\sum_{i=0}^{k}b_ix^i\right) & = \phi_n\left(\sum_{i=0}^{2k}\left[x^i\sum_{m+l=i}a_mb_l\right]\right)                     \\
-                                                                        & = \sum_{i=0}^{2k}\left[x^i\sum_{m+l=i}a_m\cdot_n b_l\mod n\right]                          \\
-                                                                        & = \sum_{i=0}^{2k}\left[x^i\sum_{m+l=i}\left(a_m\mod n \cdot  b_l\mod n\right)\mod n\right] \\
-                                                                        & = \sum_{i=0}^{k}x^ia_i\mod n\sum_{i=0}^{k}b_i\mod n                                        \\
+            \phi_n\left(\sum_{i=0}^{k}a_ix^i\sum_{i=0}^{k}b_ix^i\right) & = \phi_n\left(\sum_{i=0}^{2k}\left[x^i\sum_{m+l=i}a_mb_l\right]\right)                                     \\
+                                                                        & = \sum_{i=0}^{2k}\left[x^i\sum_{m+l=i}a_m\cdot_n b_l\mod n\right]                                          \\
+                                                                        & = \sum_{i=0}^{2k}\left[x^i\sum_{m+l=i}\left(a_m\mod n \cdot  b_l\mod n\right)\mod n\right]                 \\
+                                                                        & = \left(\left[\sum_{i=0}^{k}x^ia_i\mod n\right]\cdot\left[\sum_{i=0}^{k}x^ib_i\mod n\right]  \right)\mod n \\
                                                                         & =\phi_n\left(\sum_{i=0}^{k}a_ix^i\right)\phi_n\left(\sum_{i=0}^{k}b_ix^i\right)
           \end{align*}
+          This can also be seen (and was most immediately obvious to me) by noting that we already know that the ``mod map'' from $\mathbb{Z}\to\mathbb{Z}_n$ is a ring homomorphism
+          and hence the given map, which really only acts on the coefficients, will naturally be one as well.
     \item We are given that $\phi_p(f(x))$ is irreducible. Suppose that $f(x)$ is reducible and hence $f(x)=g(x)h(x)$ for some non-constant $g(x),h(x)\in\mathbb{Z}[x]$.
           Then since $\phi_n$ is a homomorphism, $$\phi_p(f(x))=\phi_p(g(x)h(x))=\phi_p(g(x))\phi_p(h(x))$$
           and since $\phi_p(f(x))$ is irreducible, one of $\phi_p(g(x)),\phi_p(h(x))$ must be constant and hence $p$ must divide all its coefficients except the constant one
@@ -202,10 +221,28 @@ of Example 9.20 in the notes.
           $x^2-2$ in $\mathbb{Z}_7$ where $x^2-2=(x-3)(x+3)$, however $x^2-2$ has no roots in $\mathbb{Q}$ and hence the contrapositive is false and hence the original statement is false.
     \item \begin{enumerate}[label=(\roman*)]
             \item Here we take $p=5$ so that $\phi_5(7x^3 + 6x^2 + 4x + 6)=2x^3 + x^2 + 4x + 1$ which has no roots in $\mathbb{Z}_5$ and hence does not reduce there and hence does not reduce in $\mathbb{Q}$.
-            \item Here we take $p=3$ so that $\phi_3(21x^3 - 3x^2 + 2x + 9)=2x$ which clearly is irreducible over anything.
-            \item Here we take $p=2$ so that $\phi_2(x^4 + 7x^3 + 16x^2 + 8x + 11)=x^4 + x^3 + 1$ which is irreducible over $\mathbb{Z}_2$ as it has no roots and hence is irreducible over $\mathbb{Q}$.
-            \item Here we take $p=3$ so that $\phi_3(3x^4 + 9x^3 + 6x^2 + 3x + 1)=1$ which does not reduce anywhere.
-            \item Here we take $p=3$ so that $\phi_3(x^5 + 2x + 4)=x^5+2x+1$ which is irreducible over $\mathbb{Z}_3$ as it has no roots and hence is irreducible over $\mathbb{Q}$.
+            \item Here we take $p=2$ so that $\phi_2(21x^3 - 3x^2 + 2x + 9)=x^3 + x^2 + 1$. Since this has no roots in $\mathbb{Z}_2$ it cannot be factored and hence cannot be reduced.
+            \item Here we take $p=2$ so that $\phi_2(x^4 + 7x^3 + 16x^2 + 8x + 11)=x^4 + x^3 + 1$ which has no roots in $\mathbb{Z}_2$ and because it does not factor as the square of the only irreducible quadratic
+                  (as I show in the next question because I did these out of order), it does not reduce and hence neither does the original polynomial.
+            \item Here we take $p=7$ so that $\phi_7(3x^4 + 9x^3 + 6x^2 + 3x + 1)=3x^4 + 2x^3 + 6x^2 + 3x + 1$ and since $\phi_2(3x^4 + 2x^3 + 6x^2 + 3x + 1)=x^4 + x + 1$ and since this has no zeroes
+                  in $\mathbb{Z}_2$ if it factors it must be as two irreducible quadratics. The only such quadratic in $\mathbb{Z}_2$ is $x^2+x+1$ and
+                  $(x^2+x+1)^2= x^4+x^3+x^2+x^3+x^2+x+x^2+x+1=x^4+2x^3+3x^2+2x+1\neq x^4 + x + 1$ and hence, going up the stack, our orignal polynomial is irreducible.
+            \item Here we take $p=3$ so that $\phi_3(x^5 + 2x + 4)=x^5+2x+1$ which does not have zeroes in $\mathbb{Z}_3$ and hence has no linear factors. It must therefore factor into a cubic
+                  and a quadratic. Now, I think the best way to do this is to attempt to divide out every irreducible quadratic in $\mathbb{Z}_3$
+                  because doing so would yield the cubic we could factor with. They must be irreducible because we have no linear factors.
+                  These are $x^2+x+2$, $x^2+2x+2$, and $x^2+1$. So,
+                  \begin{equation}
+                    \polylongdiv{x^5+2x+1}{x^2+x+2}
+                  \end{equation}
+                  and
+                  \begin{equation}
+                    \polylongdiv{x^5+2x+1}{x^2+2x+2}
+                  \end{equation}
+                  and
+                  \begin{equation}
+                    \polylongdiv{x^5+2x+1}{x^2+1}
+                  \end{equation}
+                  and since none of these remainders are zero $\mod 3$ we can say the polynomial $x^5+2x+1$ does not reduce in $\mathbb{Z}_3$ and hence the original polynomial is irreducible over $\mathbb{Q}$.
           \end{enumerate}
   \end{enumerate}
 \end{soln}
@@ -249,7 +286,8 @@ $$\ti{F}[x]=\left\{a_0+a_1x+a_2x^2+\dots+a_nx^n\in F[x]|a_0\neq 0\right\}$$
     \item Suppose $f(x)$ is reducible over $F$. Then $f(x)=g(x)h(x)$ and $\rho(f(x))=\rho(g(x)h(x))=\rho(g(x))\rho(h(x))$. Since we are assuming that $\rho(f(x))$ is irreducible,
           one of $\rho(h(x))$ or $\rho(g(x))$ must be constant (assume WLOG it's $h(x)$). Because this is the case then $h(x)$ itself must be constant by the definition of $\rho$ and hence
           $f(x)$ is irreducible as it only factors into a polynomial times a constant.
-    \item Since $\rho(x^3+2x^2+3)=3x^3+2x+1$ and this is irreducible since it has no zeroes in $\mathbb{Z}_5$.
+    \item Since $\rho(x^3+2x^2+3)=3x^3+2x+1$ and this is irreducible since it has no zeroes in $\mathbb{Z}_5$. Indeed, since $x^3+2x^2+3$ also has no zeroes in $\mathbb{Z}_5$
+          we've verified the result for this case.
     \item Since $\rho(3x^4 + 9x^3 + 6x^2 + 3x + 1)=x^4 + 3x^3 + 6x^2 + 9x + 3$ for which there exists $p=3$ which satisfies Eisenstein's criterion, meaning $\rho(f(x))$
           is irreducible over $\mathbb{Q}$ and so is $f(x)$.
     \item Since $\rho(px^n -1)=p-x^n$ which is irreducible over $\mathbb{Q}$ by Eisenstein's criterion with $p=p$, $px^n -1$ is also irreducible over $\mathbb{Q}$.
@@ -268,17 +306,17 @@ the polynomial $f(x)=x^n+cx^{n-1}+cx^{n-2}+\dots+cx-1$ is irreducible
 over $\mathbb{Q}$.
 \end{problem}
 \begin{soln}
-Okay, taking the fact that I'm give Brauer's Criterion as a hint I'm going to try and make $f(x)=x^n+cx^{n-1}+cx^{n-2}+\dots+cx-1$ look like the polynomial in the theorem.
-We can do this by taking \begin{equation}
-  -x^nf(\frac{1}{x})=-1-cx-cx^{2}-\dots-cx^{n-1}+x^n.
-\end{equation}
-But where to from here? Well in the case that $c>0$ the action of taking $x^nf(\frac{1}{x})$ is the same as $\rho(f(x))$ from problem 4 and since (1) is irreducible by 
-Brauer's Criterion $f(x)$ is also irreducible by the properties we proved in question 4. For $c<0$ if we just take 
-\begin{equation}
-  x^nf(\frac{1}{x})=1+cx+cx^{2}+\dots+cx^{n-1}-x^n=1-kx-kx^{2}-\dots-kx^{n-1}-x^n
-\end{equation}
-for $k=\abs{c}$. If we take $\rho$ of this we get 
-$$-1-kx-kx^{2}-\dots-kx^{n-1}+x^n$$
-which is irreducible by Brauer's criterion, and hence $x^nf(\frac{1}{x})$ is irreducible by question 4 and so $f(x)$ is irreducible by question 4.
+  Okay, taking the fact that I'm give Brauer's Criterion as a hint I'm going to try and make $f(x)=x^n+cx^{n-1}+cx^{n-2}+\dots+cx-1$ look like the polynomial in the theorem.
+  We can do this by taking \begin{equation}
+    -x^nf(\frac{1}{x})=-1-cx-cx^{2}-\dots-cx^{n-1}+x^n.
+  \end{equation}
+  But where to from here? Well in the case that $c>0$ the action of taking $x^nf(\frac{1}{x})$ is the same as $\rho(f(x))$ from problem 4 and since (1) is irreducible by
+  Brauer's Criterion $f(x)$ is also irreducible by the properties we proved in question 4. For $c<0$ if we just take
+  \begin{equation}
+    x^nf(\frac{1}{x})=1+cx+cx^{2}+\dots+cx^{n-1}-x^n=1-kx-kx^{2}-\dots-kx^{n-1}-x^n
+  \end{equation}
+  for $k=\abs{c}$. If we take $\rho$ of this we get
+  $$-1-kx-kx^{2}-\dots-kx^{n-1}+x^n$$
+  which is irreducible by Brauer's criterion, and hence $x^nf(\frac{1}{x})$ is irreducible by question 4 and so $f(x)$ is irreducible by question 4.
 \end{soln}
 \end{document}
