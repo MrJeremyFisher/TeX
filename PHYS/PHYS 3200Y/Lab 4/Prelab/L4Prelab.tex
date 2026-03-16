@@ -11,10 +11,12 @@
 \usepackage{minted}
 \usepackage{physics}
 \usepackage{hyperref}
+\usepackage{subcaption}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
 \usepackage{siunitx}
 \usepackage{fontspec}
 \usepackage{relsize}
-\usepackage{subfig}
 \usepackage{todonotes}
 \usepackage{multicol, multirow, booktabs}
 \usepackage[breakable]{tcolorbox}
@@ -30,6 +32,9 @@
 \usetikzlibrary{calc}
 \usetikzlibrary{positioning, fit}
 \usetikzlibrary{3d, perspective}
+\usetikzlibrary{math}
+\usetikzlibrary{fadings}
+\usetikzlibrary{angles,quotes} 
 
 \definecolor{incolor}{HTML}{303F9F}
 \definecolor{outcolor}{HTML}{D84315}
@@ -110,80 +115,118 @@
 
 % PROBLEM 1
 \begin{problem}
-For a circular coil of $N$ turns that is mounted on a shaft that rotates about the axis that is along
-the shaft: Estimate the minimum number of turns $N$ required (and its equivalent length of wire $L$) for a $2.5,
-  3.0,3.5,\dots,\qty{9.0}{\centi\meter}$ diameter coil $d$ to produce $> \qty{0.02}{\newton\meter}$ instantaneous torque $\tau$ driven by $\qty{1.5}{\ampere}$ pulsed current
-$I$ (regardless of AWG) under a uniform $B$-field (along the coil plane) from an AlNiCo magnet. Assume that the
-force, wire/current direction, and $B$-field are all perpendicular to each other at the time of pulse/contact.
+Review (a) literature(s) to study/verify/replicate published data through own experimentation.
 \end{problem}
 \begin{soln}
-  As given in the manual,
-  $$\bv{F}=I\bv{L}\cross\bv{B}$$
-  and the cross product of perpendicular vectors is
-  $$F=ILB.$$
-  We can get the torque then as
-  $\tau=I\frac{\pi d^2B}{4}$ and the torque felt by $N$ loops as $N$ times the torque felt by one,
-  $$\tau=IN\frac{\pi d^2B}{4}.$$
-  So if want a specific torque we need
-  $$N=\frac{4\tau}{I\pi d^2B}=\frac{8}{I\pi d^2 B}$$
-  where $d$ is in meters.
-  Hence we obtain,
 
-  \begin{table}[ht!]
-    \centering%
-    \begin{tabular}{ll}
-      \toprule
-      $d\,\unit{\centi\meter}$ & $N$    \\
-      \midrule
-      2.5                      & 181.08 \\
-      3                        & 125.75 \\
-      3.5                      & 92.39  \\
-      4                        & 70.74  \\
-      4.5                      & 55.89  \\
-      5                        & 45.27  \\
-      5.5                      & 37.41  \\
-      6                        & 31.44  \\
-      6.5                      & 26.79  \\
-      7                        & 23.1   \\
-      7.5                      & 20.12  \\
-      8                        & 17.68  \\
-      8.5                      & 15.66  \\
-      9                        & 13.97  \\
-      \bottomrule
-    \end{tabular}
-  \end{table}
 \end{soln}
 
 % PROBLEM 2
 \begin{problem}
-or a circular coil of $\pr{N}$ turns as a voice coil that is $\qty{1.6}{\centi\meter}$ in diameter $\pr{d}$: Estimate the minimum
-length of wire $\pr{L}$ (and its equivalent number of turns $\pr{N}$) required for the AWG sizes $30,32,\dots, 38$ to build a
-$\qty{2}{\watt}$ loudspeaker using the audio amplifier as the voltage source ($\qty{1.5}{\volt}$ RMS). Reference the parameters/tables
-necessary for your calculated estimates.
+Derive a theoretical expectation using a model (Helmholtz coil) using the Biot-Savart Law.
 \end{problem}
 \begin{soln}
-  We know that $P=V^2/R$. Using the hyperphysics AWG resistance table \url{http://hyperphysics.phy-astr.gsu.edu/hbase/Tables/wirega.html} and a feet-to-meters conversion factor of $3.281$ we obtain that, for a coil of
-  length $L$ and resistance per foot of $K$, $R= 3.281KL$ so
-  $$\frac{V^2}{3.281 KP}=L$$
-  and we know that
-  $$L=CN=N\pi d\implies \frac{L}{\pi d}=N=\frac{V^2}{3.281 KP\pi d}.$$
+  Helmholtz coils are a set of parallel coils with currents traveling in the same direction as seen in the figure:
 
-  \begin{table}[ht!]
-    \centering%
-    \begin{tabular}{lll}
-      \toprule
-      AWG & $\unit{\ohm\per\foot}$ & N     \\
-      \midrule
-      30  & 0.1032                 & 66.1  \\
-      32  & 0.1641                 & 41.57 \\
-      34  & 0.2609                 & 26.15 \\
-      36  & 0.4148                 & 16.45 \\
-      38  & 0.6596                 & 10.34 \\
-      \bottomrule
-    \end{tabular}
-  \end{table}
+  \begin{figure}[H]
+    \centering
+    \begin{subfigure}[t]{0.5\textwidth}
+      \centering
+      \tdplotsetmaincoords{74}{120}
+      \begin{tikzpicture}[scale=2, tdplot_main_coords]
+        % Axis
+        \draw[->] (3,0,0) -- (-3,0,0) node[above right]{$y$};
+        \draw[->] (0,-2,0) -- (0,2,0) node[right]{$x$};
+        \draw[->] (0,0,-1.5) -- (0,0,1.5) node[above]{$z$};
 
+        % Circular Loops
+        \draw[line width = 1.2mm, orange] (0,0,1) circle [radius=1];
+        \draw[line width = 1.2mm, orange] (0,0,-1) circle [radius=1];
 
+        % Refinements for 3d View
+        \draw (0,0,-1) -- (0,0,0.5);
+        \draw[->] (0,0,0.9) -- (0,0,1.5);
 
+        % Radius
+        \draw [->] (0,0,1) -- (1,0,1) node [midway, above] {\small$R$} ;
+        \draw [->] (0,0,-1) -- (1,0,-1) node [midway, above] {\small$R$} ;
+
+        % Center Distance
+        \draw[|<-] (2.2,0,1.54) -- (2.2,0,0.7) node [below] {\small$R$};
+        \draw[->|] (2.2,0,0.41)-- (2.2,0,-0.46) ;
+
+        % Current Direction
+        \draw [line width = 0.7mm, blue, ->] (1.4,-0.1,1) arc (-20:20:1.1) node [black, midway, below] {$I$};
+        \draw [line width = 0.7mm, blue, ->] (1.4,-0.1,-1) arc (-20:20:1.1) node [black, midway, below] {$I$};
+      \end{tikzpicture}
+    \end{subfigure}%
+    ~
+    \begin{subfigure}[t]{0.5\textwidth}
+      \centering
+      \tdplotsetmaincoords{90}{120}
+      \begin{tikzpicture}[scale=2, tdplot_main_coords]
+        % Axis
+        \draw[->] (0,-2,0) -- (0,2,0) node[right]{$x$};
+        \draw[->] (0,0,-1.5) -- (0,0,1.5) node[above]{$z$};
+
+        % Circular Loops
+        \draw[line width = 1.2mm, orange] (0,0,1) circle [radius=1];
+        \draw[line width = 1.2mm, orange] (0,0,-1) circle [radius=1];
+
+        % Refinements for 3d View
+        \draw (0,0,-1) -- (0,0,0.5);
+        \draw[->] (0,0,0.9) -- (0,0,1.5);
+
+        % Radius
+        \draw [->] (0,0,1) -- (0,1.1,1) node [midway, above] {$R$} ;
+
+        % Center Distance
+        \draw[|<->|] (2.2,0,-1) -- (2.2,0,1) node [midway, above right] {$R$};
+
+        % Current Direction
+        \draw [line width = 0.7mm, blue, ->] (1.4,-0.1,1) arc (-20:20:1.1) node [black, midway, below] {$I$};
+        \draw [line width = 0.7mm, blue, ->] (1.4,-0.1,-1) arc (-20:20:1.1) node [black, midway, below] {$I$};
+      \end{tikzpicture}
+    \end{subfigure}
+    \caption{Helmholtz Coil}
+    \label{fig:coils}
+  \end{figure}
+
+  If we derive the field for a single coil of radius $R$ carrying current $I$ it is easy enough to extend to two coils of $N$ turns.
+  The field generally is given by
+  $$\bv{B}(\bv{r})=\frac{\mu_0 I}{4\pi}\int \frac{d\bv{\ell}'\times\uv{\bscriptr}}{\scriptr^3}.$$
+  For the field on-axis of a single coil $\bv{r}=z\uz$ and $\bv{r}'=R\uv{s}$, hence $\bscriptr = z\uz-R\uv{s}$.
+  Since $d\bv{\ell}'=Rd\phi'\uv{\phi}$, $d\bv{\ell}'\times {\bscriptr}=Rd\phi'\uv{\phi}\times\left[z\uz-R\uv{s}\right]=
+    Rd\phi'z\uv{s}+R^2d\phi'\uz$. The integral then becomes
+  $$\bv{B}(\bv{r})=\frac{\mu_0 I}{4\pi}\int_0^{2\pi} \frac{Rd\phi'z\uv{s}+R^2d\phi'\uz}{\left(z^2+R^2\right)^{3/2}}=\frac{\mu_0 I}{2}\frac{Rz\uv{s}+R^2\uz}{\left(z^2+R^2\right)^{3/2}}.$$
+  Now we extend to the actual Helmholtz configuration by considering two sets of $N$ coils, each at $z=\pm R/2$ respectively. Note that the $\uv{s}$ components of the
+  fields due to these coils will cancel. Also, provided we assume that the individual coils are laid relatively flat and are close together, we can just multiply by $N$
+  to obtain the total field by each coil, then sum these fields to obtain the full expression. The field of one coil in such a configuration (ignoring the $\uv{s}$ component) is
+  $$\bv{B}(\bv{r})=\frac{\mu_0 NI}{2}\frac{R^2\uz}{\left((z\pm R/2)^2+R^2\right)^{3/2}}.$$
+  Summing these fields then we obtain
+  \begin{align*}
+    \bv{B}(\bv{r}) & =\frac{\mu_0 NIR^2}{2}\left[\frac{1}{\left((z+ R/2)^2+R^2\right)^{3/2}}+\frac{1}{\left((z-R/2)^2+R^2\right)^{3/2}}\right]\uz                                                         \\
+                   & =\frac{\mu_0 NIR^2}{2}\left[\frac{\left((z-R/2)^2+R^2\right)^{3/2}+\left((z+ R/2)^2+R^2\right)^{3/2}}{\left((z+ R/2)^2+R^2\right)^{3/2}\left((z- R/2)^2+R^2\right)^{3/2}}\right]\uz.
+  \end{align*}
+  We can plot this expression (in natural units),
+\begin{figure}[h]
+  \centering
+    \begin{tikzpicture}
+      \begin{axis}[
+          domain=-2:2,
+          xmin=-2, xmax=2,
+          ymin=0, ymax=2,
+          samples=400,
+          xlabel=$z$
+        ]
+        \addplot[mark=none, red] {1/((x+1/2)^2+1)^(1.5)};
+        \addplot[mark=none, green] {1/((x-1/2)^2+1)^(1.5)};
+        \addplot[mark=none] {(1/((x-1/2)^2+1)^(1.5))+(1/((x+1/2)^2+1)^(1.5))};
+      \end{axis}
+    \end{tikzpicture}
+    \caption{Helmholtz coil relative magnetic field strength. The coloured curves are the individual coils and the black curve is their sum.}
+\end{figure}
+and we see that indeed the field inside and near the center is highly uniform. Given that the uniformity is in such a small region I believe that 
+a Taylor expansion or something similar on the $\bv{B}$ field could yield a simplified expression for the field in this region.
 \end{soln}
 \end{document}

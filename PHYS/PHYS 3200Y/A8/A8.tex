@@ -1,0 +1,240 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsmath,amsthm,amssymb,bm}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{changepage}
+\usepackage{circuitikz}
+\usepackage{pgfplots}
+\usepackage{minted}
+\usepackage{physics}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usepackage{hyperref}
+\usepackage{siunitx}
+\usepackage{fontspec}
+\usepackage{relsize}
+\usepackage{subfig}
+\usepackage{todonotes}
+\usepackage{contour}
+\usepackage{multicol, multirow, booktabs}
+\usepackage[breakable]{tcolorbox}
+\usepackage[inline]{enumitem}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{soln}{Solution}
+
+\pgfplotsset{compat=newest}
+\usetikzlibrary{lindenmayersystems}
+\usetikzlibrary{arrows}
+\usetikzlibrary{calc}
+\usetikzlibrary{positioning, fit}
+\usetikzlibrary{3d, perspective}
+\usetikzlibrary{math}
+\usetikzlibrary{fadings}
+\usetikzlibrary{angles,quotes} 
+
+\definecolor{incolor}{HTML}{303F9F}
+\definecolor{outcolor}{HTML}{D84315}
+\definecolor{cellborder}{HTML}{CFCFCF}
+\definecolor{cellbackground}{HTML}{F7F7F7}
+\newcommand{\ui}{\hat{i}}
+\newcommand{\uj}{\hat{j}}
+\newcommand{\uk}{\hat{k}}
+\newcommand{\ux}{\hat{\mathbf{x}}}
+\newcommand{\uy}{\hat{\mathbf{y}}}
+\newcommand{\uz}{\hat{\mathbf{z}}}
+\newcommand{\uv}[1]{\hat{\bv{{#1}}}}
+\newcommand{\pr}[1]{{#1^\prime}}
+\newcommand{\pd}[2][]{{\frac{\partial^{#1}}{\partial {{#2}^{#1}}}}}
+\newcommand{\dif}[2][]{{\frac{d^{#1}}{d{{#2}^{#1}}}}}
+\newcommand{\grd}{\nabla}
+
+\pgfdeclarelayer{background}  
+\pgfsetlayers{background,main}
+\AtBeginDocument{\RenewCommandCopy\qty\SI}
+
+\makeatletter
+\newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+\makeatother
+\newcommand{\prompt}[4]{
+    \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+}
+
+\newcommand{\thevenin}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (2,0) to[battery1, l_=$V_{Th}\eq#1$] (2,2) 
+      to[resistor, l_=$R_{Th}\eq#2$] (0,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\norton}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (3,0) to[american current source, l_=$I_{N}\eq#1$] (3,2) -- (0,2) (2,0)
+      to[resistor, l=$R_{N}\eq#2$] (2,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\DeclareMathOperator{\Div}{div}
+\DeclareMathOperator{\Curl}{curl}
+\DeclareMathOperator{\sgn}{sgn}
+
+\newcommand{\highlight}[1]{\colorbox{yellow}{$\displaystyle #1$}}
+
+\newcommand{\ti}[1]{\widetilde{#1}}
+
+\newfontface{\Kaufmann}{Kaufmann}
+\DeclareTextFontCommand{\kf}{\Kaufmann}
+\newcommand{\scriptr}{\fontsize{12pt}{12pt}\kf{r}\fontsize{10pt}{10pt}}
+
+\newfontface{\KaufmannB}{Kaufmann Bold}
+\DeclareTextFontCommand{\kfb}{\KaufmannB}
+\newcommand{\bscriptr}{\fontsize{12pt}{12pt}\kfb{r}\fontsize{10pt}{10pt}}
+\newcommand{\justif}[2]{&{#1}&\text{#2}}
+\newcommand{\bv}[1]{\bm{\mathrm{#1}}}
+
+\title{Physics 3200Y: Assignment VIII}
+\author{Jeremy Favro (0805980) \\ Trent University, Peterborough, ON, Canada}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+% PROBLEM 1
+\begin{problem}
+A rotating disc (radius $R$, angular velocity $\omega$) has a uniform surface charge density $\sigma$. Find:
+\begin{enumerate}[label=(\alph*)]
+  \item The surface current density $\bv{K}$.
+  \item The magnetic field at a point $z > R$ along the axis of symmetry. Note the similarity to
+        Example 5.6.
+  \item The magnetic dipole moment of the disc. You can do this by treating the disc as a sum
+        of circular wire loops, and adding up the magnetic dipole moments.
+  \item Now compare the magnetic field due to the dipole you found in (c) to the magnetic field
+        you found in (b). They should be the same in the limit $z \gg R$. To do the comparison,
+        you'll need to evaluate the Taylor series for $(1 + X)^{-1/2}$ to second order in $X$. Do this
+        explicitly and find the leading-order nonzero term.
+\end{enumerate}
+\end{problem}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item A surface current density is by definition the current per unit width. If we envision the rotating disc as a bunch individual
+          wire loops each carrying a piece of the charge $\sigma$ at radius $s'$ and tangential velocity $\bv{\omega}\times \bv{s'}$ we see that the current is
+          $\bv{K}=\sigma \omega s'\uv{\phi}=\sigma \omega s'\left(-\sin\phi\ux+\cos\phi\uy\right)$
+    \item Here $\bv{r}=(0,0,z)$ and $\bv{r}'=(x',y',0)$ so $\bscriptr=(-x',-y',z)$ and when parametrizing the disc in $s'$ and $\phi'$, $\bscriptr=(-s'\cos\phi',-s'\sin\phi', z)$.
+          We want to use
+          $$\bv{B}(\bv{r})=\frac{\mu_0}{4\pi}\int da' \frac{\bv{K}(\bv{r}')\times \uv{\bscriptr}}{\scriptr^2}$$
+          so we compute
+          \begin{align*}
+            \bv{K}\times \bscriptr =\begin{vmatrix}
+                                      \ux                       & \uy                      & \uz \\
+                                      -\sigma \omega s'\sin\phi & \sigma \omega s'\cos\phi & 0   \\
+                                      -s'\cos\phi'              & -s'\sin\phi'             & z
+                                    \end{vmatrix}
+             & =\sigma z\omega s'\cos\phi\ux+\sigma z \omega s'\sin\phi\uy + \left[\sigma \omega s'^2\sin^2\phi+\sigma \omega s'^2\cos^2\phi\right]\uz \\
+             & =\sigma z\omega s'\cos\phi\ux+\sigma z \omega s'\sin\phi\uy + \sigma \omega s'^2\uz
+          \end{align*}
+          so the integral becomes
+          \begin{align*}
+            \bv{B}(\bv{r}) & =\frac{\mu_0}{4\pi}\int da' \frac{\sigma z\omega s'\cos\phi\ux+\sigma z \omega s'\sin\phi\uy + \sigma \omega s'^2\uz}{\scriptr^3}                                     \\
+                           & =\frac{\mu_0}{4\pi}\int_{0}^{2\pi}\int_{0}^{R} \frac{\sigma z\omega s'\cos\phi\ux+\sigma z \omega s'\sin\phi\uy + \sigma \omega s'^2\uz}{(s'^2+z^2)^{3/2}}s'ds'd\phi' \\
+                           & =\frac{\mu_0 \sigma \omega }{2}\int_{0}^{R} \frac{s'^3}{(s'^2+z^2)^{3/2}}ds'\uz
+          \end{align*}
+          here we let $u=s'^2+z^2\implies du =2s'ds'$ so that
+          \begin{align*}
+            \bv{B}(\bv{r}) & =\frac{\mu_0 \sigma \omega }{2}\int_{0}^{R} \frac{s'^3}{(u)^{3/2}}\frac{du}{2s'}\uz                                    \\
+                           & =\frac{\mu_0 \sigma \omega }{4}\int_{0}^{R} \frac{u-z^2}{(u)^{3/2}}du\uz                                               \\
+                           & =\frac{\mu_0 \sigma \omega }{4}\left[\int_{0}^{R} \frac{u}{(u)^{3/2}}du-\int_{0}^{R} \frac{z^2}{(u)^{3/2}}du\right]\uz \\
+                           & =\frac{\mu_0 \sigma \omega }{4}\left[2\sqrt{u}+2\frac{z^2}{\sqrt{u}}\right]_{0}^{R}\uz                                 \\
+                           & =\frac{\mu_0 \sigma \omega }{2}\left[\frac{R^2+2z^2}{\sqrt{R^2+z^2}}-\frac{2z^2}{\sqrt{z^2}}\right]\uz                 \\
+                           & =\frac{\mu_0 \sigma \omega }{2}\left[\frac{R^2+2z^2}{\sqrt{R^2+z^2}}-2z\right]\uz
+          \end{align*}
+    \item Doing this as the question suggests: we know that the magnetic moment of a wire loop of radius $s'$ is $d\bv{m}=dI\pi s'^2\uz$.
+    We don't know $dI$ so we'll have to do some work to find it. We do know $\bv{K}=\sigma \omega s'\uv{\phi}$ for the entire surface 
+    and we know that $$\bv{K}=\frac{d\bv{I}}{d\ell}$$
+    so $$\int \bv{K} d\ell = \bv{I}=\frac{\sigma \omega s'^2}{2}\uv{\phi}\implies $$
+          % Here we only know $\bv{K}$ so we'll have to integrate to find the current of each loop. Since $\bv{K}=\frac{d\bv{I}}{d\ell}$,
+          % $$I=\int_\mathcal{C} \bv{K}\cdot d\bv{\ell}$$
+          % and here $\bv{K}\cdot d\bv{\ell}=\sigma \omega ds'\uv{\phi}\cdot s'd\phi\uv{\phi}=\sigma \omega s'd\phi ds'$.
+          % Note the $ds'$ in $\bv{K}$. This is because we are not considering $\bv{K}$ for the whole surface but instead a slice of it given by the wire loop of
+          % thickness $ds'$. This gives
+          % $$I=\int_0^{2\pi}\sigma \omega s' d\phi ds'=2\pi\sigma\omega s'ds'$$
+          % This means that
+          % $$d\bv{m}=2\pi^2\sigma\omega s'^3ds' \uz.$$
+          % Now since we are treating the disc as a continuous collection of thin wire loops of radius $0\to R$ we integrate the above expression
+          % along $s'$ to find the total moment,
+          % $$\bv{m}=\int_{0}^{R}2\pi^2\sigma \omega s'^3ds'\uz=\frac{\pi^2\sigma \omega R^4}{2}\uz.$$
+    \item We know the magnetic field of a dipole to be
+          $$\bv{B}_{dip}(\bv{r})=\frac{\mu_0}{4\pi}\left[\frac{3(\bv{m}\cdot \bv{r})\bv{r}}{r^5}-\frac{\bv{m}}{r^3}\right].$$
+          Here $\bv{r}=(0,0,z)$ so
+          $$\bv{B}_{dip}(\bv{r})=\frac{\mu_0}{4\pi}\left[\frac{3(\frac{\pi^2\sigma \omega R^4}{2})z\uz}{z^{5/2}}-\frac{\frac{\pi^2\sigma \omega R^4}{2}\uz}{z^{3/2}}\right]
+            =\frac{\mu_0}{4\pi}\left[\frac{\pi^2\sigma \omega R^4}{z^{3/2}}\right]\uz
+            .$$
+          Now the ``true'' magnetic field is given by
+          $$\bv{B}(\bv{r})=\frac{\mu_0 \sigma \omega }{2}\left[\frac{R^2+2z^2}{\sqrt{R^2+z^2}}-2z\right]\uz$$
+          which for $z\gg R$ becomes
+          \begin{align*}
+            \bv{B}(\bv{r}) & =\frac{\mu_0 \sigma \omega }{2}\left[\left[R^2+2z^2\right]\left[R^2+z^2\right]^{-1/2}-2z\right]\uz \\
+                           & =\frac{\mu_0 \sigma \omega }{2}\left[R\left[R^2+2z^2\right]\left[1+\left(\frac{z}{R}\right)^2\right]^{-1/2}-2z\right]\uz \\
+                           & =\frac{\mu_0 \sigma \omega }{2}\left[R\left[R^2+2z^2\right]\left[1-\frac{1}{2}\left(\frac{z}{R}\right)^2\right]-2z\right]\uz \\
+                           & =\frac{\mu_0 \sigma \omega }{2}\left[\left[2z^2\right]\left[R-\frac{1}{2}\frac{z^2}{R}\right]-2z\right]\uz \\
+                           & =\frac{\mu_0 \sigma \omega }{2}\left[2Rz^2-\frac{z^4}{R}-2z\right]\uz \\
+          \end{align*}
+  \end{enumerate}
+\end{soln}
+
+% PROBLEM 2
+\begin{problem}
+In order to obtain Eq. (6.15) of Griffiths, we needed to show that
+$$\int_\mathcal{V}\bv{\grd}' \times \left[\frac{\bv{M}(\bv{r}')}{\scriptr}\right]d^3r'=-\oint_\mathcal{S}\frac{\bv{M}(\bv{r}')\times d\bv{a}'}{\scriptr}$$
+Complete problem 1.61(b), and then use this to fill in the missing steps of the derivation of
+Eq. (6.12).
+\end{problem}
+\begin{soln}
+Problem 1.61(b) asks for a proof of 
+$$\int_{\mathcal{V}}\bv{\grd}\times \bv{v}d\tau = -\oint_\mathcal{S}\bv{v}\times d\bv{a}.$$
+The problem suggests replacing $\bv{v}$ by $\bv{v}\times \bv{c}$ in the divergence theorem, so that is what I will do.
+The divergence theorem says that 
+$$\int_{\mathcal{V}}\bv{\grd}\cdot \bv{v} d\tau=\oint_\mathcal{S}\bv{v}\cdot \uv{n} da$$
+and doing the suggested replacement gives us 
+$$\int_{\mathcal{V}}\bv{\grd}\cdot (\bv{v}\times \bv{c}) d\tau=\oint_\mathcal{S}(\bv{v}\times \bv{c})\cdot \uv{n} da.$$
+Using product rule (6) from the front cover of Griffiths and the fact that $\uv{n} da =d\bv{a}$ gives us 
+$$\int_{\mathcal{V}} \bv{c}\cdot (\bv{\grd}\times \bv{v})-\bv{v}\cdot (\bv{\grd}\times \bv{c}) d\tau=\oint_\mathcal{S}(\bv{v}\times \bv{c})\cdot d\bv{a}.$$
+Now we use triple product rules (1) from the front cover of Griffiths to get that 
+$$\int_{\mathcal{V}} \bv{c}\cdot (\bv{\grd}\times \bv{v})-\bv{v}\cdot (\bv{\grd}\times \bv{c}) d\tau=-\oint_\mathcal{S}\bv{c}\cdot (\bv{v}\times d\bv{a})$$
+where we've flipped the sign as $\bv{a}\times \bv{b} = -\bv{b}\times \bv{a}$. Now note that (and I assume this is why $\bv{c}$ is called what it is) for constant
+$\bv{c}$, $\bv{\grd}\times \bv{c}=0$ so 
+$$\bv{c}\cdot \int_{\mathcal{V}} (\bv{\grd}\times \bv{v})d\tau=-\bv{c}\cdot \oint_\mathcal{S}(\bv{v}\times d\bv{a})$$
+which only implies that the components of these integrals along $\bv{c}$ are equal, not that the integrals themselves are equal. I.e.
+consider $\bv{a}=\ux$, $\bv{b}=x\ux+y\uy$, $\bv{c}=x\ux+8y\uy+123zyx\uz$
+then $\bv{a}\cdot\bv{b}=\bv{a}\cdot\bv{c}$ certainly but $\bv{b}\neq\bv{c}$.
+\end{soln}
+
+% PROBLEM 3
+\begin{problem}
+Griffiths problem 6.1.
+\end{problem}
+\begin{soln}
+
+\end{soln}
+
+% PROBLEM 4
+\begin{problem}
+Griffiths problem 6.7.
+\end{problem}
+\begin{soln}
+
+\end{soln}
+\end{document}

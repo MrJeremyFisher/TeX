@@ -179,12 +179,57 @@ notation.
   $$
   This is, to be explicit,
   $$\mathbb{I}^{(1)}\otimes \ket{0}\bra{0}^{(2)} +\hat{\sigma}_x^{(1)}\otimes \ket{1}\bra{1}^{(2)}$$
-  in Dirac notation.
+  in Dirac notation. After a discussion in office hours I will also show how we can get this from a truth table.
+  Recall that we can write a matrix for an operator $\hat{A}$ acting on a two-qubit system as
+  $$\begin{pmatrix}
+      \bra{00}\hat{A}\ket{00} & \bra{00}\hat{A}\ket{01} & \bra{00}\hat{A}\ket{10} & \bra{00}\hat{A}\ket{11} \\
+      \bra{01}\hat{A}\ket{00} & \dots                   &                         &                         \\
+      \bra{10}\hat{A}\ket{00} & \dots                   &                         &                         \\
+      \bra{11}\hat{A}\ket{00} & \dots                   &                         &                         \\
+    \end{pmatrix}
+    .$$
+  We also know that the operator that we want has the following truth table
+  $$
+    \begin{array}{|c|c|}
+      \ket{\psi} & \hat{A}\ket{\psi} \\
+      \hline
+      \ket{00}   & \ket{00}          \\
+      \ket{01}   & \ket{11}          \\
+      \ket{10}   & \ket{10}          \\
+      \ket{11}   & \ket{01}
+    \end{array}
+  $$
+  and hence we can evaluate the entries of the matrix we defined. Note that we can speed the process up a bit by representing the matrix like
+  $$\begin{pmatrix}
+      \bra{00} & \bra{11} & \bra{10} & \bra{01} \\
+      \bra{01} &          &          &          \\
+      \bra{10} &          &          &          \\
+      \bra{11} &          &          &          \\
+    \end{pmatrix}
+  $$
+  and noting that when we ``operate'' on this with $\hat{A}$ as defined by the truth table we obtain the following using the representation
+  $$
+    \begin{pmatrix}
+      \bra{00} & \bra{00} & \bra{11} & \bra{10} \\
+      \bra{01} &          &          &          \\
+      \bra{10} &          &          &          \\
+      \bra{11} &          &          &          \\
+    \end{pmatrix}
+  $$
+  and from here it is easy to see that when we compute the inner products we obtain the same matrix as with the other method,
+  $$
+    \begin{pmatrix}
+      1 & 0 & 0 & 0 \\
+      0 & 0 & 0 & 1 \\
+      0 & 0 & 1 & 0 \\
+      0 & 1 & 0 & 0
+    \end{pmatrix}
+  $$
 \end{soln}
 
 % PROBLEM 2
 \begin{problem}
-We discussed in class how to implement a $\text{CNOT}_12$ gate using J coupling in NMR. We
+We discussed in class how to implement a $\text{CNOT}_{12}$ gate using J coupling in NMR. We
 concluded that
 $$\hat{R}_z^{(1)}(\pi/2)\hat{R}_y^{(2)}(-\pi/2)\hat{R}_z^{(2)}(-\pi/2)\hat{U}_J^{(2)}(1/2J_{12})\hat{R}_y^{(2)}(\pi/2)=e^{i\pi/4}\hat{U}_{CNOT}$$
 where
@@ -209,32 +254,188 @@ operators in terms of $\hat{\sigma}_i$ operators and multiplying the terms. Foll
           where $\uv{j}$ is the unit vector for the axis we want to rotate about. The operators we want are then:
           \begin{enumerate}[label=(\roman*)]
             \item $\hat{R}_z^{(1)}(\pi/2)=\exp\left(-i\frac{\pi}{4}\hat{\sigma}_z^{(1)}\right)
-            =\cos\left(\frac{\pi}{4}\right)\hat{I}^{(1)}-i\sin\left(\frac{\pi}{4}\right)\hat{\sigma}_z^{(1)}
-            =(\hat{I}^{(1)}-i\hat{\sigma}_z^{(1)})/\sqrt{2}$
+                    =\cos\left(\frac{\pi}{4}\right)\hat{I}^{(1)}-i\sin\left(\frac{\pi}{4}\right)\hat{\sigma}_z^{(1)}
+                    =(\hat{I}^{(1)}-i\hat{\sigma}_z^{(1)})/\sqrt{2}$
             \item $\hat{R}_y^{(2)}(-\pi/2)=\exp\left(i\frac{\pi}{4}\hat{\sigma}_y^{(2)}\right)
-            =\cos\left(\frac{\pi}{4}\right)\hat{I}^{(2)}+i\sin\left(\frac{\pi}{4}\right)\hat{\sigma}_y^{(2)}
-            =(\hat{I}^{(2)}+i\hat{\sigma}_y^{(2)})/\sqrt{2}
-            $
+                    =\cos\left(\frac{\pi}{4}\right)\hat{I}^{(2)}+i\sin\left(\frac{\pi}{4}\right)\hat{\sigma}_y^{(2)}
+                    =(\hat{I}^{(2)}+i\hat{\sigma}_y^{(2)})/\sqrt{2}
+                  $
             \item $\hat{R}_z^{(2)}(-\pi/2)=\exp\left(i\frac{\pi}{4}\hat{\sigma}_z^{(2)}\right)
-            =\cos\left(\frac{\pi}{4}\right)\hat{I}^{(2)}+i\sin\left(\frac{\pi}{4}\right)\hat{\sigma}_z^{(2)}
-            =(\hat{I}^{(2)}+i\hat{\sigma}_z^{(2)})/\sqrt{2}
-            $
+                    =\cos\left(\frac{\pi}{4}\right)\hat{I}^{(2)}+i\sin\left(\frac{\pi}{4}\right)\hat{\sigma}_z^{(2)}
+                    =(\hat{I}^{(2)}+i\hat{\sigma}_z^{(2)})/\sqrt{2}
+                  $
             \item $
-            \hat{R}_y^{(2)}(\pi/2)
-            =\exp\left(-i\frac{\pi}{4}\hat{\sigma}_y^{(2)}\right)
-            =\cos\left(\frac{\pi}{4}\right)\hat{I}^{(2)}-i\sin\left(\frac{\pi}{4}\right)\hat{\sigma}_y^{(2)}
-            =(\hat{I}^{(2)}-i\hat{\sigma}_y^{(2)})/\sqrt{2}
-            $
+                    \hat{R}_y^{(2)}(\pi/2)
+                    =\exp\left(-i\frac{\pi}{4}\hat{\sigma}_y^{(2)}\right)
+                    =\cos\left(\frac{\pi}{4}\right)\hat{I}^{(2)}-i\sin\left(\frac{\pi}{4}\right)\hat{\sigma}_y^{(2)}
+                    =(\hat{I}^{(2)}-i\hat{\sigma}_y^{(2)})/\sqrt{2}
+                  $
           \end{enumerate}
-    \item \begin{align*}
-      \hat{U}_J^{(2)}(1/2J_{12})\hat{R}_y^{(2)}(\pi/2)&=\left[\ket{0}\bra{0}^{(1)}e^{-i(\pi/4)\hat{\sigma}_z^{(2)}}+\ket{1}\bra{1}^{(1)}e^{i(\pi/4)\hat{\sigma}_z^{(2)}}\right]\left[\hat{I}^{(2)}-i\hat{\sigma}_y^{(2)}\right]/\sqrt{2}\\
-      &=\frac{1}{2}\left[\ket{0}\bra{0}^{(1)}(\hat{I}^{(2)}-i\hat{\sigma}_z^{(2)})+\ket{1}\bra{1}^{(1)}(\hat{I}^{(2)}+i\hat{\sigma}_z^{(2)})\right]\left[\hat{I}^{(2)}-i\hat{\sigma}_y^{(2)}\right]\\
-      &=\frac{1}{2}\left[\ket{0}\bra{0}^{(1)}\hat{I}^{(2)}\left[\hat{I}^{(2)}-i\hat{\sigma}_y^{(2)}\right]-i\ket{0}\bra{0}^{(1)}\hat{\sigma}_z^{(2)}\left[\hat{I}^{(2)}-i\hat{\sigma}_y^{(2)}\right]+\ket{1}\bra{1}^{(1)}\hat{I}^{(2)}\left[\hat{I}^{(2)}-i\hat{\sigma}_y^{(2)}\right]+i\ket{1}\bra{1}^{(1)}\hat{\sigma}_z^{(2)}\left[\hat{I}^{(2)}-i\hat{\sigma}_y^{(2)}\right]\right]\\
-    \end{align*}
-    \item Calculate $\hat{R}_z^{(2)}(-\pi/2)\hat{U}_J^{(2)}(1/2J_{12})\hat{R}_y^{(2)}(\pi/2)$. Simplify again.
-    \item Calculate $\hat{R}_y^{(2)}(-\pi/2)\hat{R}_z^{(2)}(-\pi/2)\hat{U}_J^{(2)}(1/2J_{12})\hat{R}_y^{(2)}(\pi/2)$. Simplify again.
-    \item Calculate $\hat{R}_z^{(1)}(\pi/2)\hat{R}_y^{(2)}(-\pi/2)\hat{R}_z^{(2)}(-\pi/2)\hat{U}_J^{(2)}(1/2J_{12})\hat{R}_y^{(2)}(\pi/2)$. Simplify and
-          demonstrate that your result equals $e^{i\pi/4}\hat{U}_{CNOT}$.
+    \item I'm going to do this in two parts per step, one for the $\ket{0}\bra{0}$ terms and another for the $\ket{1}\bra{1}$ terms, then I'll recombine them at the end:
+          \begin{enumerate}[label=(\arabic*)]
+            \item Note that
+                  $$\ket{0}\bra{0}^{(1)}e^{-i(\pi/4)\hat{\sigma}_z^{(2)}}=\ket{0}\bra{0}^{(1)}e^{-i(\pi/4)\hat{\sigma}_z^{(2)}}=\ket{0}\bra{0}^{(1)}\otimes(\hat{I}^{(2)}-i\hat{\sigma}_z^{(2)})/\sqrt{2}.$$
+                  We can pull it apart this way by rewriting the exponential using Euler's formula
+                  and writing the sine and cosine as their respective power series which we can then simplify as the cosine series is all even powers so the $\sigma_z$s becomes the identity
+                  and the sine is all odd so we pick up a factor of $\sigma_z$. This works for the other Pauli matrices as well as they all have the square-identity property. So:
+                  \begin{align*}
+                    \ket{0}\bra{0}^{(1)}\otimes(\hat{I}^{(2)}-i\hat{\sigma}_z^{(2)})/\sqrt{2}\hat{R}_y^{(2)}(\pi/2) & =\ket{0}\bra{0}^{(1)}\otimes(\hat{I}^{(2)}-i\hat{\sigma}_z^{(2)})/\sqrt{2}(\hat{I}^{(2)}-i\hat{\sigma}_y^{(2)})/\sqrt{2}                                                                \\
+                                                                                                                    & =\ket{0}\bra{0}^{(1)}\otimes(\hat{I}^{(2)}-i\hat{\sigma}_z^{(2)})(\hat{I}^{(2)}-i\hat{\sigma}_y^{(2)})/2                                                                                \\
+                                                                                                                    & =\frac{1}{2}\ket{0}\bra{0}^{(1)}\otimes((\hat{I}^{(2)}\hat{I}^{(2)}-i\hat{I}^{(2)}\hat{\sigma}_y^{(2)})-i(\hat{\sigma}_z^{(2)}\hat{I}^{(2)}-i\hat{\sigma}_z^{(2)}\hat{\sigma}_y^{(2)})) \\
+                                                                                                                    & =\frac{1}{2}\ket{0}\bra{0}^{(1)}\otimes(\hat{I}^{(2)}-i\hat{\sigma}_y^{(2)}-i\hat{\sigma}_z^{(2)}-\hat{\sigma}_z^{(2)}\hat{\sigma}_y^{(2)})                                             \\
+                  \end{align*}
+                  and using the Levi-Cevita notation
+                  $$\hat{\sigma}_z^{(2)}\hat{\sigma}_y^{(2)}=-i\hat{\sigma}_x^{(2)}$$
+                  so
+                  \begin{align*}
+                    \ket{0}\bra{0}^{(1)}\otimes(\hat{I}^{(2)}-i\hat{\sigma}_z^{(2)})/\sqrt{2}\hat{R}_y^{(2)}(\pi/2) & =\frac{1}{2}\ket{0}\bra{0}^{(1)}\otimes(\hat{I}^{(2)}-i\hat{\sigma}_y^{(2)}-i\hat{\sigma}_z^{(2)}+i\hat{\sigma}_x^{(2)}) \\
+                  \end{align*}
+            \item \begin{align*}
+                    \ket{1}\bra{1}^{(1)}e^{i(\pi/4)\hat{\sigma}_z^{(2)}}\hat{R}_y^{(2)}(\pi/2) & =\frac{1}{2}\ket{1}\bra{1}^{(1)}\otimes(\hat{I}^{(2)}+i\hat{\sigma}_z^{(2)})(\hat{I}^{(2)}-i\hat{\sigma}_y^{(2)})                                                                  \\
+                                                                                               & =\frac{1}{2}\ket{1}\bra{1}^{(1)}\otimes(\hat{I}^{(2)}+i\hat{\sigma}_z^{(2)})(\hat{I}^{(2)}-i\hat{\sigma}_y^{(2)})                                                                  \\
+                                                                                               & =\frac{1}{2}\ket{1}\bra{1}^{(1)}\otimes(\hat{I}^{(2)}(\hat{I}^{(2)}-i\hat{\sigma}_y^{(2)})+i\hat{\sigma}_z^{(2)}(\hat{I}^{(2)}-i\hat{\sigma}_y^{(2)}))                             \\
+                                                                                               & =\frac{1}{2}\ket{1}\bra{1}^{(1)}\otimes(\hat{I}^{(2)}\hat{I}^{(2)}-i\hat{I}^{(2)}\hat{\sigma}_y^{(2)}+i\hat{\sigma}_z^{(2)}\hat{I}^{(2)}+\hat{\sigma}_z^{(2)}\hat{\sigma}_y^{(2)}) \\
+                                                                                               & =\frac{1}{2}\ket{1}\bra{1}^{(1)}\otimes(\hat{I}^{(2)}-i\hat{\sigma}_y^{(2)}+i\hat{\sigma}_z^{(2)}-i\hat{\sigma}_x^{(2)})                                                           \\
+                  \end{align*}
+          \end{enumerate}
+    \item ~\begin{enumerate}[label=(\arabic*)]
+            \item \begin{align*}
+                    \hat{R}_z^{(2)}(-\pi/2)\hat{U}_J^{(2)}(1/2J_{12})\hat{R}_y^{(2)}(\pi/2) & =_{(0)} (\hat{I}^{(2)}+i\hat{\sigma}_z^{(2)})\frac{1}{2\sqrt{2}}\ket{0}\bra{0}^{(1)}\otimes(\hat{I}^{(2)}-i\hat{\sigma}_y^{(2)}-i\hat{\sigma}_z^{(2)}+i\hat{\sigma}_x^{(2)}) \\
+                                                                                            & = \frac{1}{2\sqrt{2}}(\hat{I}^{(2)}+i\hat{\sigma}_z^{(2)})\ket{0}\bra{0}^{(1)}\otimes(\hat{I}^{(2)}-i\hat{\sigma}_y^{(2)}-i\hat{\sigma}_z^{(2)}+i\hat{\sigma}_x^{(2)})       \\
+                  \end{align*}
+            \item \begin{align*}
+                    \hat{R}_z^{(2)}(-\pi/2)\hat{U}_J^{(2)}(1/2J_{12})\hat{R}_y^{(2)}(\pi/2) & =_{(1)}\frac{1}{2\sqrt{2}}(\hat{I}^{(2)}+i\hat{\sigma}_z^{(2)})\ket{1}\bra{1}^{(1)}\otimes(\hat{I}^{(2)}-i\hat{\sigma}_y^{(2)}+i\hat{\sigma}_z^{(2)}-i\hat{\sigma}_x^{(2)}) \\
+                  \end{align*}
+          \end{enumerate}
+    \item  ~\begin{enumerate}[label=(\arabic*)]
+            \item \begin{align*}
+                    \hat{R}_y^{(2)}(-\pi/2)\hat{R}_z^{(2)}(-\pi/2)\hat{U}_J^{(2)}(1/2J_{12})\hat{R}_y^{(2)}(\pi/2) & = \frac{1}{4}(\hat{I}^{(2)}+i\hat{\sigma}_y^{(2)})(\hat{I}^{(2)}+i\hat{\sigma}_z^{(2)})\ket{0}\bra{0}^{(1)}\otimes(\hat{I}^{(2)}-i\hat{\sigma}_y^{(2)}-i\hat{\sigma}_z^{(2)}+i\hat{\sigma}_x^{(2)}) \\
+                                                                                                                   & = \frac{1}{4}(\hat{I}^{(2)}\hat{I}^{(2)}+i\hat{I}^{(2)}\hat{\sigma}_z^{(2)}+i\hat{\sigma}_y^{(2)}\hat{I}^{(2)}-\hat{\sigma}_y^{(2)}\hat{\sigma}_z^{(2)})                                            \\
+                                                                                                                   & \quad\ket{0}\bra{0}^{(1)}\otimes(\hat{I}^{(2)}-i\hat{\sigma}_y^{(2)}-i\hat{\sigma}_z^{(2)}+i\hat{\sigma}_x^{(2)})                                                                                   \\
+                                                                                                                   & = \frac{1}{4}(\hat{I}^{(2)}+i\hat{\sigma}_z^{(2)}+i\hat{\sigma}_y^{(2)}-\hat{\sigma}_x^{(2)})                                                                                                       \\
+                                                                                                                   & \quad\ket{0}\bra{0}^{(1)}\otimes(\hat{I}^{(2)}-i\hat{\sigma}_y^{(2)}-i\hat{\sigma}_z^{(2)}+i\hat{\sigma}_x^{(2)})                                                                                   \\
+                  \end{align*}
+            \item \begin{align*}
+                    \hat{R}_y^{(2)}(-\pi/2)\hat{R}_z^{(2)}(-\pi/2)\hat{U}_J^{(2)}(1/2J_{12})\hat{R}_y^{(2)}(\pi/2) & =_{(1)}\frac{1}{4}(\hat{I}^{(2)}+i\hat{\sigma}_y^{(2)})(\hat{I}^{(2)}+i\hat{\sigma}_z^{(2)})\ket{1}\bra{1}^{(1)}\otimes(\hat{I}^{(2)}-i\hat{\sigma}_y^{(2)}+i\hat{\sigma}_z^{(2)}-i\hat{\sigma}_x^{(2)}) \\
+                                                                                                                   & =_{(1)}\frac{1}{4}(\hat{I}^{(2)}+i\hat{\sigma}_z^{(2)}+i\hat{\sigma}_y^{(2)}-\hat{\sigma}_x^{(2)})                                                                                                       \\
+                                                                                                                   & \quad\ket{1}\bra{1}^{(1)}\otimes(\hat{I}^{(2)}-i\hat{\sigma}_y^{(2)}+i\hat{\sigma}_z^{(2)}-i\hat{\sigma}_x^{(2)})                                                                                        \\
+                  \end{align*}
+          \end{enumerate}
+          \newpage
+    \item ~\begin{enumerate}[label=(\arabic*)]
+            \item With $\hat{R}_z^{(1)}(\pi/2)\hat{R}_y^{(2)}(-\pi/2)\hat{R}_z^{(2)}(-\pi/2)\hat{U}_J^{(2)}(1/2J_{12})\hat{R}_y^{(2)}(\pi/2)=\hat{A}$,
+
+                  \begin{align*}
+                    \hat{A} & = \frac{1}{4\sqrt{2}}(\hat{I}^{(1)}-i\hat{\sigma}_z^{(1)})(\hat{I}^{(2)}+i\hat{\sigma}_z^{(2)}+i\hat{\sigma}_y^{(2)}-\hat{\sigma}_x^{(2)}) \\
+                            & \quad\ket{0}\bra{0}^{(1)}\otimes(\hat{I}^{(2)}-i\hat{\sigma}_y^{(2)}-i\hat{\sigma}_z^{(2)}+i\hat{\sigma}_x^{(2)})                          \\
+                            & = \frac{1}{4\sqrt{2}}
+                    (
+                    \hat{I}^{(1)}\hat{I}^{(2)}+i\hat{I}^{(1)}\hat{\sigma}_z^{(2)}+i\hat{I}^{(1)}\hat{\sigma}_y^{(2)}-\hat{I}^{(1)}\hat{\sigma}_x^{(2)}
+                    +\hat{\sigma}_z^{(1)}\hat{I}^{(2)}+\hat{\sigma}_z^{(1)}\hat{\sigma}_z^{(2)}+\hat{\sigma}_z^{(1)}\hat{\sigma}_y^{(2)}+i\hat{\sigma}_z^{(1)}\hat{\sigma}_x^{(2)}
+                    )
+                    \\
+                            & \quad\ket{0}\bra{0}^{(1)}\otimes(\hat{I}^{(2)}-i\hat{\sigma}_y^{(2)}-i\hat{\sigma}_z^{(2)}+i\hat{\sigma}_x^{(2)})                          \\
+                  \end{align*}
+            \item \begin{align*}
+                    \hat{A} &
+                    =_{(1)}\frac{1}{4\sqrt{2}}
+                    (
+                    \hat{I}^{(1)}\hat{I}^{(2)}+i\hat{I}^{(1)}\hat{\sigma}_z^{(2)}+i\hat{I}^{(1)}\hat{\sigma}_y^{(2)}-\hat{I}^{(1)}\hat{\sigma}_x^{(2)}
+                    +\hat{\sigma}_z^{(1)}\hat{I}^{(2)}+\hat{\sigma}_z^{(1)}\hat{\sigma}_z^{(2)}+\hat{\sigma}_z^{(1)}\hat{\sigma}_y^{(2)}+i\hat{\sigma}_z^{(1)}\hat{\sigma}_x^{(2)}
+                    )
+                    \\
+                            & \quad\ket{1}\bra{1}^{(1)}\otimes(\hat{I}^{(2)}-i\hat{\sigma}_y^{(2)}+i\hat{\sigma}_z^{(2)}-i\hat{\sigma}_x^{(2)}) \\
+                  \end{align*}
+          \end{enumerate}
+          so recombining the two terms the whole operator is
+          \begin{align*}
+             & \frac{1}{4\sqrt{2}}
+            (
+            \hat{I}^{(1)}\hat{I}^{(2)}+i\hat{I}^{(1)}\hat{\sigma}_z^{(2)}+i\hat{I}^{(1)}\hat{\sigma}_y^{(2)}-\hat{I}^{(1)}\hat{\sigma}_x^{(2)}
+            +\hat{\sigma}_z^{(1)}\hat{I}^{(2)}+\hat{\sigma}_z^{(1)}\hat{\sigma}_z^{(2)}+\hat{\sigma}_z^{(1)}\hat{\sigma}_y^{(2)}+i\hat{\sigma}_z^{(1)}\hat{\sigma}_x^{(2)}
+            )                                                                                                                                                                                                                                          \\
+             & \left[\ket{0}\bra{0}^{(1)}\otimes(\hat{I}^{(2)}-i\hat{\sigma}_y^{(2)}-i\hat{\sigma}_z^{(2)}+i\hat{\sigma}_x^{(2)})+ \ket{1}\bra{1}^{(1)}\otimes(\hat{I}^{(2)}-i\hat{\sigma}_y^{(2)}+i\hat{\sigma}_z^{(2)}-i\hat{\sigma}_x^{(2)})\right]
+          \end{align*}
+          This is evidently not the $\text{CNOT}_{12}$ gate unless I'm missing something. I can't tell where I went wrong.
+
+
+          % \item It's easiest (for me) to do this with the exponential forms we calculated previously. Note that when we are applying an operator like
+          %       $$\hat{R}_y^{(2)}(\pi/2)
+          %         =\exp\left(-i\frac{\pi}{4}\hat{\sigma}_y^{(2)}\right)$$
+          %       to a two qubit system, what we are really doing is applying
+          %       $$\hat{R}_y^{(2)}(\pi/2)
+          %         =\exp\left(-i\frac{\pi}{4}\hat{I}^{(1)}\otimes\hat{\sigma}_y^{(2)}\right)$$
+          %       i.e. we do nothing to the first qubit, and rotate the second. Also recall that when we original found $\hat{U}_J(1/2J_{12})$, we had the expression
+          %       $$\hat{U}_J(1/2J_{12})=\exp\left(-i\frac{\pi}{4}\hat{\sigma}_z^{(1)}\otimes\hat{\sigma}_z^{(2)}\right).$$
+          %       This means that
+          %       $$
+          %         \hat{U}_J(1/2J_{12})\hat{R}_y^{(2)}(\pi/2)
+          %         =\exp\left(-i\frac{\pi}{4}\hat{\sigma}_z^{(1)}\otimes\hat{\sigma}_z^{(2)}\right)\exp\left(-i\frac{\pi}{4}\hat{I}^{(1)}\otimes\hat{\sigma}_y^{(2)}\right)
+          %         =\exp\left(-i\frac{\pi}{4}\left[\hat{\sigma}_z^{(1)}\otimes\hat{\sigma}_z^{(2)}+\hat{I}^{(1)}\otimes\hat{\sigma}_y^{(2)}\right]\right)
+          %       $$
+          % \item \begin{align*}
+          %         \hat{R}_z^{(2)}(-\pi/2)\hat{U}_J(1/2J_{12})\hat{R}_y^{(2)}(\pi/2) &
+          %         =\exp\left(i\frac{\pi}{4}\hat{I}^{(1)}\otimes\hat{\sigma}_z^{(2)}\right)\exp\left(-i\frac{\pi}{4}\left[\hat{\sigma}_z^{(1)}\otimes\hat{\sigma}_z^{(2)}+\hat{I}^{(1)}\otimes\hat{\sigma}_y^{(2)}\right]\right)                                        \\
+          %                                                                           & =\exp\left(-i\frac{\pi}{4}\left[-\hat{I}^{(1)}\otimes\hat{\sigma}_z^{(2)}+\hat{\sigma}_z^{(1)}\otimes\hat{\sigma}_z^{(2)}+\hat{I}^{(1)}\otimes\hat{\sigma}_y^{(2)}\right]\right) \\
+          %                                                                           & =\exp\left(-i\frac{\pi}{4}\left[(\hat{\sigma}_z^{(1)}-\hat{I}^{(1)})\otimes\hat{\sigma}_z^{(2)}+\hat{I}^{(1)}\otimes\hat{\sigma}_y^{(2)}\right]\right)
+          %       \end{align*}
+          % \item \begin{align*}
+          %         \hat{R}_y^{(2)}(-\pi/2)\hat{R}_z^{(2)}(-\pi/2)\hat{U}_J(1/2J_{12})\hat{R}_y^{(2)}(\pi/2) & =\exp\left(i\frac{\pi}{4}\hat{I}^{(1)}\otimes\hat{\sigma}_y^{(2)}\right)\exp\left(-i\frac{\pi}{4}\left[(\hat{\sigma}_z^{(1)}-\hat{I}^{(1)})\otimes\hat{\sigma}_z^{(2)}+\hat{I}^{(1)}\otimes\hat{\sigma}_y^{(2)}\right]\right) \\
+          %                                                                                                  & =\exp\left(-i\frac{\pi}{4}\left[(\hat{\sigma}_z^{(1)}-\hat{I}^{(1)})\otimes\hat{\sigma}_z^{(2)}+\cancel{\hat{I}^{(1)}\otimes\hat{\sigma}_y^{(2)}}-\cancel{\hat{I}^{(1)}\otimes\hat{\sigma}_y^{(2)}}\right]\right)             \\
+          %                                                                                                  & =\exp\left(-i\frac{\pi}{4}\left[(\hat{\sigma}_z^{(1)}-\hat{I}^{(1)})\otimes\hat{\sigma}_z^{(2)}\right]\right)
+          %       \end{align*}
+
+          % \item \begin{align*}
+          %         \hat{R}_z^{(1)}(\pi/2)\hat{R}_y^{(2)}(-\pi/2)\hat{R}_z^{(2)}(-\pi/2)\hat{U}_J(1/2J_{12})\hat{R}_y^{(2)}(\pi/2) & =\exp\left(-i\frac{\pi}{4}\hat{\sigma}_z^{(1)}\otimes \hat{I}^{(2)}\right)\exp\left(-i\frac{\pi}{4}\left[(\hat{\sigma}_z^{(1)}-\hat{I}^{(1)})\otimes\hat{\sigma}_z^{(2)}\right]\right) \\
+          %                                                                                                                        & =\exp\left(-i\frac{\pi}{4}\left[(\hat{\sigma}_z^{(1)}-\hat{I}^{(1)})\otimes\hat{\sigma}_z^{(2)}+\hat{\sigma}_z^{(1)}\otimes \hat{I}^{(2)}\right]\right)                                \\
+          %                                                                                                                        & =\exp\left(-i\frac{\pi}{4}\left[\hat{\sigma}_z^{(1)}\otimes\hat{\sigma}_z^{(2)}+\hat{\sigma}_z^{(1)}\otimes \hat{I}^{(2)}-\hat{I}^{(1)}\otimes\hat{\sigma}_z^{(2)}\right]\right)       \\
+          %                                                                                                                        & =\exp\left(-i\frac{\pi}{4}\left[\hat{\sigma}_z^{(1)}\otimes(\hat{\sigma}_z^{(2)}+\hat{I}^{(2)})-\hat{I}^{(1)}\otimes\hat{\sigma}_z^{(2)}\right]\right)                                 \\
+          %                                                                                                                        & =\exp\left(-i\frac{\pi}{4}\hat{\sigma}_z^{(1)}\otimes(\hat{\sigma}_z^{(2)}+\hat{I}^{(2)})\right)\exp\left(i\frac{\pi}{4}\hat{I}^{(1)}\otimes\hat{\sigma}_z^{(2)}\right)
+          %       \end{align*}
+          %       Now let's look at the second term. If we use Euler's formula to write it as a sum of sin and cos and Taylor expand both we see that
+          %       \begin{align*}
+          %         \exp\left(i\frac{\pi}{4}\hat{I}^{(1)}\otimes\hat{\sigma}_z^{(2)}\right) & =\cos\left(\frac{\pi}{4}\hat{I}^{(1)}\otimes\hat{\sigma}_z^{(2)}\right)+i\sin\left(\frac{\pi}{4}\hat{I}^{(1)}\otimes\hat{\sigma}_z^{(2)}\right)                                                                                                                           \\
+          %                                                                                 & =\sum_{n=0}^{\infty}(-1)^n\frac{\left(\frac{\pi}{4}\hat{I}^{(1)}\otimes\hat{\sigma}_z^{(2)}\right)^{2n}}{(2n)!}+i\sum_{n=0}^{\infty}(-1)^n\frac{\left(\frac{\pi}{4}\hat{I}^{(1)}\otimes\hat{\sigma}_z^{(2)}\right)^{2n+1}}{(2n+1)!}                                       \\
+          %                                                                                 & =\sum_{n=0}^{\infty}(-1)^n\left(\frac{\pi}{4}\right)^{2n}\frac{\left(\hat{I}^{(1)}\otimes\hat{\sigma}_z^{(2)}\right)^{2n}}{(2n)!}+i\sum_{n=0}^{\infty}(-1)^n\left(\frac{\pi}{4}\right)^{2n+1}\frac{\left(\hat{I}^{(1)}\otimes\hat{\sigma}_z^{(2)}\right)^{2n+1}}{(2n+1)!} \\
+          %       \end{align*}
+          %       Now we use that tensor products obey $(A\otimes B)(C\otimes D)=AC\otimes BD$
+          %       and recall that $\hat{\sigma}_z^{2n}=\hat{I}$ (and of course $\hat{I}^{k}=\hat{I}$) which breaks the sums down to
+          %       \begin{align*}
+          %          & =\sum_{n=0}^{\infty}(-1)^n\left(\frac{\pi}{4}\right)^{2n}\frac{\left(\hat{I}^{(1)}\otimes\hat{I}^{(2)}\right)}{(2n)!}+i\sum_{n=0}^{\infty}(-1)^n\left(\frac{\pi}{4}\right)^{2n+1}\frac{\hat{I}^{(1)}\otimes\hat{\sigma}_z^{(2)}}{(2n+1)!} \\
+          %          & =\cos\left(\frac{\pi}{4}\right)\hat{I}^{(1)}\otimes\hat{I}^{(2)}+i\sin\left(\frac{\pi}{4}\right)\hat{I}^{(1)}\otimes\hat{\sigma}_z^{(2)}                                                                                                  \\
+          %          & =\frac{1}{\sqrt{2}}\hat{I}^{(1)}\otimes\left[\hat{I}^{(2)}+\hat{\sigma}_z^{(2)}\right].
+          %       \end{align*}
+          %       The other exponentials,
+          %       $$
+          %         \exp\left(-i\frac{\pi}{4}\hat{\sigma}_z^{(1)}\otimes(\hat{\sigma}_z^{(2)}+\hat{I}^{(2)})\right)
+          %         =\exp\left(-i\frac{\pi}{4}\hat{\sigma}_z^{(1)}\otimes\hat{\sigma}_z^{(2)}\right)\exp\left(-i\frac{\pi}{4}\hat{\sigma}_z^{(1)}\otimes\hat{I}^{(2)}\right)
+          %       $$
+          %       expand in much the same way giving us
+          %       \begin{align*}
+          %         \exp\left(-i\frac{\pi}{4}\hat{\sigma}_z^{(1)}\otimes\hat{\sigma}_z^{(2)}\right)\exp\left(-i\frac{\pi}{4}\hat{\sigma}_z^{(1)}\otimes\hat{I}^{(2)}\right) & =
+          %         \left[\cos\left(\frac{\pi}{4}\right)\hat{I}^{(1)}\otimes\hat{I}^{(2)}-i\sin\left(\frac{\pi}{4}\right)\hat{\sigma}_z^{(1)}\otimes\hat{\sigma}_z^{(2)}
+          %         \right]                                                                                                                                                                                                                                                                                                      \\
+          %                                                                                                                                                                 & \quad\left[\cos\left(\frac{\pi}{4}\right)\hat{I}^{(1)}\otimes\hat{I}^{(2)}-i\sin\left(\frac{\pi}{4}\right)\hat{\sigma}_z^{(1)}\otimes\hat{I}^{(2)}
+          %         \right]                                                                                                                                                                                                                                                                                                      \\
+          %                                                                                                                                                                 & =
+          %         \frac{1}{2}\left[\hat{I}^{(1)}\otimes\hat{I}^{(2)}-i\hat{\sigma}_z^{(1)}\otimes\hat{\sigma}_z^{(2)}
+          %         \right]
+          %         \left[\hat{I}^{(1)}\otimes\hat{I}^{(2)}-i\hat{\sigma}_z^{(1)}\otimes\hat{I}^{(2)}
+          %         \right]                                                                                                                                                                                                                                                                                                      \\
+          %       \end{align*}
+          %       so the whole thing becomes
+          %       \begin{align*}
+          %         &=\frac{1}{2\sqrt{2}}\left[\hat{I}^{(1)}\otimes\hat{I}^{(2)}-i\hat{\sigma}_z^{(1)}\otimes\hat{\sigma}_z^{(2)}
+          %         \right]
+          %         \left[\hat{I}^{(1)}\otimes\hat{I}^{(2)}-i\hat{\sigma}_z^{(1)}\otimes\hat{I}^{(2)}
+          %         \right]\left[\hat{I}^{(1)}\otimes\hat{I}^{(2)}+\hat{I}^{(1)}\otimes\hat{\sigma}_z^{(2)}\right]     
+          %       \end{align*}
+
+
+
+
+
+
   \end{enumerate}
 \end{soln}
 
