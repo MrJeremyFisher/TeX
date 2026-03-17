@@ -1,0 +1,131 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{changepage}
+\usepackage{circuitikz}
+\usepackage{pgfplots}
+\usepackage{physics}
+\usepackage{hyperref}
+\usepackage{siunitx}
+\usepackage{fontspec}
+\usepackage{relsize}
+\usepackage{subfig}
+\usepackage{minted}
+\usepackage{pdfpages}
+\usepackage{todonotes}
+\usepackage{multicol, multirow, booktabs}
+\usepackage[breakable]{tcolorbox}
+\usepackage[inline]{enumitem}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{soln}{Solution}
+
+\pgfplotsset{compat=newest}
+\usetikzlibrary{lindenmayersystems}
+\usetikzlibrary{arrows}
+\usetikzlibrary{calc}
+\usetikzlibrary{positioning, fit}
+\usetikzlibrary{3d, perspective}
+
+\definecolor{incolor}{HTML}{303F9F}
+\definecolor{outcolor}{HTML}{D84315}
+\definecolor{cellborder}{HTML}{CFCFCF}
+\definecolor{cellbackground}{HTML}{F7F7F7}
+\newcommand{\ui}{\hat{i}}
+\newcommand{\uj}{\hat{j}}
+\newcommand{\uk}{\hat{k}}
+\newcommand{\ux}{\hat{\mathbf{x}}}
+\newcommand{\uy}{\hat{\mathbf{y}}}
+\newcommand{\uz}{\hat{\mathbf{z}}}
+\newcommand{\uv}[1]{\hat{\bm{{#1}}}}
+\newcommand{\pr}[1]{{#1^\prime}}
+\newcommand{\pd}[2][]{{\frac{\partial^{#1}}{\partial {{#2}^{#1}}}}}
+\newcommand{\dif}[2][]{{\frac{d^{#1}}{d{{#2}^{#1}}}}}
+\pgfdeclarelayer{background}  
+\pgfsetlayers{background,main}
+\AtBeginDocument{\RenewCommandCopy\qty\SI}
+\newcommand{\justif}[2]{&{#1}&\text{#2}}
+\DeclareMathOperator\Arg{Arg}
+\DeclareMathOperator{\sgn}{sgn}
+
+\makeatletter
+\newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+\makeatother
+\newcommand{\prompt}[4]{
+    \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+}
+
+\newcommand{\thevenin}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (2,0) to[battery1, l_=$V_{Th}\eq#1$] (2,2) 
+      to[resistor, l_=$R_{Th}\eq#2$] (0,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\norton}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (3,0) to[american current source, l_=$I_{N}\eq#1$] (3,2) -- (0,2) (2,0)
+      to[resistor, l=$R_{N}\eq#2$] (2,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\highlight}[1]{{\colorbox{yellow}{#1}}}
+
+\newcommand{\ti}[1]{\widetilde{#1}}
+
+\newfontface{\Kaufmann}{Kaufmann}
+\DeclareTextFontCommand{\kf}{\Kaufmann}
+\newcommand{\scriptr}{\fontsize{12pt}{12pt}\kf{r}}
+
+\newfontface{\KaufmannB}{Kaufmann Bd BT}
+\DeclareTextFontCommand{\kfb}{\KaufmannB}
+\newcommand{\bscriptr}{\fontsize{12pt}{12pt}\kfb{r}}
+
+\newcommand{\bv}[1]{\mathbf{#1}}
+
+\title{Math 3160H: Assignment II}
+\author{Jeremy Favro (0805980) \\ Trent University, Peterborough, ON, Canada}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+% PROBLEM 1
+\begin{problem}
+A simple pendulum initially has the length $\ell_0$ and makes an angle $\theta_0$ with the vertical line. It is
+then released from this position. If the length of the pendulum increases with time $t$ according to
+$\ell=\ell_0+\epsilon t$, where $\epsilon$ is a small constant, then the angle $\theta$ that the pendulum makes with the vertical
+line, assuming that the oscillations are small, is the solution of the initial value problem
+$$\left(\ell_0+\epsilon t\right)\frac{d^2\theta}{dt^2}+2\epsilon\frac{d\theta}{dt}+g\theta=0,\quad \theta(0)=\theta_0,\quad \frac{d\theta}{dt}(0)=0$$
+where $g$ is the acceleration due to gravity. Find the solution of the above initial value problem.
+\end{problem}
+\begin{soln}
+Consider the change of variables 
+$$t=\ell=\ell_0+\epsilon t$$. This gives us 
+$d\ell=\epsilon dt$
+and so 
+$$\frac{d\theta}{dt}=\epsilon\frac{d\theta}{d\ell}$$ and 
+$$\epsilon^2\frac{d^2\theta}{d\ell^2}$$
+so the ODE becomes 
+$$\ell \epsilon^2\frac{d^2\theta}{d\ell^2}+2\epsilon^2\frac{d\theta}{d\ell}+g\theta=0$$
+which we can divide through by $\epsilon^2$ to see that 
+$$\ell\frac{d^2\theta}{d\ell^2}+2\frac{d\theta}{d\ell}+\frac{g}{\epsilon^2}\theta=0$$
+which is very nearly the Bessel equation, we just need to fiddle a bit more. We can multiply by $\ell$ to get
+$$\ell^2\frac{d^2\theta}{d\ell^2}+2\ell\frac{d\theta}{d\ell}+\frac{g\ell}{\epsilon^2}\theta=0$$
+\end{soln}
+\end{document}

@@ -162,35 +162,32 @@ A rotating disc (radius $R$, angular velocity $\omega$) has a uniform surface ch
                            & =\frac{\mu_0 \sigma \omega }{2}\left[\frac{R^2+2z^2}{\sqrt{R^2+z^2}}-2z\right]\uz
           \end{align*}
     \item Doing this as the question suggests: we know that the magnetic moment of a wire loop of radius $s'$ is $d\bv{m}=dI\pi s'^2\uz$.
-    We don't know $dI$ so we'll have to do some work to find it. We do know $\bv{K}=\sigma \omega s'\uv{\phi}$ for the entire surface 
-    and we know that $$\bv{K}=\frac{d\bv{I}}{d\ell}$$
-    so $$\int \bv{K} d\ell = \bv{I}=\frac{\sigma \omega s'^2}{2}\uv{\phi}\implies $$
-          % Here we only know $\bv{K}$ so we'll have to integrate to find the current of each loop. Since $\bv{K}=\frac{d\bv{I}}{d\ell}$,
-          % $$I=\int_\mathcal{C} \bv{K}\cdot d\bv{\ell}$$
-          % and here $\bv{K}\cdot d\bv{\ell}=\sigma \omega ds'\uv{\phi}\cdot s'd\phi\uv{\phi}=\sigma \omega s'd\phi ds'$.
-          % Note the $ds'$ in $\bv{K}$. This is because we are not considering $\bv{K}$ for the whole surface but instead a slice of it given by the wire loop of
-          % thickness $ds'$. This gives
-          % $$I=\int_0^{2\pi}\sigma \omega s' d\phi ds'=2\pi\sigma\omega s'ds'$$
-          % This means that
-          % $$d\bv{m}=2\pi^2\sigma\omega s'^3ds' \uz.$$
-          % Now since we are treating the disc as a continuous collection of thin wire loops of radius $0\to R$ we integrate the above expression
-          % along $s'$ to find the total moment,
-          % $$\bv{m}=\int_{0}^{R}2\pi^2\sigma \omega s'^3ds'\uz=\frac{\pi^2\sigma \omega R^4}{2}\uz.$$
-    \item We know the magnetic field of a dipole to be
-          $$\bv{B}_{dip}(\bv{r})=\frac{\mu_0}{4\pi}\left[\frac{3(\bv{m}\cdot \bv{r})\bv{r}}{r^5}-\frac{\bv{m}}{r^3}\right].$$
-          Here $\bv{r}=(0,0,z)$ so
-          $$\bv{B}_{dip}(\bv{r})=\frac{\mu_0}{4\pi}\left[\frac{3(\frac{\pi^2\sigma \omega R^4}{2})z\uz}{z^{5/2}}-\frac{\frac{\pi^2\sigma \omega R^4}{2}\uz}{z^{3/2}}\right]
-            =\frac{\mu_0}{4\pi}\left[\frac{\pi^2\sigma \omega R^4}{z^{3/2}}\right]\uz
-            .$$
-          Now the ``true'' magnetic field is given by
-          $$\bv{B}(\bv{r})=\frac{\mu_0 \sigma \omega }{2}\left[\frac{R^2+2z^2}{\sqrt{R^2+z^2}}-2z\right]\uz$$
-          which for $z\gg R$ becomes
+          We don't know $dI$ so we'll have to do some work to find it. A current $dI$ is a charge $dq$ moved in a time $dt$. Since the disc here is rotating with angular
+          velocity $\omega$ with a charge distribution $\sigma$ (so a total charge $\pi R^2 \sigma$) it takes $\frac{2\pi}{\omega}$ seconds for a charge to complete a full rotation.
+          Hence if we consider a wire at inner radius $s'$ and outer radius $s'+ds'$ there is a total current
+          $$dI=(2\pi s'ds' \sigma)\frac{\omega}{2\pi}=s'ds'\sigma\omega$$
+          where $(2\pi s'ds' \sigma)$ is the fraction of the total charge that lies on each wire.
+          We know then that the magnetic moment of one of these wires is given by
+          $$d\bv{m}=dI d\bv{a}=s'^3ds'\sigma\omega\pi\uz$$
+          and so the total magnetic moment comes from integrating both sides,
+          $$\bv{m}=\frac{1}{4}R^4\sigma\omega\pi\uz.$$
+    \item The magnetic field due to a dipole is given by
+          $$\bv{B}_{dip}(\bv{r})=\frac{\mu_0}{4\pi}\frac{3\left(\bv{m}\cdot\uv{r}\right)\uv{r}-\bv{m}}{r^3}$$
+          and for our dipole $\bv{r}=(0,0,z)$ so the field becomes
           \begin{align*}
-            \bv{B}(\bv{r}) & =\frac{\mu_0 \sigma \omega }{2}\left[\left[R^2+2z^2\right]\left[R^2+z^2\right]^{-1/2}-2z\right]\uz \\
-                           & =\frac{\mu_0 \sigma \omega }{2}\left[R\left[R^2+2z^2\right]\left[1+\left(\frac{z}{R}\right)^2\right]^{-1/2}-2z\right]\uz \\
-                           & =\frac{\mu_0 \sigma \omega }{2}\left[R\left[R^2+2z^2\right]\left[1-\frac{1}{2}\left(\frac{z}{R}\right)^2\right]-2z\right]\uz \\
-                           & =\frac{\mu_0 \sigma \omega }{2}\left[\left[2z^2\right]\left[R-\frac{1}{2}\frac{z^2}{R}\right]-2z\right]\uz \\
-                           & =\frac{\mu_0 \sigma \omega }{2}\left[2Rz^2-\frac{z^4}{R}-2z\right]\uz \\
+            \bv{B}_{dip}(\bv{r}) & =\frac{\mu_0}{4\pi z^3}\left[3\left(\frac{1}{4}R^4\sigma\omega\pi\uz\cdot \uz\right)\uz-\frac{1}{4}R^4\sigma\omega\pi\uz\right] \\
+                                 & =\frac{\mu_0}{16\pi z^3}\left[3R^4\sigma\omega\pi\uz-R^4\sigma\omega\pi\uz\right]                                               \\
+                                 & =\frac{\mu_0R^4 \sigma\omega}{16 z^3}\left[3\uz-\uz\right]                                                                      \\
+                                 & =\frac{\mu_0R^4 \sigma\omega}{8z^3}\uz.
+          \end{align*}
+          Now recall that the ``true'' field was
+          \begin{align*}
+            \bv{B}(\bv{r}) & =\frac{\mu_0 \sigma \omega }{2}\left[\frac{R^2+2z^2}{\sqrt{R^2+z^2}}-2z\right]\uz                                                                        \\
+                           & =\frac{\mu_0 \sigma \omega }{2}\left[\frac{R^2+2z^2}{z\sqrt{1+\left(\frac{R}{z}\right)^2}}-2z\right]\uz                                                  \\
+                           & \approx \frac{\mu_0 \sigma \omega }{2}\left[\frac{1}{z}\left[R^2+2z^2\right]\left[1-\frac{1}{2}\left(\frac{R}{z}\right)^2\right]-2z\right]\uz            \\
+                           & =\frac{\mu_0 \sigma \omega }{2}\left[\frac{1}{z}\left[R^2-\frac{R^2}{2}\left(\frac{R}{z}\right)^2+2z^2-z^2\left(\frac{R}{z}\right)^2\right]-2z\right]\uz \\
+                           & =\frac{\mu_0 \sigma \omega }{2}\left[\frac{R^2}{z}-\frac{R^2}{2z}\left(\frac{R}{z}\right)^2-\frac{R^2}{z}\right]\uz                                      \\
+                           & =\frac{\mu_0 \sigma \omega }{2}\left[-\frac{R^4}{2z^3}\right]\uz                                                                                         \\
           \end{align*}
   \end{enumerate}
 \end{soln}
@@ -203,38 +200,62 @@ Complete problem 1.61(b), and then use this to fill in the missing steps of the 
 Eq. (6.12).
 \end{problem}
 \begin{soln}
-Problem 1.61(b) asks for a proof of 
-$$\int_{\mathcal{V}}\bv{\grd}\times \bv{v}d\tau = -\oint_\mathcal{S}\bv{v}\times d\bv{a}.$$
-The problem suggests replacing $\bv{v}$ by $\bv{v}\times \bv{c}$ in the divergence theorem, so that is what I will do.
-The divergence theorem says that 
-$$\int_{\mathcal{V}}\bv{\grd}\cdot \bv{v} d\tau=\oint_\mathcal{S}\bv{v}\cdot \uv{n} da$$
-and doing the suggested replacement gives us 
-$$\int_{\mathcal{V}}\bv{\grd}\cdot (\bv{v}\times \bv{c}) d\tau=\oint_\mathcal{S}(\bv{v}\times \bv{c})\cdot \uv{n} da.$$
-Using product rule (6) from the front cover of Griffiths and the fact that $\uv{n} da =d\bv{a}$ gives us 
-$$\int_{\mathcal{V}} \bv{c}\cdot (\bv{\grd}\times \bv{v})-\bv{v}\cdot (\bv{\grd}\times \bv{c}) d\tau=\oint_\mathcal{S}(\bv{v}\times \bv{c})\cdot d\bv{a}.$$
-Now we use triple product rules (1) from the front cover of Griffiths to get that 
-$$\int_{\mathcal{V}} \bv{c}\cdot (\bv{\grd}\times \bv{v})-\bv{v}\cdot (\bv{\grd}\times \bv{c}) d\tau=-\oint_\mathcal{S}\bv{c}\cdot (\bv{v}\times d\bv{a})$$
-where we've flipped the sign as $\bv{a}\times \bv{b} = -\bv{b}\times \bv{a}$. Now note that (and I assume this is why $\bv{c}$ is called what it is) for constant
-$\bv{c}$, $\bv{\grd}\times \bv{c}=0$ so 
-$$\bv{c}\cdot \int_{\mathcal{V}} (\bv{\grd}\times \bv{v})d\tau=-\bv{c}\cdot \oint_\mathcal{S}(\bv{v}\times d\bv{a})$$
-which only implies that the components of these integrals along $\bv{c}$ are equal, not that the integrals themselves are equal. I.e.
-consider $\bv{a}=\ux$, $\bv{b}=x\ux+y\uy$, $\bv{c}=x\ux+8y\uy+123zyx\uz$
-then $\bv{a}\cdot\bv{b}=\bv{a}\cdot\bv{c}$ certainly but $\bv{b}\neq\bv{c}$.
+  Problem 1.61(b) asks for a proof of
+  $$\int_{\mathcal{V}}\bv{\grd}\times \bv{v}d\tau = -\oint_\mathcal{S}\bv{v}\times d\bv{a}.$$
+  The problem suggests replacing $\bv{v}$ by $\bv{v}\times \bv{c}$ in the divergence theorem, so that is what I will do.
+  The divergence theorem says that
+  $$\int_{\mathcal{V}}\bv{\grd}\cdot \bv{v} d\tau=\oint_\mathcal{S}\bv{v}\cdot \uv{n} da$$
+  and doing the suggested replacement gives us
+  $$\int_{\mathcal{V}}\bv{\grd}\cdot (\bv{v}\times \bv{c}) d\tau=\oint_\mathcal{S}(\bv{v}\times \bv{c})\cdot \uv{n} da.$$
+  Using product rule (6) from the front cover of Griffiths and the fact that $\uv{n} da =d\bv{a}$ gives us
+  $$\int_{\mathcal{V}} \bv{c}\cdot (\bv{\grd}\times \bv{v})-\bv{v}\cdot (\bv{\grd}\times \bv{c}) d\tau=\oint_\mathcal{S}(\bv{v}\times \bv{c})\cdot d\bv{a}.$$
+  Now we use triple product rules (1) from the front cover of Griffiths to get that
+  $$\int_{\mathcal{V}} \bv{c}\cdot (\bv{\grd}\times \bv{v})-\bv{v}\cdot (\bv{\grd}\times \bv{c}) d\tau=-\oint_\mathcal{S}\bv{c}\cdot (\bv{v}\times d\bv{a})$$
+  where we've flipped the sign as $\bv{a}\times \bv{b} = -\bv{b}\times \bv{a}$. Now note that (and I assume this is why $\bv{c}$ is called what it is) for constant
+  $\bv{c}$, $\bv{\grd}\times \bv{c}=0$ so
+  $$\bv{c}\cdot \int_{\mathcal{V}} (\bv{\grd}\times \bv{v})d\tau=-\bv{c}\cdot \oint_\mathcal{S}(\bv{v}\times d\bv{a})$$
+  which only implies that the components of these integrals along $\bv{c}$ are equal, not that the integrals themselves are equal. I.e.
+  consider $\bv{a}=\ux+\uy+\uz$, $\bv{b}=x\ux+y\uy$, $\bv{c}=x\ux+8y\uy+123zyx\uz$
+  then $\bv{a}\cdot\bv{b}=\bv{a}\cdot\bv{c}$ certainly but $\bv{b}\neq\bv{c}$.
 \end{soln}
 
 % PROBLEM 3
 \begin{problem}
-Griffiths problem 6.1.
+Calculate the torque experienced by the square loop shown in Fig 6.6, due to the circular loop. Assume $r\gg a,b$. If the square loop is free to rotate,
+what will its equilibrium orientation be?
 \end{problem}
 \begin{soln}
-
+  Since the distance between the loops is very large, we can approximate the field of the circular loop as that of a dipole,
+  $$\bv{B}_{dip}(\bv{r})=\frac{\mu_0}{4\pi}\frac{3\left(\bv{m}\cdot\uv{r}\right)\uv{r}-\bv{m}}{r^3}$$
+  and we can set up our coordinates so that $\bv{r}=r\ux$. The magnetic moment due to a current loop is
+  $\bv{m}=I\bv{A}=I\pi a^2\uz.$
+  Hence
+  \begin{align*}
+    \bv{B}_{dip}(\bv{r}) & =\frac{\mu_0}{4\pi}\frac{3\left(I\pi a^2\uz\cdot \ux\right)\ux-I\pi a^2\uz}{r^3} \\
+                         & =-\frac{\mu_0Ia^2}{4r^3}\uz.
+  \end{align*}
+  We know that the torque is given by
+  $$\bv{\tau}=\bv{m}\times \bv{B}$$
+  and for the square loop $\bv{m}=I\bv{A}=Ib^2\ux$ so
+  $$\bv{\tau}=Ib^2\ux\times (-\frac{\mu_0Ia^2}{4r^3}\uz)=\frac{\mu_0(Iab)^2}{4r^3}\uy.$$
+  This will want to rotate the magnetic moment of the loop to align with $\bv{B}$ so it will come to rest when the moment is facing in $-\uz$.
 \end{soln}
 
 % PROBLEM 4
 \begin{problem}
-Griffiths problem 6.7.
+An infinitely long circular cylinder carries a uniform magnetization $\bv{M}$ parallel to its axis.
+Find the magnetic field (due to $\bv{M}$) inside and outside the cylinder
 \end{problem}
 \begin{soln}
-
+  If we place the cylinder's long axis along $\uz$ then $\bv{M}=M\uz$. This gives bound currents
+  $$\bv{J}_b=\bv{\grd}\times \bv{M}=0\quad\text{and}\quad \bv{K}_b=\bv{M}\times\uv{n}=M\uz\times \uv{s}=M\uv{\phi}.$$
+  Now I first tried to do this with the vector potential but didn't get very far before realizing I was just doing the infinite tightly-wound solenoid problem
+  we already did in class, which gave
+  $$
+    \bv{B}=\begin{cases}
+      \mu_0M\uz & s<R  \\
+      0         & s>R.
+    \end{cases}
+  $$
 \end{soln}
 \end{document}
