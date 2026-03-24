@@ -116,16 +116,223 @@
 \maketitle
 
 % PROBLEM 1
-\begin{problem}
+\begin{problem}~
 \begin{enumerate}[label=(\roman*)]
   \item Find the force law for a central-force field that allows a particle to move in a spiral
         orbit given by $r=k\theta^2$.
   \item Find $r$ and $\theta$ as functions of time.
 \end{enumerate}
 \end{problem}
-\begin{soln}
-
+\begin{soln}~
+  \begin{enumerate}[label=(\roman*)]
+    \item We know that
+          $$\frac{d^2}{d\theta^2}\left(\frac{1}{r}\right)+\frac{1}{r}=-\frac{\mu r^2}{L^2}F(r).$$
+          We are given $r$ so we just substitute it in to obtain
+          $$\frac{d^2}{d\theta^2}\left(\frac{1}{k\theta^2}\right)+\frac{1}{k\theta^2}=-\frac{\mu k^2\theta^4}{L^2}F(r)$$
+          which when we do the differentiation gives
+          $$\frac{6}{k\theta^4}+\frac{1}{k\theta^2}=-\frac{\mu k^2\theta^4}{L^2}F(r)$$
+          so
+          $$-\frac{L^2}{\mu k^2\theta^4}\left[\frac{6}{k\theta^4}+\frac{1}{k\theta^2}\right]=F(r)$$
+          and $r=k\theta^2$ so
+          $$F(r)=-\frac{L^2}{\mu r^3}\left[\frac{6k}{r}+1\right]$$
+    \item We know that $$\dot{\theta}=\frac{L}{\mu r^2}=\frac{L}{\mu k^2\theta^4}=\frac{d\theta}{dt}$$
+          and so
+          $$\frac{L}{\mu k^2}dt=\theta^4 d\theta$$
+          hence
+          $$\theta(t)= \left[\frac{5L}{\mu k^2}t+C\right]^{1/5}$$
+          and so
+          $$r(t)=k\left[\frac{5L}{\mu k^2}t+C\right]^{2/5}$$
+  \end{enumerate}
 \end{soln}
 
+% PROBLEM 2
+\begin{problem}
+This question emerges out of classroom discussion. Provide brief answers. Not more than
+10 sentences for each.
+\begin{enumerate}[label=(\roman*)]
+  \item Explain the origin of rotation of Earth.
+  \item Explain the formation of moon and discuss why it is revolving around the Earth. For this question \#2,
+        using your library skills learnt from PHYS 3200, you need to provide appropriate
+        citations.
+\end{enumerate}
+\end{problem}
+\begin{soln}~
+  \begin{enumerate}[label=(\roman*)]
+    \item When the Sun was newly formed it was surrounded by the gas, dust, and rocks which were orbiting (with angular momentum) around the Sun.
+          As this debris coalesced under its own gravity the momentum of the dust was conserved and caused the growing masses which would become planets to rotate. This is also
+          why many of the planets happen to rotate about the same axis, though some have deviated due to other effects. There is also a theory that a mars-sized protoplanet
+          impacted the earth at some point in its history, drastically changing its spin and knocking off sufficient material to form the moon.
+    \item There are many theories for the formation of the moon. It seems like the most common is the impact theory I mentioned above, first proposed here \cite{HARTMANN1975504}.
+          The idea here is that a mars-sized impactor struck the Earth and ejected enough material that then coalesced to form the moon. There is evidence for this and against it but
+          it does seem widely accepted and much work has been done in simulations to show that it is possible. Other theories involve things like the moon being a captured object,
+          a result of the Earth's rapid spin, or the formation of the moon in the same way as the Earth, due to debris accretion in the early solar system, though these are not
+          so readily accepted. One other theory \cite{AnisichkinV.F.1997Dpb} that I found kind of interesting is the idea that when Earth was much more fluid, superheavy radioactive elements were concentrated
+          near the equator due to spin forces, causing a nuclear chain-reaction near the equator which ejected the material to form the Moon. This actually explains somewhat
+          well the relative elemental compositions of the Earth and the Moon, though again is not a mainline theory.
+  \end{enumerate}
+\end{soln}
 
+% PROBLEM 3
+\begin{problem}
+Two particles moving under the influence of their mutual gravitational force describe
+circular orbits about one another with a period $\tau$. If they are suddenly stopped in their
+orbits and allowed to gravitate toward each other, show that they will collide after a time
+$\tau/4\sqrt{2}$.
+\end{problem}
+\begin{soln}
+  We can reduce this problem to one of a single body of mass $\mu=m_1m_1/(m_1+m_2)$ subject to central force
+  $$F=G\frac{m_1m_2}{r^2}.$$
+  This gives an equation of motion
+  $$\mu \frac{4\pi r}{\tau^2} =G\frac{m_1m_2}{r^2}$$
+  before the orbital motion stops. We know that the semimajor axis of an orbit is related to $\tau$, the orbital period, by
+  $$\tau \approx \frac{2\pi a^{3/2}}{\sqrt{G(m_s+m_e)}}$$
+  and in circular orbits $a=r$. Now we stop the motion and use conservation of energy. Note that because we reduced this to a one-body problem
+  we are interested in when $r=0$ rather than the barycentre of the original binary orbit or something like that (which is good because I don't know anything
+  about the math there other than the words). At all times after the stop the system has total energy (composed of kinetic and potential) equal to the potential
+  energy it had at the instant the orbits stopped,
+  $$E=-G\frac{m_1m_2}{a}=\frac{1}{2}\mu v^2-G\frac{m_1m_2}{r}$$
+  which we can rearrange to find the velocity,
+  $$v(x)=\frac{dx}{dt}=\left(\frac{2Gm_1m_2}{\mu}\left[\frac{1}{x}-\frac{1}{a}\right]\right)^{1/3}$$
+  and we rearrange and integrate to find that
+  $$t=-\sqrt{\frac{a\mu}{2Gm_1m_2}}\int_a^0\sqrt{\frac{x}{a-x}}dx.$$
+  To do the integration we make the substitution $x=a\sin^2\theta\implies dx=2a\cos\theta\sin\theta d\theta$
+  which lets us rewrite the integral as
+  \begin{align*}
+    I & =\int_a^0\sqrt{\frac{a\sin^2\theta}{a-a\sin^2\theta}}2a\cos\theta\sin\theta d\theta \\
+      & =2a\int_a^0\frac{\sin\theta}{\sqrt{1-\sin^2\theta}}\cos\theta\sin\theta d\theta     \\
+      & =2a\int_a^0\sin^2\theta d\theta                                                     \\
+      & =2a\int_a^0\sin^2\theta d\theta                                                     \\
+      & =\frac{1}{2}a\left[2\theta-\sin(2\theta)\right]_a^0
+  \end{align*}
+  Now I really should've changed my bounds of integration earlier. We have that $x=0=a\sin^2\theta\implies \theta=0$ and
+  $x=a=a\sin^2\theta\implies \theta=\pi/2$. This gives us an expression for $t$,
+  $$t=\frac{a\pi}{2}\sqrt{\frac{a\mu}{2Gm_1m_2}}.$$
+  Recall that $a$ is given by
+  $$a\approx\left[G\frac{m_1m_2 \tau^2}{4\pi^2\mu}\right]^{1/3}$$
+  and so
+  \begin{align*}
+    t & = \frac{\pi}{2}\left[G\frac{m_1m_2 \tau^2}{4\pi^2\mu}\right]^{1/3}\left[\frac{\mu}{2Gm_1m_2}\right]^{1/2}\left[G\frac{m_1m_2 \tau^2}{4\pi^2\mu}\right]^{1/6} \\
+      & = \frac{\pi}{2}\left[G\frac{m_1m_2 \tau^2}{4\pi^2\mu}\right]^{1/2}\left[\frac{\mu}{2Gm_1m_2}\right]^{1/2}                                                    \\
+      & = \frac{\pi}{2}\left[\frac{ \tau^2}{4\pi^2}\frac{1}{2}\right]^{1/2}                                                                                          \\
+      & = \frac{\tau}{4\sqrt{2}}.
+  \end{align*}
+  Yay!
+\end{soln}
+
+% PROBLEM 4
+\begin{problem}
+Assume Earth's orbit to be circular and that the Sun's mass suddenly decreases by half.
+What orbit does Earth have then? Will Earth escape the solar system?
+\end{problem}
+\begin{soln}
+  An object in a circular orbit has $F_{net}=0$ and hence
+  $$F_c=F_g.$$
+  Here this looks like
+  $$m_e\omega^2 r=G\frac{m_em_s}{r^2}$$
+  or in terms of $v=r\omega$,
+  $$\frac{m_e v^2}{r}=G\frac{m_em_s}{r^2}\implies v=\sqrt{G\frac{m_s}{r}}.$$
+  We found in class that the escape velocity for an orbiter about the sun (in class it was the earth) is
+  $$v_{esc}=\sqrt{\frac{2Gm_s}{r}}$$
+  and if we half the Sun's mass we see that
+  $$v_{esc}=\sqrt{\frac{Gm_s}{r}}$$
+  which is exactly what we found for the velocity of the Earth, which does not change with the Sun's mass. Hence the Earth will leave the Solar system,
+  provided it does not encounter any other massive objects, and will enter a parabolic/hyperbolic orbit.
+\end{soln}
+
+% PROBLEM 5
+\begin{problem}
+Two gravitating masses $m_1$ and $m_2$ ($m_1+m_2=M$) are separated by a distance $r_0$ and
+released from rest. Show that when the separation is $r<r_0$, the speeds are:
+$$v_1=m_2\sqrt{\frac{2G}{M}\left(\frac{1}{r}-\frac{1}{r_0}\right)}\quad v_2=m_1\sqrt{\frac{2G}{M}\left(\frac{1}{r}-\frac{1}{r_0}\right)}$$
+\end{problem}
+\begin{soln}
+  To use conservation of energy here, which I think is the best approach, we need the total energy of the system. Initially this is all potential and as time progresses the initial potential energy
+  is transformed to kinetic energy as the masses accelerate. I.e. at $t=0$
+  $$E=-G\frac{m_1m_2}{r_0}$$
+  and at a later time
+  $$E=\frac{1}{2}\left[m_1v_1^2+m_2v_2^2\right]-G\frac{m_1m_2}{r}.$$
+  Since energy is conserved
+  $$-G\frac{m_1m_2}{r_0}=\frac{1}{2}\left[m_1v_1^2+m_2v_2^2\right]-G\frac{m_1m_2}{r}$$
+  and rearranging
+  $$2Gm_1m_2\left[\frac{1}{r}-\frac{1}{r_0}\right]=m_1v_1^2+m_2v_2^2.$$
+  And since there is no angular momentum present here and the masses begin at rest,
+  $$m_1v_1+m_2v_2=0\implies v_1=-\frac{m_2}{m_1}v_2\text{ and }v_2=-\frac{m_1}{m_2}v_1$$
+  and so
+  \begin{align*}
+             & 2Gm_1m_2\left[\frac{1}{r}-\frac{1}{r_0}\right]=m_1(-\frac{m_2}{m_1}v_2)^2+m_2v_2^2    \\
+    \implies & 2Gm_1m_2\left[\frac{1}{r}-\frac{1}{r_0}\right]=\frac{m_2^2}{m_1}v_2^2+m_2v_2^2        \\
+    \implies & 2Gm_1m_2\left[\frac{1}{r}-\frac{1}{r_0}\right]=\left[\frac{m_2}{m_1}+1\right]m_2v_2^2 \\
+    \implies & 2Gm_1^2\left[\frac{1}{r}-\frac{1}{r_0}\right]=\left[m_2+m_1\right]v_2^2               \\
+    \implies & m_1\sqrt{\frac{2G}{M}\left[\frac{1}{r}-\frac{1}{r_0}\right]}=v_2
+  \end{align*}
+  and the process is much the same for the second mass,
+  \begin{align*}
+             & 2Gm_1m_2\left[\frac{1}{r}-\frac{1}{r_0}\right]=m_1v_1^2+m_2\left(-\frac{m_1}{m_2}v_1\right)^2 \\
+    \implies & 2Gm_1m_2\left[\frac{1}{r}-\frac{1}{r_0}\right]=\left[1+\frac{m_1}{m_2}\right]m_1v_1^2         \\
+    \implies & 2Gm_2^2\left[\frac{1}{r}-\frac{1}{r_0}\right]=Mv_1^2                                          \\
+    \implies & v_1 =m_2\sqrt{\frac{2G}{M}}\left[\frac{1}{r}-\frac{1}{r_0}\right]
+  \end{align*}
+\end{soln}
+
+% PROBLEM 6
+\begin{problem}
+This question deals with the description of planetary motion qualitatively. Read pages 308,
+309, 310, 311 and 312. It is sufficient to answer the following questions directly from the
+textbook:
+\begin{enumerate}[label=(\alph*)]
+  \item What is Hohmann transfer and what are the advantages and disadvantages of Hohmann
+        transfer?
+  \item Suggest a scheme from Fig 8-11, that can reduce the time taken for a spacecraft to undergo a
+        interplanetary transfer.
+  \item Explain the slingshot effect that utilizes gravity assist using figure 8-12.
+  \item Discuss the gravity-assist method that helped to realize Voyagers 1 and 2 missions.
+  \item What is so spectacular about ICE mission and how was it possible? Explain using 8-15.
+\end{enumerate}
+\end{problem}
+\begin{soln}
+  \begin{enumerate}[label=(\alph*)]
+    \item A Hohmann transfer is an orbital maneuver used to transfer an orbiting object from one orbit to another with both orbits sharing the same central body. The big advantage
+          of a Hohmann transfer is that it uses the (provably) lowest amount of energy (in the case of a propelled spacecraft, propellant) to accomplish a given transfer. This big disadvantage is that
+          due to how a transfer is performed and its requirements of alignment of the bodies being transferred from and to, or just time between burn operations, the Hohmann transfer can take much longer
+          than other transfer strategies.
+    \item The big thing that the figure highlights is the utility of gravity assists. Depending on the desired transfer you can get effectively free extra
+          ``burns'' due to gravitational encounters with massive bodies.
+    \item When a projectile approaches a massive object, it is pulled towards the object, increasing its speed. Provided it does not have too much speed on entry
+          the projectile can swing behind the object, being pulled towards it the whole time, to gain speed on approach which is then bled off on exit. This allows the projectile
+          to change its direction at no cost. If the massive object is also moving, say in an orbit, the projectile will be dragged along with this movement, potentially gaining speed.
+    \item The Voyager probes used a chain of gravity assists to travel much further and visit more celestial bodies than would normally be possible. NASA used the alignment
+          of several planets in the solar system to nudge the Voyagers towards these planets and allow them to gain speed to continue further out as they did so.
+    \item The figure shows the extremely complex series of assists the the ICE probe used. It is spectacular because of the number of flybys used to eject to its desired target
+          and the degree of accuracy with which these assists were performed. The book mentions that one flyby came within 75 miles of the lunar surface! The mission was possible
+          precisely because of the force-laws we've developed which are able to accurately predict the behaviours of these extremely complex maneuver series.
+  \end{enumerate}
+\end{soln}
+
+% PROBLEM 7
+\begin{problem}
+An Earth satellite has a speed of $\qty{28070}{\kilo\meter\per\hour}$ when it is at its perigee of $\qty{220}{\kilo\meter}$ about Earth's
+surface. Find the apogee distance, its speed at apogee and its period of revolution.
+\end{problem}
+\begin{soln}
+  Since total energy is conserved in an elliptic orbit the energy at perigee,
+  $$E_{p}=\frac{1}{2}m_sv_p^2-G\frac{m_sm_e}{r_p},$$
+  is equal to the energy at apogee,
+  $$E_a=\frac{1}{2}m_sv_a^2-G\frac{m_sm_e}{r_a}=\frac{1}{2}m_sv_a^2-G\frac{m_sm_e}{r_p\frac{v_p}{v_a}}.$$
+  Both of these are equal to
+  $$E=-G\frac{m_em_s}{2a}$$
+  from $a=k/2\abs{E}$.
+  Hence we see that
+  $$-G\frac{m_em_s}{2a}=\frac{1}{2}m_sv_p^2-G\frac{m_sm_e}{r_p}$$
+  which is not immediately helpful. However (and this took me a while)
+  $2a=r_p+r_a$ so
+  $$r_a=2\left[-\frac{1}{Gm_e}v_p^2+\frac{2}{r_p}\right]^{-1}-r_p\approx \qty{6.683e6}{\meter}$$
+  and hence the apoapsis is at a height of around $\qty{305}{\kilo\meter}$. Applying conservation of momentum at the apoapsis and periapsis
+  gives a velocity of
+  $$v_a=\frac{r_p}{r_a}v_p\approx \qty{2.0 e4}{\kilo\meter\per\hour}.$$
+  The period can be calculated with $$\tau \approx \frac{2\pi a^{3/2}}{\sqrt{G(m_s+m_e)}}\approx \qty{1.49}{\hour}$$
+  with the approximation that $m_s+m_e\approx m_e$.
+\end{soln}
+
+\bibliographystyle{plain}
+\bibliography{Citations}
 \end{document}

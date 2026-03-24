@@ -182,12 +182,16 @@ A rotating disc (radius $R$, angular velocity $\omega$) has a uniform surface ch
           \end{align*}
           Now recall that the ``true'' field was
           \begin{align*}
-            \bv{B}(\bv{r}) & =\frac{\mu_0 \sigma \omega }{2}\left[\frac{R^2+2z^2}{\sqrt{R^2+z^2}}-2z\right]\uz                                                                        \\
-                           & =\frac{\mu_0 \sigma \omega }{2}\left[\frac{R^2+2z^2}{z\sqrt{1+\left(\frac{R}{z}\right)^2}}-2z\right]\uz                                                  \\
-                           & \approx \frac{\mu_0 \sigma \omega }{2}\left[\frac{1}{z}\left[R^2+2z^2\right]\left[1-\frac{1}{2}\left(\frac{R}{z}\right)^2\right]-2z\right]\uz            \\
-                           & =\frac{\mu_0 \sigma \omega }{2}\left[\frac{1}{z}\left[R^2-\frac{R^2}{2}\left(\frac{R}{z}\right)^2+2z^2-z^2\left(\frac{R}{z}\right)^2\right]-2z\right]\uz \\
-                           & =\frac{\mu_0 \sigma \omega }{2}\left[\frac{R^2}{z}-\frac{R^2}{2z}\left(\frac{R}{z}\right)^2-\frac{R^2}{z}\right]\uz                                      \\
-                           & =\frac{\mu_0 \sigma \omega }{2}\left[-\frac{R^4}{2z^3}\right]\uz                                                                                         \\
+            \bv{B}(\bv{r}) & =\frac{\mu_0 \sigma \omega }{2}\left[\frac{R^2+2z^2}{\sqrt{R^2+z^2}}-2z\right]\uz                                                                                                                                                                                      \\
+                           & =\frac{\mu_0 \sigma \omega }{2}\left[\frac{R^2+2z^2}{z\sqrt{1+\left(\frac{R}{z}\right)^2}}-2z\right]\uz                                                                                                                                                                \\
+                           & \approx \frac{\mu_0 \sigma \omega }{2}\left[\frac{1}{z}\left[R^2+2z^2\right]\left[1-\frac{1}{2}\left(\frac{R}{z}\right)^2+\frac{3}{8}\left(\frac{R}{z}\right)^4\right]-2z\right]\uz                                                                                    \\
+                           & =\frac{\mu_0 \sigma \omega }{2}\left[\frac{1}{z}\left[R^2\left[1-\frac{1}{2}\left(\frac{R}{z}\right)^2+\frac{3}{8}\left(\frac{R}{z}\right)^4\right]+2z^2\left[1-\frac{1}{2}\left(\frac{R}{z}\right)^2+\frac{3}{8}\left(\frac{R}{z}\right)^4\right]\right]-2z\right]\uz \\
+                           & =\frac{\mu_0 \sigma \omega }{2}\left[\frac{1}{z}\left[R^2-\frac{R^2}{2}\left(\frac{R}{z}\right)^2+\frac{3R^2}{8}\left(\frac{R}{z}\right)^4+2z^2-\frac{2z^2}{2}\left(\frac{R}{z}\right)^2+\frac{6z^2}{8}\left(\frac{R}{z}\right)^4\right]-2z\right]\uz                  \\
+                           & =\frac{\mu_0 \sigma \omega }{2}\left[\frac{R^2}{z}-\frac{R^2}{2z}\left(\frac{R}{z}\right)^2+\frac{3R^2}{8z}\left(\frac{R}{z}\right)^4+2z-z\left(\frac{R}{z}\right)^2+\frac{3z}{4}\left(\frac{R}{z}\right)^4-2z\right]\uz                                               \\
+                           & =\frac{\mu_0 \sigma \omega }{2}\left[\frac{R^2}{z}-\frac{R^2}{2z}\left(\frac{R}{z}\right)^2+\frac{3R^2}{8z}\left(\frac{R}{z}\right)^4-z\left(\frac{R}{z}\right)^2+\frac{3z}{4}\left(\frac{R}{z}\right)^4\right]\uz                                                     \\
+                           & =\frac{\mu_0 \sigma \omega }{2}\left[\frac{R^2}{z}-\frac{R^4}{2z^3}+\frac{3R^6}{8z^5}-\frac{R^2}{z}+\frac{3R^4}{4z^3}\right]\uz                                                                                                                                        \\
+                           & =\frac{\mu_0 \sigma \omega }{2}\left[-\frac{2R^4}{4z^3}+\frac{3R^6}{8z^5}+\frac{3R^4}{4z^3}\right]\uz                                                                                                                                                                  \\
+                           & \approx\frac{\mu_0 \sigma \omega }{2}\left[\frac{R^4}{4z^3}\right]\uz
           \end{align*}
   \end{enumerate}
 \end{soln}
@@ -213,10 +217,8 @@ Eq. (6.12).
   $$\int_{\mathcal{V}} \bv{c}\cdot (\bv{\grd}\times \bv{v})-\bv{v}\cdot (\bv{\grd}\times \bv{c}) d\tau=-\oint_\mathcal{S}\bv{c}\cdot (\bv{v}\times d\bv{a})$$
   where we've flipped the sign as $\bv{a}\times \bv{b} = -\bv{b}\times \bv{a}$. Now note that (and I assume this is why $\bv{c}$ is called what it is) for constant
   $\bv{c}$, $\bv{\grd}\times \bv{c}=0$ so
-  $$\bv{c}\cdot \int_{\mathcal{V}} (\bv{\grd}\times \bv{v})d\tau=-\bv{c}\cdot \oint_\mathcal{S}(\bv{v}\times d\bv{a})$$
-  which only implies that the components of these integrals along $\bv{c}$ are equal, not that the integrals themselves are equal. I.e.
-  consider $\bv{a}=\ux+\uy+\uz$, $\bv{b}=x\ux+y\uy$, $\bv{c}=x\ux+8y\uy+123zyx\uz$
-  then $\bv{a}\cdot\bv{b}=\bv{a}\cdot\bv{c}$ certainly but $\bv{b}\neq\bv{c}$.
+  $$\bv{c}\cdot \int_{\mathcal{V}} (\bv{\grd}\times \bv{v})d\tau=-\bv{c}\cdot \oint_\mathcal{S}(\bv{v}\times d\bv{a}).$$
+  Since $\bv{c}$ is arbitrary (aside from being constant) we obtain the desired result. The rest of the derivation follows.
 \end{soln}
 
 % PROBLEM 3
@@ -238,7 +240,7 @@ what will its equilibrium orientation be?
   $$\bv{\tau}=\bv{m}\times \bv{B}$$
   and for the square loop $\bv{m}=I\bv{A}=Ib^2\ux$ so
   $$\bv{\tau}=Ib^2\ux\times (-\frac{\mu_0Ia^2}{4r^3}\uz)=\frac{\mu_0(Iab)^2}{4r^3}\uy.$$
-  This will want to rotate the magnetic moment of the loop to align with $\bv{B}$ so it will come to rest when the moment is facing in $-\uz$.
+  This will want to rotate the magnetic moment of the loop to align with $\bv{B}$ (so that the cross product in $\bv{\tau}$ is zero) so it will come to rest when the moment is facing in $-\uz$.
 \end{soln}
 
 % PROBLEM 4

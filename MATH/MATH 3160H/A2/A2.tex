@@ -115,17 +115,234 @@ $$\left(\ell_0+\epsilon t\right)\frac{d^2\theta}{dt^2}+2\epsilon\frac{d\theta}{d
 where $g$ is the acceleration due to gravity. Find the solution of the above initial value problem.
 \end{problem}
 \begin{soln}
-Consider the change of variables 
-$$t=\ell=\ell_0+\epsilon t$$. This gives us 
-$d\ell=\epsilon dt$
-and so 
-$$\frac{d\theta}{dt}=\epsilon\frac{d\theta}{d\ell}$$ and 
-$$\epsilon^2\frac{d^2\theta}{d\ell^2}$$
-so the ODE becomes 
-$$\ell \epsilon^2\frac{d^2\theta}{d\ell^2}+2\epsilon^2\frac{d\theta}{d\ell}+g\theta=0$$
-which we can divide through by $\epsilon^2$ to see that 
-$$\ell\frac{d^2\theta}{d\ell^2}+2\frac{d\theta}{d\ell}+\frac{g}{\epsilon^2}\theta=0$$
-which is very nearly the Bessel equation, we just need to fiddle a bit more. We can multiply by $\ell$ to get
-$$\ell^2\frac{d^2\theta}{d\ell^2}+2\ell\frac{d\theta}{d\ell}+\frac{g\ell}{\epsilon^2}\theta=0$$
+  Consider the change of variables
+  $$\ell-\ell_0=\epsilon t.$$ This gives us
+  $d\ell=\epsilon dt$
+  and so
+  $$\frac{d\theta}{dt}=\epsilon\frac{d\theta}{d\ell}$$ and
+  $$\epsilon^2\frac{d^2\theta}{d\ell^2}$$
+  so the ODE becomes
+  $$\ell \epsilon^2\frac{d^2\theta}{d\ell^2}+2\epsilon^2\frac{d\theta}{d\ell}+g\theta=0$$
+  which we can divide through by $\epsilon^2$ to see that
+  $$\ell\frac{d^2\theta}{d\ell^2}+2\frac{d\theta}{d\ell}+\frac{g}{\epsilon^2}\theta=0$$
+  which is very nearly the Bessel equation, we just need to fiddle a bit more. We can multiply by $\ell$ to get
+  $$\ell^2\frac{d^2\theta}{d\ell^2}+2\ell\frac{d\theta}{d\ell}+\frac{g\ell}{\epsilon^2}\theta=0$$
+  which is of a form we know,
+  $$x^2y''+(1-2a)xy'+\left[b^2c^2x^{2c}+(a^2-p^2c^2)\right]y=0$$
+  which has solution
+  $$y=c_1x^aJ_p(bx^c)+c_2x^aY_p(bx^c).$$
+  Here then
+  \begin{align*}
+    1-2a     & =2            \\
+    b^2c^2   & =g/\epsilon^2 \\
+    2c       & =1            \\
+    a^2-pc^2 & =0
+  \end{align*}
+  which tells us that
+  \begin{align*}
+    c & =1/2                \\
+    a & =-1/2               \\
+    b & =2\sqrt{g}/\epsilon \\
+    p & =1
+  \end{align*}
+  so we get a solution of the form
+  $$\theta(\ell)=c_1\ell^{-1/2}J_1\left(\frac{2\sqrt{g}}{\epsilon}\ell^{1/2}\right)+c_2\ell^{-1/2}Y_1\left(\frac{2\sqrt{g}}{\epsilon}\ell^{1/2}\right).$$
+  Now recall we originally had initial conditions in $t$ so we need to change those to $\ell$.
+  Since $\ell=\ell_0+\epsilon t$, when $t=0$ $\ell=\ell_0$ so $\theta(t=0)=\theta_0\implies \theta(\ell=\ell_0)=\theta_0$
+  and $\frac{d\theta}{dt}(t=0)=0\implies \frac{d\theta}{d\ell}(\ell=\ell_0)=0$.
+  So we take the derivative of our solution,
+  \begin{align*}
+    \frac{d\theta(\ell)}{d\ell} & =\frac{d}{d\ell}\left[
+      c_1\ell^{-1/2}J_1\left(\frac{2\sqrt{g}}{\epsilon}\ell^{1/2}\right)
+      +c_2\ell^{-1/2}Y_1\left(\frac{2\sqrt{g}}{\epsilon}\ell^{1/2}\right)
+    \right]                                                     \\
+                                & =-\frac{1}{2\ell^{3/2}}\left[
+      c_1J_1\left(\frac{2\sqrt{g}}{\epsilon}\ell^{1/2}\right)
+      +c_2Y_1\left(\frac{2\sqrt{g}}{\epsilon}\ell^{1/2}\right)
+    \right]                                                     \\
+                                & \quad+
+    \frac{\sqrt{g}}{2\epsilon\ell}\left[
+      c_1\left[J_0\left(\frac{2\sqrt{g}}{\epsilon}\ell^{1/2}\right)-J_2\left(\frac{2\sqrt{g}}{\epsilon}\ell^{1/2}\right)\right]
+      +c_2\left[Y_0\left(\frac{2\sqrt{g}}{\epsilon}\ell^{1/2}\right)-Y_2\left(\frac{2\sqrt{g}}{\epsilon}\ell^{1/2}\right)\right]
+    \right]                                                     \\
+  \end{align*}
+  and evaluate the condition,
+  \begin{align*}
+    \theta_\ell(\ell_0)=0
+             & =-\frac{1}{2\ell_0^{3/2}}\left[
+      c_1J_1\left(\frac{2\sqrt{g\ell_0}}{\epsilon}\right)
+      +c_2Y_1\left(\frac{2\sqrt{g}}{\epsilon}\right)
+    \right]                                    \\
+             & \quad+
+    \frac{\sqrt{g}}{2\epsilon\ell_0}\left[
+      c_1\left[J_0\left(\frac{2\sqrt{g\ell_0}}{\epsilon}\right)-J_2\left(\frac{2\sqrt{g\ell_0}}{\epsilon}\right)\right]
+      +c_2\left[Y_0\left(\frac{2\sqrt{g\ell_0}}{\epsilon}\right)-Y_2\left(\frac{2\sqrt{g\ell_0}}{\epsilon}\right)\right]
+    \right]                                    \\
+    \implies &
+    c_2\left\{
+    +\frac{1}{2\ell_0^{3/2}}Y_1\left(\frac{2\sqrt{g}}{\epsilon}\right)
+    -\frac{\sqrt{g}}{2\epsilon\ell_0}\left[Y_0\left(\alpha\right)-Y_2\left(\alpha\right)\right]
+    \right\}
+    =
+    c_1\left\{
+    \frac{\sqrt{g}}{2\epsilon\ell_0}\left[J_0\left(\alpha\right)-J_2\left(\alpha\right)\right]
+    -\frac{1}{2\ell_0^{3/2}}J_1\left(\alpha\right)
+    \right\}
+  \end{align*}
+  for $\alpha=\frac{2\sqrt{g\ell_0}}{\epsilon}$
+  Now we apply the condition $\theta(\ell=\ell_0)=\theta_0$,
+  \begin{align*}
+    \theta(\ell=\ell_0)=\theta_0 & =\frac{1}{\sqrt{\ell_0}}\left[c_1J_1\left(\alpha\right)+c_2Y_1\left(\alpha\right)\right] \\
+    \implies                     & \frac{\sqrt{\ell_0}\theta_0-c_1J_1\left(\alpha\right)}{Y_1\left(\alpha\right)}=c_2       \\
+  \end{align*}
+\end{soln}
+
+% PROBLEM 2
+\begin{problem}
+The differential equation
+$$x^2\frac{d^2E}{dx^2}-\mu x\frac{dE}{dx}-k^2x^\nu E=0$$
+occurs in the study of the flow of current through electrical transmission lines; here $\mu$, $\nu$ are positive
+constants and $E$ represents the potential difference (with respect to one end of the line) at a point a
+distance $x$ from that end of the line. Find its general solution.
+\end{problem}
+\begin{soln}
+  Recall we found that the ODE
+  $$x^2y''+(1-2a)xy'+\left[b^2c^2x^{2c}+(a^2-p^2c^2)\right]y=0$$
+  has solution
+  $$y=c_1x^aJ_p(bx^c)+c_2x^aY_p(bx^c).$$
+  The given problem is of this form with come of the coefficients being complex. We have that
+  \begin{align*}
+    1-2a       & =-\mu \\
+    b^2c^2     & =-k^2 \\
+    2c         & =\nu  \\
+    a^2-p^2c^2 & =0
+  \end{align*}
+  which gives
+  \begin{align*}
+    a & =\frac{1}{2}(\mu+1)  \\
+    b & =2i\frac{k}{\nu}     \\
+    c & =\frac{\nu}{2}       \\
+    p & =\frac{(\mu+1)}{\nu}
+  \end{align*}
+  so we get a solution of the form
+  $$E=x^{\frac{1}{2}(\mu+1)}\left[c_1J_{\frac{(\mu+1)}{\nu}}(2i\frac{k}{\nu} x^{\frac{1}{2}\nu})+c_2Y_{\frac{(\mu+1)}{\nu}}(2i\frac{k}{\nu} x^{\frac{1}{2}\nu})\right].$$
+\end{soln}
+
+% PROBLEM 3
+\begin{problem}~
+\begin{enumerate}[label=(\alph*)]
+  \item Show that the solution of the DE
+        $$\frac{d^2w}{dt^2}+t^mw=0,\quad m>0$$
+        can be expressed as
+        $$w(t)=t^{1/2}\left(AJ_{1/(m+2)}\left(\frac{2}{m+2}t^{(m+2)/2}\right)+BJ_{-1/(m+2)}\left(\frac{2}{m+2}t^{(m+2)/2}\right)\right)$$
+  \item Express the solution of DE
+        $$\frac{d^2w}{dt^2}+w=0$$
+        in terms of Bessel functions and deduce the relations given in Problem 9.2 Parts (i) and (ii).
+\end{enumerate}
+\end{problem}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item Multiplying through by $t^2$ his is again $$x^2y''+(1-2a)xy'+\left[b^2c^2x^{2c}+(a^2-p^2c^2)\right]y=0$$
+          has solution
+          $$y=c_1x^aJ_p(bx^c)+c_2x^aJ_{-p}(bx^c)$$
+          for $p\notin \mathbb{Z}$. Here
+          \begin{align*}
+            1-2a       & =0   \\
+            b^2c^2     & =1   \\
+            2c         & =m+2 \\
+            a^2-p^2c^2 & =0
+          \end{align*}
+          so
+          \begin{align*}
+            a & =\frac{1}{2} \\
+            b & =2/(m+2)     \\
+            c & =(m+2)/2     \\
+            p & =1/(m+2)
+          \end{align*}
+          which indeed gives us the solution given in the problem statement.
+    \item The ODE $$\frac{d^2w}{dt^2}+w=0$$
+          has $m=0$ (\highlight{this doesn't work according to the $m>0$ condition but I don't see why that's necessary}) and so has solution
+          $$w(t)=t^{1/2}\left(AJ_{1/2}\left(t\right)+BJ_{-1/2}\left(t\right)\right)$$
+          and the relations mentioned are forms for $J_{\pm1/2}$ which let us say that
+          $$w(t)=t^{1/2}\left(A'\frac{1}{\sqrt{x}}\sin(x)+B'\frac{1}{\sqrt{x}}\cos(x)\right)$$
+          where the coefficients have absorbed the contants in the relations.
+  \end{enumerate}
+\end{soln}
+
+% PROBLEM 4
+\begin{problem} Use the definition of the Bessel functions to prove each of the following.
+\begin{enumerate}[label=(\alph*)]
+  \item $\displaystyle J_{-1/2}(x)=\sqrt{\frac{2}{\pi x}}\cos x$
+  \item $\displaystyle J_{3/2}(x)=\sqrt{\frac{2}{\pi x}}\left(x^{-1}\sin x-\cos x\right)$
+  \item $\displaystyle J_{-3/2}(x)=\sqrt{\frac{2}{\pi x}}\left(-x^{-1}\cos x-\sin x\right)$
+\end{enumerate}
+\end{problem}
+\begin{soln} Recall that the series definition of the Bessel function is
+  $$J_n(x) = \sum_{m=0}^\infty \frac{(-1)^m}{m!\Gamma(m+n+1)} {\left(\frac{x}{2}\right)}^{2m + n}$$
+  \begin{enumerate}[label=(\alph*)]
+    \item From the series definition
+          \begin{align*}
+            J_{-1/2}(x) & = \sum_{m=0}^\infty \frac{(-1)^m}{m!\Gamma(m+1/2)} {\left(\frac{x}{2}\right)}^{2m - 1/2}             \\
+                        & = \sqrt{\frac{2}{x}}\sum_{m=0}^\infty \frac{(-1)^m}{m!\Gamma(m+1/2)} {\left(\frac{x}{2}\right)}^{2m}
+          \end{align*}
+          and $\Gamma(m+1/2)=\Gamma(m-1/2)(m-1/2)=\Gamma(m-3/2)(m-1/2)(m-3/2)\dots =\frac{\sqrt{\pi}(2m-1)(2m-3)\dots 3\cdot 1}{2^m}$ so
+          \begin{align*}
+            J_{-1/2}(x) & = \sqrt{\frac{2}{x}}\sum_{m=0}^\infty \frac{(-1)^m}{m!\Gamma(m+1/2)} {\left(\frac{x}{2}\right)}^{2m}                                 \\
+                        & = \sqrt{\frac{2}{\pi x}}\sum_{m=0}^\infty \frac{(-1)^m}{m! (2m-1)(2m-3)\dots 3\cdot 1\cdot 2^m} x^{2m}                               \\
+                        & = \sqrt{\frac{2}{\pi x}}\sum_{m=0}^\infty \frac{(-1)^m}{(m)(m-1)(m-2)\dots 3\cdot2\cdot1 (2m-1)(2m-3)\dots 3\cdot 1\cdot 2^m} x^{2m} \\
+                        & = \sqrt{\frac{2}{\pi x}}\sum_{m=0}^\infty \frac{(-1)^m}{(2m)(2m-2)(2m-4)\dots 6\cdot 4\cdot 2 (2m-1)(2m-3)\dots 3\cdot 1} x^{2m}     \\
+                        & = \sqrt{\frac{2}{\pi x}}\sum_{m=0}^\infty \frac{(-1)^m}{(2m)!} x^{2m}                                                                \\
+                        & =\sqrt{\frac{2}{\pi x}} \cos x.
+          \end{align*}
+    \item From the series definition
+          \begin{align*}
+            J_{3/2}(x) & = \sum_{m=0}^\infty \frac{(-1)^m}{m!\Gamma(m+5/2)} {\left(\frac{x}{2}\right)}^{2m + 3/2}                                        \\
+                       & = \frac{x^{3/2}}{2^{3/2}}\sum_{m=0}^\infty \frac{(-1)^m}{m!\Gamma(m+5/2)} {\left(\frac{x}{2}\right)}^{2m}                       \\
+                       & = \frac{x^{3/2}}{2^{3/2}}\sum_{m=0}^\infty \frac{(-1)^m }{m!2^m\sqrt{\pi} (2m+3)(2m+1)(2m-1)(2m-3)\dots 5\cdot 3\cdot 1} x^{2m} \\
+                       & = \frac{1}{2}\sqrt{\frac{x}{2\pi}}\sum_{m=0}^\infty \frac{(-1)^m }{(2m+1)! (2m+3)} x^{2m+1}                                   \\                        
+          \end{align*}
+    \item $\displaystyle J_{-3/2}(x)=\sqrt{\frac{2}{\pi x}}\left(-x^{-1}\cos x-\sin x\right)$
+  \end{enumerate}
+\end{soln}
+
+% PROBLEM 5
+\begin{problem}
+In a study of planetary motion Bessel encountered the integral
+$$y(x)=\frac{1}{\pi}\int_0^\pi\cos(n\theta-x\sin(\theta))d\theta$$
+Show that $y(x)=J_n(x)$.
+\end{problem}
+\begin{soln}
+  Recall that the generating function for $J_n$ is
+  $$\exp(\frac{1}{2}x(h-\frac{1}{h}))=\sum_{n=-\infty}^\infty h^n J_n(x).$$
+  Using Euler's formula for complex exponentials we can rewrite the integral as
+  \begin{align*}
+    y(x) & =\frac{1}{2\pi}\int_0^\pi \exp\left(in\theta-ix\sin(\theta)\right)+\exp\left(-in\theta+ix\sin(\theta)\right)d\theta                                                                       \\
+         & =\frac{1}{2\pi}\int_0^\pi \exp\left(in\theta-i\frac{x}{2}\left[e^{i\theta}-e^{-i\theta}\right]\right)+\exp\left(-in\theta+i\frac{x}{2}\left[e^{i\theta}-e^{-i\theta}\right]\right)d\theta \\
+         & =\frac{1}{2\pi}\int_0^\pi \exp\left(in\theta+i\frac{x}{2}\left[e^{-i\theta}-e^{i\theta}\right]\right)+\exp\left(-in\theta+i\frac{x}{2}\left[e^{i\theta}-e^{-i\theta}\right]\right)d\theta \\
+         & =\frac{1}{2\pi}\int_0^\pi \exp(in\theta)\sum_{k=-\infty}^{\infty}\exp(-ik\theta)J_k(x)+\exp(-in\theta)\sum_{k=-\infty}^{\infty}\exp(ik\theta)J_k(x)d\theta \\
+         & =\frac{1}{2\pi}\int_0^\pi \exp(in\theta)\sum_{k=-\infty}^{\infty}(-1)^k\exp(ik\theta)J_{k}(x)+\exp(-in\theta)\sum_{k=-\infty}^{\infty}\exp(ik\theta)J_k(x)d\theta \\
+          &=\frac{1}{2\pi}\int_0^\pi \sum_{k=-\infty}^{\infty}\left[(-1)^k\exp(i(n+k)\theta)+\exp(i(k-n)\theta)\right]J_{k}(x)d\theta \\
+          &=\frac{1}{2\pi} \sum_{k=-\infty}^{\infty}\left[-\frac{i(-1)^k}{(n+k)}\exp(i(n+k)\theta)-\frac{i}{(k-n)}\exp(i(k-n)\theta)\right]_0^\pi J_{k}(x) \\
+          &=\frac{1}{2\pi} \sum_{k=-\infty}^{\infty}\left[-\frac{i(-1)^k}{(n+k)}(-1)^{n+k}-\frac{i}{(k-n)}(-1)^{k-n}
+          +\frac{i(-1)^k}{(n+k)}+\frac{i}{(k-n)}
+          \right]_0^\pi J_{k}(x) \\
+    % &=\frac{1}{2\pi}\int_0^\pi \exp\left(in\theta-ix\frac{1}{2}\left[e^{i\theta}-e^{-i\theta}\right]\right)+\exp\left(-in\theta+ix\frac{1}{2}\left[e^{i\theta}-e^{-i\theta}\right]\right)d\theta\\
+    % &=\frac{1}{2\pi}\int_0^\pi \exp\left(in\theta\right)\exp\left(-ix\frac{1}{2}\left[e^{i\theta}-e^{-i\theta}\right]\right)+\exp\left(-in\theta\right)\exp\left(ix\frac{1}{2}\left[e^{i\theta}-e^{-i\theta}\right]\right)d\theta\\
+    % &=\frac{1}{2\pi}\int_0^\pi \exp\left(in\theta\right)\exp\left(ix\frac{1}{2}\left[e^{-i\theta}-e^{i\theta}\right]\right)+\exp\left(-in\theta\right)\exp\left(ix\frac{1}{2}\left[e^{i\theta}-e^{-i\theta}\right]\right)d\theta\\
+    % &=\frac{1}{2\pi}\int_0^\pi \exp\left(in\theta\right)\sum_{k=-\infty}^\infty e^{-ik\theta} J_k(x)+\exp\left(-in\theta\right)\sum_{k=-\infty}^\infty e^{ik\theta} J_k(x)d\theta\\
+    % &=\frac{1}{2\pi}\int_0^\pi \sum_{k=-\infty}^\infty \left[\exp\left(i(n-k)\theta\right)+\exp\left(i(k-n)\theta\right) \right]J_k(x)d\theta\\
+    % &=\frac{1}{2\pi}\sum_{k=-\infty}^\infty \left[-\frac{i}{n-k}\exp\left(i(n-k)\theta\right)-\frac{i}{k-n}\exp\left(i(k-n)\theta\right) \right]_0^\pi J_k(x)\\
+    % &=\frac{1}{2\pi}\sum_{k=-\infty}^\infty \frac{i}{n-k}\left[\exp\left(i(k-n)\theta\right)-\exp\left(i(n-k)\theta\right)\right]_0^\pi J_k(x)\\
+    % &=\frac{1}{2\pi}\sum_{k=-\infty}^\infty \frac{i}{n-k}\left[
+    %   \exp\left(i(k-n)\pi\right)-\exp\left(i(n-k)\pi\right)-
+    %   1+1
+    %   \right]J_k(x)\\
+    %   &=\frac{1}{2\pi}\sum_{k=-\infty}^\infty \frac{i}{n-k}\left[
+    %   \cos((k-n)\pi)+i\sin((k-n)\pi)-\cos((n-k)\pi)-i\sin((n-k)\pi)
+    %   \right] J_k(x)\\
+    %   &=\frac{1}{2\pi}\sum_{k=-\infty}^\infty \frac{i}{n-k}\left[
+    %   \cos((k-n)\pi)-\cos((k-n)\pi)
+    %   \right] J_k(x)\\
+  \end{align*}
 \end{soln}
 \end{document}

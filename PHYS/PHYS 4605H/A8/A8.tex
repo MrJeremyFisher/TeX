@@ -1,0 +1,244 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsmath,amsthm,amssymb,bm}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{changepage}
+\usepackage{circuitikz}
+\usepackage{pgfplots}
+\usepackage{physics}
+\usepackage{hyperref}
+\usepackage{siunitx}
+\usepackage{minted}
+\usepackage{fontspec}
+\usepackage{relsize}
+\usepackage{subfig}
+\usepackage{mhchem}
+\usepackage{todonotes}
+\usepackage{biblatex}
+\usepackage{multicol, multirow, booktabs}
+\usepackage[breakable]{tcolorbox}
+\usepackage[inline]{enumitem}
+\patchcmd{\thebibliography}{\section*{\refname}}{}{}{}
+\addbibresource{sources.bib}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{soln}{Solution}
+
+\pgfplotsset{compat=newest}
+\usetikzlibrary{lindenmayersystems}
+\usetikzlibrary{arrows}
+\usetikzlibrary{calc}
+\usetikzlibrary{positioning, fit}
+\usetikzlibrary{3d, perspective}
+
+\definecolor{incolor}{HTML}{303F9F}
+\definecolor{outcolor}{HTML}{D84315}
+\definecolor{cellborder}{HTML}{CFCFCF}
+\definecolor{cellbackground}{HTML}{F7F7F7}
+\newcommand{\ui}{\hat{i}}
+\newcommand{\uj}{\hat{j}}
+\newcommand{\uk}{\hat{k}}
+\newcommand{\ux}{\hat{x}}
+\newcommand{\uy}{\hat{y}}
+\newcommand{\uz}{\hat{z}}
+\newcommand{\uv}[1]{\hat{\bm{{#1}}}}
+\newcommand{\pr}[1]{{#1^\prime}}
+\newcommand{\justif}[2]{&{#1}&\text{#2}}
+\newcommand{\dul}[1]{\underline{\underline{#1}}}
+\newcommand{\pdiff}[2][]{{\frac{\partial^{#1}}{\partial {{#2}^{#1}}}}}
+% \newcommand{\dif}[2][]{{\frac{d^{#1}}{d{{#2}^{#1}}}}}
+\pgfdeclarelayer{background}  
+\pgfsetlayers{background,main}
+\AtBeginDocument{\RenewCommandCopy\qty\SI}
+
+\makeatletter
+\newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+\makeatother
+\newcommand{\prompt}[4]{
+    \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+}
+
+\newcommand{\thevenin}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (2,0) to[battery1, l_=$V_{Th}\eq#1$] (2,2) 
+      to[resistor, l_=$R_{Th}\eq#2$] (0,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\norton}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (3,0) to[american current source, l_=$I_{N}\eq#1$] (3,2) -- (0,2) (2,0)
+      to[resistor, l=$R_{N}\eq#2$] (2,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\highlight}[1]{\colorbox{yellow}{#1}}
+
+\newcommand{\ti}[1]{\widetilde{#1}}
+
+\newfontface{\Kaufmann}{Kaufmann}
+\DeclareTextFontCommand{\kf}{\Kaufmann}
+\newcommand{\scriptr}{\fontsize{12pt}{12pt}\kf{r}}
+
+\newfontface{\KaufmannB}{Kaufmann Bold}
+\DeclareTextFontCommand{\kfb}{\KaufmannB}
+\newcommand{\bscriptr}{\fontsize{12pt}{12pt}\kfb{r}}
+
+\newcommand{\bv}[1]{\vec{#1}}
+
+\title{Physics 4605H: Assignment VIII}
+\author{Jeremy Favro (0805980) \\ Trent University, Peterborough, ON, Canada}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+% PROBLEM 1
+\begin{problem}
+We know from PHYS 3610 that for a system in a pure state $\ket{\psi}$, the probability that
+a measurement of observable $A$ will give the value $a_5$ is $p(A=a_5)=\abs{c_5}^2$, where
+$\hat{A}\ket{\phi_n}=a_n\ket{\phi_n}$ and $\ket{\psi}=\sum_nc_n\ket{\phi}_n$.
+The goal of this problem is to calculate this probability for a system in a mixed state. Let
+the mixed state be represented by the density matrix $\hat{\rho}=\sum_i p_i\ket{\psi_i}\bra{\psi_i}$, and let
+$\ket{\psi_i}=\sum_nc_n\ket{\phi_n}$.
+\begin{enumerate}[label=(\alph*)]
+  \item Express $\hat{\rho}$ in term of $\left\{\ket{\phi_n}\right\}$, the eigenstates of $\hat{A}$.
+  \item Write the projection operator $\hat{P}_5$ which projects onto the state $\ket{\phi_5}$.
+  \item Write out $\hat{P}_5\hat{\rho}$ and simplify.
+  \item Calculate the probability $p(A=a_5)=\Tr(\hat{P}_5\hat{\rho})$.
+  \item Does the sum over all options $\sum_n p(A=A_n)$ equal one? Explain.
+\end{enumerate}
+\end{problem}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item Since $\hat{\rho}=\sum_i p_i\ket{\psi_i}\bra{\psi_i}$ and $\ket{\psi_i}=\sum_nc_n\ket{\phi_n}$
+          we get that
+          \begin{align*}
+            \hat{\rho} & =\sum_i p_i\left[\sum_nc_{n,i}\ket{\phi_n}\right]\left[\sum_mc_{m,i}^*\bra{\phi_m}\right] \\
+                       & =\sum_i p_i\sum_n\sum_mc_{n,i}c_{m,i}^*\ket{\phi_n}\bra{\phi_m}
+          \end{align*}
+    \item By definition
+          $$\hat{P}_5=\ket{\phi_5}\bra{\phi_5}.$$
+    \item \begin{align*}
+            \hat{P}_5\hat{\rho} & =\ket{\phi_5}\bra{\phi_5}\sum_i p_i\sum_n\sum_mc_{n,i}c_{m,i}^*\ket{\phi_n}\bra{\phi_m} \\
+                                & =\sum_i p_i\sum_n\sum_mc_{n,i}c_{m,i}^*\ket{\phi_5}\bra{\phi_5}\ket{\phi_n}\bra{\phi_m} \\
+                                & =\sum_i p_i\sum_n\sum_mc_{n,i}c_{m,i}^*\ket{\phi_5}\delta_{5,n}\bra{\phi_m}             \\
+                                & =\sum_i p_ic_{5,i}\sum_m c_{m,i}^*\ket{\phi_5}\bra{\phi_m}
+          \end{align*}
+    \item \begin{align*}
+            \Tr(\hat{P}_5\hat{\rho}) & =\sum_k\bra{\phi_k}\left[\sum_i p_ic_{5,i}\sum_m c_{m,i}^*\ket{\phi_5}\bra{\phi_m}\right]\ket{\phi_k} \\
+                                     & =\sum_k\sum_i p_ic_{5,i}\sum_m c_{m,i}^*\bra{\phi_k}\ket{\phi_5}\bra{\phi_m}\ket{\phi_k}              \\
+                                     & =\sum_k\sum_i p_ic_{5,i}c_{k,i}^*\delta_{k,5}                                                         \\
+                                     & =\sum_i p_ic_{5,i}c_{5,i}^*                                                                           \\
+                                     & =\sum_i p_i\abs{c_{5,i}}^2                                                                            \\
+          \end{align*}
+    \item This sum looks like
+          $$\sum_n p(A=A_n)=\sum_n\sum_i p_i\abs{c_{n,i}}^2.$$
+          Off the top of my head I think this should be 1, just because the particle exists and so it should be in some state. I think I can show this mathematically by moving
+          the sums around. We know that $\sum_n\abs{c_n}^2=1$ and $\sum_ip_i=1$ and that
+          \begin{align*}
+            \sum_n p(A=A_n) & =\sum_n\sum_i p_i\abs{c_{n,i}}^2              \\
+                            & =\sum_i p_i\sum_n\abs{c_{n,i}}^2              \\
+                            & =\sum_i p_i\left[\sum_n\abs{c_{n,i}}^2\right] \\
+                            & =\sum_i p_i=1.
+          \end{align*}
+  \end{enumerate}
+\end{soln}
+
+% PROBLEM 2
+\begin{problem}
+The goal of this problem is to show that for a harmonic oscillator in a coherent state
+the expectation value of position oscillates in time, similar to the classical solution. Below
+I provide the starting information, and break up the problem into two steps, providing an
+intermediate result to help keep you threaded.
+The coherent state is
+$$\ket{\alpha}=e^{-\abs{\alpha}^2/2}\sum_n\frac{\alpha^n}{\sqrt{n!}}\ket{n}.$$
+Here $\alpha=\abs{\alpha}e^{i\phi}$ is a complex number and $\left\{\ket{n}\right\}$ are the eigenstates of the quantum harmonic oscillator with $E_n=\hbar\omega(n+1/2)$.
+Recall that $\hat{x}$ may be expressed in terms of the raising and lowering operators,
+$$\hat{x}=\sqrt{\frac{\hbar}{2m\omega}}\left(\hat{a}+\hat{a}^\dagger\right)$$
+where $\hat{a}\ket{n}=\sqrt{n}\ket{n-1}$ and $\hat{a}^\dagger\ket{n}=\sqrt{n+1}\ket{n+1}$.
+\begin{enumerate}[label=(\alph*)]
+  \item Show that
+        $$\expval{x}=\bra{\alpha}\hat{x}\ket{\alpha}=\sqrt{\frac{\hbar}{2m\omega}}e^{-\abs{\alpha}^2}\left(\sum_{n=1}^{\infty}\frac{\abs{\alpha}^{2(n-1)}}{(n-1)!}\alpha e^{-i\omega t}+\sum_{n=0}^{\infty}\frac{\abs{\alpha}^{2n}}{n!}\alpha^* e^{i\omega t}\right).$$
+        Be sure to explain why the summation limits are different.
+  \item Continuing, show further that
+        $$\expval{x}=\sqrt{\frac{2\hbar}{m\omega}}\abs{\alpha}\cos(\omega t-\phi).$$
+\end{enumerate}
+\end{problem}
+\begin{soln}
+  \begin{enumerate}[label=(\alph*)]
+    \item To do this we first need to include time-dependence in $\ket{\alpha}$. This will come from $\ket{n}$ which we know has energy $E_n=\hbar\omega(n+1/2)$ and hence
+          has time component $e^{-i\omega(n+1/2)t}$ so we get that
+          $$\ket{a}(t)=e^{-\abs{\alpha}^2/2}\sum_{n=0}^\infty\frac{\alpha^n}{\sqrt{n!}}e^{-i\omega(n+1/2)t}\ket{n}$$
+          and hence
+          \begin{align*}
+            \hat{x}\ket{\alpha}(t) & = \sqrt{\frac{\hbar}{2m\omega}}\left(\hat{a}+\hat{a}^\dagger\right)\ket{\alpha}(t)                                                                                                                                                    \\
+                                   & = \sqrt{\frac{\hbar}{2m\omega}}\left(\hat{a}\ket{\alpha}(t)+\hat{a}^\dagger \ket{\alpha}(t)\right)                                                                                                                                    \\
+                                   & = \sqrt{\frac{\hbar}{2m\omega}}e^{-\abs{\alpha}^2/2}\left(\hat{a}\sum_{n=0}^\infty\frac{\alpha^n}{\sqrt{n!}}e^{-i\omega(n+1/2)t}\ket{n}+\hat{a}^\dagger \sum_{n=0}^\infty\frac{\alpha^n}{\sqrt{n!}}e^{-i\omega(n+1/2)t}\ket{n}\right) \\
+                                   & = \sqrt{\frac{\hbar}{2m\omega}}e^{-\abs{\alpha}^2/2}\left(\sum_{n=0}^\infty\frac{\alpha^n}{\sqrt{n!}}e^{-i\omega(n+1/2)t}\sqrt{n}\ket{n-1}+\sum_{n=0}^\infty\frac{\alpha^n}{\sqrt{n!}}e^{-i\omega(n+1/2)t}\sqrt{n+1}\ket{n+1}\right)  \\
+                                   & = \sqrt{\frac{\hbar}{2m\omega}}e^{-\abs{\alpha}^2/2}\left(\sum_{n=1}^\infty\frac{\alpha^n}{\sqrt{(n-1)!}}e^{-i\omega(n+1/2)t}\ket{n-1}+\sum_{n=0}^\infty\frac{\alpha^n}{\sqrt{n!}}e^{-i\omega(n+1/2)t}\sqrt{n+1}\ket{n+1}\right)
+          \end{align*}
+          where the index on the first summation has bumped up to start at 1 because of the $\sqrt{n}$ which would have been zero at $n=0$. Now we act on the left with
+          $\bra{\alpha}$,
+          \begin{align*}
+            \expval{x}=\bra{\alpha}\hat{x}\ket{\alpha} & =\bra{\alpha}\sqrt{\frac{\hbar}{2m\omega}}e^{-\abs{\alpha}^2/2}\left(\sum_{n=1}^\infty\frac{\alpha^n}{\sqrt{(n-1)!}}e^{-i\omega(n+1/2)t}\ket{n-1}+\sum_{n=0}^\infty\frac{\alpha^n}{\sqrt{n!}}e^{-i\omega(n+1/2)t}\sqrt{n+1}\ket{n+1}\right) \\
+                                                       & =e^{-\abs{\alpha}^2/2}\sum_{k=0}^\infty\frac{(\alpha^*)^k}{\sqrt{k!}}e^{i\omega(k+1/2)t}\bra{k}\sqrt{\frac{\hbar}{2m\omega}}e^{-\abs{\alpha}^2/2}
+            \left(\sum_{n=1}^\infty\frac{\alpha^n}{\sqrt{(n-1)!}}e^{-i\omega(n+1/2)t}\ket{n-1}\right.                                                                                                                                                                                                \\
+                                                       & \quad+\left.\sum_{n=0}^\infty\frac{\alpha^n}{\sqrt{n!}}e^{-i\omega(n+1/2)t}\sqrt{n+1}\ket{n+1}\right)                                                                                                                                       \\
+                                                       & =\sqrt{\frac{\hbar}{2m\omega}}e^{-\abs{\alpha}^2}\sum_{k=0}^\infty\frac{(\alpha^*)^k}{\sqrt{k!}}e^{i\omega(k+1/2)t}\bra{k}
+            \left(\sum_{n=1}^\infty\frac{\alpha^n}{\sqrt{(n-1)!}}e^{-i\omega(n+1/2)t}\ket{n-1}\right.                                                                                                                                                                                                \\
+                                                       & \quad+\left.\sum_{n=0}^\infty\frac{\alpha^n}{\sqrt{n!}}e^{-i\omega(n+1/2)t}\sqrt{n+1}\ket{n+1}\right)                                                                                                                                       \\
+          \end{align*}
+          This is pretty big and kind of annoying to typeset. Let's look at the individual terms separately:
+          Starting with
+          \begin{align*}
+             & ~\sum_{k=0}^\infty\frac{(\alpha^*)^k}{\sqrt{k!}}e^{i\omega(k+1/2)t}\bra{k}
+            \left(\sum_{n=1}^\infty\frac{\alpha^n}{\sqrt{(n-1)!}}e^{-i\omega(n+1/2)t}\ket{n-1}\right)                \\
+             & =\sum_{k=0}^\infty
+            \sum_{n=1}^\infty\frac{\alpha^{n}(\alpha^*)^k}{\sqrt{(n-1)!k!}}e^{i\omega(k+1/2-n-1/2)t}\bra{k}\ket{n-1} \\
+             & =\sum_{n=1}^\infty\frac{\alpha^{n}(\alpha^*)^{n-1}}{\sqrt{(n-1)!(n-1)!}}e^{i\omega((n-1)-n)t}         \\
+             & =\sum_{n=1}^\infty\frac{\abs{\alpha}^{2n-2}}{(n-1)!}\alpha e^{-i\omega t}.
+          \end{align*}
+          And the second term,
+          \begin{align*}
+             & ~\sum_{k=0}^\infty\frac{(\alpha^*)^k}{\sqrt{k!}}e^{i\omega(k+1/2)t}\bra{k}
+            \left(\sum_{n=0}^\infty\frac{\alpha^n}{\sqrt{n!}}e^{-i\omega(n+1/2)t}\sqrt{n+1}\ket{n+1}\right)                   \\
+             & =\sum_{k=0}^\infty\sum_{n=0}^\infty\frac{\alpha^n(\alpha^*)^k}{\sqrt{n!k!}}e^{i\omega(k+1/2-n-1/2)t}\sqrt{n+1} \\
+             & =\sum_{n=0}^\infty\frac{\alpha^n(\alpha^*)^{n+1}}{\sqrt{n!n!}}e^{i\omega((n+1)+1/2-n-1/2)t}                    \\
+             & =\sum_{n=0}^\infty\frac{\abs{\alpha}^{2n}}{n!}\alpha^*e^{i\omega t}.
+          \end{align*}
+          Recombining these we get the result,
+          \begin{align*}
+            \expval{x}=\bra{\alpha}\hat{x}\ket{\alpha} & =\sqrt{\frac{\hbar}{2m\omega}}e^{-\abs{\alpha}^2}\left[\sum_{n=1}^\infty\frac{\abs{\alpha}^{2n-2}}{(n-1)!}\alpha e^{-i\omega t}+\sum_{n=0}^\infty\frac{\abs{\alpha}^{2n}}{n!}\alpha^*e^{i\omega t}\right]
+          \end{align*}
+    \item
+          \begin{align*}
+            \expval{x}=\bra{\alpha}\hat{x}\ket{\alpha} & =\sqrt{\frac{\hbar}{2m\omega}}e^{-\abs{\alpha}^2}\left[\sum_{n=1}^\infty\frac{\abs{\alpha}^{2n-2}}{(n-1)!}\alpha e^{-i\omega t}+\sum_{n=0}^\infty\frac{\abs{\alpha}^{2n}}{n!}\alpha^*e^{i\omega t}\right]                             \\
+                                                       & =\sqrt{\frac{\hbar}{2m\omega}}e^{-\abs{\alpha}^2}\left[\alpha e^{-i\omega t}\sum_{n=1}^\infty\frac{\left(\abs{\alpha}^{n-1}\right)^2}{(n-1)!}+\alpha^*e^{i\omega t}\sum_{n=0}^\infty\frac{\left(\abs{\alpha}^{n}\right)^2}{n!}\right] \\
+                                                       & =\sqrt{\frac{\hbar}{2m\omega}}e^{-\abs{\alpha}^2}\left[\alpha e^{-i\omega t}\sum_{m=0}^\infty\frac{\left(\abs{\alpha}^{n}\right)^2}{n!}+\alpha^*e^{i\omega t}\sum_{n=0}^\infty\frac{\left(\abs{\alpha}^{n}\right)^2}{n!}\right]       \\
+                                                       & =\sqrt{\frac{\hbar}{2m\omega}}e^{-\abs{\alpha}^2}\left[\alpha e^{-i\omega t}+\alpha^*e^{i\omega t}\right]\sum_{n=0}^\infty\frac{\left(\abs{\alpha}^{n}\right)^2}{n!}                                                                  \\
+                                                       & =\sqrt{\frac{\hbar}{2m\omega}}e^{-\abs{\alpha}^2}\left[\abs{\alpha} e^{-i(\omega t-\phi)}+\abs{\alpha}e^{i(\omega t-\phi)}\right]\sum_{n=0}^\infty\frac{\left(\abs{\alpha}^{n}\right)^2}{n!}                                          \\
+                                                       & =2\sqrt{\frac{\hbar}{2m\omega}}\abs{\alpha}e^{-\abs{\alpha}^2}\cos(\omega t-\phi)\sum_{n=0}^\infty\frac{\left(\abs{\alpha}^{n}\right)^2}{n!}
+          \end{align*}
+          and since $$\sum_{n=0}^\infty\frac{\left(\abs{\alpha}^{n}\right)^2}{n!}e^{-\abs{\alpha}^2}$$
+          is the sum of coefficients of an eigenvalue expansion ($c_n$s), it comes out to 1 and we obtain the result,
+          $$
+            \expval{x}=\bra{\alpha}\hat{x}\ket{\alpha}  =\sqrt{\frac{2\hbar}{m\omega}}\abs{\alpha}\cos(\omega t-\phi).
+          $$
+  \end{enumerate}
+\end{soln}
+\end{document}
