@@ -181,8 +181,10 @@ where $\hat{a}\ket{n}=\sqrt{n}\ket{n-1}$ and $\hat{a}^\dagger\ket{n}=\sqrt{n+1}\
 \end{problem}
 \begin{soln}
   \begin{enumerate}[label=(\alph*)]
-    \item To do this we first need to include time-dependence in $\ket{\alpha}$. This will come from $\ket{n}$ which we know has energy $E_n=\hbar\omega(n+1/2)$ and hence
-          has time component $e^{-i\omega(n+1/2)t}$ so we get that
+    \item To do this we first need to include time-dependence in $\ket{\alpha}$. This will come from
+          a time evolution operator of the form $\exp(-i\hat{H}t/\hbar)$ since we know
+          $\ket{n}$ has energy $E_n=\hbar\omega(n+1/2)$ this operator becomes
+          $e^{-i\omega(n+1/2)t}$ and we get that
           $$\ket{a}(t)=e^{-\abs{\alpha}^2/2}\sum_{n=0}^\infty\frac{\alpha^n}{\sqrt{n!}}e^{-i\omega(n+1/2)t}\ket{n}$$
           and hence
           \begin{align*}
