@@ -193,8 +193,9 @@ where $g$ is the acceleration due to gravity. Find the solution of the above ini
   Now we apply the condition $\theta(\ell=\ell_0)=\theta_0$,
   \begin{align*}
     \theta(\ell=\ell_0)=\theta_0 & =\frac{1}{\sqrt{\ell_0}}\left[c_1J_1\left(\alpha\right)+c_2Y_1\left(\alpha\right)\right] \\
-    \implies                     & \frac{\sqrt{\ell_0}\theta_0-c_1J_1\left(\alpha\right)}{Y_1\left(\alpha\right)}=c_2       \\
+    \implies                     & \frac{\sqrt{\ell_0}\theta_0-c_1J_1\left(\alpha\right)}{Y_1\left(\alpha\right)}=c_2.
   \end{align*}
+  Since these coefficients are so long and nasty (and do not simplify, I tried in Sage) I will leave them in this form.
 \end{soln}
 
 % PROBLEM 2
@@ -242,7 +243,7 @@ distance $x$ from that end of the line. Find its general solution.
 \end{problem}
 \begin{soln}~
   \begin{enumerate}[label=(\alph*)]
-    \item Multiplying through by $t^2$ his is again $$x^2y''+(1-2a)xy'+\left[b^2c^2x^{2c}+(a^2-p^2c^2)\right]y=0$$
+    \item Multiplying through by $t^2$ this is again $$x^2y''+(1-2a)xy'+\left[b^2c^2x^{2c}+(a^2-p^2c^2)\right]y=0$$
           has solution
           $$y=c_1x^aJ_p(bx^c)+c_2x^aJ_{-p}(bx^c)$$
           for $p\notin \mathbb{Z}$. Here
@@ -260,12 +261,16 @@ distance $x$ from that end of the line. Find its general solution.
             p & =1/(m+2)
           \end{align*}
           which indeed gives us the solution given in the problem statement.
-    \item The ODE $$\frac{d^2w}{dt^2}+w=0$$
-          has $m=0$ (\highlight{this doesn't work according to the $m>0$ condition but I don't see why that's necessary}) and so has solution
-          $$w(t)=t^{1/2}\left(AJ_{1/2}\left(t\right)+BJ_{-1/2}\left(t\right)\right)$$
-          and the relations mentioned are forms for $J_{\pm1/2}$ which let us say that
-          $$w(t)=t^{1/2}\left(A'\frac{1}{\sqrt{x}}\sin(x)+B'\frac{1}{\sqrt{x}}\cos(x)\right)$$
-          where the coefficients have absorbed the contants in the relations.
+    \item The ODE $$t^2\frac{d^2w}{dt^2}+t^2w=0$$
+          has solution
+          $$w(t)=c_1t^{1/2}J_{1/2}(t)+c_2t^{1/2}J_{-1/2}(t).$$
+          Since the question just asks me to ``deduce''
+          $$J_{1/2}(x)=\sqrt{\frac{2}{\pi x}}\sin x$$
+          $$J_{-1/2}(x)=\sqrt{\frac{2}{\pi x}}\cos x$$
+          we can note that the above ODE has solutions like $C_1\sin(x)+C_2\cos(x)$ and when plugging these in we see that
+          $$\frac{d^2w}{dt^2}+w=-C_1\sin(x)-C_2\cos(x)+C_1\sin(x)+C_2\cos(x)=0$$
+          and so indeed the relations must hold as we can multiply by $\sqrt{t}$. The $\sqrt{2/\pi}$ would have to come out from initial conditions
+          as there is no normalization requirement to enforce that would imply it.
   \end{enumerate}
 \end{soln}
 
@@ -296,12 +301,49 @@ distance $x$ from that end of the line. Find its general solution.
           \end{align*}
     \item From the series definition
           \begin{align*}
-            J_{3/2}(x) & = \sum_{m=0}^\infty \frac{(-1)^m}{m!\Gamma(m+5/2)} {\left(\frac{x}{2}\right)}^{2m + 3/2}                                        \\
-                       & = \frac{x^{3/2}}{2^{3/2}}\sum_{m=0}^\infty \frac{(-1)^m}{m!\Gamma(m+5/2)} {\left(\frac{x}{2}\right)}^{2m}                       \\
-                       & = \frac{x^{3/2}}{2^{3/2}}\sum_{m=0}^\infty \frac{(-1)^m }{m!2^m\sqrt{\pi} (2m+3)(2m+1)(2m-1)(2m-3)\dots 5\cdot 3\cdot 1} x^{2m} \\
-                       & = \frac{1}{2}\sqrt{\frac{x}{2\pi}}\sum_{m=0}^\infty \frac{(-1)^m }{(2m+1)! (2m+3)} x^{2m+1}                                   \\                        
+            J_{3/2}(x) & = \sum_{m=0}^\infty \frac{(-1)^m}{m!\Gamma(m+5/2)} {\left(\frac{x}{2}\right)}^{2m + 3/2}                                                  \\
+                       & = \sum_{m=0}^\infty \frac{1}{2^{2m+1+1/2}}\frac{(-1)^m}{m!\Gamma(m+1/2+2)} x^{2m + 1+1/2}                                                 \\
+                       & =\sqrt{\frac{2x}{\pi}}\sum_{m=0}^\infty \frac{(-1)^m}{(2m+1)!(2m+3)} x^{2m + 1}\justif{\quad}{Same process as previous to eval $\Gamma$.}
           \end{align*}
-    \item $\displaystyle J_{-3/2}(x)=\sqrt{\frac{2}{\pi x}}\left(-x^{-1}\cos x-\sin x\right)$
+          Now I found this next step online as a general tip for working with Taylor series as I got stuck here. You can write
+          $$1/(2m+3)=\int_{0}^{1}y^{2m+2}dy$$ which makes the series expansion
+          \begin{align*}
+            J_{3/2}(x) & = \sqrt{\frac{2x}{\pi}}\sum_{m=0}^\infty \frac{(-1)^m }{(2m+1)!(2m+3)} x^{2m + 1}                  \\
+                       & = \sqrt{\frac{2x}{\pi}}\sum_{m=0}^\infty \frac{(-1)^m }{(2m+1)!} \int_{0}^{1}y^{2m+2}dy x^{2m + 1} \\
+                       & = \sqrt{\frac{2x}{\pi}}\int_{0}^{1}y\sum_{m=0}^\infty \frac{(-1)^m }{(2m+1)!} y^{2m+1}x^{2m + 1}dy \\
+                       & = \sqrt{\frac{2x}{\pi}}\int_{0}^{1}y\sum_{m=0}^\infty \frac{(-1)^m }{(2m+1)!} (xy)^{2m+1} dy       \\
+                       & = \sqrt{\frac{2x}{\pi}}\int_{0}^{1}y\sin(xy) dy                                                    \\
+                       & = \sqrt{\frac{2x}{\pi}}\frac{1}{x^2}\left[\sin(x)-x\cos(x)\right]                                  \\
+                       & = \sqrt{\frac{2}{x\pi}}\left[x^{-1}\sin(x)-\cos(x)\right]                                          \\
+          \end{align*}
+    \item From the series definition
+          \begin{align*}
+            J_{-3/2}(x) & = \sum_{m=0}^\infty \frac{(-1)^m}{m!\Gamma(m-3/2+1)} {\left(\frac{x}{2}\right)}^{2m -3/2} \\
+                        & = \sum_{m=0}^\infty \frac{(-1)^m}{m!\Gamma(m-1/2)} {\left(\frac{x}{2}\right)}^{2m -1/2-1} \\
+          \end{align*}
+          And I don't know where to go from here because $\Gamma(0-1/2)=\Gamma(-1/2)$ is undefined. I'll just show that the definition satisfies
+          $$x^2y''+xy'+(x^2-(3/2)^2)y=0$$
+          as this by definition has $J_{-3/2}(x)$ as a solution. Since this is just algebra we can pass it to Sage:
+          \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+            \prompt{In}{incolor}{1}{\boxspacing}
+            \begin{minted}[breaklines, autogobble]{sage}
+clear_vars()
+x = var('x')
+y = -sqrt(2/(pi*x))*((1/x)*cos(x)+sin(x))
+ODE = x^2*diff(y, x, 2)+x*diff(y,x)+(x^2-(3/2)^2)*y
+print("full: ")
+show(ODE)
+print("simplified: ")
+show(ODE.full_simplify())
+              \end{minted}
+          \end{tcolorbox}
+          \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+            \prompt{Out}{outcolor}{1}{\boxspacing}
+            full:\\
+            $\frac{1}{4} \, {\left(4 \, \sqrt{2} {\left(\frac{\cos\left(x\right)}{x} - \frac{2 \, \sin\left(x\right)}{x^{2}} - \frac{2 \, \cos\left(x\right)}{x^{3}} + \sin\left(x\right)\right)} \sqrt{\frac{1}{\pi x}} - \frac{4 \, \sqrt{2} {\left(\frac{\sin\left(x\right)}{x} + \frac{\cos\left(x\right)}{x^{2}} - \cos\left(x\right)\right)}}{\pi x^{2} \sqrt{\frac{1}{\pi x}}} - \frac{4 \, \sqrt{2} {\left(\frac{\cos\left(x\right)}{x} + \sin\left(x\right)\right)}}{\pi x^{3} \sqrt{\frac{1}{\pi x}}} + \frac{\sqrt{2} {\left(\frac{\cos\left(x\right)}{x} + \sin\left(x\right)\right)}}{\pi^{2} x^{4} \left(\frac{1}{\pi x}\right)^{\frac{3}{2}}}\right)} x^{2} - \frac{1}{4} \, \sqrt{2} {\left(4 \, x^{2} - 9\right)} {\left(\frac{\cos\left(x\right)}{x} + \sin\left(x\right)\right)} \sqrt{\frac{1}{\pi x}} + \frac{1}{2} \, {\left(2 \, \sqrt{2} {\left(\frac{\sin\left(x\right)}{x} + \frac{\cos\left(x\right)}{x^{2}} - \cos\left(x\right)\right)} \sqrt{\frac{1}{\pi x}} + \frac{\sqrt{2} {\left(\frac{\cos\left(x\right)}{x} + \sin\left(x\right)\right)}}{\pi x^{2} \sqrt{\frac{1}{\pi x}}}\right)} x$\\
+            simplified:\\
+            $0$
+          \end{tcolorbox}
   \end{enumerate}
 \end{soln}
 
@@ -314,35 +356,69 @@ Show that $y(x)=J_n(x)$.
 \begin{soln}
   Recall that the generating function for $J_n$ is
   $$\exp(\frac{1}{2}x(h-\frac{1}{h}))=\sum_{n=-\infty}^\infty h^n J_n(x).$$
-  Using Euler's formula for complex exponentials we can rewrite the integral as
-  \begin{align*}
-    y(x) & =\frac{1}{2\pi}\int_0^\pi \exp\left(in\theta-ix\sin(\theta)\right)+\exp\left(-in\theta+ix\sin(\theta)\right)d\theta                                                                       \\
-         & =\frac{1}{2\pi}\int_0^\pi \exp\left(in\theta-i\frac{x}{2}\left[e^{i\theta}-e^{-i\theta}\right]\right)+\exp\left(-in\theta+i\frac{x}{2}\left[e^{i\theta}-e^{-i\theta}\right]\right)d\theta \\
-         & =\frac{1}{2\pi}\int_0^\pi \exp\left(in\theta+i\frac{x}{2}\left[e^{-i\theta}-e^{i\theta}\right]\right)+\exp\left(-in\theta+i\frac{x}{2}\left[e^{i\theta}-e^{-i\theta}\right]\right)d\theta \\
-         & =\frac{1}{2\pi}\int_0^\pi \exp(in\theta)\sum_{k=-\infty}^{\infty}\exp(-ik\theta)J_k(x)+\exp(-in\theta)\sum_{k=-\infty}^{\infty}\exp(ik\theta)J_k(x)d\theta \\
-         & =\frac{1}{2\pi}\int_0^\pi \exp(in\theta)\sum_{k=-\infty}^{\infty}(-1)^k\exp(ik\theta)J_{k}(x)+\exp(-in\theta)\sum_{k=-\infty}^{\infty}\exp(ik\theta)J_k(x)d\theta \\
-          &=\frac{1}{2\pi}\int_0^\pi \sum_{k=-\infty}^{\infty}\left[(-1)^k\exp(i(n+k)\theta)+\exp(i(k-n)\theta)\right]J_{k}(x)d\theta \\
-          &=\frac{1}{2\pi} \sum_{k=-\infty}^{\infty}\left[-\frac{i(-1)^k}{(n+k)}\exp(i(n+k)\theta)-\frac{i}{(k-n)}\exp(i(k-n)\theta)\right]_0^\pi J_{k}(x) \\
-          &=\frac{1}{2\pi} \sum_{k=-\infty}^{\infty}\left[-\frac{i(-1)^k}{(n+k)}(-1)^{n+k}-\frac{i}{(k-n)}(-1)^{k-n}
-          +\frac{i(-1)^k}{(n+k)}+\frac{i}{(k-n)}
-          \right]_0^\pi J_{k}(x) \\
-    % &=\frac{1}{2\pi}\int_0^\pi \exp\left(in\theta-ix\frac{1}{2}\left[e^{i\theta}-e^{-i\theta}\right]\right)+\exp\left(-in\theta+ix\frac{1}{2}\left[e^{i\theta}-e^{-i\theta}\right]\right)d\theta\\
-    % &=\frac{1}{2\pi}\int_0^\pi \exp\left(in\theta\right)\exp\left(-ix\frac{1}{2}\left[e^{i\theta}-e^{-i\theta}\right]\right)+\exp\left(-in\theta\right)\exp\left(ix\frac{1}{2}\left[e^{i\theta}-e^{-i\theta}\right]\right)d\theta\\
-    % &=\frac{1}{2\pi}\int_0^\pi \exp\left(in\theta\right)\exp\left(ix\frac{1}{2}\left[e^{-i\theta}-e^{i\theta}\right]\right)+\exp\left(-in\theta\right)\exp\left(ix\frac{1}{2}\left[e^{i\theta}-e^{-i\theta}\right]\right)d\theta\\
-    % &=\frac{1}{2\pi}\int_0^\pi \exp\left(in\theta\right)\sum_{k=-\infty}^\infty e^{-ik\theta} J_k(x)+\exp\left(-in\theta\right)\sum_{k=-\infty}^\infty e^{ik\theta} J_k(x)d\theta\\
-    % &=\frac{1}{2\pi}\int_0^\pi \sum_{k=-\infty}^\infty \left[\exp\left(i(n-k)\theta\right)+\exp\left(i(k-n)\theta\right) \right]J_k(x)d\theta\\
-    % &=\frac{1}{2\pi}\sum_{k=-\infty}^\infty \left[-\frac{i}{n-k}\exp\left(i(n-k)\theta\right)-\frac{i}{k-n}\exp\left(i(k-n)\theta\right) \right]_0^\pi J_k(x)\\
-    % &=\frac{1}{2\pi}\sum_{k=-\infty}^\infty \frac{i}{n-k}\left[\exp\left(i(k-n)\theta\right)-\exp\left(i(n-k)\theta\right)\right]_0^\pi J_k(x)\\
-    % &=\frac{1}{2\pi}\sum_{k=-\infty}^\infty \frac{i}{n-k}\left[
-    %   \exp\left(i(k-n)\pi\right)-\exp\left(i(n-k)\pi\right)-
-    %   1+1
-    %   \right]J_k(x)\\
-    %   &=\frac{1}{2\pi}\sum_{k=-\infty}^\infty \frac{i}{n-k}\left[
-    %   \cos((k-n)\pi)+i\sin((k-n)\pi)-\cos((n-k)\pi)-i\sin((n-k)\pi)
-    %   \right] J_k(x)\\
-    %   &=\frac{1}{2\pi}\sum_{k=-\infty}^\infty \frac{i}{n-k}\left[
-    %   \cos((k-n)\pi)-\cos((k-n)\pi)
-    %   \right] J_k(x)\\
-  \end{align*}
+  If we take $h=e^{-i\theta}$ this becomes
+  $$\exp(\frac{x}{2}(e^{-i\theta}-e^{i\theta}))=\sum_{n=-\infty}^\infty e^{in\theta} J_n(x)$$
+  and
+  $$\frac{x}{2}(e^{-i\theta}-e^{i\theta})=-ix\sin(\theta)$$ so
+  $$\exp(-ix\sin\theta)=\sum_{n=-\infty}^\infty e^{-in\theta} J_n(x).$$
+  Now both to get us closer to the integral formula above (whose integrand can be expressed using complex exponentials) and
+  to use the orthogonality of $e^{imx}$ for $m\in\mathbb{Z}$ we multiply by $e^{im\theta}$,
+  $$\exp(im\theta-ix\sin\theta)=\sum_{n=-\infty}^\infty e^{i(m-n)\theta} J_n(x)$$
+  and integrate
+  $$\int_{0}^{\pi}\exp(im\theta-ix\sin\theta)d\theta=\sum_{n=-\infty}^\infty \int_{0}^{\pi}e^{i(m-n)\theta}d\theta J_n(x).$$
+  The integral
+  $$\int_{0}^{\pi}e^{i(m-n)\theta}d\theta$$
+  has two cases. When $m=n$, it is the integral of $1$ and comes out to $\pi$. When $m\neq n$ we get
+  $$\int_{0}^{\pi}e^{ik\theta}d\theta=-i\frac{1}{k}\left[e^(ik\pi)-e^{-ik\pi}\right]=0$$
+  where $k=m-n$ for simplicity. Hence we obtain a Kronecker delta function for $m$ and $n$ which eliminates all but the $m=n$ term
+  in the sum, which will be multiplied by $\pi$. This leaves us with
+  $$\int_{0}^{\pi}\exp(im\theta-ix\sin\theta)d\theta=\pi J_m(x).$$
+  Which is almost what we want. Since
+  $$\exp(im\theta-ix\sin\theta)=\cos(m\theta-x\sin\theta)+i\sin(m\theta-x\sin\theta),$$
+  $$\int_{0}^{\pi}\cos(m\theta-x\sin\theta)+i\sin(m\theta-x\sin\theta)d\theta=\pi J_m(x).$$
+  and since the right hand side is entirely real, the $\sin$ integral must vanish, leaving us with the desired result! Yay!
+\end{soln}
+
+% PROBLEM 6
+\begin{problem}[SAGE]
+\begin{enumerate}[label=(\alph*)]
+  \item Plot $P_n(x)$ for $n = 0..5$ on the same graph.
+  \item Find the Zeros of $P_{12}(x)$.
+  \item Use SAGE to solve each of the following differential equations:
+        \begin{enumerate}[label=(\roman*)]
+          \item $\displaystyle (1-x^2)y''-2xy'+30y=0$;
+          \item $\displaystyle (1-x^2)y''-2xy'+\left(30-\frac{16}{1-x^2}\right)y=0$.
+        \end{enumerate}
+  \item Use SAGE to plot $J_n(x)$ for $n = 0..5$ on the same graph. Comment on the behaviour of the
+        graph.
+  \item Use SAGE to plot $Y_n(x)$ for $n = 0..5$ on the same graph. Comment on the behaviour of the
+        graph.
+  \item Use SAGE to plot $K_n(x)$ for $n = 0..5$ on the same graph. Comment on the behaviour of the
+        graph.
+  \item Use SAGE to plot $I_n(x)$ for $n = 0..5$ on the same graph. Comment on the behaviour of the
+        graph.
+  \item Find the first three Zeros of $J_{1/2}(x)$ using SAGE.
+  \item Find the first three Zeros of $Y_1(x)$ using SAGE.
+  \item Use SAGE to solve each of the following differential equations:
+        \begin{enumerate}[label=(\roman*)]
+          \item $\displaystyle x^2y'' + xy' - (4x^2 + 9)y = 0$;
+          \item $\displaystyle x^2y'' + xy' + (4x^2 - 9)y = 0$;
+          \item $\displaystyle x^2y'' + 2xy' + (4x^2 -30)y = 0$.
+        \end{enumerate}
+\end{enumerate}
+\end{problem}
+\begin{soln}
+  \includepdf[
+    %% Include all pages of the PDF
+    pages=-,
+    %% make this page have the usual page style
+    %% (you can change it to plain etc). By default pdfpages
+    %% sets the pagecommand to \pagestyle{empty}
+    pagecommand={\pagestyle{headings}},
+    %% Add a "section" entry to the ToC with the heading
+    %% "Quilling Shapes" and the label "sec:shapes"
+    addtotoc={1,section,1,Quilling Shapes,sec:shapes}]
+  %% The pdf file itself
+  {./Sage/3160H A2.pdf}
 \end{soln}
 \end{document}
