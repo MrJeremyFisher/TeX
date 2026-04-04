@@ -1,0 +1,129 @@
+\documentclass[10pt, twocolumn]{article}
+
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsmath,amsthm,amssymb,bm}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{changepage}
+\usepackage{circuitikz}
+\usepackage{pgfplots}
+\usepackage{minted}
+\usepackage{physics}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{siunitx}
+\usepackage{fontspec}
+\usepackage{relsize}
+\usepackage{subcaption}
+\usepackage{todonotes}
+\usepackage{multicol, multirow, booktabs}
+\usepackage[breakable]{tcolorbox}
+\usepackage[inline]{enumitem}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{soln}{Solution}
+
+\pgfplotsset{compat=newest}
+\usetikzlibrary{lindenmayersystems}
+\usetikzlibrary{arrows}
+\usetikzlibrary{calc}
+\usetikzlibrary{positioning, fit}
+\usetikzlibrary{3d, perspective}
+\usetikzlibrary{math}
+\usetikzlibrary{fadings}
+\usetikzlibrary{angles,quotes} 
+
+\definecolor{incolor}{HTML}{303F9F}
+\definecolor{outcolor}{HTML}{D84315}
+\definecolor{cellborder}{HTML}{CFCFCF}
+\definecolor{cellbackground}{HTML}{F7F7F7}
+\newcommand{\bv}[1]{\bm{\mathrm{#1}}}
+\newcommand{\ui}{\bv{\hat{i}}}
+\newcommand{\uj}{\bv{\hat{j}}}
+\newcommand{\uk}{\bv{\hat{k}}}
+\newcommand{\ux}{\bv{\hat{x}}}
+\newcommand{\uy}{\bv{\hat{y}}}
+\newcommand{\uz}{\bv{\hat{z}}}
+\newcommand{\uv}[1]{\hat{\bv{{#1}}}}
+\newcommand{\pd}[2][]{{\frac{\partial^{#1}}{\partial {{#2}^{#1}}}}}
+\newcommand{\dif}[2][]{{\frac{d^{#1}}{d{{#2}^{#1}}}}}
+\newcommand{\grd}{\nabla}
+
+\pgfdeclarelayer{background}  
+\pgfsetlayers{background,main}
+\AtBeginDocument{\RenewCommandCopy\qty\SI}
+
+\makeatletter
+\newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+\makeatother
+\newcommand{\prompt}[4]{
+    \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+}
+
+\newcommand{\thevenin}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (2,0) to[battery1, l_=$V_{Th}\eq#1$] (2,2) 
+      to[resistor, l_=$R_{Th}\eq#2$] (0,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\norton}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (3,0) to[american current source, l_=$I_{N}\eq#1$] (3,2) -- (0,2) (2,0)
+      to[resistor, l=$R_{N}\eq#2$] (2,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\DeclareMathOperator{\Div}{div}
+\DeclareMathOperator{\Curl}{curl}
+\DeclareMathOperator{\sgn}{sgn}
+
+\DeclareSIUnit \year {yr}
+
+\newcommand{\highlight}[1]{\colorbox{yellow}{$\displaystyle #1$}}
+
+\newcommand{\ti}[1]{\widetilde{#1}}
+
+\newfontface{\Kaufmann}{Kaufmann}
+\DeclareTextFontCommand{\kf}{\Kaufmann}
+\newcommand{\scriptr}{\fontsize{12pt}{12pt}\kf{r}\fontsize{10pt}{10pt}}
+
+\newfontface{\KaufmannB}{Kaufmann Bold}
+\DeclareTextFontCommand{\kfb}{\KaufmannB}
+\newcommand{\bscriptr}{\fontsize{12pt}{12pt}\kfb{r}\fontsize{10pt}{10pt}}
+\newcommand{\justif}[2]{&{#1}&\text{#2}}
+
+\begin{document}
+Special relativity says time dilation is given by
+\begin{equation}
+  \Delta t_{fixed}=\gamma \Delta t_{moving}
+  \label{eqn:time-dilation}
+\end{equation}
+where $$\gamma=\frac{1}{\sqrt{1-v_{moving}^2/c^2}}.$$
+Assuming the timeline in the movie is correct and they're undergoing a $\qty{30}{\year}$ round trip, with say $\qty{4}{\year}$ to do stuff at Tau Ceti,
+we get the expected $\Delta t_{fixed}\approx \qty{13}{\year}$ trip time. This is the time for an Earth observer. Assuming no encounters with
+massive objects, we can rearrange \cref{eqn:time-dilation} to find $v_{moving}$,
+\begin{align*}
+  v_{moving}&=c\sqrt{1-(\Delta t_{fixed})^{-2}(\Delta t_{moving})^{2}}\\
+  &= \qty{2.852483008 e8}{\meter\per\second}\\
+  &\approx 0.95c.
+  \label{eqn:velocity-time-dilation}
+\end{align*}
+Definitely a reachable speed. Assuming no gravity assists (which is not the case, when Grace first sees the path he took out of the solar system a gravity assist is evident),
+you could accelerate at 1.5 times Earth's gravity for just over half a year and reach this speed.
+
+\end{document}

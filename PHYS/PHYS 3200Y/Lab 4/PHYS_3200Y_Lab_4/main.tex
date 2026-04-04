@@ -115,132 +115,148 @@
 
 \maketitle
 \begin{abstract}
-
+    
 \end{abstract}
 \section{Introduction}
 This lab seeks to develop and test theoretical models for the field between two current carrying loops of wire. The developed models predict a high uniformity of the magnetic field between the coils in both magnitude and direction. The theoretical uniformity of the field will be investigated through the construction of the structure for which models were derived and the use of a magnetic field probe.
 Additionally the more mathematically challenging off-axis field of the coil structure will be measured and investigated.
 
 \section{Theory}
-\begin{figure}[H]
-  \centering
-  \begin{subfigure}[t]{0.5\textwidth}
+  \begin{figure}[H]
     \centering
-    \tdplotsetmaincoords{74}{120}
-    \begin{tikzpicture}[scale=2, tdplot_main_coords]
-      % Axis
-      \draw[->] (3,0,0) -- (-3,0,0) node[above right]{$y$};
-      \draw[->] (0,-2,0) -- (0,2,0) node[right]{$x$};
-      \draw[->] (0,0,-1.5) -- (0,0,1.5) node[above]{$z$};
+    \begin{subfigure}[t]{0.5\textwidth}
+      \centering
+      \tdplotsetmaincoords{74}{120}
+      \begin{tikzpicture}[scale=2, tdplot_main_coords]
+        % Axis
+        \draw[->] (3,0,0) -- (-3,0,0) node[above right]{$y$};
+        \draw[->] (0,-2,0) -- (0,2,0) node[right]{$x$};
+        \draw[->] (0,0,-1.5) -- (0,0,1.5) node[above]{$z$};
 
-      % Circular Loops
-      \draw[line width = 1.2mm, orange] (0,0,1) circle [radius=1];
-      \draw[line width = 1.2mm, orange] (0,0,-1) circle [radius=1];
+        % Circular Loops
+        \draw[line width = 1.2mm, orange] (0,0,1) circle [radius=1];
+        \draw[line width = 1.2mm, orange] (0,0,-1) circle [radius=1];
 
-      \draw (0,0,-1) -- (0,0,0.5);
-      \draw[->] (0,0,0.9) -- (0,0,1.5);
+        \draw (0,0,-1) -- (0,0,0.5);
+        \draw[->] (0,0,0.9) -- (0,0,1.5);
 
-      % Radius
-      \draw [->] (0,0,1) -- (1,0,1) node [midway, above] {\small$R$} ;
-      \draw [->] (0,0,-1) -- (1,0,-1) node [midway, above] {\small$R$} ;
+        % Radius
+        \draw [->] (0,0,1) -- (1,0,1) node [midway, above] {\small$R$} ;
+        \draw [->] (0,0,-1) -- (1,0,-1) node [midway, above] {\small$R$} ;
 
-      % Center Distance
-      \draw[|<-] (2.2,0,1.54) -- (2.2,0,0.7) node [below] {\small$R$};
-      \draw[->|] (2.2,0,0.41)-- (2.2,0,-0.46) ;
+        % Center Distance
+        \draw[|<-] (2.2,0,1.54) -- (2.2,0,0.7) node [below] {\small$R$};
+        \draw[->|] (2.2,0,0.41)-- (2.2,0,-0.46) ;
 
-      % Current Direction
-      \draw [line width = 0.7mm, blue, ->] (1.4,-0.1,1) arc (-20:20:1.1) node [black, midway, below] {$I$};
-      \draw [line width = 0.7mm, blue, ->] (1.4,-0.1,-1) arc (-20:20:1.1) node [black, midway, below] {$I$};
-    \end{tikzpicture}
-  \end{subfigure}%
-  % ~
-  % \begin{subfigure}[t]{0.5\textwidth}
-  %   \centering
-  %   \tdplotsetmaincoords{90}{120}
-  %   \begin{tikzpicture}[scale=2, tdplot_main_coords]
-  %     % Axis
-  %     \draw[->] (0,-2,0) -- (0,2,0) node[right]{$x$};
-  %     \draw[->] (0,0,-1.5) -- (0,0,1.5) node[above]{$z$};
-
-  %     % Circular Loops
-  %     \draw[line width = 1.2mm, orange] (0,0,1) circle [radius=1];
-  %     \draw[line width = 1.2mm, orange] (0,0,-1) circle [radius=1];
-
-  %     % Refinements for 3d View
-  %     \draw (0,0,-1) -- (0,0,0.5);
-  %     \draw[->] (0,0,0.9) -- (0,0,1.5);
-
-  %     % Radius
-  %     \draw [->] (0,0,1) -- (0,1.1,1) node [midway, above] {$R$} ;
-
-  %     % Center Distance
-  %     \draw[|<->|] (2.2,0,-1) -- (2.2,0,1) node [midway, above right] {$R$};
-
-  %     % Current Direction
-  %     \draw [line width = 0.7mm, blue, ->] (1.4,-0.1,1) arc (-20:20:1.1) node [black, midway, below] {$I$};
-  %     \draw [line width = 0.7mm, blue, ->] (1.4,-0.1,-1) arc (-20:20:1.1) node [black, midway, below] {$I$};
-  %   \end{tikzpicture}
-  %   \caption{Side-on view of the coils}
-  % \end{subfigure}
-  \caption{Helmholtz coil structure}
-  \label{diagram:coils}
-\end{figure}
+        % Current Direction
+        \draw [line width = 0.7mm, blue, ->] (1.4,-0.1,1) arc (-20:20:1.1) node [black, midway, below] {$I$};
+        \draw [line width = 0.7mm, blue, ->] (1.4,-0.1,-1) arc (-20:20:1.1) node [black, midway, below] {$I$};
+      \end{tikzpicture}
+    \end{subfigure}%
+    \caption{Helmholtz coil structure. Further reference to direction will be in terms of the $\parallel$ direction, the $xy$ plane in the figure, and the $\perp$ direction, $\uz$ in the figure.}
+    \label{diagram:coils}
+  \end{figure}
 The construction under study, known as Helmholtz coils \todo{Cite?} is illustrated in \cref{diagram:coils}. We consider two coils, each of radius $R$, separated by a distance $R$. In the figure, and for the following derivation, the coils are placed at $\pm R/2$ respectively with the origin between them as indicated in the figure. We begin by deriving the field due to a single current carrying loop and then utilize linear superposition to determine the total magnetic field due to a true Helmholtz coil system. The magnetic field for a wire loop represented by a (directed) contour $\mathcal{C}$ is given by the Biot-Savart law,
 \begin{equation}
-  \bv{B}(\bv{r})=\frac{\mu_0 I}{4\pi}\int_\mathcal{C}\frac{d\bv{\ell}'\times \bscriptr'}{\scriptr^3}
-  \label{eq:biot-savart}
+\bv{B}(\bv{r})=\frac{\mu_0 I}{4\pi}\int_\mathcal{C}\frac{d\bv{\ell}'\times \bscriptr'}{\scriptr^3}
+    \label{eq:biot-savart}
 \end{equation}
 where $\bscriptr=\bv{r}-\bv{r}'$ and $\bv{r}$ and $\bv{r}'$ represent the test-point and an integration variable respectively.
-To exploit the symmetries present in the problem we consider only the field on the axis of symmetry, hereon referred to as the on-axis field. This means that our position vector $\bv{r}=(0,0,z)$ in cylindrical coordinates. Since we are considering only the field due to a single coil we take $\bv{r}'=R\uv{s}$ which sweeps out the entire coil. This gives $\bscriptr=z\uz-R\uv{s}$. Finally if we direct the contour such that the area vector is in $\uz$, $d\ell'=Rd\phi'\uv{\phi}$. This means that \cref{eq:biot-savart} becomes
+To exploit the symmetries present in the problem we consider only the field on the axis of symmetry, hereon referred to as the on-axis field. This means that our position vector $\bv{r}=(0,0,z)$ in cylindrical coordinates. Since we are considering only the field due to a single coil we take $\bv{r}'=R\uv{s}$ which sweeps out the entire coil. This gives $\bscriptr=z\uz-R\uv{s}$. Finally if we direct the contour such that the area vector is in $\uz$, $d\ell'=Rd\phi'\uv{\phi}$. This means that \cref{eq:biot-savart} becomes 
 \begin{align*}
-  \bv{B}(\bv{r}) & =\frac{\mu_0 I}{4\pi}\int_0^{2\pi}\frac{Rd\phi'z\uv{s}+R^2d\phi'\uz}{(z^2+R^2)^{3/2}} \\
-                 & =\frac{\mu_0 I}{2}\frac{R'z\uv{s}+R^2\uz}{(z^2+R^2)^{3/2}}
+    \bv{B}(\bv{r})&=\frac{\mu_0 I}{4\pi}\int_0^{2\pi}\frac{Rd\phi'z\uv{s}+R^2d\phi'\uz}{(z^2+R^2)^{3/2}}\\
+    &=\frac{\mu_0 I}{2}\frac{R'z\uv{s}+R^2\uz}{(z^2+R^2)^{3/2}}
 \end{align*}
-and since the magnetic field obeys linear superposition, $N$ such coils very close together create a field given by
+and since the magnetic field obeys linear superposition, $N$ such coils very close together create a field given by 
 \begin{equation}
-  \bv{B}(\bv{r})=\frac{\mu_0 NI}{2}\frac{R'z\uv{s}+R^2\uz}{(z^2+R^2)^{3/2}}.
-  \label{eq:nfield}
+\bv{B}(\bv{r})=\frac{\mu_0 NI}{2}\frac{R'z\uv{s}+R^2\uz}{(z^2+R^2)^{3/2}}.
+    \label{eq:nfield}
 \end{equation}
 Now we can construct the field due to two such coils at $\pm R/2$ easily again by linear superposition,
 \begin{align}
-  \bv{B}(\bv{r}) & =\frac{\mu_0 NIR^2}{2}\left[\frac{1}{((z+R/2)^2+R^2)^{3/2}}\right.\nonumber \\
-                 & \quad+\left.\frac{1}{((z-R/2)^2+R^2)^{3/2}}\right]\uz
-  \label{eq:helmholtz-field}
+\bv{B}(\bv{r})&=\frac{\mu_0 NIR^2}{2}\left[\frac{1}{((z+R/2)^2+R^2)^{3/2}}\right.\nonumber\\
+&\quad+\left.\frac{1}{((z-R/2)^2+R^2)^{3/2}}\right]\uz
+    \label{eq:helmholtz-field}
 \end{align}
 where we've canceled out the $\uv{s}$ components of the field by symmetry.
-We can plot this expression (in natural units),
+  We can plot this expression (in natural units),
 \begin{figure}[h]
   \centering
-  \begin{tikzpicture}
-    \begin{axis}[
-        domain=-2:2,
-        xmin=-2, xmax=2,
-        ymin=0, ymax=2,
-        samples=100,
-        xlabel=$z$
-      ]
-      \addplot[mark=none, red] {1/((x+1/2)^2+1)^(1.5)};
-      \addplot[mark=none, green] {1/((x-1/2)^2+1)^(1.5)};
-      \addplot[mark=none] {(1/((x-1/2)^2+1)^(1.5))+(1/((x+1/2)^2+1)^(1.5))};
-    \end{axis}
-  \end{tikzpicture}
-  \caption{Helmholtz coil relative magnetic field strength. The coloured curves are fields due to the individual coils, placed at $\pm 1/2$, and the black curve is their sum.}
+    \begin{tikzpicture}
+      \begin{axis}[
+          domain=-2:2,
+          xmin=-2, xmax=2,
+          ymin=0, ymax=2,
+          samples=100,
+          xlabel=$z$
+        ]
+        \addplot[mark=none, red] {1/((x+1/2)^2+1)^(1.5)};
+        \addplot[mark=none, green] {1/((x-1/2)^2+1)^(1.5)};
+        \addplot[mark=none] {(1/((x-1/2)^2+1)^(1.5))+(1/((x+1/2)^2+1)^(1.5))};
+      \end{axis}
+    \end{tikzpicture}
+    \caption{Helmholtz coil relative magnetic field strength. The coloured curves are fields due to the individual coils, placed at $\pm 1/2$, and the black curve is their sum.}
 \end{figure}
 and we see that indeed the field inside and near the center is highly uniform. This is the desired effect of the Helmholtz configuration.
 \section{Methods}
 \subsection{Coils}
-Two 200 turn, $\qty{10}{\centi\meter}$ radius, Pasco Scientific Helmholtz coils were used \cite{pascoHelmholtzCoils}. These were mounted on a ruled base, also manufactured by Pasco Scientific.
+Two 200 turn, $\qty{10}{\centi\meter}$ radius, Pasco Scientific Helmholtz coils were used \cite{pascoHelmholtzCoils}. These were mounted on a ruled base, also manufactured by Pasco Scientific. A DC current of approximately (not exceeding) $\qty{1.5}{\ampere}$ was passed through the coils in series with the coils connected such that the field produced by each was in the same direction.
 \subsection{Magnetic Probe}
 The magnetic field produced by the coils was measured using a Pasco Scientific 2-axis field sensor \cite{pascoPASPORT2Axis}. The probe was positioned to measure the fields both perpendicular and parallel to the coil plane to verify the uniformity and self-canceling behaviour in these directions.
 Data was collected on the field in several configurations in order to verify the validity of assumptions made in theoretical derivations. Further discussion is available in the results section.
 \subsection{Linear Motion Sensor}
-In order to measure the field as a function of position in the coil a Pasco Scientific rotary motion sensor \cite{pascoPASPORTRotary} was used, with the magnetic field probe mounted to a rigid support whose extension into the coils could be tracked by the motion sensor.
+In order to measure the field as a function of position in the coil a Pasco Scientific rotary motion sensor \cite{pascoPASPORTRotary} was used, with the magnetic field probe mounted to a rigid support whose extension into the coils could be tracked by the motion sensor.  Both the motion sensor and magnetic field probe were connected, via Pasco Scientific USB interfaces, to a desktop computer running the Pasco Capstone software for data collection.
 \subsection{Alignment}
-A challenge in configuring the experiment was the need to measure as closely as possible to
-the axis of symmetry of the coils, as this is the region in which the theory derived previously applies. To align the probe vertically two rulers were placed perpendicularly and the axial field indicator dot on the probe was aligned with the appropriate position on the rulers. To align horizontally a similar process was used except with the perpendicular field indicator dot. The motion sensor was zeroed at $\qty{10}{\centi\meter}$ from the first coil. \todo{Make some pictures of the setup here and shunt results to next page}
+A challenge in configuring the experiment was the need to measure as closely as possible to 
+the axis of symmetry of the coils, as this is the region in which the theory derived previously applies. To align the probe vertically two rulers were placed perpendicularly and the axial field indicator dot on the probe was aligned with the appropriate position on the rulers. To align horizontally a similar process was used except with the perpendicular field indicator dot. The motion sensor was zeroed at the midpoint between the coils. 
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[]
+        \def\R{4}
+
+        % Coils
+        \draw[orange, ultra thick] (-\R/2,\R/2) -- (\R/2,\R/2) (-\R/2,-\R/2) -- (\R/2,-\R/2);
+
+        % Axis
+        \draw[->] (0,\R/2+\R/8) -- (\R/4,\R/2+\R/8) node[right]{$\parallel$};
+        \draw[->] (0,\R/2+\R/8) -- (0,\R/2+\R/8+\R/4) node[above]{$\perp$};
+
+        % Field probe
+        \draw[fill=green!30!white] (-1/4,-\R/2-\R/4) rectangle (1/4,-\R/2-\R/36);
+        \draw[-o] (0, -\R/2-\R/36) -- (0,-\R/2+\R/8) node[fill=white,rounded corners=2pt,inner sep=1pt, above]{Field Probe};
+        \draw[->] (0,-\R/2-\R/4) to[out=270, in=180] (1/4+1,-\R/2-\R/2) node[right]{To Computer};
+
+        % Linear motion sensor
+        \fill[] (-1/3,-\R/2-\R/7) rectangle (1/3,-\R/2-\R/8);
+        \draw[]
+        (-1/3,-71*\R/112) -- (-1/2,-71*\R/112)
+        -- (-1/2,-\R)
+        ;
+        \draw[fill=blue!30!white] (-1/2-1/3,-\R) rectangle (-1/2+1/3,-\R-\R/4) coordinate (A) ++ (-1/3,0)  node[below]{Motion Sensor};
+        \draw[] (A) ++(0,\R/8) to[out=0, in=180] (1/4+1,-\R/2-\R/2);
+
+        % Power supply & connections
+        \draw[fill=red!30!white] (-\R+1,-\R/6) rectangle (-\R+1+\R/8,\R/6) (-\R+1,0) node[above, rotate=90]{Power Supply}
+        (-\R+1+\R/16, \R/6-\R/24) coordinate(pterm) node[]{$+$}
+        (-\R+1+\R/16, -\R/6+\R/24) coordinate(nterm) node[]{$-$}
+        ;
+        \draw[<-] (nterm) ++ (\R/16,0) to[out=0, in=0] (\R/2,-\R/2);
+        \draw[->] (pterm) ++ (\R/16,0) to[out=0, in=180] (-\R/2,\R/2);
+        \draw[->] (\R/2,\R/2) to[out=0, in=180] (-\R/2,-\R/2);
+        \draw [thick, blue, ->]
+        (-\R/8,\R/2) -- (\R/8,\R/2) node[midway, below] {$I$}
+        (-\R/8,-\R/2) -- (\R/8,-\R/2) node[midway, above right] {$I$};
+
+        \draw[-o] (0, -\R/2-\R/36) -- (0,-\R/2+\R/8);
+    \end{tikzpicture}
+    \caption{A cartoon of the experimental setup.}
+    \label{diagram:coils}
+  \end{figure}
+\clearpage
 \section{Results}
 \subsection{On-Axis}
-The on-axis field was collected in several configurations. These are: the normal Helmholtz configuration, one coil on and the other off for each coil, both coils at a separation of $2R$, and
+The on-axis field was collected in several configurations. These are: the normal Helmholtz configuration, one coil on and the other off for each coil, both coils at a separation of $2R$, and 
 both coils at a separation of $R/2$. For each run the current passing through the coils was held at a value not exceeding $\qty{1.5}{\ampere}$, though due to coil heating a drop to as low as $\qty{1.47}{\ampere}$ was observed.
 % STANDARD HOLTZ CONFIG
 \begin{figure}[h]
@@ -253,7 +269,7 @@ both coils at a separation of $R/2$. For each run the current passing through th
       ]
       \addplot[only marks, color=blue!80!black] table [x=pos, y=axial, col sep=comma] {run1-out.csv};
       \addlegendentry{Axial Field}
-      \addplot[mark=none, domain=-0.08:0.08] {((1.256*10^(-6))*1.47*200*(0.1)^2/2)*((1/((x-0.1/2)^2+0.1^2)^(1.5))+(1/((x+0.1/2)^2+0.1^2)^(1.5)))*10000};
+      \addplot[mark=none, domain=-0.05:0.05] {((1.256*10^(-6))*1.5*200*(0.1)^2/2)*((1/((x-0.1/2)^2+0.1^2)^(1.5))+(1/((x+0.1/2)^2+0.1^2)^(1.5)))*10000};
       \addlegendentry{Theory}
       \addplot[only marks, color=green!80!black] table [x=pos, y=perp, col sep=comma] {run1-out.csv};
       \addlegendentry{Perpendicular Field}
@@ -304,53 +320,61 @@ both coils at a separation of $R/2$. For each run the current passing through th
 \end{figure}
 \subsubsection{Superposition}
 \todo{Figure out a good way to do this}
+
+\clearpage
 \subsection{Off-Axis}
-Blah blah
+Off axis field measurements were conducted at increasing (towards coil center) distance from the edge of the coils.
 \begin{figure}[h]
-  \centering
-  \begin{tikzpicture}
-    \begin{axis}[
+    \centering
+\begin{tikzpicture}
+  \begin{axis}[
       xlabel={$\perp$ Position $(\unit{\meter})$},
       ylabel={$\parallel$ Position $(\unit{\meter})$},
       zlabel={Field Strength (Gauss)}
       legend style={at={(0.3,0.35)},anchor=south west}
-      ]
-      \addplot3[only marks, color=blue!80!black] table [x=pos, y=fakepos, z=axial, col sep=comma] {run6-out.csv};
-      \addlegendentry{$\qty{1.5}{\centi\meter}$}
-      \addplot3[only marks, color=green!80!black] table [x=pos, y=fakepos, z=axial, col sep=comma] {run7-out.csv};
-      \addlegendentry{$\qty{3}{\centi\meter}$}
-      \addplot3[only marks, color=red!80!black] table [x=pos, y=fakepos, z=axial, col sep=comma] {run8-out.csv};
-      \addlegendentry{$\qty{5}{\centi\meter}$}
-      \addplot3[only marks, color=black] table [x=pos, y=fakepos, z=axial, col sep=comma] {run9-out.csv};
-      \addlegendentry{$\qty{8}{\centi\meter}$}
-    \end{axis}
-  \end{tikzpicture}
-  \caption{Perpendicular and axial fields in an $R/2$ Helmholtz configuration.}
-  \label{fig:helmholtz-3d-field-data}
+    ]
+    \addplot3[only marks, color=blue!80!black] table [x=pos, y=fakepos, z=axial, col sep=comma] {run6-out.csv};
+    \addlegendentry{$\qty{1.5}{\centi\meter}$}
+    \addplot3[only marks, color=green!80!black] table [x=pos, y=fakepos, z=axial, col sep=comma] {run7-out.csv};
+    \addlegendentry{$\qty{3}{\centi\meter}$}
+    \addplot3[only marks, color=red!80!black] table [x=pos, y=fakepos, z=axial, col sep=comma] {run8-out.csv};
+    \addlegendentry{$\qty{5}{\centi\meter}$}
+    \addplot3[only marks, color=black] table [x=pos, y=fakepos, z=axial, col sep=comma] {run9-out.csv};
+    \addlegendentry{$\qty{8}{\centi\meter}$}
+  \end{axis}
+\end{tikzpicture}
+    \caption{Axial field at varying distance from coil edge.}
+    \label{fig:helmholtz-3d-ax-field-data}
 \end{figure}
 \begin{figure}[h]
-  \centering
-  \begin{tikzpicture}
-    \begin{axis}[
+    \centering
+\begin{tikzpicture}
+  \begin{axis}[
       xlabel={$\perp$ Position $(\unit{\meter})$},
       ylabel={$\parallel$ Position $(\unit{\meter})$},
       zlabel={Field Strength (Gauss)}
       legend style={at={(0.3,0.35)},anchor=south west}
-      ]
-      \addplot3[only marks, color=blue!80!black] table [x=pos, y=fakepos, z=perp, col sep=comma] {run6-out.csv};
-      \addplot3[only marks, color=blue!80!black] table [x=pos, y=fakepos, z=perp, col sep=comma] {run7-out.csv};
-      \addplot3[only marks, color=blue!80!black] table [x=pos, y=fakepos, z=perp, col sep=comma] {run8-out.csv};
-      \addplot3[only marks, color=blue!80!black] table [x=pos, y=fakepos, z=perp, col sep=comma] {run9-out.csv};
-      % \addlegendentry{Axial Field}
-      % \addplot[only marks, color=green!80!black] table [x=pos, y=perp, col sep=comma] {run5-out.csv};
-      % \addlegendentry{Perpendicular Field}
-    \end{axis}
-  \end{tikzpicture}
-  \caption{Perpendicular and axial fields in an $R/2$ Helmholtz configuration.}
-  \label{fig:helmholtz-3d-field-data}
+    ]
+    \addplot3[only marks, color=blue!80!black] table [x=pos, y=fakepos, z=perp, col sep=comma] {run6-out.csv};
+    \addlegendentry{$\qty{1.5}{\centi\meter}$}
+    \addplot3[only marks, color=green!80!black] table [x=pos, y=fakepos, z=perp, col sep=comma] {run7-out.csv};
+    \addlegendentry{$\qty{3}{\centi\meter}$}
+    \addplot3[only marks, color=red!80!black] table [x=pos, y=fakepos, z=perp, col sep=comma] {run8-out.csv};
+    \addlegendentry{$\qty{5}{\centi\meter}$}
+    \addplot3[only marks, color=black] table [x=pos, y=fakepos, z=perp, col sep=comma] {run9-out.csv};
+    \addlegendentry{$\qty{8}{\centi\meter}$}
+  \end{axis}
+\end{tikzpicture}
+    \caption{Perpendicular field at varying distance from coil edge.}
+    \label{fig:helmholtz-3d-perp-field-data}
 \end{figure}
 \section{Discussion}
+\subsection{On-Axis}
+As can be seen in \cref{fig:helmholtz-field-data}, the developed theoretical model agrees somewhat with the collected data. The model estimates a higher overall axial field in the uniform and non-uniform regions. Additionally there is a noticeable horizontal shift between the model and data. This is likely due to inaccurate zeroing of the linear motion sensor when collecting data. Shifting the data by approximately $\qty{2}{\centi\meter}$ to the left provides much better alignment with the theoretical model. The collected perpendicular data agrees well with the assumption that the perpendicular field is very small, approximately an order of magnitude smaller than the axial field.
 
+In \cref{fig:helmholtz-2r-field-data} and \cref{fig:helmholtz-r/2-field-data} we see the expected nonuniformity of an improperly constructed Helmholtz coil system. We also see more variation in the perpendicular field. These figures both show the real accuracy of the model much better in the horizontal alignment. Interestingly they also show a much more similar magnetic field magnitude when compared to \cref{fig:helmholtz-field-data}. This points either to there being some effect which causes a field strength increase to match the model when in a non Helmholtz configuration or that the data in \cref{fig:helmholtz-field-data} is inaccurate. It is more likely that the data is inaccurate, perhaps due to a lower current (the theoretical curves assume exactly $\qty{1.5}{\ampere}$).
+\subsection{Off-Axis}
+The off-axis measurements do not have a theoretical result to compare against, though \cref{fig:helmholtz-3d-perp-field-data} does show the intuitively expected increase in perpendicular field strength due to closer proximity to one side of the coils. \cref{fig:helmholtz-3d-ax-field-data} also shows a similar effect, again due to the proximity to one side of the coils removing the ``balancing'' of the opposite side of the coils. The effect becomes less present closer to the center of the coils as expected, quickly converging to a highly uniform field.
 \bibliographystyle{plain}
 \bibliography{sources}
 \end{document}
