@@ -241,7 +241,7 @@ to integrate and if greater precision is required, we can just do more integrals
 %     \addplot3[surf, shader=flat] {1/sqrt(x^2+(y+1/2)^2)-1/sqrt(x^2+(y-1/2)^2)};
 %   \end{axis}
 % \end{tikzpicture}
-\subsection{Moving Charges}
+\subsection{Moving Charges \& Magnetostatics}
 Everything we did above assumed that the charge distributions were \emph{static} (though the test points needed not be).
 When things start to move, fields other than $\bv{E}$ arise. Unlike in mathematics classes, there is no hint that these new fields
 would arise from previous static situations. A lot of experimental work was done to create a model for the magnetic field after
@@ -260,8 +260,67 @@ it, we'll just come out and say the next two Maxwell equations:
   \bv{\nabla}\times\bv{B} & =\mu_0\bv{J}
   \label{eqn:curlB}
 \end{align}
-where $\bv{J}$ is the \emph{volume current}, the amount of charge passing through a volume per a time.
-
-\section{Non-Steady State Potential}
-
+where $\bv{J}$ is the \emph{volume current}, the amount of charge passing through a volume per a time. As usual there are many ways to actually
+find the magnetic field. One of the most general is the \emph{Biot-Savart law},
+\begin{equation}
+  \bv{B}(\bv{r})=\frac{\mu_0}{4\pi}\int \frac{\bv{J}(\bv{r}')\times \uv{\bscriptr}}{\scriptr^2}.
+  \label{eqn:biot-savart}
+\end{equation}
+This ``law'' only holds for nonrelativistic ($v\ll c$) charges and for steady state currents. Again though we run into the problem
+that this integral can get \emph{hard} to calculate. There are of course other approaches to finding the field, similar to how we could use
+Gauss' law in electrostatics when there was exploitable symmetry, in magnetostatics we can sometimes use the integral form of \cref{eqn:curlB},
+\begin{equation}
+  \oint \bv{B}\cdot d\bv{\ell}=\mu_0 I_{enc}
+  \label{eqn:amperes-law}
+\end{equation}
+where we are integrating around an \emph{Amp\`erian loop} enclosing total current $I_{enc}$. But again this is only applicable in situations
+of high symmetry! So what do we do? Introduce another potential! In electrostatics we had that $\bv{\nabla}\times\bv{E}=0$ let us introduce a
+scalar potential $V$ such that $\bv{E}=-\bv{\nabla}V$. Unfortunately since \cref{eqn:curlB} says $\bv{B}$ isn't a conservative field,
+we can't define a scalar potential. We do however have \cref{eqn:divB} which invites the definition of a \emph{vector} potential $\bv{A}$ such
+that
+\begin{equation}
+  \bv{B}=\bv{\nabla}\times \bv{A}.
+  \label{eqn:vec-pot}
+\end{equation}
+Let's see how this works out with the Maxwell equations for $\bv{B}$. \cref{eqn:divB} is covered, since the divergence of a curl is always zero. 
+\cref{eqn:curlB} becomes 
+$$\bv{\nabla}\times\bv{B}=\bv{\nabla}\times(\bv{\nabla}\times \bv{A})=\bv{\nabla}(\bv{\nabla}\cdot \bv{A})-\nabla^2\bv{A}=\mu_0\bv{J}.$$
+Now, just as the electrostatic potential was defined only up to addition of an object whose divergence was zero (a constant), 
+the magnetic vector potential is only defined up to addition of an object whose curl is zero, which will have no effect on $\bv{B}$.
+This allows us to set $\bv{\nabla}\cdot\bv{A}=0$. You can prove this but it is not particularly enlightening here so I will omit it.
+With this change we can say that 
+$$
+\nabla^2\bv{A}=-\mu_0\bv{J},
+$$
+Poisson's equation again, actually three of them - one for each cartesian coordinate. For a $\bv{J}$ that vanishes at infinity then 
+\begin{equation}
+  \bv{A}(\bv{r})=\frac{\mu_0}{4\pi}\int \frac{\bv{J}(\bv{r}')}{\scriptr}d\tau'.
+  \label{eqn:vec-pot-integral}
+\end{equation}
+This definition gives up a similar expansion as to what we had done previously. Recall we found by way of cosine law that 
+$$\frac{1}{\scriptr}=\frac{1}{\sqrt{r^2+r'^2-2rr'\cos\alpha}}=\frac{1}{r}\sum_{n=0}^{\infty}\left(\frac{r'}{r}\right)^nP_n(\cos\alpha)$$
+where $\alpha$ is the angle between $\bv{r}$ and $\bv{r}'$. This lets us rewrite \cref{eqn:vec-pot-integral} as
+\begin{align}
+  \bv{A}(\bv{r})&=\frac{\mu_0I}{4\pi}\oint \frac{1}{\scriptr}d\bv{\ell}'=\frac{\mu_0I}{4\pi}\int_{n=0}^{\infty}\frac{1}{r^{n+1}}\oint (r')^nP_n(\cos\alpha)d\bv{\ell}'\nonumber\\
+  &=\frac{\mu_0I}{4\pi}\left[\frac{1}{r}\oint d\bv{\ell}'+\frac{1}{r^2}\oint r'\cos\alpha d\bv{\ell}'+\dots\right].
+\end{align}
+Note that the first term is the displacement around an entire curve, zero. This is no accident. It arises as a consequence of 
+$\bv{\nabla}\cdot\bv{B}=0$ and the assumption that there are no magnetic monopoles. This is (or was) an area of intense
+experimental research. Much work has been done to try to observe a magnetic monopole but none have ever been found.
+\section{Time Dependent Currents}
+We now consider the case where the magnetic field in a region is non-constant in time, i.e. $\bv{B}=\bv{B}(\bv{r},t)$.
+This results in some changes in our previously defined Maxwell equations. First is that the curl of the electric field is no longer
+zero, it is related to the change in the magnetic field,
+$$\bv{\nabla}\times \bv{E}=-\frac{\partial \bv{B}}{\partial t}.$$
+This change can be ``derived'' by experiment \todo{maybe do it}. The next change we must make comes from taking 
+$$\bv{\nabla}\cdot(\bv{\nabla}\times \bv{B})=\mu_0(\bv{\nabla}\cdot \bv{J}).$$
+The left hand side of this \emph{must} be zero, the divergence of a curl is always so; but the right hand side is, generally, nonzero.
+In the realm of magnetostatics we were considering steady currents which implied no buildup of charge so $\bv{\nabla}\cdot \bv{J}$ was
+indeed zero, but in magneto\emph{dynamics}, charge might build up, slow down, etc. To resolve this we rewrite 
+$$\bv{\nabla}\cdot \bv{J}=-\frac{\partial \rho}{\partial t}=-\bv{\nabla}\cdot\left(\epsilon_0\frac{\partial \bv{E}}{\partial t}\right)$$
+where the second equality comes out of the \emph{continuity equation} \todo{Talk about it}. Now if we add this onto our expression for the curl of the 
+$\bv{B}$ field we get 
+\begin{equation}
+  \bv{\nabla}\times \bv{B}=\mu_0\bv{J}+\mu_0\epsilon_0\frac{\partial \bv{E}}{\partial t}.
+\end{equation}
 \end{document}
