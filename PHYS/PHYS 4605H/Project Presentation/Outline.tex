@@ -93,7 +93,7 @@
 
 \newcommand{\bv}[1]{\bm{\mathrm{#1}}}
 
-\title{Physics 4605H: Project Presentation}
+\title{Examining a quantum algorithm for data fitting and error estimation}
 \author{Jeremy Favro (0805980) \\ Trent University, Peterborough, ON, Canada}
 
 \begin{document}
@@ -112,6 +112,13 @@
 \end{frame}
 
 \begin{frame}
+\frametitle{Table of Contents}
+\tableofcontents
+\end{frame}
+
+\section{Fitting}
+\subsection{Why}
+\begin{frame}
   \frametitle{Why we're doing it: least squares}
   \begin{itemize}
     \item Fitting is the process of finding a nice $f(x)=\sum_j \phi_j(x)\lambda_j$ which approximates a dataset $\left\{(x_i,y_i)\right\}$
@@ -125,7 +132,7 @@
     \item The matrix must be \emph{sparse}
   \end{itemize}
 \end{frame}
-
+\subsection{How: matrices}
 \begin{frame}
   \frametitle{How we're doing it: matrix math}
   \begin{itemize}
@@ -136,7 +143,7 @@
           % \item \todo{Talk about MPPI in speaker notes. What is it? Uses?}
   \end{itemize}
 \end{frame}
-
+\subsection{How: quantum}
 \begin{frame}
   \frametitle{How we're doing it: going quantum}
   \begin{itemize}
@@ -148,6 +155,7 @@
   \end{itemize}
 \end{frame}
 
+\section{What: error estimation}
 \begin{frame}
   \frametitle{What we're doing: error estimation}
   \begin{itemize}
@@ -157,6 +165,7 @@
   \end{itemize}
 \end{frame}
 
+\subsection{How: swap test}
 \begin{frame}
   \frametitle{How we're doing it: swap test}
   \begin{itemize}
@@ -171,7 +180,7 @@
   \end{itemize}
 \end{frame}
 
-
+\section{Summary}
 \begin{frame}
   \frametitle{What we've done}
   \begin{itemize}
