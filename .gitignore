@@ -28,3 +28,6 @@ _autosave*
 *.scmd
 *.sout
 .venv/
+*.toc
+*.snm
+*.nav

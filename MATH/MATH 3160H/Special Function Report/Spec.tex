@@ -15,6 +15,15 @@
 \usepackage{hyperref}
 \usepackage{cleveref}
 \usepackage[uncertainty-mode = separate, separate-uncertainty-units = single]{siunitx}
+\usepackage[
+    backend=biber,
+    style=authoryear,
+    natbib=true,
+    sortlocale=en_US,
+    url=false, 
+    doi=true,
+    eprint=false
+]{biblatex}
 \usepackage{fontspec}
 \usepackage{relsize}
 \usepackage{subcaption}
@@ -22,6 +31,8 @@
 \usepackage{multicol, multirow, booktabs}
 \usepackage[breakable]{tcolorbox}
 \usepackage[inline]{enumitem}
+
+\addbibresource{sources.bib}
 
 \theoremstyle{definition}
 \newtheorem{problem}{Problem}
@@ -92,6 +103,9 @@
 \DeclareMathOperator{\Curl}{curl}
 \DeclareMathOperator{\sgn}{sgn}
 
+\renewcommand{\div}[1]{\bv{\nabla}\cdot #1}
+\renewcommand{\curl}[1]{\bv{\nabla}\times #1}
+
 \newcommand{\highlight}[1]{\colorbox{yellow}{$\displaystyle #1$}}
 
 \newcommand{\ti}[1]{\widetilde{#1}}
@@ -111,16 +125,57 @@
 
 \begin{document}
 \maketitle
-\todo{Define all the r' stuff etc.}
+\section*{Preface}
+The goal of this report is to demonstrate at a high level the physical phenomena which lead to the appearance of special functions such as the Legendre polynomials
+and others if time permits. Much of the notation herein is adopted from David J. Griffiths' \emph{Introduction to Electrodynamics}, an
+excellent book on the electrodynamics. It will be useful to define a few things notation-wise before we start out: first is the vector notation we'll be using. I will write
+$\bv{C}$ to represent a vector $C$, $\uv{z}$ to represent a unit vector and $\bv{\nabla}\cdot\bv{C}$, and $\bv{\nabla}\times \bv{C}$ to represent the divergence and curl of vectors respectively.
+Additionally I will often write $C$ to represent $\abs{\bv{C}}$, the magnitude of $\bv{C}$.
+
+
+When discussing electrodynamics problems we are often interested in finding the effect of some construction of charges or currents at some point (we usually
+position the origin here for convenience). To represent this we use the vectors $\bv{r}$ as the \emph{test point}, where we are measuring an effect,
+$\bv{r}'$ the \emph{source point}, often something we sum or integrate over, and $\bv{\bscriptr}=\bv{r}-\bv{r}'$ the vector from $\bv{r}'$ to $\bv{r}$. In two dimensions
+this might look like
+\begin{center}
+  \begin{tikzpicture}
+    \coordinate (O) at (0,0);
+    \coordinate (R) at (3.1,2.8);
+
+    % AXES
+    \draw[-Latex] (O) -- (0, 3) node[above]{$\uv{y}$};
+    \draw[-Latex] (O) -- (5, 0) node[above]{$\uv{x}$};
+
+    % CHARGES
+    \coordinate[label = above:$q_1$] (A) at (0.2, 0.76);
+    \coordinate[] (B) at (0.76, 1.23);
+    \coordinate[] (C) at (0.93, 1.4);
+    \coordinate[label = above :$q_2$] (D) at (2, 0.45);
+    \coordinate[label = right :$q_i$] (E) at (1.4, 0.3);
+    \foreach \n in {A,B,C,D,E}
+    \node at (\n) [circle,fill,inner sep=1pt]{};
+
+    % VECTORS
+    \draw[-Latex] (O) -- (E) node[pos=0.62, above]{$\bv{r}'_i$};
+    \draw[-Latex] (O) -- (R) node[midway, above]{$\bv{r}$};
+    \draw[-Latex] (E) -- (R) node[midway, below]{$\bv{\bscriptr}$};
+    \node at (R) [circle,fill,inner sep=1pt]{};
+    \node at (R) [right]{test point};
+  \end{tikzpicture}
+\end{center}
+
+Finally, many of the equations in this report will come with constants out front, namely $\epsilon_0$ and $\mu_0$. These are the vacuum permittivity and
+permeability respectively. These are essentially proportionality constants to do with how well electric and magnetic fields can form in vacuum; similar
+``constants'' (which actually have frequency dependence) arise when considering electromagnetic behaviour in materials, which we will not consider here. We will
+see a very important aspect of their definition in section 2, but for now they can be treated as constants with only physical meaning.
 \section{Electrostatics \& the Steady State Potential}
 \subsection{Motivation}
-A common (really the only) problem in electro\emph{statics} \todo{How to glossary} is finding the electric field of some stationary charge distribution.
+A common (really the only) problem in electro\emph{statics} is finding the electric field of some stationary charge distribution.
 This is accomplished by Coulombs law,
 \begin{equation}
-  \bv{E}(\bv{r})=\frac{1}{4\pi\epsilon_0}\int \frac{\uv{\bscriptr}}{\scriptr} \rho(\bv{r}')dr\tau'.
+  \bv{E}(\bv{r})=\frac{1}{4\pi\epsilon_0}\int \frac{\uv{\bscriptr}}{\scriptr} \rho(\bv{r}')d\tau'.
   \label{eqn:e-field-integral}
 \end{equation}
-\todo{\scriptr}
 This integral becomes complicated quickly for nontrivial charge distributions. When these more complex situations arise we can still use
 \emph{Gauss' law} if the charge distribution has some kind of exploitable symmetry, but these situations are rare. Instead we seek a potential,
 \begin{equation}
@@ -146,9 +201,16 @@ where $\rho=0$ (though $\rho$ identically zero would imply $V$ identically zero)
 \subsection{The Static Potential}
 There are many ways of solving Laplace's equation, but since we are interested specifically in the expansion of the electric potential,
 we will take the approach of a \emph{multipole expansion}. Consider some arbitrary charge distribution. If you are very far from the charges, their
-potential $V$ and electric field $\bv{E}$ will look like those of point charges, just like how if you are very distant from Earth, its gravitational field
-becomes that of a point mass, with none of the unevenness of the real Earth due to density changes \todo{Grav map of earth} (classical gravitation and
-electrostatics have much in common in this way). The potential due to a point charge $Q$ is easily found by \cref{eqn:potential-integral} to be
+potential $V$ and electric field $\bv{E}$ will look like that of a point charge, just like how if you are very distant from Earth, its gravitational field
+becomes that of a point mass, with none of the unevenness of the real Earth due to density changes (classical gravitation and
+electrostatics have much in common in this way).
+\begin{figure}[h]
+  \includegraphics[width=\linewidth]{Gravity_anomalies_on_Earth.jpg}
+  \caption{NASA GRACE data on Earth's gravitational field showing deviation of Earth's gravitational field
+    from a smooth-sphere model.}
+\end{figure}
+
+The potential due to a point charge $Q$ is easily found by \cref{eqn:potential-integral} to be
 \begin{equation}
   V=\frac{1}{4\pi \epsilon_0} \frac{Q}{r}.
   \label{eqn:point-potential}
@@ -196,6 +258,7 @@ a \emph{physical electric dipole},
     \draw[charge+] (Q+) circle (\R) node[scale=1.0, left=0.3cm] {$+q$};
   \end{tikzpicture}
 \end{center}
+two opposing charges separated by a distance $d$.
 We know the potential due to $\pm q$ to be
 $$V_\pm(\bv{r})=\frac{1}{4\pi \epsilon_0}\frac{\pm q}{\scriptr_\pm}$$
 and since potential obeys \emph{linear superposition} the total potential is given by
@@ -209,7 +272,7 @@ $$\frac{1}{\scriptr_+}-\frac{1}{\scriptr_-}\approx \frac{d}{r^2}\cos\theta,$$
 and so
 $$V(\bv{r})\approx \frac{1}{4\pi\epsilon_0}\frac{qd\cos\theta}{r^2}.$$
 As we expected, this decays like $1/r^2$ and so is nearly zero at large $r$. We can extend this to larger charge distributions by tacking on additional dipoles
-which invites the development of some way to expand any \emph{compact} charge distribution in this way. \todo{Blob figure here (3.28)}
+which invites the development of some way to expand any \emph{compact} charge distribution in this way.
 We know that the potential is given in general by \cref{eqn:potential-integral}. Using the cosine law again we see that
 $$\scriptr^2=r^2+r'^2-2rr'\cos\alpha=r^2\left[1+\left(\frac{r'}{r}\right)^2-2\frac{r'}{r}\cos\alpha\right],$$
 where $\alpha$ is the angle between $\bv{r}$ and $\bv{r}'$. We can hence say that
@@ -232,15 +295,11 @@ and hence
 where, if we orient our coordinate system so that $\bv{r}$ lies along $\uz$, $\alpha$ becomes the polar angle $\theta'$ in spherical-polar coordinates.
 This is the multipole expansion! It allows us to much more easily calculate an approximate potential at large distances since the Legendre polynomials are not hard
 to integrate and if greater precision is required, we can just do more integrals!
-\todo{Maybe comment further on dipoles, plot potentials}
-% \begin{tikzpicture}
-%   \begin{axis}[
-%       colormap/jet,
-%       colorbar,
-%       view={0}{90}]
-%     \addplot3[surf, shader=flat] {1/sqrt(x^2+(y+1/2)^2)-1/sqrt(x^2+(y-1/2)^2)};
-%   \end{axis}
-% \end{tikzpicture}
+\begin{figure}[h]
+  \includegraphics[width=\linewidth]{dipole_potential.png}\\
+  \includegraphics[width=\linewidth]{quadrupole_potential.png}
+  \caption{Dipole and quadrupole potentials.}
+\end{figure}
 \subsection{Moving Charges \& Magnetostatics}
 Everything we did above assumed that the charge distributions were \emph{static} (though the test points needed not be).
 When things start to move, fields other than $\bv{E}$ arise. Unlike in mathematics classes, there is no hint that these new fields
@@ -249,7 +308,7 @@ physicist Hans Christian Oersted discovered, in 1820, that when he moved a compa
 
 Naively, one might think that this is somehow due to the current (which, awkwardly, is defined as if positive charges were its origin) creating a
 charge buildup in the wire which attracts the compass needle. This doesn't work as an explanation as a test charge placed near the wire would experience
-no force! \todo{I'm lying. Problem 7.45.} This is because, even though electrons are flowing along the wire, there are just as many (fixed) positive charges (protons)
+no force! This is because, even though electrons are flowing along the wire, there are just as many (fixed) positive charges (protons)
 as there are moving negative charges.
 
 Okay, so there's something going on here other than an electric field. We call this new field the \emph{magnetic field}, $\bv{B}$. It is produced
@@ -282,45 +341,215 @@ that
   \bv{B}=\bv{\nabla}\times \bv{A}.
   \label{eqn:vec-pot}
 \end{equation}
-Let's see how this works out with the Maxwell equations for $\bv{B}$. \cref{eqn:divB} is covered, since the divergence of a curl is always zero. 
-\cref{eqn:curlB} becomes 
+Let's see how this works out with the Maxwell equations for $\bv{B}$. \cref{eqn:divB} is covered, since the divergence of a curl is always zero.
+\cref{eqn:curlB} becomes
 $$\bv{\nabla}\times\bv{B}=\bv{\nabla}\times(\bv{\nabla}\times \bv{A})=\bv{\nabla}(\bv{\nabla}\cdot \bv{A})-\nabla^2\bv{A}=\mu_0\bv{J}.$$
-Now, just as the electrostatic potential was defined only up to addition of an object whose divergence was zero (a constant), 
+Now, just as the electrostatic potential was defined only up to addition of a constant,
 the magnetic vector potential is only defined up to addition of an object whose curl is zero, which will have no effect on $\bv{B}$.
 This allows us to set $\bv{\nabla}\cdot\bv{A}=0$. You can prove this but it is not particularly enlightening here so I will omit it.
-With this change we can say that 
+With this change we can say that
 $$
-\nabla^2\bv{A}=-\mu_0\bv{J},
+  \nabla^2\bv{A}=-\mu_0\bv{J},
 $$
-Poisson's equation again, actually three of them - one for each cartesian coordinate. For a $\bv{J}$ that vanishes at infinity then 
+Poisson's equation again, actually three of them - one for each cartesian coordinate. For a $\bv{J}$ that vanishes at infinity then
 \begin{equation}
   \bv{A}(\bv{r})=\frac{\mu_0}{4\pi}\int \frac{\bv{J}(\bv{r}')}{\scriptr}d\tau'.
   \label{eqn:vec-pot-integral}
 \end{equation}
-This definition gives up a similar expansion as to what we had done previously. Recall we found by way of cosine law that 
+This definition gives up a similar expansion as to what we had done previously. Recall we found by way of cosine law that
 $$\frac{1}{\scriptr}=\frac{1}{\sqrt{r^2+r'^2-2rr'\cos\alpha}}=\frac{1}{r}\sum_{n=0}^{\infty}\left(\frac{r'}{r}\right)^nP_n(\cos\alpha)$$
 where $\alpha$ is the angle between $\bv{r}$ and $\bv{r}'$. This lets us rewrite \cref{eqn:vec-pot-integral} as
 \begin{align}
-  \bv{A}(\bv{r})&=\frac{\mu_0I}{4\pi}\oint \frac{1}{\scriptr}d\bv{\ell}'=\frac{\mu_0I}{4\pi}\int_{n=0}^{\infty}\frac{1}{r^{n+1}}\oint (r')^nP_n(\cos\alpha)d\bv{\ell}'\nonumber\\
-  &=\frac{\mu_0I}{4\pi}\left[\frac{1}{r}\oint d\bv{\ell}'+\frac{1}{r^2}\oint r'\cos\alpha d\bv{\ell}'+\dots\right].
+  \bv{A}(\bv{r}) & =\frac{\mu_0I}{4\pi}\oint \frac{1}{\scriptr}d\bv{\ell}'=\frac{\mu_0I}{4\pi}\sum_{n=0}^{\infty}\frac{1}{r^{n+1}}\oint (r')^nP_n(\cos\alpha)d\bv{\ell}'\nonumber \\
+                 & =\frac{\mu_0I}{4\pi}\left[\frac{1}{r}\oint d\bv{\ell}'+\frac{1}{r^2}\oint r'\cos\alpha d\bv{\ell}'+\dots\right].
 \end{align}
-Note that the first term is the displacement around an entire curve, zero. This is no accident. It arises as a consequence of 
+Note that the first term is the displacement around an entire curve, zero. This is no accident. It arises as a consequence of
 $\bv{\nabla}\cdot\bv{B}=0$ and the assumption that there are no magnetic monopoles. This is (or was) an area of intense
 experimental research. Much work has been done to try to observe a magnetic monopole but none have ever been found.
-\section{Time Dependent Currents}
+\section{Electrodynamics \& Time Dependence}
 We now consider the case where the magnetic field in a region is non-constant in time, i.e. $\bv{B}=\bv{B}(\bv{r},t)$.
 This results in some changes in our previously defined Maxwell equations. First is that the curl of the electric field is no longer
 zero, it is related to the change in the magnetic field,
 $$\bv{\nabla}\times \bv{E}=-\frac{\partial \bv{B}}{\partial t}.$$
-This change can be ``derived'' by experiment \todo{maybe do it}. The next change we must make comes from taking 
+This change can be ``derived'' by experiment. The next change we must make comes from taking
 $$\bv{\nabla}\cdot(\bv{\nabla}\times \bv{B})=\mu_0(\bv{\nabla}\cdot \bv{J}).$$
 The left hand side of this \emph{must} be zero, the divergence of a curl is always so; but the right hand side is, generally, nonzero.
 In the realm of magnetostatics we were considering steady currents which implied no buildup of charge so $\bv{\nabla}\cdot \bv{J}$ was
-indeed zero, but in magneto\emph{dynamics}, charge might build up, slow down, etc. To resolve this we rewrite 
+indeed zero, but in magneto\emph{dynamics}, charge might build up, slow down, etc. To resolve this we rewrite
 $$\bv{\nabla}\cdot \bv{J}=-\frac{\partial \rho}{\partial t}=-\bv{\nabla}\cdot\left(\epsilon_0\frac{\partial \bv{E}}{\partial t}\right)$$
-where the second equality comes out of the \emph{continuity equation} \todo{Talk about it}. Now if we add this onto our expression for the curl of the 
-$\bv{B}$ field we get 
+where the second equality comes out of the \emph{continuity equation} which is the homogenous form of the transport equation (no source/sink term). Now if we add this onto our expression for the curl of the
+$\bv{B}$ field we get
 \begin{equation}
   \bv{\nabla}\times \bv{B}=\mu_0\bv{J}+\mu_0\epsilon_0\frac{\partial \bv{E}}{\partial t}.
 \end{equation}
+We've now arrived at the point where we have the ``correct'' Maxwell equations (no more of me showing that I've been working under a contradiction),
+\begin{align*}
+   & \bv{\nabla}\cdot \bv{E}                                                     =\frac{\rho}{\epsilon_0}, \\
+   & \bv{\nabla}\times \bv{E}+\frac{\partial \bv{B}}{\partial t}                 =\bv{0},                  \\
+   & \bv{\nabla}\cdot \bv{B}                                                     =0,                       \\
+   & \bv{\nabla}\times \bv{B}-\mu_0\epsilon_0\frac{\partial \bv{E}}{\partial t}  =\mu_0\bv{J}
+\end{align*}
+and we can start to think about what we can do with these equations. To simplify things a bit we'll start by considering the case of Maxwell's equations
+in vacuum, with no currents or charges present. In such an environment the equations reduce down to
+\begin{align*}
+   & \bv{\nabla}\cdot \bv{E} =0,                                                  \\
+   & \bv{\nabla}\times \bv{E} =-\frac{\partial \bv{B}}{\partial t},               \\
+   & \bv{\nabla}\cdot \bv{B} =0,                                                  \\
+   & \bv{\nabla}\times \bv{B} =\mu_0\epsilon_0\frac{\partial \bv{E}}{\partial t}.
+\end{align*}
+These are \emph{coupled} first-order PDEs, meaning knowledge of $\bv{B}$ depends on knowledge of $\bv{E}$ and vice-versa. To decouple them, we can take the curl
+of the second and fourth equations,
+$$\bv{\nabla}\times(\bv{\nabla}\times \bv{E}) =
+  \bv{\nabla}(\bv{\nabla}\cdot \bv{E})-\bv{\nabla}^2\bv{E}=
+  -\frac{\partial (\bv{\nabla}\times\bv{B})}{\partial t}=-\mu_0\epsilon_0\frac{\partial^2\bv{E}}{\partial t^2}$$
+and
+$$\bv{\nabla}\times(\bv{\nabla}\times \bv{B}) =
+  \bv{\nabla}(\bv{\nabla}\cdot \bv{B})-\bv{\nabla}^2\bv{B}=
+  -\frac{\partial (\bv{\nabla}\times\bv{E})}{\partial t}=-\mu_0\epsilon_0\frac{\partial^2\bv{B}}{\partial t^2}$$
+and since $\bv{\nabla}\cdot \bv{E}=\bv{\nabla}\cdot \bv{B}=0$,
+\begin{align}
+  \nabla^2\bv{E} & =\mu_0\epsilon_0\frac{\partial^2\bv{E}}{\partial t^2}  \\
+  \nabla^2\bv{B} & =\mu_0\epsilon_0\frac{\partial^2\bv{B}}{\partial t^2}.
+\end{align}
+These sure look familiar, don't they? That's right, these are three dimensional wave equations; each (cartesian)
+component of the $\bv{E}$ and $\bv{B}$ fields obey the wave equation. But recall that the usual form of the wave equation is something like
+$$\nabla^2 f=\frac{1}{\nu^2}\frac{\partial^2 f}{\partial t^2},$$
+where $\nu$ is the wave speed, so for our electromagnetic wave equations
+$$\nu=\frac{1}{\sqrt{\mu_0\epsilon_0}}$$
+which is \emph{exactly} (up to how precisely you can determine $\mu_0$ and $\epsilon_0$) the speed of light, $c$. This is not so shocking to us
+today since all of this theory was developed well over a century ago but in Maxwell's time this was the first indication that light was an electromagnetic wave!
+This must have come as a real surprise, $\epsilon_0$ and $\mu_0$ are constants that we've had around since we were dealing with \emph{statics}, and now we've
+drawn the conclusion that they can be used to find the speed of light.
+
+\subsection{Electromagnetic Waves}
+We know from Fourier Series that the solution to the wave equation can be expressed as a sum of wave functions with individual frequencies so we consider
+only a single frequency $\omega$, with generalization being not too difficult. If we consider only plane-wave (single cartesian direction of propagation) solutions then come out in the form
+\begin{align*}
+  \bv{E}=\bv{E}_0e^{i(kz-\omega t)} \\
+  \bv{B}=\bv{B}_0e^{i(kz-\omega t)}
+\end{align*}
+where $\bv{B}_0$ and $\bv{E}_0$ represent the complex (though physical fields are entirely real) wave amplitudes and $\omega=ck$. Since these fields must still
+satisfy Maxwell's equations $\bv{\nabla}\cdot\bv{E}=\bv{\nabla}\cdot \bv{B}=0$ and hence the $\uz$ components of $\bv{E}_0$ and $\bv{B}_0$ must be zero, meaning
+these are transverse waves - the fields are perpendicular to the direction of propagation. We can additionally derive that
+$$\bv{B}_0=\frac{k}{\omega}(\uz\times \bv{E}_0)$$
+using $\bv{\nabla}\times\bv{E}=-\partial \bv{B}/\partial t$. This means that the electric and magnetic fields are perpendicular and propagate on one another.
+
+\begin{tikzpicture}[x=(-15:1.2), y=(90:1.0), z=(-150:1.0),
+    line cap=round, line join=round,
+    axis/.style={black, thick,-Latex},
+    vector/.style={>=stealth,->}]
+  \large
+  \def\A{1}
+  \def\nNodes{3}
+  \def\nVectorsPerNode{8}
+  \def\N{\nNodes*40}
+  \def\xmax{\nNodes*pi/2*1.01}
+  \pgfmathsetmacro\nVectors{(\nVectorsPerNode+1)*\nNodes}
+
+  \def\vE{{\color{blue!80!black}\bv{E}}}
+  \def\vB{{\color{red!80!black}\bv{B}}}
+  \def\vk{\mathbf{\hat{k}}}
+
+  % MAIN AXES
+  \draw[axis] (0,0,0) -- ++(\xmax*1.1,0,0) node[right] {$\uz$};
+  \draw[axis] (0,-\A*1.4,0) -- (0,\A*1.4,0) node[above] {$\ux$};
+  \draw[axis] (0,0,-\A*1.4) -- (0,0,\A*1.4) node[left] {$\uy$};
+
+  % SMALL AXES
+  \def\xOffset{{(\nNodes-2)*pi/2}}
+  \def\yOffset{\A*1.2}
+  \def\zOffset{\A*1.2}
+  \draw[axis,blue!80!black]  (\xOffset,\yOffset,-\zOffset) -- ++(0,\A*0.6,0) node[right] {$\mathbf{E}$};
+  \draw[axis,red!80!black]   (\xOffset,\yOffset,-\zOffset) -- ++(0,0,\A*0.6) node[above left] {$\mathbf{B}$};
+
+  \def\drawENode{
+    \draw[blue!80!black,very thick,variable=\t,domain=\iOffset*pi/2:(\iOffset+1)*pi/2*1.01,samples=40]
+    plot (\t,{\A*sin(\t*360/pi)},0);
+    \foreach \k [evaluate={\t=\k*pi/2/(\nVectorsPerNode+1);
+          \angle=\k*90/(\nVectorsPerNode+1);}]
+    in {1,...,\nVectorsPerNode}{
+        \draw[vector,blue!80!black]  (\iOffset*pi/2+\t,0,0) -- ++(0,{\A*sin(2*\angle+\iOffset*180)},0);
+      }
+  }
+  \def\drawBNode{
+    \draw[red!80!black,very thick,variable=\t,domain=\iOffset*pi/2:(\iOffset+1)*pi/2*1.01,samples=40]
+    plot (\t,0,{\A*sin(\t*360/pi)});
+    \foreach \k [evaluate={\t=\k*pi/2/(\nVectorsPerNode+1);
+          \angle=\k*90/(\nVectorsPerNode+1);}]
+    in {1,...,\nVectorsPerNode}{
+        \draw[vector,red!80!black]  (\iOffset*pi/2+\t,0,0) -- ++(0,0,{\A*sin(2*\angle+\iOffset*180)});
+      }
+  }
+
+  \foreach \iNode [evaluate={\iOffset=\iNode-1;}] in {1,...,\nNodes}{
+      \ifodd\iNode \drawBNode \drawENode % E overlaps B
+      \else        \drawENode \drawBNode % B overlaps E
+      \fi
+    }
+\end{tikzpicture}
+A multipole expansion of these solutions (which we'll skip over here since we're interested in the potential specifically) yields
+spherical Hankel functions and spherical harmonics.
+
+\subsection{Electromagnetic Potential}
+What if we want to solve the more general form of Maxwell's equations in a region where there is current and/or charge? Directly
+using the electromagnetic field makes these equations cumbersome. It is instead common to update the scalar and vector potentials we used
+previously and use them instead. Since $\curl{\bv{E}}\neq 0$ in the nonstatic regime we can no longer define our scalar potential as before.
+However, the $\bv{B}$ field has remained divergenceless and so we can continue to use $\bv{B}=\curl{\bv{A}}$. Plugging this definition into
+the expression for the curl of $\bv{E}$,
+$$\curl{\bv{E}}+\frac{\partial \curl{\bv{A}}}{\partial t}=\curl{\bv{E}+\frac{\partial\bv{A}}{\partial t}}=0$$
+which allows us to redefine the scalar potential $V$ so that
+$$ -\bv{\nabla}V=\bv{E}+\frac{\partial\bv{A}}{\partial t}$$
+which is actually not much of a redefiniton as it reduces to the original
+form when $\bv{A}$ is constant. Putting these new potentials into the Maxwell equations we obtain
+\begin{equation}
+  \nabla^2 V + \frac{\partial \div{\bv{A}}}{\partial t}=-\frac{\rho}{\epsilon_0}
+  \label{eqn:gauge-eqn-1}
+\end{equation}
+and
+\begin{equation}
+  \nabla^2\bv{A}-\mu_0\epsilon_0 \frac{\partial^2 \bv{A}}{\partial t^2}-\bv{\nabla}\left(\div{\bv{A}}+\mu_0\epsilon_0\frac{\partial V}{\partial t}\right)=-\mu_0\bv{J}.
+  \label{eqn:gauge-eqn-2}
+\end{equation}
+This might not seem like much of an improvement if you try to write out these equations with $\bv{E}$ and $\bv{B}$ but it has served the usual purpose
+of a potential, we've reduced the problem of finding six components (three per field) to finding four components, one for $V$ and three for $\bv{A}$.
+We can further do some manipulation of these equations as we did in the original definition of the magnetic potential to try to simplify things a bit.
+Recall that any change we make that doesn't affect the electromagnetic fields is ok. This ability to change the potentials is known as \emph{gauge freedom}.
+Two common gauges in electrodynamics are the Coulomb gauge which we used earlier,
+$$\div{\bv{A}}=0$$
+and the Lorenz (previously the Lorentz) gauge
+$$\div{\bv{A}}=-\mu_0\epsilon_0\frac{\partial V}{\partial t}.$$
+In the Lorenz gauge \cref{eqn:gauge-eqn-1} becomes
+\begin{equation}
+  \nabla^2 V -\mu_0\epsilon_0 \frac{\partial ^2 V}{\partial t^2}=-\frac{\rho}{\epsilon_0}
+  \label{eqn:scalar-wave}
+\end{equation}
+and \cref{eqn:gauge-eqn-2} becomes
+\begin{equation}
+  \nabla^2\bv{A}-\mu_0\epsilon_0\frac{\partial^2 \bv{A}}{\partial t^2}=-\mu_0\bv{J}.
+\end{equation}
+Solutions to these equations depend greatly on the physical conditions which they are applied to. Instead of trying to further develop
+the physics to concoct a bunch of configurations to show off the solutions we can get from these, I'll just talk about the situations from a very high level and
+make some nice pictures of the solutions. We've already seen that the Legendre polynomials arise from multipole expansions in the static case, this is true for
+the nonstatic case as well; both for $\bv{A}$ and $V$.
+
+Bessel functions arise when considering the electromagnetic field inside a \emph{waveguide}, a structure used to ``steer'' waves. A common usage of waveguides is in
+microwave ovens, where a device outside of the microwave chamber generates a microwave frequency ($\qty{300}{\mega\hertz}$ to $\qty{300}{\giga\hertz}$) EM field
+and it is steered into the cooking chamber. Bessel functions arise when considering cylindrical waveguides.
+\begin{figure}[h]
+  \includegraphics[width=\linewidth]{bessel-cylindrical-waveguide.png}
+  \caption{``The spatial profile of the electric field of the first few cylindrical vector modes propagating in a dielectric waveguide.
+    The normalized amplitude of the electric field, $E/E_\mathrm {max}$, is represented in pseudo-colors, whereas the arrows indicate the polarization profile.
+    The condition of null field at the core boundary is applied.'' \cite{Pkincaid}}
+\end{figure}
+
+Another application is in the optical or near-optical frequency band ($\qty{3}{\tera\hertz}$ and up) of the Zernike polynomials, a special case of the 
+Gegenbauer (and thereby Jacobi) polynomials. The Zernike polynomials can be used to model \emph{wavefront abberation} where when a light wave (which we now know
+to be an EM wave) passes through optical media, even and normal incidence (so no bending), it is deflected slightly or has its phase changed due to unevenness 
+in the optical medium. A common example of wavefront abberation is in the human eye, with astigmatism.
+\begin{figure}[h]
+  \includegraphics[width=\linewidth]{zernike-pyramid.png}
+  \caption{Plots of the Zernike polynomials for common aberrations seen in the human eye, 
+  labeled by medical term for the aberration (zoom in). \cite{telescopeopticsMONOCHROMATICABERRATIONS}}
+\end{figure}
+\printbibliography
 \end{document}
