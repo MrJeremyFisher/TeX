@@ -1,0 +1,230 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsmath,amsthm,amssymb,bm}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{changepage}
+\usepackage{circuitikz}
+\usepackage{pgfplots}
+\usepackage{minted}
+\usepackage{physics}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usepackage{hyperref}
+\usepackage{siunitx}
+\usepackage{fontspec}
+\usepackage{relsize}
+\usepackage{subfig}
+\usepackage{todonotes}
+\usepackage{contour}
+\usepackage{multicol, multirow, booktabs}
+\usepackage[breakable]{tcolorbox}
+\usepackage[inline]{enumitem}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{soln}{Solution}
+
+\pgfplotsset{compat=newest}
+\usetikzlibrary{lindenmayersystems}
+\usetikzlibrary{arrows}
+\usetikzlibrary{calc}
+\usetikzlibrary{positioning, fit}
+\usetikzlibrary{3d, perspective}
+\usetikzlibrary{math}
+\usetikzlibrary{fadings}
+\usetikzlibrary{angles,quotes} 
+
+\definecolor{incolor}{HTML}{303F9F}
+\definecolor{outcolor}{HTML}{D84315}
+\definecolor{cellborder}{HTML}{CFCFCF}
+\definecolor{cellbackground}{HTML}{F7F7F7}
+\newcommand{\ui}{\hat{i}}
+\newcommand{\uj}{\hat{j}}
+\newcommand{\uk}{\hat{k}}
+\newcommand{\ux}{\hat{\mathbf{x}}}
+\newcommand{\uy}{\hat{\mathbf{y}}}
+\newcommand{\uz}{\hat{\mathbf{z}}}
+\newcommand{\uv}[1]{\hat{\bv{{#1}}}}
+\newcommand{\pr}[1]{{#1^\prime}}
+\newcommand{\pd}[2][]{{\frac{\partial^{#1}}{\partial {{#2}^{#1}}}}}
+\newcommand{\dif}[2][]{{\frac{d^{#1}}{d{{#2}^{#1}}}}}
+\newcommand{\grd}{\nabla}
+
+\pgfdeclarelayer{background}  
+\pgfsetlayers{background,main}
+\AtBeginDocument{\RenewCommandCopy\qty\SI}
+
+\makeatletter
+\newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+\makeatother
+\newcommand{\prompt}[4]{
+    \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+}
+
+\newcommand{\thevenin}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (2,0) to[battery1, l_=$V_{Th}\eq#1$] (2,2) 
+      to[resistor, l_=$R_{Th}\eq#2$] (0,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\norton}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (3,0) to[american current source, l_=$I_{N}\eq#1$] (3,2) -- (0,2) (2,0)
+      to[resistor, l=$R_{N}\eq#2$] (2,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\DeclareMathOperator{\Div}{div}
+\DeclareMathOperator{\Curl}{curl}
+\DeclareMathOperator{\sgn}{sgn}
+
+\newcommand{\highlight}[1]{\colorbox{yellow}{$\displaystyle #1$}}
+\newcommand{\ti}[1]{\widetilde{#1}}
+\renewcommand{\div}[1]{\bv{\nabla}\cdot #1}
+\renewcommand{\curl}[1]{\bv{\nabla}\times #1}
+
+\newfontface{\Kaufmann}{Kaufmann}
+\DeclareTextFontCommand{\kf}{\Kaufmann}
+\newcommand{\scriptr}{\fontsize{12pt}{12pt}\kf{r}\fontsize{10pt}{10pt}}
+
+\newfontface{\KaufmannB}{Kaufmann Bold}
+\DeclareTextFontCommand{\kfb}{\KaufmannB}
+\newcommand{\bscriptr}{\fontsize{12pt}{12pt}\kfb{r}\fontsize{10pt}{10pt}}
+\newcommand{\justif}[2]{&{#1}&\text{#2}}
+\newcommand{\bv}[1]{\bm{\mathrm{#1}}}
+
+\title{Physics 3200Y: Assignment IX}
+\author{Jeremy Favro (0805980) \\ Trent University, Peterborough, ON, Canada}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+% PROBLEM 1
+\begin{problem}
+A metal bar of mass $m$ slides frictionlessly on two parallel conducting rails a distance $\ell$ apart.
+A resistor $R$ is connected across the rails and a uniform magnetic field $\bv{B}$, pointing into the page,
+fills the entire region.
+\begin{enumerate}[label=(\alph*)]
+  \item If the bar moves to the right with speed $v$, what is the current in the resistor? In what direction does it flow?
+  \item What is the magnetic force on the bar? In what direction?
+  \item If the bar starts out with speed $v_0$ at time $t=0$, and is left to slide, what is its speed at a later time $t$?
+  \item The initial kinetic energy of the bar was, of course, $\frac{1}{2}mv_0^2$. Check that the energy delivered to the
+        resistor is exactly $\frac{1}{2}mv_0^2$.
+\end{enumerate}
+\end{problem}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item We know that the current in a purely resistive circuit is related to the flux, and thereby the EMF, by
+          $$-\frac{d\phi}{dt}=\epsilon=IR.$$
+          Since the flux here is the field times the area of the loop, say the bar is at a position $x(t)$. Then
+          $$\phi=B\ell x\implies IR=-B\ell\frac{dx}{dt}\implies I=-\frac{B\ell v}{R}.$$
+          Where the negative sign indicates direction. Since the field is pointing into the page we can see that, using the
+          RHR, the current is traveling downward through the resistor.
+    \item Magnetic force is given by $\bv{f}=dq \bv{v}_{charges}\times \bv{B}$. Here since $\bv{v}_{charges}$ and $\bv{B}$ are at right
+          angles to one another the cross product resolves to a regular product of magnitudes which we can integrate along the bar
+          to find the force on the whole thing,
+          $$\bv{F}=\int_{0}^{\ell}dq v_{charges} B(-\ux)=\int_{0}^{\ell}\frac{dq}{dt}Bd\ell'(-\ux)=I\ell B(-\ux)=-\frac{B^2\ell^2 v}{R}\ux.$$
+          where we haven't picked up the sign on the current because we're considering magnitudes. This says that the force is leftward.
+    \item The equation of motion here is
+          $$m\ddot{x}=m\frac{dv}{dt}=-\frac{B^2\ell^2 v}{R}\implies v(t)=v_0\exp\left(-\frac{B^2\ell^2}{mR}t\right)$$
+    \item The energy dissipated by the resistor is the power, given by $I^2R$:
+          $$\frac{dW}{dt}=I^2 R=\frac{B^2\ell^2 v^2}{R}=\frac{B^2\ell^2}{R}v_0^2\exp\left(-2\frac{B^2\ell^2}{mR}t\right).$$
+          Integrating this from $t=0$ to steady-state then
+          \begin{align*}
+            W & =\frac{B^2\ell^2}{R}v_0^2\int_0^\infty \exp\left(-2\frac{B^2\ell^2}{mR}t\right)dt                             \\
+              & =-\frac{B^2\ell^2}{R}v_0^2\frac{mR}{2B^2\ell^2}\left[\exp\left(-2\frac{B^2\ell^2}{mR}t\right)\right]_0^\infty \\
+              & =-\frac{1}{2}mv_0^2\left[e^{-\infty}-e^{0}\right]=\frac{1}{2}mv_0^2.
+          \end{align*}
+  \end{enumerate}
+\end{soln}
+
+% PROBLEM 2
+\begin{problem}
+An alternating current $I=I_0\cos\omega t$ flows down a long straight wire, and returns along a coaxial conducting tube
+of radius $a$.
+\begin{enumerate}[label=(\alph*)]
+  \item In what \emph{direction} does the induced electric field point (radial, circumferential, longitudinal)?
+  \item Assuming that the field goes to zero as $s \to \infty$, find $\bv{E}(s,t)$.
+\end{enumerate}
+\end{problem}
+\begin{soln}
+  \begin{enumerate}[label=(\alph*)]
+    \item If we consider an Amp\`erian loop enclosing only the central conductor we see that the magnetic field
+          is entirely in the $\uv{\phi}$ direction in cylindrical coordinates. Then since
+          $$\curl{\bv{E}}=-\frac{d\bv{B}}{dt}$$
+          $\curl{\bv{E}}$ must also be in $\uv{\phi}$. Looking at the $\uv{\phi}$ term for curl in
+          cylindrical we see that
+          $$\curl{\bv{v}}=\dots+\left[\frac{\partial v_s}{\partial z}-\frac{\partial v_z}{\partial s}\right]\uv{\phi}+\dots.$$
+          Since the wire is long there shouldn't be any $z$ dependence so $\bv{E}$ should only have a $\uz$ component which varies with
+          $s$.
+          \todo{Contour diagrams\dots}
+    \item Taking a new contour of length $\ell$ which slices the outer conductor we note that using our definition of flux,
+          $$\int (\curl{\bv{E}})\cdot d\bv{a}=\oint \bv{E}\cdot d\ell'\uz=-\frac{d}{dt}\int \bv{B}\cdot d\bv{a}$$
+          where the first equality comes from Stoke's (curl) theorem. We can also use Ampere's law to write
+          $$\oint \bv{B}\cdot d\bv{\ell}'=2\pi s' B=\mu_0 I_0\cos\omega t.$$
+          Plugging this into the chain of equalities for the electric field gives that
+          $$E\ell=-\frac{d}{dt}\int_0^\ell\int_s^a \frac{\mu_0 I_0}{2\pi s'}\cos\omega t ds'dz'$$
+          and so
+          $$E=\frac{\mu_0 I_0 \omega}{2\pi}\ln\left(\frac{a}{s}\right)\sin\omega t.$$
+  \end{enumerate}
+\end{soln}
+
+% PROBLEM 3
+\begin{problem}
+An infinite cylinder of radius $R$ carries a uniform surface charge $\sigma$.
+We propose to set it spinning about its axis, at a final angular velocity $\omega_f$. How much work will this take per unit length?
+Do it two ways, and compare your answers:
+\begin{enumerate}[label=(\alph*)]
+  \item Find the magnetic field and the induced electric field (in the quasistatic approximation),
+        inside and outside the cylinder, in terms of $\omega$, $\dot{\omega}$, and $s$. Calculate the torque you must
+        exert, and from that obtain the work done per unit length ($W=\int Nd\phi$).
+  \item Use Eq. 7.44 ($W=\frac{1}{2\mu_0}\int_{\mathbb{R}}B^2d\tau$) to determine the energy stored in the resulting magnetic field.
+\end{enumerate}
+\end{problem}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item When we set this system rotating it becomes a solenoid. We know the field of a solenoid to be
+          $$\bv{B}=\begin{cases}
+              \mu_0\sigma\omega R\uz & s<R  \\
+              0                      & s> R
+            \end{cases}$$
+          where $\sigma\omega R$ is the surface current density. Since, for a contour with area in $\uz$
+          $$\oint \bv{E}\cdot d\bv{\ell}'=-\frac{d}{dt}\int\bv{B}\cdot d\bv{a}$$
+          and we expect that the electric field is entirely in $\uv{\phi}$, as is $d\bv{\ell}'$,
+          $$E2\pi s=-\frac{d}{dt}\int_{0}^{s}s'ds'\int_{0}^{2\pi}d\phi' \mu_0\sigma\omega R=-2\pi\mu_0\sigma\dot{\omega}\frac{R s^2}{2}$$
+          so
+          $$\bv{E}=-\mu_0\sigma\dot{\omega}\frac{R s}{2}\uv{\phi}$$
+          inside. To do outside we change the limits of the integrals,
+          $$E2\pi s=-\frac{d}{dt}\int_{0}^{R}s'ds'\int_{0}^{2\pi}d\phi' \mu_0\sigma\omega R=-2\pi\mu_0\sigma\dot{\omega}\frac{R^3}{2}$$
+          so
+          $$\bv{E}=-\mu_0\sigma\dot{\omega}\frac{R^3}{2s}$$
+          outside. At the surface then (I think) the electric field is
+          $$\bv{E}=-\mu_0\sigma\dot{\omega}\frac{R^2}{2}\uv{\phi}.$$
+          Torque then is
+          $$\bv{\tau}=\bv{r}\times\bv{F}=R(2\pi R\ell \sigma)(-\mu_0\sigma\dot{\omega}\frac{R^2}{2})\uz$$
+          since the total charge on a segment of length $\ell$ is $2\pi R\ell \sigma$.
+          This works out to
+          $$\bv{\tau}=-\pi\ell\mu_0\sigma^2\dot{\omega}R^4\uz.$$
+          Work per $\ell$ then is 
+          $$\frac{W}{\ell}=-\pi\mu_0\sigma^2R^4\int\dot{\omega}d\phi$$
+          but 
+
+    \item Use Eq. 7.44 ($W=\frac{1}{2\mu_0}\int_{\mathbb{R}}B^2d\tau$) to determine the energy stored in the resulting magnetic field.
+  \end{enumerate}
+\end{soln}
+\end{document}
