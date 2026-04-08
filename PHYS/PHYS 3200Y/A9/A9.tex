@@ -220,11 +220,97 @@ Do it two ways, and compare your answers:
           since the total charge on a segment of length $\ell$ is $2\pi R\ell \sigma$.
           This works out to
           $$\bv{\tau}=-\pi\ell\mu_0\sigma^2\dot{\omega}R^4\uz.$$
-          Work per $\ell$ then is 
+          Work per $\ell$ then is
           $$\frac{W}{\ell}=-\pi\mu_0\sigma^2R^4\int\dot{\omega}d\phi$$
-          but 
+          and
+          $$\dot{\omega}d\phi=\frac{d\omega}{dt}\omega dt=\omega d\omega$$
+          so
+          $$\frac{W}{\ell}=-\pi\mu_0\sigma^2R^4\int_0^{\omega_f}\omega d\omega=-\frac{\pi\mu_0}{2}\sigma^2R^4\omega_f^2.$$
+    \item $$W=\frac{1}{2\mu_0}\int_0^{2\pi}\int_{0}^{R}\int_{0}^{\ell}\mu_0^2\sigma^2\omega^2 R^3dz ds d\phi=\pi\mu_0\sigma^2\omega^2 R^4\ell$$
+          which gives the same result per unit length as previous except with the sign reversed. The sign change is because this is the work done to bring the field
+          up to strength by the person spinning it up and the other (negative) work was the work done by the electric field.
+  \end{enumerate}
+\end{soln}
 
-    \item Use Eq. 7.44 ($W=\frac{1}{2\mu_0}\int_{\mathbb{R}}B^2d\tau$) to determine the energy stored in the resulting magnetic field.
+% PROBLEM 4
+\begin{problem}
+Consider a capacitor made of two circular disks with wires connected to the centre of each
+disk. The disks have radius $a$ and are separated by $w \ll a$. For concreteness, put one disk
+at $z = -w/2$ and the other at $z=w/2$. A current $I(t)$ flows through the capacitor. Assume
+that the wires are infinitely thin.
+\begin{enumerate}[label=(\alph*)]
+  \item In 2D, the continuity equation is $\div{\bv{K}}=-\partial\sigma/\partial t$, with $\sigma$ the surface charge density
+        and $\bv{K}$ the surface current density. Assume that charge flows onto the disks in such a
+        way that $\sigma(t)$ is independent of position on each disk. To understand what this means,
+        think about filling up a basin from a tap. If the liquid coming out of the tap is viscous
+        (like honey), the height of the liquid in the basin will be higher near the tap than far
+        away from it. If the liquid is not viscous (like water), the height of the surface will
+        remain the same everywhere in the basin. Here, we assume that electrons spread out
+        in such a way as to keep $\sigma$ uniform at all times. What must $\bv{K}$ be for this to happen?
+        Note that you have two boundary conditions:
+        \begin{enumerate}[label=(\roman*)]
+          \item The total current flowing onto the disk is $I$;
+          \item The current density at the edge of the disk (at $s = a$; $a$ is the radius of the disk)
+                is zero, since no current can flow through the edge.
+        \end{enumerate}
+        Your solution for $\bv{K}$ will diverge at $s = 0$, but this is a consequence of assuming the
+        wires carrying the current onto the disks are infinitely thin.
+  \item What is the magnetic field produced by $\bv{K}$? Set up the integral for the field at a general
+        position $\bv{r}$, but then evaluate it for the simple case $\bv{r}=(0,0,z)$ with $-w/2<z<w/2$.
+  \item What is the magnetic field produced by the displacement current? You should be able
+        to obtain this for any point that's not too close to the edge of the disk.
+\end{enumerate}
+\end{problem}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item Here we expand the continuity equation using the definition of the divergence in cylindrical coordinates.
+          $$\div{\bv{K}}=\frac{1}{s}\frac{\partial (K_ss)}{\partial s}=-\frac{\partial \sigma}{\partial t}$$
+          and so
+          $$K_s=-\frac{\partial \sigma}{\partial t}\frac{s}{2}+\frac{C(t)}{s}$$
+          and applying the second boundary condition,
+          $$K_s(a)=0=-\frac{\partial \sigma}{\partial t}\frac{a}{2}+\frac{C(t)}{a}.$$
+          And so
+          $$K_s(s)=-\frac{\partial \sigma}{\partial t}\frac{s}{2}+\frac{\partial \sigma}{\partial t}\frac{a^2}{2s}=\frac{1}{2}\frac{\partial \sigma}{\partial t}\left[\frac{a^2}{s}-s\right].$$
+          The only reason to apply the first boundary conditon is to determine $\sigma$ in terms of $I$. To do this note that
+          $$\frac{\partial \sigma}{\partial t}=\frac{1}{\pi a^2}\frac{\partial Q}{\partial t}=\frac{1}{\pi a^2}I$$
+          so
+          $$\bv{K}=\frac{I}{2\pi}\left[\frac{1}{s}-\frac{s}{a^2}\right]\uv{s}$$
+    \item The general form of the magnetic field due to a surface current is
+          $$\bv{B}(\bv{r})=\frac{\mu_0}{4\pi}\int \frac{\bv{K}(\bv{r}')\times \uv{\bscriptr}}{\scriptr^2}.$$
+          Here
+          $\bv{r}=(x,y,z)$, $\bv{r}'=(x',y',\pm w/2)$, so $\bscriptr=(x-x',y-y', z\mp w/2)$. Since
+          $$\bv{K}(s')=\frac{1}{2}\frac{\partial \sigma}{\partial t}\left[\frac{a^2}{s'}-s'\right]\uv{s}=\frac{1}{2}\frac{\partial \sigma}{\partial t}\left[\frac{a^2}{s'}-s'\right]\left(\cos\phi\ux+\sin\phi\uy\right)$$
+          the cross product comes out to
+          $$
+            \bv{K}\times \bv{\scriptr}
+            =\begin{vmatrix}
+              \ux        & \uy        & \uz      \\
+              K\cos\phi' & K\sin\phi' & 0        \\
+              x-x'       & y-y'       & z\mp w/2
+            \end{vmatrix}=
+            \left[K\left(z\mp w/2\right)\sin\phi'\right]\ux
+            -\left[K\left(z\mp w/2\right)\cos\phi'\right]\uy
+            \left[K(y-y')\cos\phi'-K(x-x')\sin\phi'\right]\uz.
+          $$
+          When we take $\bv{r}=(0,0,z)$ and note that $x'=s'\cos\phi'$ and $y'=s'\sin\phi'$ this becomes
+          $$
+            \bv{K}\times \bv{\scriptr}
+            =
+            \left[K\left(z\mp w/2\right)\sin\phi'\right]\ux
+            -\left[K\left(z\mp w/2\right)\cos\phi'\right]\uy
+            \left[-Ks'\sin\phi'\cos\phi'+Ks'\cos\phi'\sin\phi'\right]\uz.
+          $$
+          Obviously the $\uz$ term is zero. When we integrate the other two over the entire disc(s) the $\sin\phi'$ and
+          $\cos\phi'$ will go to zero. This means, on axis, $\bv{B}(\bv{r})=\bv{0}$.
+    \item Here
+          $$\curl{\bv{B}}=\mu_0\bv{J}+\mu_0\epsilon_0\frac{\partial \bv{E}}{\partial t}.$$
+          Since we are considering the region between the plates, which is vaccuum, $\bv{J}=0$ and so
+          $$\curl{\bv{B}}=\mu_0\epsilon_0\frac{\partial \bv{E}}{\partial t}=\frac{\mu_0 I}{\pi a^2}\uz$$
+          where we've recalled that $\bv{E}=\sigma/\epsilon_0$ for a parallel plate capacitor and used the current definition we worked out in (a).
+          Since we expect the RHS to be in $\uz$ only so should the LHS meaning
+          $$\curl{\bv{B}}=\frac{1}{s}\left[\frac{\partial (s B_\phi)}{\partial s}-\frac{\partial B_s}{\partial \phi}\right]\uz=\frac{\mu_0 I}{\pi a^2}\uz$$
+          and since the plates are symmetric in $\phi$ the $\phi$ derivative should be zero so
+          $$\bv{B}=\frac{\mu_0 Is}{2\pi a^2}\uv{\phi}.$$
   \end{enumerate}
 \end{soln}
 \end{document}
