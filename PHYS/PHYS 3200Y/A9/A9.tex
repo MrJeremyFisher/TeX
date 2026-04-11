@@ -36,6 +36,7 @@
 \usetikzlibrary{math}
 \usetikzlibrary{fadings}
 \usetikzlibrary{angles,quotes} 
+\usetikzlibrary{decorations.markings}
 
 \definecolor{incolor}{HTML}{303F9F}
 \definecolor{outcolor}{HTML}{D84315}
@@ -164,16 +165,43 @@ of radius $a$.
 \end{problem}
 \begin{soln}
   \begin{enumerate}[label=(\alph*)]
-    \item If we consider an Amp\`erian loop enclosing only the central conductor we see that the magnetic field
-          is entirely in the $\uv{\phi}$ direction in cylindrical coordinates. Then since
+    \item The field of a current carrying wire is entirely in the $\uv{\phi}$ direction in cylindrical coordinates. Then since
           $$\curl{\bv{E}}=-\frac{d\bv{B}}{dt}$$
           $\curl{\bv{E}}$ must also be in $\uv{\phi}$. Looking at the $\uv{\phi}$ term for curl in
           cylindrical we see that
           $$\curl{\bv{v}}=\dots+\left[\frac{\partial v_s}{\partial z}-\frac{\partial v_z}{\partial s}\right]\uv{\phi}+\dots.$$
           Since the wire is long there shouldn't be any $z$ dependence so $\bv{E}$ should only have a $\uz$ component which varies with
           $s$.
-          \todo{Contour diagrams\dots}
-    \item Taking a new contour of length $\ell$ which slices the outer conductor we note that using our definition of flux,
+    \item Taking a contour of length $\ell$ which slices the outer conductor such that there is maximum flux
+          through the contour
+          \begin{figure}[h]
+            \centering
+            \begin{tikzpicture}
+              \tikzset{->-/.style={decoration={
+                  markings,
+                  mark=at position #1 with {\arrow{Latex}}},postaction={decorate}}}
+
+              \coordinate (O) at (0,0);
+              \def\R{2}
+
+              \draw[red!80!black, ->-=.5] (-\R,0) -- (\R,0) node[midway, below]{$I$};
+              \draw[blue!80!black, ->-=.5] (\R,1) -- (-\R,1) node[midway, above]{$I$};
+              \draw[blue!80!black, ->-=.5] (\R,-1) -- (-\R,-1) node[midway, below]{$I$};
+              \draw[-Latex] (-1.75, 0) -- (-1.75,1) node[midway, left]{$a$};
+              \draw[-Latex] (0, 0) -- (0,0.3) node[midway, right]{$s$};
+
+              \draw[] (-1,0.3) rectangle (1,1.5);
+              \draw[Latex-Latex] (-1, 1.65) -- (1,1.65);
+              \node[above, fill=white, rounded corners=2pt, inner sep=1pt] at (0,1.5) {$\ell$};
+
+              \draw[<-] (\R+0.1,1) to[out=0, in=180] (3,0) node[right]{Outer conductor};
+              \draw[<-] (\R+0.1,-1) to[out=0, in=180] (3,0);
+              \draw[<-] (-\R-0.1,0) to[out=180, in=0] (-3,0) node[left]{Inner wire};
+            \end{tikzpicture}
+            \caption{The setup and contour (in black)}
+          \end{figure}
+
+          we note that using our definition of flux,
           $$\int (\curl{\bv{E}})\cdot d\bv{a}=\oint \bv{E}\cdot d\ell'\uz=-\frac{d}{dt}\int \bv{B}\cdot d\bv{a}$$
           where the first equality comes from Stoke's (curl) theorem. We can also use Ampere's law to write
           $$\oint \bv{B}\cdot d\bv{\ell}'=2\pi s' B=\mu_0 I_0\cos\omega t.$$
@@ -183,6 +211,7 @@ of radius $a$.
           $$E=\frac{\mu_0 I_0 \omega}{2\pi}\ln\left(\frac{a}{s}\right)\sin\omega t.$$
   \end{enumerate}
 \end{soln}
+\newpage 
 
 % PROBLEM 3
 \begin{problem}

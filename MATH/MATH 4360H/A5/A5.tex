@@ -1,0 +1,242 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{changepage}
+\usepackage{circuitikz}
+\usepackage{pgfplots}
+\usepackage{physics}
+\usepackage{hyperref}
+\usepackage{siunitx}
+\usepackage{fontspec}
+\usepackage{relsize}
+\usepackage{subfig}
+\usepackage{polynom}
+% \usepackage{polydiv}
+\usepackage{todonotes}
+\usepackage{multicol, multirow, booktabs}
+\usepackage[breakable]{tcolorbox}
+\usepackage[inline]{enumitem}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{soln}{Solution}
+\newtheorem{theorem}{Theorem}
+
+\pgfplotsset{compat=newest}
+\usetikzlibrary{lindenmayersystems}
+\usetikzlibrary{arrows}
+\usetikzlibrary{calc}
+\usetikzlibrary{positioning, fit}
+\usetikzlibrary{3d, perspective}
+
+\definecolor{incolor}{HTML}{303F9F}
+\definecolor{outcolor}{HTML}{D84315}
+\definecolor{cellborder}{HTML}{CFCFCF}
+\definecolor{cellbackground}{HTML}{F7F7F7}
+\newcommand{\ui}{\hat{i}}
+\newcommand{\uj}{\hat{j}}
+\newcommand{\uk}{\hat{k}}
+\newcommand{\ux}{\hat{x}}
+\newcommand{\uy}{\hat{y}}
+\newcommand{\uz}{\hat{z}}
+\newcommand{\pr}[1]{{#1}^\prime}
+\newcommand{\hull}[1]{\langle {#1}\rangle}
+\pgfdeclarelayer{background}  
+\pgfsetlayers{background,main}
+\AtBeginDocument{\RenewCommandCopy\qty\SI}
+\newcommand{\justif}[2]{&{#1}&\text{#2}}
+
+\makeatletter
+\newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+\makeatother
+\newcommand{\prompt}[4]{
+    \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+}
+
+
+\newcommand{\thevenin}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (2,0) to[battery1, l_=$V_{Th}\eq#1$] (2,2) 
+      to[resistor, l_=$R_{Th}\eq#2$] (0,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\norton}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (3,0) to[american current source, l_=$I_{N}\eq#1$] (3,2) -- (0,2) (2,0)
+      to[resistor, l=$R_{N}\eq#2$] (2,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\highlight}[1]{\colorbox{yellow}{$\displaystyle #1$}}
+
+\newcommand{\ti}[1]{\widetilde{#1}}
+
+\newfontface{\Kaufmann}{Kaufmann}
+\DeclareTextFontCommand{\kf}{\Kaufmann}
+\newcommand{\scriptr}{\fontsize{12pt}{12pt}\kf{r}}
+
+\newfontface{\KaufmannB}{Kaufmann Bd BT}
+\DeclareTextFontCommand{\kfb}{\KaufmannB}
+\newcommand{\bscriptr}{\fontsize{12pt}{12pt}\kfb{r}}
+
+\newcommand{\bv}[1]{\mathbf{#1}}
+
+\title{Math 4360H: Assignment V}
+\author{Jeremy Favro (0805980) \\ Trent University, Peterborough, ON, Canada}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+% PROBLEM 1
+\begin{problem}
+Let $E\leq \mathbb{C}$ be the splitting field of $x^8-1$ over $\mathbb{Q}$.
+\begin{enumerate}[label=(\alph*)]
+  \item Show that $E=\mathbb{Q}(e^{i\frac{2\pi}{8}})$.
+  \item Find the minimal polynomial for $e^{i\frac{2\pi}{8}}$ over $\mathbb{Q}$.
+  \item Show that $E=\mathbb{Q}(\sqrt{2},i)$.
+  \item Find the elements of $G(E/\mathbb{Q})$, and determine its isomorphism class.
+\end{enumerate}
+\end{problem}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item The splitting field for $x^8-1$ is the smallest field such that the polynomial
+          factors fully into linear factors. Consider then $x^8-1=0\implies x^8=1$.
+          This is an $n$th roots of unity problem. The roots here are
+          $$
+            1,e^{i\frac{\pi}{4}},e^{i\frac{\pi}{2}}, e^{i\frac{3\pi }{4}},
+            -1, e^{i\frac{5\pi}{4}}, e^{ i\frac{3\pi}{2}}, e^{i\frac{7\pi}{4}}
+          $$
+          and so the polynomial will factor as
+          $$x^8-1=(x-1)(x-e^{i\frac{\pi}{4}})(x-e^{i\frac{\pi}{2}})(x-e^{i\frac{3\pi }{4}})
+            (x+1)(x-e^{i\frac{5\pi}{4}})(x-e^{ i\frac{3\pi}{2}})(x-e^{i\frac{7\pi}{4}}).$$
+          Since everything in $E=\mathbb{Q}(e^{i\frac{2\pi}{8}})$ can be written with the basis
+          $$\left\{1,e^{i\frac{\pi}{4}},e^{i\frac{\pi}{2}},e^{i\frac{3\pi}{4}},-1,e^{i\frac{5\pi}{4}},
+            e^{i\frac{3\pi}{2}},e^{i\frac{7\pi}{4}}
+            \right\}$$
+          which is just powers of $e^{i\frac{2\pi}{8}}$ and is also all the roots we found above.
+    \item $e^{i\frac{2\pi}{8}}=\alpha\implies \alpha^8=e^{2\pi i}=1$ which is just $x^8-1$ as before.
+    \item Since we showed before that $e^{i\pi/2}=i$ is an element of the basis and since
+          $e^{i\frac{\pi}{4}}=\frac{1}{\sqrt{2}}\left(1+i\right)=\frac{\sqrt{2}}{2}\left(1+i\right)$ is also an element of the basis
+          and we can make things like $(1+i)$ and $1/2$ in $\mathbb{Q}(i)$ so we need to create
+          $\sqrt{2}$ in $\mathbb{Q}(i)$ which requires creating $\mathbb{Q}(i)(\sqrt{2})=\mathbb{Q}(\sqrt{2},i)$. The other elements of the
+          basis are all $\pm 1$, $\pm i$, or some linear combination of the two multiplied by $1/\sqrt{2}$, all of which we can make in
+          $\mathbb{Q}(\sqrt{2},i)$, hence $E=\mathbb{Q}(e^{i\frac{2\pi}{8}})=\mathbb{Q}(\sqrt{2},i)$.
+    \item $G(\mathbb{Q}(\sqrt{2},i)/\mathbb{Q})$ is all automorphisms of $\mathbb{Q}(\sqrt{2},i)$ that fix $\mathbb{Q}$.
+          We showed in class that these can only be the conjugation maps,
+          $$G(\mathbb{Q}(\sqrt{2},i)/\mathbb{Q})=\left\{\iota, \psi_{\sqrt{2},-\sqrt{2}}, \psi_{i,-i}, \psi_{\sqrt{2},-\sqrt{2}}\circ \psi_{i,-i}\right\}$$
+          where $\circ$ represents composition.
+          The Cayley table for this looks like
+          \begin{center}
+            \begin{tabular}{c | c c c c}
+              $\circ $                                     & $\iota$                                      & $\psi_{\sqrt{2},-\sqrt{2}}$                  & $\psi_{i,-i}$                                & $\psi_{\sqrt{2},-\sqrt{2}}\circ \psi_{i,-i}$ \\
+              \cline{1-5}
+              $\iota$                                      & $\iota$                                      & $\psi_{\sqrt{2},-\sqrt{2}}$                  & $\psi_{i,-i}$                                & $\psi_{\sqrt{2},-\sqrt{2}}\circ \psi_{i,-i}$ \\
+              $\psi_{\sqrt{2},-\sqrt{2}}$                  & $\psi_{\sqrt{2},-\sqrt{2}}$                  & $\iota$                                      & $\psi_{\sqrt{2},-\sqrt{2}}\circ \psi_{i,-i}$ & $\psi_{i,-i}$                                \\
+              $\psi_{i,-i}$                                & $\psi_{i,-i}$                                & $\psi_{\sqrt{2},-\sqrt{2}}\circ \psi_{i,-i}$ & $\iota$                                      & $\psi_{\sqrt{2},-\sqrt{2}}$                  \\
+              $\psi_{\sqrt{2},-\sqrt{2}}\circ \psi_{i,-i}$ & $\psi_{\sqrt{2},-\sqrt{2}}\circ \psi_{i,-i}$ & $\psi_{i,-i}$                                & $\psi_{\sqrt{2},-\sqrt{2}}$                  & $\iota$
+            \end{tabular}
+          \end{center}
+          where I've implicitly used the commutativity of $\circ$ that is present here because the maps don't interact with eachother.
+          This is a little messy so I'll rewrite it by taking
+          $$\left\{\iota, \psi_{\sqrt{2},-\sqrt{2}}, \psi_{i,-i}, \psi_{\sqrt{2},-\sqrt{2}}\circ \psi_{i,-i}\right\}=\left\{1, a, b, ab\right\}$$
+          in that order
+          \begin{center}
+            \begin{tabular}{c | c c c c}
+              $\circ $ & $1$  & $a$  & $b$  & $ab$ \\
+              \cline{1-5}
+              $1$      & $1$  & $a$  & $b$  & $ab$ \\
+              $a$      & $a$  & $1$  & $ab$ & $b$  \\
+              $b$      & $b$  & $ab$ & $1$  & $a$  \\
+              $ab$     & $ab$ & $b$  & $a$  & $1$
+            \end{tabular}
+          \end{center}
+          which is clearly the same as the Klein-4 group under addition mod $2$. This is the isomorphism class.
+  \end{enumerate}
+\end{soln}
+
+% PROBLEM 2
+\begin{problem}
+Let $\sigma: F\to F'$ be an isomorphism of fields $F$ and $F'$. Define the map
+$\tau:F[x]\to F'[x]$ by
+$$\tau(a_0+a_1x+\dots+a_nx^n)=\sigma(a_0)+\sigma(a_1)x+\dots+\sigma(a_n)x^n$$
+which extends $\sigma$. Show that $\tau$ is a ring isomorphism.
+\end{problem}
+\begin{soln}
+  To show this we need to show bijectivity and that $\tau$ is a ring homomorphism, i.e. preserves addition and multiplication.
+  Here invertibility and therefore bijectivity is ``inherited'' from $\sigma$. $\tau^{-1}$ defined by
+  $$\tau^{-1}(a_0+a_1x+\dots+a_nx^n)=\sigma^{-1}(a_0)+\sigma^{-1}(a_1)x+\dots+\sigma^{-1}(a_n)x^n$$
+  is well-defined since $\sigma^{-1}$ is well defined. For preservation of addition note that
+  $$\left[a_0+a_1x+\dots+a_nx^n\right]+\left[b_0+b_1x+\dots+b_nx^n\right]=(a_0+b_0)+(a_1+b_1)x+\dots+(a_n+b_n)x^n$$
+  where one of the polynomials may have lower degree, the coefficients would just be zero. Applying $\tau$ then we see that
+  \begin{align*}
+    \tau(\left[a_0+a_1x+\dots+a_nx^n\right]+\left[b_0+b_1x+\dots+b_nx^n\right]) & =\tau((a_0+b_0)+(a_1+b_1)x+\dots+(a_n+b_n)x^n)             \\
+                                                                                & =\sigma(a_0+b_0)+\sigma(a_1+b_1)x+\dots+\sigma(a_n+b_n)x^n
+  \end{align*}
+  and since $\sigma$ is a field isomorphism it preserves addition so,
+  $$\tau(\left[a_0+a_1x+\dots+a_nx^n\right]+\left[b_0+b_1x+\dots+b_nx^n\right])
+    =(\sigma (a_0)+\sigma (b_0))+(\sigma (a_1)+\sigma (b_1))x+\dots+(\sigma (a_n)+\sigma (b_n))x^n.
+  $$
+  Re-expanding the coefficients and separating the polynomials we get preservation of addition.
+  For preservation of multiplication recall that for the product
+  $$\left[a_0+a_1x+\dots+a_nx^n\right]\left[b_0+b_1x+\dots+b_nx^n\right]$$
+  the new polynomial has $j$th coefficient
+  $$c_j=\sum_{i+k=j} a_ib_k.$$
+  Applying $\tau$ to the product is then equivalent to applying $\sigma$ to $c_j$. Since $\sigma$ is a field isomorphism
+  it preserves multiplication. This gives the desired result by pulling the polynomials apart again.
+\end{soln}
+
+% PROBLEM 3
+\begin{problem}
+Show that $x^{21} + 2x^9 + 1$ has zeros of multiplicity greater than $1$ in some extension
+of $\mathbb{Z}_3$.
+\end{problem}
+\begin{soln}
+Since 
+$$x^{21} + 2x^9 + 1=(x^{7} + 2x^3 + 1)^3$$
+and so 
+$$D(x^{21} + 2x^9 + 1)=3(x^{7} + 2x^3 + 1)^2(7x^{6} + 6x^2)$$
+which share common factor $(x^{7} + 2x^3 + 1)$ and so by theorem 15.19 in the notes
+$x^{21} + 2x^9 + 1$ has a zero of multiplicity greater than $1$.
+\end{soln}
+
+% PROBLEM 4
+\begin{problem}
+Let $F$ be a field, $a\in F$ and $f(x) \in F[x]$. Show that $f(x)$ and $f(x+a)$ have the
+same splitting field over $F$.
+\end{problem}
+\begin{soln}
+  Let $E$ be the splitting field of $F$. Then if $E$ is created by adjoining elements
+  $\alpha_i$ to $F$ (which is fine, there are only a finite number of roots I think),
+  $E'$, the splitting field for $f(x+a)$ is created by adjoining $\alpha_i-a$ for $F$.
+  Since $a \in F$ adjoining a bunch of copies of it doesn't change anything, all that matters is adjoining the $\alpha_i$s.
+  Since then in both cases we are just adding all the $\alpha_i$s, $E'=E$.
+\end{soln}
+
+% PROBLEM 5
+\begin{problem}
+Show that $\mathbb{Q}(4-i)=\mathbb{Q}(1+i)$.
+\end{problem}
+\begin{soln}
+  Since $\mathbb{Q}(4-i)$ contains things like $a+b(4-i)=(a+4b)-bi$ and $\mathbb{Q}(1+i)$ contains things like
+  $a'+b'(1+i)=(a'+b')+b'i$ we can see they each contain $\mathbb{Q}(i)$. We can also see that for
+  $(a+4b)-bi=1+i$, $b=-1$ and $a=5$, both of which are in $\mathbb{Q}$, hence $\mathbb{Q}(1+i)\subseteq \mathbb{Q}(4-i)$.
+  Then for $(a'+b')+b'i=4-i$, $b'=-1$ and $a'=5$ which again are both in $\mathbb{Q}$ so $\mathbb{Q}(4-i)\subseteq \mathbb{Q}(1+i)$, hence
+  $\mathbb{Q}(4-i)=\mathbb{Q}(1+i)$.
+\end{soln}
+\end{document}
