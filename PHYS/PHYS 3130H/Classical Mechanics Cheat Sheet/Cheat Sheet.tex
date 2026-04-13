@@ -1,0 +1,44 @@
+\documentclass[10pt,landscape,letterpaper]{cheatsheet}
+
+\usepackage{amsmath,amsthm,amssymb,bm}
+\usepackage{graphicx,lipsum}
+\usepackage{enumitem}
+
+\usepackage{mdframed}
+\usepackage{cancel}
+
+
+\newcommand{\PRLsep}{\noindent\makebox[\linewidth]{\resizebox{0.3333\linewidth}{1pt}{$\bullet$}}\bigskip}
+\newcommand\longdiv[2]{%
+$\strut#1$\kern.25em\smash{\raise.3ex\hbox{$\big)$}}$\mkern-8mu
+        \overline{\enspace\strut#2}$}
+
+\newcommand{\bv}[1]{\bm{\mathrm{#1}}}     
+\newcommand{\uv}[1]{\hat{\bv{{#1}}}} 
+\newcommand{\ui}{\uv{i}}
+\newcommand{\uj}{\uv{j}}
+\newcommand{\uk}{\uv{k}}
+\newcommand{\ux}{\uv{x}}
+\newcommand{\uy}{\uv{y}}
+\newcommand{\uz}{\uv{z}}
+\newcommand{\grad}{\bv{\nabla}}
+
+\title{PHYS 3130H Cheat Sheet}
+\author{Jeremy Favro}
+\date{\today\\Revision 1}
+
+\begin{document}
+
+\maketitle
+
+\section*{Chapter 10}
+$$\left(\frac{d\bv{Q}}{dt}\right)_{\mathrm{fixed}}=\left(\frac{d\bv{Q}}{dt}\right)_{\mathrm{rotating}}+\bv{\omega}\times \bv{Q}$$
+$$\bv{F}_{\mathrm{eff}}=\bv{S}+m\bv{g}_0-m\bv{\omega}\times\left[\bv{\omega}\times (\bv{r}+\bv{R})\right]-2m\bv{\omega}\times \bv{v}_r$$
+\section*{Chapter 5}
+???? 
+\section*{Chapter 8}
+$\bv{v}=\dot{r}\uv{r}+r\dot{\theta}\uv{\theta}$\\
+$\dot{r}=\pm\sqrt{\frac{2(E-U)}{\mu}-\left(\frac{L}{\mu r}\right)^2}$\\
+$\theta(r)=\pm \displaystyle \int \dfrac{L}{r^2\sqrt{2\mu(E-U-\frac{L^2}{2\mur^2})}}dr$\\
+$-\frac{r^2\mu}{L^2}F(r)=\frac{d^2}{d \theta^2}(\frac{1}{r(\theta)})+\frac{1}{r}$
+\end{document}
