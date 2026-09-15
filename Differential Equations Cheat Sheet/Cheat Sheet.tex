@@ -213,7 +213,7 @@ $$
 \section*{Bessel Functions}
 \subsection*{Normal}
 An ODE of the form
-$x^2\phi_{xx}+x\phi_x+(n^2-\lambda^2x^2)\phi=0$
+$x^2\phi_{xx}+x\phi_x+(\lambda^2x^2-n^2)\phi=0$
 is solved by the Bessel functions
 $\phi_n=C_1J_n(\lambda x)+C_2Y_n(\lambda x)$.
 Generally $C_2=0$ as $Y_n(0)\to -\infty$.
@@ -228,7 +228,7 @@ $I_n(\infty)\to\infty$ as well.
 A Sturm-Liouville problem is given by 
 $L\left[\phi\right]+\lambda w(x)\phi(x)=0$. 
 $L$ is a self-adjoint linear differential operator. For 
-$\L[\phi]=P_0\phi_{xx}+P_1\phi_x+P_2\phi$ this means that 
+$L[\phi]=P_0\phi_{xx}+P_1\phi_x+P_2\phi$ this means that 
 $P_0^\prime=P_1$. Distinct $\phi_n$ are orthogonal with respect to $w(x)$.
 The coefficients of the eigenfunction expansion for $f(x)$ are 
 $a_n=\int_a^bw(x)f(x)\phi_n(x)\,dx/\int_a^bw(x)\phi_n^2(x)\,dx$. We can transform a 

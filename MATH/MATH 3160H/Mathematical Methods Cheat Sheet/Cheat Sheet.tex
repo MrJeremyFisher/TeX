@@ -57,7 +57,7 @@ $\Gamma(p)\Gamma(1-p)=\int_{0}^{\infty}\frac{x^{p-1}}{1+x}\,dx\,0<p<1$\\
 $\Gamma(p)\approx\sqrt{\frac{2\pi}{p}}\left(\frac{p}{e}\right)^p,p\to\infty$
 \subsection{Beta Function}
 $\beta(p,q)=\beta(q,p)=\int_{0}^{1}x^{p-1}(1-x)^{q-1}\,dx\,p,q>0$\\
-$\beta(p,q)=\frac{1}{{b-a}^{p+q-1}}\int_{a}^{b}(x-a)^{p-1}(b-x)^{q-1}$\\
+$\beta(p,q)=\frac{1}{({b-a})^{p+q-1}}\int_{a}^{b}(x-a)^{p-1}(b-x)^{q-1}$\\
 $\beta(p,q)=2\int_{0}^{\pi/2}\sin^{2p-1}(\theta)\cos^{2q-1}(\theta)d\theta$\\
 $\beta(p,q)=\frac{\Gamma(p)\Gamma(q)}{\Gamma(p+q)}$
 \subsection{Error Function}
@@ -70,7 +70,7 @@ $\erf(x)\approx\frac{e^{-x^2}}{x\sqrt{\pi}}\left[1-\frac{1}{2x^2}+\frac{1\cdot 3
 \subsection{Legendre Polynomials}
 ODEs of the form 
 $(1-x^2)y''-2xy'+\ell(\ell+1)y=0$
-is solved by
+are solved by
 $c_1Q_\ell(x)+c_2P_\ell(x)$.\\
 $P_\ell(x)=\frac{1}{2^\ell}\sum_{m=0}^M\frac{(-1)^m(2\ell-2m)!}{m!(\ell-m)!(\ell-2m)!}$\\
 where
@@ -88,4 +88,57 @@ $xP_\ell'(x)-P_{\ell-1}'(x)=\ell P_\ell(x)$\\
 $P_{\ell+1}'(x) -xP_\ell'(x)=(\ell+1)P_\ell(x)$\\
 $(2\ell+1)P_\ell(x)=P_{\ell+1}'(x)-P_{\ell-1}'(x)$\\
 $(1-x^2)P_\ell'(x)=\ell P_{\ell-1}(x)-\ell x P_\ell(x)$
+\subsubsection{Orthogonality}
+$\int_{-1}^{1}P_n(x)P_m(x)=\frac{2}{2n+1}\delta_{nm}$\\
+
+\subsection{Bessel Functions}
+ODEs of the form \\
+$x^2y''+xy'+(\lambda^2x^2-\nu^2)y=0$
+are solved by
+$y=c_1J_\nu(\lambda x)+c_2Y_\nu(\lambda x)$.\\
+$J_\nu(x)=\sum_{m=0}^\infty\frac{(-1)^mx^{2m+\nu}}{2^{2m+\nu}\Gamma(m+\nu+1)}$\\
+$Y_\nu(x)=J_\nu(x)\ln(x) + \sum_{m=0}^\infty \frac{(-1)^m}{2^{2m}(m!)^2}x^{m+\nu}\cdot\sum_{n=1}^m\frac{1}{n}$.\\
+ODEs of the form \\
+$x^2y''+xy'-(\lambda^2x^2+\nu^2)y=0$
+are solved by
+$y=c_1I_\nu(\lambda x)+c_2K_\nu(\lambda x)$.\\
+$I_\nu(x)=i^{-\nu}J_\nu(ix)$\\
+$K_\nu(x)=\frac{\pi}{2}\frac{I_{-\nu}(x)-I_\nu(x)}{\sin(\nu\pi)}$. $I$ diverges for large $x$ and $K$ diverges for $x\to 0$.
+ODEs of the form \\
+$x^2y''+(1-2a)xy'+(b^2c^2x^{2c}+(a^2-p^2c^2))y=0$
+are solved by
+$y=c_1x^aJ_p(bx^c)+c_2x^aY_p(bx^c)$.\\
+\subsubsection{Generating Function}
+Useful in proving recurrence relations
+$\Psi(x,h)=e^{\frac{1}{2}x(h-1/h)}=\sum_{n=-\infty}^{\infty}h^n J_n(x)$
+\subsubsection{Properties}
+$\frac{d}{dx}(x^\nu J_\nu(x))=x^\nu J_{\nu-1}(x)$\\
+$\frac{d}{dx}(x^{-\nu} J_\nu(x))=-x^{-\nu} J_{\nu+1}(x)$\\
+$J_{\nu-1}(x)+J_{\nu+1}=\frac{2\nu}{x}J_\nu$\\
+$J_{\nu}'=\frac{1}{2}\left[J_{\nu-1}(x)+J_{\nu+1}\right]$\\
+$xJ_{\nu}'=\nu J_{\nu}(x)-xJ_{\nu+1}$\\
+$J_{1/2}(x)=\sqrt{\frac{2}{\pi x}}\sin(x)$\\
+$J_{-1/2}(x)=\sqrt{\frac{2}{\pi x}}\cos(x)$\\
+$J_{3/2}(x)=\sqrt{\frac{2}{\pi x}}\left[\frac{\sin(x)}{x}-\cos(x)\right]$\\
+$J_{-3/2}(x)=-\sqrt{\frac{2}{\pi x}}\left[\frac{\cos(x)}{x}+\sin(x)\right]$
+\subsubsection{Orthogonality}
+$\int_0^1xJ_\nu(a_nx)J_\nu(b_mx)dx=\frac{1}{2}(J_\nu'(a))^2\delta_{nm}$
+where $a_n$ and $b_m$ are the $n$th and $m$th zeroes of $J_\nu$.
+\section{Self-Adjoint Operators and Sturm-Liouville}
+A Sturm-Liouville problem is given by 
+$L\left[\phi\right]+\lambda w(x)\phi(x)=0$. 
+$L$ is a self-adjoint linear differential operator. For 
+$L[\phi]=P_0\phi_{xx}+P_1\phi_x+P_2\phi$ this means that 
+$P_0^\prime=P_1$. Distinct $\phi_n$ are orthogonal with respect to $w(x)$.
+The coefficients of the eigenfunction expansion for $f(x)$ are 
+$a_n=\int_a^bw(x)f(x)\phi_n(x)\,dx/\int_a^bw(x)\phi_n^2(x)\,dx$. We can transform a 
+non-self-adjoint $L$ to a self adjoint one by multiplying by 
+$P_0^{-1}\exp(\int P_1(x)/P_0(x)\,dx)$
+\section*{Fourier Series}
+For some function $f(x)$ periodic with period $2L$:\\
+$a_0=\frac{1}{2L}\int_{-L}^{L}f(x)\,dx$\\
+$a_n=\frac{1}{L}\int_{-L}^{L}f(x)\cos\left(\dfrac{n\pi x}{L}\right)\,dx$\\
+$b_n=\frac{1}{L}\int_{-L}^{L}f(x)\sin\left(\dfrac{n\pi x}{L}\right)\,dx$\\
+and
+$f(x)=a_0+\sum_{n=1}^{\infty}a_n\cos\frac{n\pi x}{L}+b_n\sin\frac{n\pi x}{L}$
 \end{document}

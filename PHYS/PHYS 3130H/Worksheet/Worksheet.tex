@@ -1,0 +1,291 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsmath,amsthm,amssymb,bm}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{changepage}
+\usepackage{circuitikz}
+\usepackage{pgfplots}
+\usepackage{physics}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usepackage{hyperref}
+\usepackage{siunitx}
+\usepackage{fontspec}
+\usepackage{relsize}
+\usepackage{subfig}
+\usepackage{todonotes}
+\usepackage{multicol, multirow, booktabs}
+\usepackage[breakable]{tcolorbox}
+\usepackage[inline]{enumitem}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{soln}{Solution}
+
+\pgfplotsset{compat=newest}
+\usetikzlibrary{lindenmayersystems}
+\usetikzlibrary{arrows}
+\usetikzlibrary{calc}
+\usetikzlibrary{positioning, fit}
+\usetikzlibrary{3d, perspective}
+\usetikzlibrary{math}
+\usetikzlibrary{fadings}
+\usetikzlibrary{angles,quotes} 
+
+\definecolor{incolor}{HTML}{303F9F}
+\definecolor{outcolor}{HTML}{D84315}
+\definecolor{cellborder}{HTML}{CFCFCF}
+\definecolor{cellbackground}{HTML}{F7F7F7}
+\newcommand{\ui}{\hat{i}}
+\newcommand{\uj}{\hat{j}}
+\newcommand{\uk}{\hat{k}}
+\newcommand{\ux}{\hat{x}}
+\newcommand{\uy}{\hat{y}}
+\newcommand{\uz}{\hat{z}}
+\newcommand{\uv}[1]{\hat{\bv{{#1}}}}
+\newcommand{\pr}[1]{{#1}^\prime}
+\pgfdeclarelayer{background}  
+\pgfsetlayers{background,main}
+\AtBeginDocument{\RenewCommandCopy\qty\SI}
+\newcommand{\justif}[2]{&{#1}&\text{#2}}
+
+\makeatletter
+\newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+\makeatother
+\newcommand{\prompt}[4]{
+    \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+}
+
+\newcommand{\thevenin}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (2,0) to[battery1, l_=$V_{Th}\eq#1$] (2,2) 
+      to[resistor, l_=$R_{Th}\eq#2$] (0,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\norton}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (3,0) to[american current source, l_=$I_{N}\eq#1$] (3,2) -- (0,2) (2,0)
+      to[resistor, l=$R_{N}\eq#2$] (2,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\DeclareMathOperator{\Div}{div}
+\DeclareMathOperator{\Curl}{curl}
+
+\DeclareSIUnit\mile{m}
+
+\newlength\stdbls % standard baselineskip
+\AtBeginDocument{%
+  \setlength\stdbls{\baselineskip}%
+  \gdef\stdblsn{\strip@pt\stdbls}%
+} 
+
+\newfontface{\Kaufmann}{Kaufmann}
+\DeclareTextFontCommand{\kf}{\Kaufmann}
+\newcommand{\scriptr}{\fontsize{12pt}{\stdbls}\kf{r}\fontsize{10pt}{\stdbls}}
+
+\newfontface{\KaufmannB}{Kaufmann Bold}
+\DeclareTextFontCommand{\kfb}{\KaufmannB}
+\newcommand{\bscriptr}{\fontsize{12pt}{\stdbls}\kfb{r}\fontsize{10pt}{\stdbls}}
+
+\newcommand{\highlight}[1]{\colorbox{yellow}{$\displaystyle #1$}}
+
+\newcommand{\ti}[1]{\widetilde{#1}}
+
+\newcommand{\bv}[1]{\bm{\mathrm{#1}}}
+
+\title{Physics 3130H: Worksheet}
+\author{Jeremy Favro (0805980) \\ Trent University, Peterborough, ON, Canada}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+% PROBLEM 1
+\begin{problem}
+\begin{enumerate}[label=(\alph*)]
+  \item Function representing curl is a \rule{1cm}{0.15mm}
+  \item Function representing gradient is a \rule{1cm}{0.15mm}
+  \item gravitational field is a \rule{1cm}{0.15mm}
+  \item gravitational potential is a \rule{1cm}{0.15mm}
+  \item forces are \rule{1cm}{0.15mm}
+  \item force component is a \rule{1cm}{0.15mm}
+  \item Speed is a \rule{1cm}{0.15mm}
+  \item velocity is a \rule{1cm}{0.15mm}
+  \item angular velocity is a \rule{1cm}{0.15mm}
+  \item angular acceleration is a \rule{1cm}{0.15mm}
+  \item potential energy is a \rule{1cm}{0.15mm}
+  \item kinetic energy is a \rule{1cm}{0.15mm}
+\end{enumerate}
+\end{problem}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item Function representing curl is a \textbf{vector}.
+    \item Function representing gradient is a \textbf{vector}.
+    \item gravitational field is a \textbf{vector}.
+    \item gravitational potential is a \textbf{scalar}.
+    \item forces are \textbf{vectors}.
+    \item force component is a \textbf{scalar}.
+    \item speed is a \textbf{scalar}.
+    \item velocity is a \textbf{vector}.
+    \item angular velocity is a \textbf{vector}.
+    \item angular acceleration is a \textbf{vector}.
+    \item potential energy is a \textbf{scalar}.
+    \item kinetic energy is a \textbf{scalar}.
+  \end{enumerate}
+\end{soln}
+\newpage
+
+% PROBLEM 2
+\begin{problem}
+An object moves in the $xy$-plane in such a way that its position vector $\bv{r}$ is given as a function
+of time $t$ by $\bv{r}=a\cos \omega t \ui + b\sin\omega t\uj$ where $a$, $b$, and $\omega$ are constants.
+\begin{enumerate}[label=(\alph*)]
+  \item How far is the object from the origin at any time t?
+  \item Find the object's velocity and acceleration as a function of time.
+  \item Show that the object moves on the elliptical path.
+\end{enumerate}
+\end{problem}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item If we take the origin to be $\bv{O}=(0,0,0)$ then its distance from the origin is
+          $r=\sqrt{a^2\cos^2 \omega t + b^2\sin^2\omega t}$.
+    \item $\bv{v}=d\bv{r}/dt=-a\omega\sin \omega t \ui + b\omega\cos\omega t\uj$.
+          $\bv{a}=d\bv{v}/dt=-a\omega^2\cos \omega t \ui - b\omega^2\sin\omega t\uj$.
+    \item It is clear enough to see the elliptic motion which arises from these equations. The object's position ($r$, distance from the origin)
+          is a strictly oscillating function, i.e. the object is confined to orbit around the origin.
+  \end{enumerate}
+\end{soln}
+
+% PROBLEM 3
+\begin{problem}
+Calculate the divergence of each of the following functions:
+\begin{enumerate}[label=(\alph*)]
+  \item $x^2\ui+y^2\uj+z^2\uk$.
+  \item $zy\ui+xz\uj+xy\uk$.
+  \item $e^{-x}\ui+e^{-y}\uj+e^{-z}\uk$.
+\end{enumerate}
+\end{problem}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item $\bv{\nabla}\cdot(x^2\ui+y^2\uj+z^2\uk)=2x+2y+2z$.
+    \item $\bv{\nabla}\cdot(zy\ui+xz\uj+xy\uk)=0$.
+    \item $\bv{\nabla}\cdot(e^{-x}\ui+e^{-y}\uj+e^{-z}\uk)=-e^{-x}-e^{-y}-e^{-z}$.
+  \end{enumerate}
+\end{soln}
+
+% PROBLEM 4
+\begin{problem}
+Calculate the curl of each of the following functions:
+\begin{enumerate}[label=(\alph*)]
+  \item $xy\ui+yz\uj-y^2\uk$.
+  \item $xe^{-x}\ui+e^{-y}\uj+e^{-z}\uk$.
+  \item $x\ui+y\uj+(x^2+y^2)\uk$.
+\end{enumerate}
+\end{problem}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item $\bv{\nabla}\times (xy\ui+yz\uj-y^2\uk)=\left[-2y-y\right]\ui+0\uj+x\uk$.
+    \item $\bv{\nabla}\times (xe^{-x}\ui+e^{-y}\uj+e^{-z}\uk)=\bv{0}$.
+    \item $\bv{\nabla}\times (x\ui+y\uj+(x^2+y^2)\uk)=2y\ui+2x\uj+0\uk$.
+  \end{enumerate}
+\end{soln}
+
+% PROBLEM 5
+\begin{problem}
+For any central force show that curl of $\bv{F}$ is zero. (use spherical polar coordinates: Refer to
+the lecture slides in gravitation chapter and central forces chapter)
+\end{problem}
+\begin{soln}
+  Central forces are forces of the form $\bv{F}(\bv{r})=F(r)\uv{r}$. Curl in spherical coordinates is given by
+  \begin{align*}
+    \bv{\nabla}\times \bv{v} & =\frac{1}{r\sin\theta}\left[\partial_\theta(\sin\theta v_\phi) -\partial_\phi v_\theta\right]\uv{r} \\
+                             & +\frac{1}{r}\left[\frac{1}{\sin\theta}\partial_\phi v_r-\partial_r(rv_\phi)\right]\uv{\theta}       \\
+                             & +\frac{1}{r}\left[\partial_r(rv_\theta)-\partial_\theta v_r\right]\uv{\phi}.
+  \end{align*}
+  Clearly since the curl does not contain a term like $\partial_rv_r$ it wil be zero. Note that under this definition a central force is one
+  which is spherically symmetric. A nonsymmetric central force which looks like $\bv{F}(\bv{r})=F(r,\theta,\phi)\uv{r}$ may not have
+  vanishing curl.
+\end{soln}
+
+% PROBLEM 6
+\begin{problem}
+Objective is to find the
+gravitational field. For the following configurations write down the corresponding
+integrals:
+\begin{enumerate}[label=(\alph*)]
+  \item A rod of length $L$ (at a point $R$ along the length ($R>L/2$) from the center, at a point $R$
+        perpendicular to the length from the center of the rod)
+  \item A spherical shell (at a point inside the shell, in between the inner and outer radius, at a
+        point outside the sphere)
+  \item A hollow sphere (at a point inside the shell, and outside the shell)
+  \item A solid sphere (at a point inside the shell, and outside the shell)
+\end{enumerate}
+\end{problem}
+\begin{soln}
+  Note that for the most part here I am just looking at setting up the integrals. I'm not going to make simplifications.
+  \begin{enumerate}[label=(\alph*)]
+    \item The general form for gravitational field is (using the notational conventions from Griffiths' electrodynamics)
+          $$\bv{g}=-G\int\frac{\rho(\bv{r}')\uv{\bscriptr}}{\scriptr^2}d^3r'.$$
+          Here we ought to take advantage of cylindrical symmetry and integrate over $s,\phi,z$. Additionally,
+          we take this rod, given that we are not told a radius, to have a linear mass density $\lambda(\bv{r}')$.
+          If we are at a point $R$ along the length of the rod then $\bv{r}=0\uv{s}+0\uv{\phi}+R\uz$ and
+          $\bv{r}'=z'\uz$ so $\bv{\bscriptr}=R-z'\uz$ and the integral becomes
+          $$\bv{g}=-G\int_0^L \frac{\lambda(z')\left[R-z'\right]}{\left|R-z'\right|^{3}}dz'\uz.$$
+          When we are at a distance $R$ from the center of the rod along $\uv{s}$ we have that
+          $\bv{r}=R\uv{s}$ and $\bv{r}'$ is unchanged. This gives $\bv{\bscriptr}=R\uv{s}-z'\uv{z}$ and so
+          $$\bv{g}=-G\int_0^L \frac{\lambda(z')\left[R\uv{s}-z'\uv{z}\right]}{\left[R^2+(z')^2\right]^{3/2}}dz'.$$
+    \item Inside the shell (of volume mass density $\bv{\rho}(\bv{r}')$), $\bv{r}=x\ux+y\uy+z\uz$,
+          $\bv{r}'=x'\ux+y'\uy+z'\uz=r'\sin\theta'\cos\phi'\ux+r'\sin\theta'\sin\phi'\uy+r'\cos\theta'\uz$ and
+          so
+          $$\bv{\bscriptr}=(x-r'\sin\theta'\cos\phi')\ux+(y-r'\sin\theta'\sin\phi')\uy+(z-r'\cos\theta')\uz.$$
+          The integral then becomes
+          $$\bv{g}=-G\int_0^{2\pi}\int_0^\pi\int_0^R \frac{\rho(\bv{r}')\left[(x-r'\sin\theta'\cos\phi')\ux+(y-r'\sin\theta'\sin\phi')\uy+(z-r'\cos\theta')\uz\right]}{\left[(x-r'\sin\theta'\cos\phi')^2+(y-r'\sin\theta'\sin\phi')^2+(z-r'\cos\theta')^2\right]^{3/2}}(r')^2\sin\theta'dr'd\theta'd\phi'$$
+          where I'm assuming the mass density will account for the hollow portion. If this is not the case the bounds on the $r'$ integral could be adjusted to integrate
+          only over the real mass. Between the inner and outer shell the integral remains the same, the values of $x,y,z$ would just change.
+          The same is the case for outside the sphere.
+    \item I'll skimp on the details because I think I get the point. The integral is
+          $$\bv{g}=-G\int_0^{2\pi}\int_0^\pi\frac{\sigma(\bv{r}')\left[(x-R\sin\theta'\cos\phi')\ux+(y-R\sin\theta'\sin\phi')\uy+(z-R\cos\theta')\uz\right]}{\left[(x-R\sin\theta'\cos\phi')^2+(y-R\sin\theta'\sin\phi')^2+(z-R\cos\theta')^2\right]^{3/2}}(R)^2\sin\theta'd\theta'd\phi'$$
+          where I've assumed the shell has surface mass density $\sigma$ and radius $R$. Again this integral is the same inside and out, the values of $x,y,z$ will just change.
+    \item This is the same integral as in part (b), just with $\rho(\bv{r}')$ nonzero for the entire sphere. In the case we would not have to change the bounds
+          on the $r'$ integral as we are integrating over the entire spherical volume.
+  \end{enumerate}
+\end{soln}
+
+% PROBLEM 7
+\begin{problem}
+Calculate the Coriolis force for an object falling vertically down in the southern
+hemisphere. I am interested to see the components of the vector quantities involved, the
+vector product, and the direction of the lateral deflection.
+\end{problem}
+\begin{soln}
+  The Coriolis force is given by $-2m\bv{\omega}\times \bv{v}_r$ where
+  $\bv{\omega}$ is the angular velocity of the rotating body which causes the force and
+  $\bv{v}_r$ is the velocity of the falling object as measured in the rotating frame, which here is the surface of the Earth.
+  Recall that in class we defined $\bv{\omega}=-\omega\cos\lambda\ux+\omega\sin\lambda\uz$ with $\ux$ pointing south, $\uy$ pointing east, and $\uz$ normal to the Earth's surface.
+  $\omega$ is the angular \emph{speed} and $\lambda$ is the latitude, running from $+\pi/2$ at the north pole to $0$ at the equator and $-\pi/2$ at the south pole.
+  Since we are in the southern hemisphere, $\abs{\lambda}=-\lambda$ so $\bv{\omega}=-\omega\cos\ux-\omega\sin\abs{\lambda}\uz$. Assuming the object starts
+  from rest and begins falling (e.g. it wasn't thrown upwards, or if it was we start our measurement from the throw's apex) then $\bv{v}_r=-gt\uz$
+  if we take gravity to be along $\uz$ alone which is not quite correct but is sufficient. This then gives a cross product of the form
+  $$-\bv{\omega}\times\bv{v}_r=-\begin{vmatrix}
+      \ux                & \uy & \uz                      \\
+      -\omega\cos\lambda & 0   & -\omega\sin\abs{\lambda} \\
+      0                  & 0   & -gt                      \\
+    \end{vmatrix}=0\ux+gt\omega\cos\lambda\uy+0\uz$$
+  so the deflection is entirely along $\uy$ and points east.
+\end{soln}
+\end{document}
