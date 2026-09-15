@@ -75,16 +75,19 @@ def printcayley(op: operator):
             print("\\\\")
         else:
             print("")
-    print("\\end{tabular}")
+    if latex:
+        print("\\end{tabular}")
     if closed:
         print("closed!")
     else:
         print("not closed,", badval)
 
 
-S = [1,5,7,11]
-mod = 12
-latex = True
+S = [11, 0, 22, 33]
+S.sort()
+print(S)
+mod = 34
+latex = False
 
 printcayley(plus)
 print("")
