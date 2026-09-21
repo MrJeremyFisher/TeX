@@ -1,0 +1,250 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsmath,amsthm,amssymb,bm}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{changepage}
+\usepackage{circuitikz}
+\usepackage{pgfplots}
+\usepackage{minted}
+\usepackage{physics}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{siunitx}
+\usepackage{fontspec}
+\usepackage{relsize}
+\usepackage{subfig}
+\usepackage{todonotes}
+\usepackage{contour}
+\usepackage{multicol, multirow, booktabs}
+\usepackage[breakable]{tcolorbox}
+\usepackage[inline]{enumitem}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{soln}{Solution}
+
+\pgfplotsset{compat=newest}
+\usetikzlibrary{lindenmayersystems}
+\usetikzlibrary{arrows}
+\usetikzlibrary{calc}
+\usetikzlibrary{positioning, fit}
+\usetikzlibrary{3d, perspective}
+\usetikzlibrary{math}
+\usetikzlibrary{fadings}
+\usetikzlibrary{angles,quotes} 
+\usetikzlibrary{decorations.markings}
+
+\definecolor{incolor}{HTML}{303F9F}
+\definecolor{outcolor}{HTML}{D84315}
+\definecolor{cellborder}{HTML}{CFCFCF}
+\definecolor{cellbackground}{HTML}{F7F7F7}
+\newcommand{\ui}{\hat{i}}
+\newcommand{\uj}{\hat{j}}
+\newcommand{\uk}{\hat{k}}
+\newcommand{\ux}{\hat{\mathbf{x}}}
+\newcommand{\uy}{\hat{\mathbf{y}}}
+\newcommand{\uz}{\hat{\mathbf{z}}}
+\newcommand{\uv}[1]{\hat{\bv{{#1}}}}
+\newcommand{\pr}[1]{{#1^\prime}}
+\newcommand{\pd}[2][]{{\frac{\partial^{#1}}{\partial {{#2}^{#1}}}}}
+\newcommand{\dif}[2][]{{\frac{d^{#1}}{d{{#2}^{#1}}}}}
+\newcommand{\grd}{\nabla}
+
+\pgfdeclarelayer{background}  
+\pgfsetlayers{background,main}
+\AtBeginDocument{\RenewCommandCopy\qty\SI}
+
+\makeatletter
+\newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+\makeatother
+\newcommand{\prompt}[4]{
+    \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+}
+
+\newcommand{\thevenin}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (2,0) to[battery1, l_=$V_{Th}\eq#1$] (2,2) 
+      to[resistor, l_=$R_{Th}\eq#2$] (0,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\norton}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (3,0) to[american current source, l_=$I_{N}\eq#1$] (3,2) -- (0,2) (2,0)
+      to[resistor, l=$R_{N}\eq#2$] (2,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\DeclareMathOperator{\Div}{div}
+\DeclareMathOperator{\Curl}{curl}
+\DeclareMathOperator{\sgn}{sgn}
+
+\newcommand{\highlight}[1]{\colorbox{yellow}{$\displaystyle #1$}}
+\newcommand{\ti}[1]{\widetilde{#1}}
+\renewcommand{\div}[1]{\bv{\nabla}\cdot #1}
+\renewcommand{\curl}[1]{\bv{\nabla}\times #1}
+
+\newfontface{\Kaufmann}{Kaufmann}
+\DeclareTextFontCommand{\kf}{\Kaufmann}
+\newcommand{\scriptr}{\fontsize{12pt}{12pt}\kf{r}\fontsize{10pt}{10pt}}
+
+\newfontface{\KaufmannB}{Kaufmann Bold}
+\DeclareTextFontCommand{\kfb}{\KaufmannB}
+\newcommand{\bscriptr}{\fontsize{12pt}{12pt}\kfb{r}\fontsize{10pt}{10pt}}
+\newcommand{\justif}[2]{&{#1}&\text{#2}}
+\newcommand{\bv}[1]{\bm{\mathrm{#1}}}
+
+\title{Physics 4220H: Assignment I}
+\author{Jeremy Favro (0805980) \\ Trent University, Peterborough, ON, Canada}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+% PROBLEM 1
+\begin{problem}
+Derive the four typical boundary conditions given below from (the complete)
+Maxwell's equations. Please include diagrams as needed (drawn by hand is fine):
+\begin{align*}
+  \bv{E}_1^\parallel-\bv{E}_2^\parallel                               & =0                    \\
+  \frac{1}{\mu_1}\bv{B}_1^\parallel-\frac{1}{\mu_2}\bv{B}_2^\parallel & =\bv{K}_f\times\uv{n} \\
+  \epsilon_1E_1^\perp-\epsilon_2E_2^\perp                             & =\sigma_f             \\
+  B_1^\perp-B_2^\perp                                                 & =0
+\end{align*}
+\end{problem}
+\begin{soln}
+
+\end{soln}
+
+% PROBLEM 2
+\begin{problem}
+Derive the charge continuity equation,
+$$\pd{t}\rho(\bv{r},t)=-\div{\bv{J}(\bv{r},t)}$$
+from (the complete) Maxwell's Equations.
+\end{problem}
+\begin{soln}
+  Amp\`ere's law states that
+  $$\curl{\bv{B}}=\mu_0\bv{J}+\mu_0\epsilon_0\frac{\partial \bv{E}}{\partial t}.$$
+  Taking the divergence of both sides of this we get that
+  $$\div{(\curl{\bv{B}})}=0=\mu_0\div{\bv{J}}+\mu_0\epsilon_0\frac{\partial}{\partial t}\div{\bv{E}}$$
+  which can be rearranged to
+  \begin{equation}
+    \div{\bv{J}}=-\epsilon_0\frac{\partial}{\partial t}\div{\bv{E}}.
+    \label{eqn:nc}
+  \end{equation}
+  Gauss' law then states that
+  \begin{equation}
+    \div{E}=\frac{\rho}{\epsilon_0}.
+    \label{eqn:gauss}
+  \end{equation}
+  Plugging \cref{eqn:gauss} into \cref{eqn:nc} we get the continuity equation,
+  $$\div{\bv{J}}=-\frac{\partial\rho}{\partial t}.$$
+\end{soln}
+
+% PROBLEM 3
+\begin{problem}~
+\begin{enumerate}[label=(\alph*)]
+  \item Show that, in linear media, the Poynting vector can be given by $\bv{S}=\bv{E}\times\bv{H}$, and that the energy density is
+        $u_{EM}=\frac{1}{2}\left(\bv{E}\cdot\bv{D}+\bv{B}\cdot \bv{H}\right)$.
+  \item Describe in words the conceptual difference between the Poynting vector and
+        the total electromagnetic energy density. Can you give an example of when
+        computing one might be more relevant than the other?
+\end{enumerate}
+\end{problem}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item I'll follow basically the same process we did in class except using Maxwell's Equations in linear media,
+          \begin{align*}
+            \div{\bv{D}}=\rho_f                               \\
+            \curl{\bv{E}}=-\frac{\partial \bv{B}}{\partial t} \\
+            \div{\bv{B}}=0                                    \\
+            \curl{\bv{H}}=\bv{J}_f+\frac{\partial \bv{D}}{\partial t}.
+          \end{align*}
+          Now the work done by an electromagnetic field on a charge in infinitesimal timestep $dt$ (over which a length $d\ell$ is traveled)
+          is $dW=\bv{F}\cdot d\bv{\ell}=q(\bv{E}+\bv{v}\times\bv{B})\cdot d\ell$. Noting that $\bv{v}=\frac{d\bv{\ell}}{dt}$ we can rewrite this as
+          $$dW=q(\bv{E}+\bv{v}\times\bv{B})\cdot \bv{v}dt.$$ Noting then that $\bv{v}\times\bv{B}$ by definition of the cross product
+          gives a vector perpendicular to $\bv{v}$ and $\bv{B}$, dotting the output with $\bv{v}$ will give zero, hence, dividing through by $dt$,
+          $$\frac{dW}{dt}=\bv{E}\cdot q\bv{v}.$$
+          Then since $q=\int_\mathcal{V}\rho(\bv{r}')dr'$,
+          $$\frac{dW}{dt}=\bv{E}\cdot \int_\mathcal{V}\rho(\bv{r}')\bv{v}dr'=\int_\mathcal{V}\bv{E}\cdot \bv{J}dr'$$
+          provided $\bv{E}$ is position independent in $\mathcal{V}$ and since $\rho \bv{v}$ is a charge moving, i.e. a current.
+          Now applying Amp\`ere's law in media,
+          $$\bv{J}=\curl{\bv{H}}-\frac{\partial \bv{D}}{\partial t},$$
+          $$\frac{dW}{dt}=\int_\mathcal{V} \bv{E}\cdot (\curl{\bv{H}})-\bv{E}\cdot \frac{\partial \bv{D}}{\partial t}dr'.$$
+          Now to fiddle with the first term we use the vector identity $\div{(\bv{E}\times\bv{H})}=(\curl{\bv{E}})\cdot\bv{H}-\bv{E}\cdot(\curl{\bv{H}})$ and obtain
+          $$\frac{dW}{dt}=\int_\mathcal{V} (\curl{\bv{E}})\cdot\bv{H}-\div{(\bv{E}\times\bv{H})}-\bv{E}\cdot \frac{\partial \bv{D}}{\partial t}dr'.$$
+          Now applying Faraday's law to the first term,
+          $$\frac{dW}{dt}=-\int_\mathcal{V} \bv{H}\cdot\frac{\partial \bv{B}}{\partial t}+\bv{E}\cdot \frac{\partial \bv{D}}{\partial t} + \div{(\bv{E}\times\bv{H})}dr'.$$
+          Now using the bit of a priori knowledge from class regarding the chain-rule differentiation trick we can look more closely at the first two terms.
+          Since $\bv{B}=\mu_0(\bv{H}+\bv{M})=\mu\bv{H}$ where $\mu=\mu_0(1+\chi_m)$ and 
+          $$\frac{1}{\mu}\frac{\partial \abs{\bv{B}}^2}{\partial t}=\frac{2}{\mu}\bv{B}\cdot\frac{\partial \bv{B}}{\partial t}=2\bv{H}\cdot\frac{\partial \bv{B}}{\partial t}$$
+          we can rewrite the first term as 
+          $$\bv{H}\cdot\frac{\partial \bv{B}}{\partial t}=\frac{1}{2}\frac{\partial \bv{B}\cdot\bv{H}}{\partial t}$$
+          and the second term using the same chain rule approach with $\bv{D}=\epsilon\bv{E}=\epsilon_0(1+\chi_e)\bv{E}$ as
+          $$\bv{E}\cdot \frac{\partial \bv{D}}{\partial t}=\frac{1}{2} \frac{\partial \bv{E}\cdot\bv{D}}{\partial t}.$$
+          The main expression then becomes 
+          $$\frac{dW}{dt}=-\int_\mathcal{V} \frac{1}{2}\frac{\partial }{\partial t}\left[\bv{B}\cdot\bv{H}+\bv{E}\cdot\bv{D}\right]dr' - \int_\mathcal{V}\div{(\bv{E}\times\bv{H})}dr'.$$
+          We can fiddle with the last term with the divergence theorem (and pull out the time derivative in the first) to obtain
+          $$\frac{dW}{dt}=-\frac{1}{2}\frac{d }{d t}\int_\mathcal{V} \left[\bv{B}\cdot\bv{H}+\bv{E}\cdot\bv{D}\right]dr' - \oint_\mathcal{S}(\bv{E}\times\bv{H})\cdot d\bv{a}.$$
+          I think at this point we can just look at Poynting's theorem in vacuum and compare the two. Performing such a comparison makes it immediately obvious that the 
+          term in the first integral is an analogue to $u_{EM}$, the electromagnetic energy density and the term in the second integral is the Poynting vector.
+    \item To my understanding, due to the way the $dW/dt$ equation is written, the $u_{EM}$ term represents the total energy stored in the fields in a volume $\mathcal{V}$. The
+    Poynting vector integral term represents the flow of energy through $\mathcal{S}$, the surface which bounds $\mathcal{V}$. \todo{Situation where one is more useful than the other?}
+  \end{enumerate}
+\end{soln}
+
+% PROBLEM 4
+\begin{problem}
+The Dirac Quantization Condition is a famous rule in quantum mechanics that states
+that if even a single magnetic monopole exists in the universe, electric charge must
+be quantized. There is a famously cute (if technically improper) way to “show” this,
+involving quantization of field angular momentum:
+
+
+Suppose that you had an electric point charge, $q_e$, separated by distance $R$ from a
+magnetic point charge (or monopole), $q_m$. Put the monopole at the origin, and the
+electric charge at $\bv{R}$. The magnetic and electric fields emanating from these charges
+would be
+$$\bv{B}=\frac{\mu_0}{4\pi}\frac{q_m}{r^3}\bv{r}$$
+and
+$$\bv{E}=\frac{1}{4\pi\epsilon_0}\frac{q_e}{\abs{\bv{r}-\bv{R}}^3}(\bv{r}-\bv{R}).$$
+\begin{enumerate}[label=(\alph*)]
+  \item Calculate the field momentum density, $\bv{p}_{EM}$, of this arrangement (known as a
+        Thompson Dipole, btw), as a function of $r$, and comment on the direction of this
+        momentum density.
+  \item From this, find the ``field angular momentum'' possessed by this arrangement, and
+        comment on
+        \begin{enumerate}[label=\roman*.]
+          \item the meaning (or strangeness) of the functional dependence of this angular
+                momentum on the distance between the two “charges”,
+          \item the direction of this angular momentum,
+          \item whether it is intuitive to you that static “charges” can set up fields arranged with
+                nonzero angular momentum.
+        \end{enumerate}
+        [Note, the integral involved is notoriously difficult, usually requiring several
+        shortcuts or tricks. If needed, you may invoke the following result:
+        $$\int\frac{R}{r}\frac{1}{\abs{\bv{r}-\bv{R}}}\left[\uv{R}-\uv{r}\left(\uv{r}\cdot\uv{R}\right)\right]dV=4\pi \uv{R}]$$
+  \item A fundamental requirement of quantum mechanics is that angular momentum be
+        quantized in units of $\hbar/2$. Use this fact, together with your result from (b) to argue for
+        Dirac quantization.
+\end{enumerate}
+\end{problem}
+\begin{soln}
+
+\end{soln}
+\end{document}
