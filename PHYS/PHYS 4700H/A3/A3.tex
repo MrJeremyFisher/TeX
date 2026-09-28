@@ -1,0 +1,150 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsmath,amsthm,amssymb,bm}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{changepage}
+\usepackage{circuitikz}
+\usepackage{pgfplots}
+\usepackage{minted}
+\usepackage{physics}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usepackage{hyperref}
+\usepackage{siunitx}
+\usepackage{fontspec}
+\usepackage{relsize}
+\usepackage{subfig}
+\usepackage{todonotes}
+\usepackage{contour}
+\usepackage{multicol, multirow, booktabs}
+\usepackage[breakable]{tcolorbox}
+\usepackage[inline]{enumitem}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{soln}{Solution}
+
+\pgfplotsset{compat=newest}
+\usetikzlibrary{lindenmayersystems}
+\usetikzlibrary{arrows}
+\usetikzlibrary{calc}
+\usetikzlibrary{positioning, fit}
+\usetikzlibrary{3d, perspective}
+\usetikzlibrary{math}
+\usetikzlibrary{fadings}
+\usetikzlibrary{angles,quotes} 
+\usetikzlibrary{decorations.markings}
+
+\definecolor{incolor}{HTML}{303F9F}
+\definecolor{outcolor}{HTML}{D84315}
+\definecolor{cellborder}{HTML}{CFCFCF}
+\definecolor{cellbackground}{HTML}{F7F7F7}
+\newcommand{\ui}{\hat{i}}
+\newcommand{\uj}{\hat{j}}
+\newcommand{\uk}{\hat{k}}
+\newcommand{\ux}{\hat{\mathbf{x}}}
+\newcommand{\uy}{\hat{\mathbf{y}}}
+\newcommand{\uz}{\hat{\mathbf{z}}}
+\newcommand{\uv}[1]{\hat{\bv{{#1}}}}
+\newcommand{\pr}[1]{{#1^\prime}}
+\newcommand{\pd}[2][]{{\frac{\partial^{#1}}{\partial {{#2}^{#1}}}}}
+\newcommand{\dif}[2][]{{\frac{d^{#1}}{d{{#2}^{#1}}}}}
+\newcommand{\grd}{\nabla}
+
+\pgfdeclarelayer{background}  
+\pgfsetlayers{background,main}
+\AtBeginDocument{\RenewCommandCopy\qty\SI}
+
+\makeatletter
+\newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+\makeatother
+\newcommand{\prompt}[4]{
+    \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+}
+
+\newcommand{\thevenin}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (2,0) to[battery1, l_=$V_{Th}\eq#1$] (2,2) 
+      to[resistor, l_=$R_{Th}\eq#2$] (0,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\norton}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (3,0) to[american current source, l_=$I_{N}\eq#1$] (3,2) -- (0,2) (2,0)
+      to[resistor, l=$R_{N}\eq#2$] (2,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\DeclareMathOperator{\Div}{div}
+\DeclareMathOperator{\Curl}{curl}
+\DeclareMathOperator{\sgn}{sgn}
+
+\newcommand{\highlight}[1]{\colorbox{yellow}{$\displaystyle #1$}}
+\newcommand{\ti}[1]{\widetilde{#1}}
+\renewcommand{\div}[1]{\bv{\nabla}\cdot #1}
+\renewcommand{\curl}[1]{\bv{\nabla}\times #1}
+
+\newfontface{\Kaufmann}{Kaufmann}
+\DeclareTextFontCommand{\kf}{\Kaufmann}
+\newcommand{\scriptr}{\fontsize{12pt}{12pt}\kf{r}\fontsize{10pt}{10pt}}
+
+\newfontface{\KaufmannB}{Kaufmann Bold}
+\DeclareTextFontCommand{\kfb}{\KaufmannB}
+\newcommand{\bscriptr}{\fontsize{12pt}{12pt}\kfb{r}\fontsize{10pt}{10pt}}
+\newcommand{\justif}[2]{&{#1}&\text{#2}}
+\newcommand{\bv}[1]{\bm{\mathrm{#1}}}
+
+\title{Physics 4700H: Assignment III}
+\author{Jeremy Favro (0805980) \\ Trent University, Peterborough, ON, Canada}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+% PROBLEM 1
+\begin{problem} Consider, again, the case of $N$ tosses of a fair coin.\\
+On PS2, you considered the multiplicity function describing the number of ways a value of
+$X = N_H -N_T$ can be obtained. Using the more approximate form of Stirling's approximation
+you showed that $\Omega(N, X)$ is approximately Gaussian when $N \gg 1$ and $\abs{X}/N\ll1$.
+However, the form you found is not normalized.
+If one uses the less approximate form of Stirling's approximation, one obtains
+$$\Omega(N,X)\approx\sqrt{\frac{2}{\pi N}}2^Ne^{-X^2/2N}$$
+Show that in this case, the sum of the probability $P (N, X) = \Omega(N, X)/2^N$ over all possible
+$X$ values is one. In the limit of $N$ is large, the sum can be converted to an integral, but do
+think carefully about the limits of the sum and the conversion to the integral, and articulate
+clearly the approximations you are making.
+\end{problem}
+\begin{soln}
+Just to write it out, $$P (N, X) = \Omega(N, X)/2^N\approx \sqrt{\frac{2}{\pi N}}e^{-X^2/2N}.$$
+We want to show that
+$$1=\sqrt{\frac{2}{\pi N}}\sum_{X=-N}^{N}e^{-X^2/2N}.$$
+To convert this to an integral we need to have $N$ large enough that $dX=2$ is insignificant, i.e. that
+$P(N,X)=P_c(N,X)dX$ in the continuous case. This forces that, dividing through by $dX$, 
+$$\frac{1}{2}P(N,X)=P_c(N,X)=\frac{1}{\sqrt{2\pi N}}e^{-X^2/2N}.$$
+Integrating this
+$$\frac{1}{\sqrt{2\pi N}}\int_{-N}^{N}e^{-X^2/2N}dX$$
+we let $u=X/\sqrt{2N}\implies \sqrt{2N}du=dX$ which transforms the integral to
+$$\frac{\sqrt{2N}}{\sqrt{2N\pi }}\int_{-\sqrt{N/2}}^{\sqrt{N/2}}e^{-u^2}du=\frac{1}{\sqrt{\pi}}\int_{-\sqrt{N/2}}^{\sqrt{N/2}}e^{-u^2}du$$
+which is half of the error function, $\erf(x)$. So 
+$$\frac{1}{\sqrt{\pi}}\int_{-\sqrt{N/2}}^{\sqrt{N/2}}e^{-u^2}du=\frac{1}{2}\left[\erf(\sqrt{N/2})-\erf(-\sqrt{N/2})\right]$$
+and since the error function is odd,
+$$\frac{1}{\sqrt{\pi}}\int_{-\sqrt{N/2}}^{\sqrt{N/2}}e^{-u^2}du=\erf(\sqrt{N/2}).$$
+Now $\erf(x)$ asymptotes to 1 \emph{very} quickly. As an example, to 512(!) bits of precision, SageMath gives 
+$$\erf(12)\approx0.999999999999999999999999999999999999999999999999999999999999999864373883079409578721969384340958242733321776671189507008762046251464309514787536774406542$$
+(page cutoff for comedic effect). I'd call that normalized.
+\end{soln}
+\end{document}

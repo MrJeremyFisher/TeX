@@ -10,7 +10,7 @@
 *.run.xml
 *.bcf
 __pycache__/
-_minted-*/
+_minted*/
 robustExternalize/
 *-robExt-all-figures.txt
 *-robExt-compile-missing-figures.sh

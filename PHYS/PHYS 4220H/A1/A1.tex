@@ -121,14 +121,54 @@
 Derive the four typical boundary conditions given below from (the complete)
 Maxwell's equations. Please include diagrams as needed (drawn by hand is fine):
 \begin{align*}
-  \bv{E}_1^\parallel-\bv{E}_2^\parallel                               & =0                    \\
-  \frac{1}{\mu_1}\bv{B}_1^\parallel-\frac{1}{\mu_2}\bv{B}_2^\parallel & =\bv{K}_f\times\uv{n} \\
   \epsilon_1E_1^\perp-\epsilon_2E_2^\perp                             & =\sigma_f             \\
+  \bv{E}_1^\parallel-\bv{E}_2^\parallel                               & =\bv{0}               \\
+  \frac{1}{\mu_1}\bv{B}_1^\parallel-\frac{1}{\mu_2}\bv{B}_2^\parallel & =\bv{K}_f\times\uv{n} \\
   B_1^\perp-B_2^\perp                                                 & =0
 \end{align*}
 \end{problem}
 \begin{soln}
-
+  Starting with Maxwell's equations in linear media,
+  \begin{align}
+     & \epsilon\oint_\mathcal{S}\bv{E}\cdot d\bv{a}=Q_{f_{enc}}\label{eqn:1}                                                             \\
+     & \oint_\mathcal{S}\bv{B}\cdot d\bv{a}=0\label{eqn:2}                                                                               \\
+     & \oint_\mathcal{C}\bv{E}\cdot d\bv{\ell}=-\frac{d}{dt}\int_\mathcal{S}\bv{B}\cdot d\bv{a}\label{eqn:3}                             \\
+     & \frac{1}{\mu}\oint_\mathcal{C}\bv{B}\cdot d\bv{\ell}=I_{enc}-\epsilon\frac{d}{dt}\int_\mathcal{S}\bv{E}\cdot d\bv{a}\label{eqn:4}
+  \end{align}
+  we construct two scenarios, one of a charge-carrying
+  (free charge density $\sigma_f$) surface, the other of a sheet of surface current density $\bv{K}_f$. We take region 1 to be the above region,
+  and 2 the below.
+  I've attached handmade drawings when I would usually do something in TikZ as I can't bring myself to put in the effort needed when there are 
+  very good drawings already in Griffiths.
+  \begin{enumerate}[label=(\alph*)]
+    \item If we take the charge-carrying surface and place a ``Gaussian pillbox'' so that it is cut in half by the surface, then take the pillbox
+          to be infinitesimally thin, and the sheet to be very large, the electric field produced by the sheet is entirely normal
+          to said sheet. This allows us to eliminate everything except the top and bottom (parallel to the sheet) components of the integral in \cref{eqn:1}
+          which is run over the pillbox. Since these two pieces of the integral experience a uniform electric field (we force $\sigma_f$ to be such that this is so),
+          $$\epsilon_1\bv{E}_1\cdot\bv{A}_1+\epsilon_2\bv{E}_2\cdot\bv{A}_2=\sigma_f A.$$
+          $\bv{A}_1$ and $\bv{A}_2$ have the same magnitude, $A$, but one is pointing in line with $\bv{E}_1$ and the other in line but opposite in direction to
+          $\bv{E}_2$, giving us the negative sign we want. The perpendicular components are picked out by the dot product with the area-normal vectors, giving
+          $$\epsilon_1E_1^\perp-\epsilon_2E_2^\perp=\sigma_f.$$
+    \item Now, still considering the sheet of charge, we replace the pillbox with a closed loop $\mathcal{C}$, and shrink its ``height'' (the sides perpendicular to the sheet)
+          to again be infinitesimal, the left-hand side of \cref{eqn:3} drops to zero as the area of the surface shrinks to zero and the right-hand side
+          can be cut down to just the contribution of the sides of $\mathcal{C}$ parallel to the sheet,
+          $$\bv{E}_1\cdot \bv{\ell}-\bv{E}_2\cdot\bv{\ell}=0$$
+          where we picked up the negative sign due to the decision to traverse the curve in a right-handed manner. If we divide out the magnitude of
+          $\bv{\ell}$, leaving us with the components of $\bv{E}_1$ and $\bv{E}_2$ along $\uv{\ell}$ we obtain the desired result,
+          $$\bv{E}_1^\parallel-\bv{E}_2^\parallel=\bv{0}.$$
+    \item Now considering the sheet of surface current $\bv{K}_f$ and a loop placed so that the current is perpendicular to the area-normal of the surface
+          bounded by the loop, the left-hand side surface integral vanishes as the surface does (because we shrink the height of the loop), and
+          the right-hand side integral picks up only the contribution due to the current-sheet-parallel components of $\bv{B}$,
+          $$\left(\bv{B}_1-\bv{B}_2\right)\cdot\bv{\ell}=I_{f_{enc}}.$$
+          Since the loop is too thin to contain any volume current, the only contribution can be due to our constructed free surface current $\bv{K}_f$,
+          the component of which that passes ``through'' the loop (though it is infinitely thin, so is the surface current) is given by
+          $$I_{f_{enc}}=\bv{K}_f\cdot(\uv{n}\times\bv{\ell})$$
+          where $\bv{n}$ is the current-sheet surface normal vector. Using the scalar triple product this transforms to
+          $$I_{f_{enc}}=(\bv{K}_f\times\uv{n})\cdot \bv{\ell}$$
+          which allows us to knock off the shared dotting with $\bv{\ell}$ and obtain the desired result,
+          $$\bv{B}_1^\parallel-\bv{B}_2^\parallel=\bv{K}_f\times\uv{n}.$$
+    \item Here we apply the exact same reasoning as in (a), just that the Maxwell equation we use, \cref{eqn:2}, is zero on the LHS.
+  \end{enumerate}
 \end{soln}
 
 % PROBLEM 2
@@ -149,7 +189,7 @@ from (the complete) Maxwell's Equations.
   \end{equation}
   Gauss' law then states that
   \begin{equation}
-    \div{E}=\frac{\rho}{\epsilon_0}.
+    \div{\bv{E}}=\frac{\rho}{\epsilon_0}.
     \label{eqn:gauss}
   \end{equation}
   Plugging \cref{eqn:gauss} into \cref{eqn:nc} we get the continuity equation,
@@ -191,20 +231,22 @@ from (the complete) Maxwell's Equations.
           Now applying Faraday's law to the first term,
           $$\frac{dW}{dt}=-\int_\mathcal{V} \bv{H}\cdot\frac{\partial \bv{B}}{\partial t}+\bv{E}\cdot \frac{\partial \bv{D}}{\partial t} + \div{(\bv{E}\times\bv{H})}dr'.$$
           Now using the bit of a priori knowledge from class regarding the chain-rule differentiation trick we can look more closely at the first two terms.
-          Since $\bv{B}=\mu_0(\bv{H}+\bv{M})=\mu\bv{H}$ where $\mu=\mu_0(1+\chi_m)$ and 
+          Since $\bv{B}=\mu_0(\bv{H}+\bv{M})=\mu\bv{H}$ where $\mu=\mu_0(1+\chi_m)$ and
           $$\frac{1}{\mu}\frac{\partial \abs{\bv{B}}^2}{\partial t}=\frac{2}{\mu}\bv{B}\cdot\frac{\partial \bv{B}}{\partial t}=2\bv{H}\cdot\frac{\partial \bv{B}}{\partial t}$$
-          we can rewrite the first term as 
+          we can rewrite the first term as
           $$\bv{H}\cdot\frac{\partial \bv{B}}{\partial t}=\frac{1}{2}\frac{\partial \bv{B}\cdot\bv{H}}{\partial t}$$
           and the second term using the same chain rule approach with $\bv{D}=\epsilon\bv{E}=\epsilon_0(1+\chi_e)\bv{E}$ as
           $$\bv{E}\cdot \frac{\partial \bv{D}}{\partial t}=\frac{1}{2} \frac{\partial \bv{E}\cdot\bv{D}}{\partial t}.$$
-          The main expression then becomes 
+          The main expression then becomes
           $$\frac{dW}{dt}=-\int_\mathcal{V} \frac{1}{2}\frac{\partial }{\partial t}\left[\bv{B}\cdot\bv{H}+\bv{E}\cdot\bv{D}\right]dr' - \int_\mathcal{V}\div{(\bv{E}\times\bv{H})}dr'.$$
           We can fiddle with the last term with the divergence theorem (and pull out the time derivative in the first) to obtain
           $$\frac{dW}{dt}=-\frac{1}{2}\frac{d }{d t}\int_\mathcal{V} \left[\bv{B}\cdot\bv{H}+\bv{E}\cdot\bv{D}\right]dr' - \oint_\mathcal{S}(\bv{E}\times\bv{H})\cdot d\bv{a}.$$
-          I think at this point we can just look at Poynting's theorem in vacuum and compare the two. Performing such a comparison makes it immediately obvious that the 
+          I think at this point we can just look at Poynting's theorem in vacuum and compare the two. Performing such a comparison makes it immediately obvious that the
           term in the first integral is an analogue to $u_{EM}$, the electromagnetic energy density and the term in the second integral is the Poynting vector.
     \item To my understanding, due to the way the $dW/dt$ equation is written, the $u_{EM}$ term represents the total energy stored in the fields in a volume $\mathcal{V}$. The
-    Poynting vector integral term represents the flow of energy through $\mathcal{S}$, the surface which bounds $\mathcal{V}$. \todo{Situation where one is more useful than the other?}
+          Poynting vector integral term represents the flow of energy through $\mathcal{S}$, the surface which bounds $\mathcal{V}$.
+          I can't come up with a specific situation, but it would be more useful to have the Poynting vector when you want to know where the energy is going,
+          but (maybe) it would be easier (I kind of doubt it) to find energy density w.r.t time if you just want to know how energy is changing in a region.
   \end{enumerate}
 \end{soln}
 
@@ -245,6 +287,83 @@ $$\bv{E}=\frac{1}{4\pi\epsilon_0}\frac{q_e}{\abs{\bv{r}-\bv{R}}^3}(\bv{r}-\bv{R}
 \end{enumerate}
 \end{problem}
 \begin{soln}
+  \begin{enumerate}[label=(\alph*)]
+    \item Directly from the given fields (I'm using $\bv{g}$ because that's what the book uses to make momentum density distinct from momentum),
+          $$\bv{g}_{EM}=\epsilon_0\bv{E}\times\bv{B}=\frac{\mu_0}{(4\pi)^2}\frac{q_mq_e}{r^3\abs{\bv{r}-\bv{R}}^3}(\bv{r}-\bv{R})\times\bv{r}$$
+          and since $(\bv{r}-\bv{R})\times\bv{r}=(-\bv{R})\times\bv{r}=-\abs{\bv{r}}\abs{\bv{R}}\sin(\theta)\uz$, which gives a new vector pointing into the page.
+          Not sure if I can calculate the magnitude of this vector beyond the product of magnitudes and the angle between $\bv{r}$ and $\bv{R}$ as given above.
+          To be explicit,
+          $$\bv{g}_{EM}=-\frac{\mu_0}{(4\pi)^2}\frac{q_mq_e}{r^3\abs{\bv{r}-\bv{R}}^3}\abs{\bv{r}}\abs{\bv{r}-\bv{R}}\sin(\theta)\uz=
+            -\frac{\mu_0}{(4\pi)^2}\frac{q_mq_e}{r^2\abs{\bv{r}-\bv{R}}^2}\sin(\theta)\uz,$$
+          where $\theta$ is the angle between $\bv{r}$ and $\bv{r}-\bv{R}$.
+    \item I find the book a little confusing here, it defines $\bv{\ell}=\bv{r}\times\bv{g}$ as angular momentum, but had previously called $\bv{g}$ the
+          momentum \emph{density}, so is $\bv{\ell}$ the \emph{angular} momentum density? I think so? That is the assumption I will proceed under,
+          as this question mentions an integral which only makes sense to me in the context of a density. The angular momentum density for us is
+          $$\bv{\ell}=\bv{r}\times\bv{g}_{EM}=-\frac{\mu_0}{(4\pi)^2}\frac{q_mq_e}{r^2\abs{\bv{r}-\bv{R}}^2}\sin(\theta)\bv{r}\times\uz=-\frac{\mu_0}{(4\pi)^2}\frac{q_mq_e}{r\abs{\bv{r}-\bv{R}}^2}\sin(\theta)\uv{r}\times\uz.$$
+          So we care about the result of $\bv{r}\times\uz$. At this point I feel the need to draw a picture, in the below image $\uz$ is out of the page.
+          \begin{center}
+            \begin{tikzpicture}
+              \tikzset{>=latex}
+              \tikzstyle{vector}=[-stealth,red!90!black,thick,line cap=round]
+              \tikzstyle{magcharge}=[thin,top color=green!50,bottom color=green!90!black,shading angle=20]
+              \tikzstyle{eleccharge}=[thin,top color=blue!50,bottom color=blue!80,shading angle=20]
+              \tikzstyle{vector}=[->,very thick,green!45!black]
 
+              \def\R{4.0}
+              \def\rad{0.3}
+
+              \coordinate (O) at (0,0);
+              \coordinate (Qm) at (0,0);
+              \coordinate (Qe) at (+\R,0);
+              \coordinate (P) at (0.8*\R,0.90*\R);
+
+
+              \draw[thick,->] (0,0) -- (\R*1.5,0) node[anchor=north east]{$x$};
+              \draw[thick,->] (0,0) -- (0,\R) node[anchor=north west]{$y$};
+
+              \draw[vector] ++(\rad,0) (Qm) --++ (\R-\rad,0) node[midway, above]{$\bv{R}$};
+
+              \draw[thick,->,shorten >=1] (Qm) -- (P) node[midway, above]{$\bv{r}$};
+              \draw[thick,->,shorten >=1] (Qe) -- (P) node[midway, right]{$\bv{r}-\bv{R}$};
+
+              \pic [draw, ->, "$\theta$", angle eccentricity=1.5] {angle = Qm--P--Qe};
+
+              \node[] at (P) {$\times$} (P) node[right]{Direction of $\bv{g}_{EM}$};
+
+              % \pic [draw, ->, "$\phi$", angle eccentricity=1.5] {angle = Qm--P--Qe};
+
+              \draw[magcharge] (Qm) circle (\rad) node[scale=1.0] {$q_m$};
+              \draw[eleccharge] (Qe) circle (\rad) node[scale=1.0] {$q_e$};
+            \end{tikzpicture}
+          \end{center}
+          I think we end up with
+          $$\abs{\bv{\ell}}=-\frac{\mu_0}{(4\pi)^2}\frac{q_mq_e}{r\abs{\bv{r}-\bv{R}}^2}\sin(\theta)\sin(\phi)$$
+          where $\phi$ is the (I want to say polar) angle between $\uv{r}$ and $\uv{z}$. I am having real trouble
+          conceptualizing the direction of this, it would depend on where $\bv{r}$ is obviously. I am having less trouble conceptualizing
+          that regardless of the direction, it's symmetric about the axis of the dipole, so only the components along $\bv{R}$ will survive
+          the integration to get the angular momentum from the angular momentum density. So I'll just say then that the angular momentum will be along
+          $\bv{R}$ and sweep under the rug that I can't figure out where the angular momentum density is pointing, or rather a function that tells you
+          where it's pointing given $\uv{r}$. After a bit of thought and trying to work backwards from the given integral formula, I realized
+          that said formula looks like the remains of a vector triple product. Looking back at the original expression,
+          \begin{align*}
+            \bv{\ell} & =\epsilon_0\bv{r}\times\left(\bv{E}\times\bv{B}\right)                                                                                           \\
+                      & =\frac{\mu_0}{(4\pi)^2}\frac{q_mq_e}{r^3\abs{\bv{r}-\bv{R}}^3}\bv{r}\times\left[(\bv{r}-\bv{R})\times\bv{r}\right]                               \\
+                      & =\frac{\mu_0}{(4\pi)^2}\frac{q_mq_e}{r^3\abs{\bv{r}-\bv{R}}^3}\left[(\bv{r}\cdot\bv{r})(\bv{r}-\bv{R})-(\bv{r}\cdot(\bv{r}-\bv{R}))\bv{r}\right] \\
+                      & =\frac{\mu_0}{(4\pi)^2}\frac{q_mq_e}{r^3\abs{\bv{r}-\bv{R}}^3}\left[r^2\bv{r}-r^2\bv{R}-r^2\bv{r}+(\bv{r}\cdot\bv{R})\bv{r}\right]               \\
+                      & =\frac{\mu_0}{(4\pi)^2}\frac{q_mq_e}{r^3\abs{\bv{r}-\bv{R}}^3}\left[-r^2\bv{R}+(\bv{r}\cdot\bv{R})\bv{r}\right]                                  \\
+                      & =\frac{\mu_0}{(4\pi)^2}\frac{q_mq_e}{\cancelto{r}{r^3}\abs{\bv{r}-\bv{R}}^3}\cancel{r^2}R\left[-\uv{R}+(\uv{r}\cdot\uv{R})\uv{r}\right]          \\
+                      & =-\frac{\mu_0}{(4\pi)^2}q_mq_e \frac{R}{r}\frac{1}{\abs{\bv{r}-\bv{R}}^3}\left[\uv{R}-(\uv{r}\cdot\uv{R})\uv{r}\right].
+          \end{align*}
+          So integrating the above expression using the given formula we obtain the angular momentum,
+          $$\bv{L}=-\frac{\mu_0}{4\pi}q_mq_e\uv{R}.$$
+          To answer the sub questions, evidently the angular momentum points from the electric to the magnetic charge,
+          the angular momentum has no dependence on the magnitude of $\bv{R}$, meaning these charges can be as far away as you can get them
+          and their dipole has the same angular momentum, no it is not intuitive that these static charges can create angular momentum, and it feels
+          like something similar to intrinsic angular momentum due to spin.
+    \item If angular momentum is to be quantized, then $\abs{L}=n\hbar/2\implies \frac{\mu_0}{4\pi}q_mq_e=n\hbar/2$ for $n\in\mathbb{Z}$.
+          If this is true, then $\mu_0q_mq_e=nh$. Since $h$ and $\mu_0$ are constants we can say that, in whatever units $q_e$ and $q_m$ are written,
+          they must be integers themselves. Since $\bv{L}$ does not depend on distance, a single magnetic monopole would form this dipole structure with
+          every charge everywhere, leading to the above condition on the integer nature of $q_e$ to be enforced on every charge.
+  \end{enumerate}
 \end{soln}
 \end{document}

@@ -157,10 +157,10 @@ Its disturbance at the origin is a maximum at time zero. Using the cosine form o
 \end{problem}
 \begin{soln}
   \begin{enumerate}[label=(\alph*)]
-    \item $y(x,t)=2\cos(\frac{2\pi}{\qty{5}{\meter}}x-\frac{2\pi}{\qty{3}{\second}}t)$
-    \item $y(x,t)=2\cos(\frac{2\pi}{\qty{5}{\meter}}x-\frac{2\pi}{\qty{3}{\second}}t)$
+    \item $y(x,t)=2\cos(\frac{2\pi}{\qty{5}{\meter}}z+\frac{2\pi}{\qty{3}{\second}}t)$.
+    \item $y(x,t)=2\cos(\frac{2\pi}{\qty{5}{\meter}}\left[z+\frac{\qty{5}{\meter}}{\qty{3}{\second}}t\right])$.
     \item Not sure if you want the cosine in complex form or just an exponential. I'll assume exponential because it's easy to get the real part out of that later,
-          $y(x,t)=2\exp(i(\frac{2\pi}{\qty{5}{\meter}}x-\frac{2\pi}{\qty{3}{\second}}t))$.
+          $y(x,t)=2\exp(i(\frac{2\pi}{\qty{5}{\meter}}z+\frac{2\pi}{\qty{3}{\second}}t))$.
   \end{enumerate}
 \end{soln}
 
@@ -176,9 +176,9 @@ displaying wavelength and velocity, if the propagation is:
 \end{problem}
 \begin{soln}
   \begin{enumerate}[label=(\alph*)]
-    \item $\exp(i(\frac{2\pi}{\lambda}z-vt))$. Here $k=\frac{2\pi}{\lambda}\uz$, $r=z\uz$.
-    \item $\exp(i(\frac{2\pi}{\lambda}\left[x+y\right]-vt))$. Here $k=\frac{2\pi}{\lambda}\left[\ux+\uy\right]$, $r=x\ux+y\uy$.
-    \item $\exp(i(\frac{2\pi}{\lambda}\left[x+y+z\right]-vt))$. Here $k=\frac{2\pi}{\lambda}\left[\ux+\uy+\uz\right]$, $r=x\ux+y\uy+z\uz$.
+    \item $\exp(i(\frac{2\pi}{\lambda}z-vt))$. Here $\bv{k}=\frac{2\pi}{\lambda}\uz$, $\bv{r}=z\uz$.
+    \item $\exp(i(\frac{2\pi}{\sqrt{2}\lambda}\left[x+y\right]-vt))$. Here $\bv{k}=\frac{2\pi}{\sqrt{2}\lambda}\left[\ux+\uy\right]$, $\bv{r}=x\ux+y\uy$.
+    \item $\exp(i(\frac{6\pi}{\sqrt{2}\lambda}\left[x+y+z\right]-vt))$. Here $\bv{k}=\frac{6\pi}{\sqrt{2}\lambda}\left[\ux+\uy+\uz\right]$, $\bv{r}=x\ux+y\uy+z\uz$.
   \end{enumerate}
 \end{soln}
 
@@ -339,7 +339,7 @@ phase of both components is zero).
   wave in the glass?
 \end{enumerate}
 \end{problem}
-\begin{soln}
+\begin{soln}~
 \begin{enumerate}[label=(\roman*)]
   \item We are directly given the amplitude. Since the wave is traveling in $+\ux$ the sign on the time term ought to be negative. Then we just have to find
   $k=2\pi/\lambda=2\pi/(c_0/\nu)\approx \qty{1.09e7}{\per\meter}$. We could calculate the angular frequency to confirm but this is sufficient to 

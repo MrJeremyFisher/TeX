@@ -149,7 +149,7 @@ $$\Omega(N,X)=\frac{N!}{\left[\frac{1}{2}\left(N+X\right)\right]!
   \item Use the stronger form of Stirling's approximation to write an expression for $\ln \Omega(N, X)$
         which is true when $N \gg 1$ and $\abs{X}/N \ll 1$ (so $N \pm X$ also $\gg 1$).
   \item Calculate the Taylor expansion of $\ln(1 + x)$ for small $x$ to second order.
-  \item Use your results in (b) and (c) to show that $\ln \Omega \approx N$ $\ln (2-X^2/(2N))$.
+  \item Use your results in (b) and (c) to show that $\ln \Omega \approx N\ln(2)-X^2/(2N)$.
   \item Using (d), find an approximate expression for $\Omega$.
 \end{enumerate}
 \end{problem}
@@ -159,43 +159,63 @@ $$\Omega(N,X)=\frac{N!}{\left[\frac{1}{2}\left(N+X\right)\right]!
           \begin{center}
             \scalebox{0.6}{\input{plot.pgf}}
           \end{center}
-    \item The strong form of Stirling's approximation is, with the $\ln$
-          $$\ln(N!)\approx \left(N+\frac{1}{2}\right)\ln(N)-N+\frac{1}{2}\ln(2\pi)$$
-          so for our expression,
-          \begin{align*}
-            \ln(\Omega(N,X)) & =\ln(\frac{N!}{\left[\frac{1}{2}\left(N+X\right)\right]!
-            \left[\frac{1}{2}\left(N-X\right)\right]!})                                                                                                                    \\
-                             & =\ln(N!)-\ln(\left[\frac{1}{2}\left(N+X\right)\right]!
-            \left[\frac{1}{2}\left(N-X\right)\right]!)                                                                                                                     \\
-                             & \approx\left(N+\frac{1}{2}\right)\ln(N)-N+\frac{1}{2}\ln(2\pi)-\ln(\left[\frac{1}{2}\left(N+X\right)\right]!)+
-            \ln(\left[\frac{1}{2}\left(N-X\right)\right]!)                                                                                                                 \\
-                             & =\left(N+\frac{1}{2}\right)\ln(N)-N+\frac{1}{2}\ln(2\pi)-\ln(\left[\frac{1}{2}\left(N+X\right)\right]!)
-            -\ln(\left[\frac{1}{2}\left(N-X\right)\right]!)                                                                                                                \\
-                             & =\left(N+\frac{1}{2}\right)\ln(N)-N+\frac{1}{2}\ln(2\pi)                                                                                    \\
-                             & \quad-\left(\frac{1}{2}\left(N+X\right)+\frac{1}{2}\right)\ln(\frac{1}{2}\left(N+X\right))-\frac{1}{2}\left(N+X\right)+\frac{1}{2}\ln(2\pi) \\
-                             & \quad-\left(\frac{1}{2}\left(N-X\right)+\frac{1}{2}\right)\ln(\frac{1}{2}\left(N-X\right))+\frac{1}{2}\left(N-X\right)-\frac{1}{2}\ln(2\pi) \\
-                             & =\left(N+\frac{1}{2}\right)\ln(N)-N+\frac{1}{2}\ln(2\pi)                                                                                    \\
-                             & \quad-\frac{1}{2}\left(N+X+1\right)\ln(\frac{1}{2}\left(N+X\right))-X                                                                       \\
-                             & \quad-\frac{1}{2}\left(N-X+1\right)\ln(\frac{1}{2}\left(N-X\right))                                                                         \\
-                             & \approx N\ln(N)-N-\frac{1}{2}N\ln(\frac{1}{2}\left(N+X\right))-\frac{1}{2}N\ln(\frac{1}{2}\left(N-X\right)) \\
-                             & = N\ln(N)-N-\frac{1}{2}N\left[\ln(\frac{1}{4}\left(N+X\right)\left(N-X\right))\right] \\
-                             & \approx N\left(\ln(N)-\frac{1}{2}\left[\ln(\frac{1}{4}\left(N^2-X^2\right))\right]\right) \\
-                             & = N\ln(\frac{1}{2}\sqrt{\frac{N^2}{N^2-X^2}}) \\
-                             & = -\frac{N}{2}\ln(4-4\left(\frac{X}{N}\right)^2) \\
-            %                  & = N\ln(N)-(N+X)-\frac{1}{2}\left(N+X\right)\ln(\frac{1}{2}\left(N+X\right))-\frac{1}{2}\left(N-X\right)\ln(\frac{1}{2}\left(N-X\right))     \\
-            %                  & = N\ln(N)-(N+X)-\frac{1}{2}\left[
-            %   N\ln(\frac{1}{4}\left(N+X\right)\left(N-X\right))
-            %   +X\ln(\frac{\left(N+X\right)}{\left(N-X\right)})
-            % \right]                                                                                                                                                        \\
-            %                  & = N\ln(N)-(N+X)-\frac{1}{2}\left[
-            %   N\ln(\frac{1}{4}\left(N^2-X^2\right))
-            %   +X\ln(\frac{\left(N+X\right)}{\left(N-X\right)})
-            % \right]                                                                                                                                                        \\
-          \end{align*}
+          \inputminted[
+            frame=lines,
+            framesep=2mm,
+            baselinestretch=1.2,
+            fontsize=\footnotesize,
+            linenos,
+            breaklines
+          ]{python3}{./plotter.py}
+    \item The strong form of Stirling's approximation is, without the extra constants which here a negligible compared to $N$,
+          $$\ln(N!)\approx N\ln(N)-N$$
+          so for our expression
+          $$\ln(\Omega(N,X)) =\ln(\frac{N!}{\left[\frac{1}{2}\left(N+X\right)\right]!
+              \left[\frac{1}{2}\left(N-X\right)\right]!}).$$
+          Splitting this up with properties of $\ln$ we obtain three terms,
+          $$\ln(N!)-\ln(\left[\frac{1}{2}\left(N+X\right)\right]!)-\ln(\left[\frac{1}{2}\left(N-X\right)\right]!).$$
+          Applying Stirling's approximation to each term,
+          $$N\ln(N)-N
+            -\frac{1}{2}\left(N+X\right)\ln(\frac{1}{2}\left(N+X\right))+\frac{1}{2}\left(N+X\right)
+            -\frac{1}{2}\left(N-X\right)\ln(\frac{1}{2}\left(N-X\right))+\frac{1}{2}\left(N-X\right).$$
+          Then cleaning up the new terms a bit,
+          $$N\ln(N)-\cancel{N}
+            -\frac{1}{2}\left[\left(N+X\right)\ln(\frac{1}{2}\left(N+X\right))+\left(N-X\right)\ln(\frac{1}{2}\left(N-X\right))\right]+\cancel{N}.$$
+          Now from looking at the next question we'll want to Taylor expand something like $\ln(1+x)$, so divide through the $\ln$ arguments by $N$,
+          $$N\ln(N)
+            -\frac{N}{2}\left[\left(1+\frac{X}{N}\right)\ln(\frac{N}{2}\left(1+\frac{X}{N}\right))+\left(1-\frac{X}{N}\right)\ln(\frac{N}{2}\left(1-\frac{X}{N}\right))\right]$$
+          then pull out the $N/2$s into their own $\ln$ terms,
+          $$N\ln(N)
+            -\frac{N}{2}\left[\left(1+\frac{X}{N}\right)\ln(1+\frac{X}{N})+\left(1-\frac{X}{N}\right)\ln(1-\frac{X}{N})
+              +\left(1+\frac{X}{N}\right)\ln(\frac{N}{2})+\left(1-\frac{X}{N}\right)\ln(\frac{N}{2})
+              \right]$$
+          and simplify
+          $$N\ln(N)
+            -\frac{N}{2}\left[\left(1+\frac{X}{N}\right)\ln(1+\frac{X}{N})+\left(1-\frac{X}{N}\right)\ln(1-\frac{X}{N})
+              +2\ln(\frac{N}{2})
+              \right].$$
+          Then we can pull the $2\ln(N/2)$ out of the square brackets and get $-N\ln(N/2)=N\ln(2/N)=N(\ln(2)-\ln(N))$
+          so that the two $N\ln(N)$ terms cancel,
+          $$-\frac{N}{2}\left[\left(1+\frac{X}{N}\right)\ln(1+\frac{X}{N})+\left(1-\frac{X}{N}\right)\ln(1-\frac{X}{N})\right]+N\ln(2).$$
+          Now in the next bit we Taylor expand the terms that look like $(1\pm x)\ln(1\pm x)$.
     \item For $f(x)=\ln(1 + x)$, $f'(x)=\frac{1}{1+x}$, $f''(x)=-\frac{1}{(1+x)^2}$, $f'''(x)=\frac{2}{(1+x)^3}$. Then, about zero,
           $$f(x)\approx x-\frac{x^2}{2}+\frac{x^3}{3}.$$
-    \item Use your results in (b) and (c) to show that $\ln \Omega \approx N$ $\ln (2-X^2/(2N))$.
-    \item Using (d), find an approximate expression for $\Omega$.
+    \item As mentioned in (b) we have terms like $(1\pm x)\ln(1\pm x)$. To second order these look like
+          $$(1+ x)\ln(1+ x)\approx (1+x)\left(x-\frac{x^2}{2}\right)\approx x+\frac{x^2}{2}$$
+          and
+          $$(1- x)\ln(1- x)\approx (1-x)\left(-x-\frac{x^2}{2}\right)\approx -x+\frac{x^2}{2}.$$
+          Then we can apply the expansion,
+          $$
+            \left(1+\frac{X}{N}\right)\ln(1+\frac{X}{N})+\left(1-\frac{X}{N}\right)\ln(1-\frac{X}{N})
+            \approx
+            \frac{X}{N}+\frac{1}{2}\left[\frac{X}{N}\right]^2-\frac{X}{N}+\frac{1}{2}\left[\frac{X}{N}\right]^2
+            =\left[\frac{X}{N}\right]^2.
+          $$
+          Putting this back into the full expression then
+          $$\ln(\Omega(N,X))\approx -\frac{N}{2}\left[\left[\frac{X}{N}\right]^2\right]+N\ln(2)=N\ln(2)-\frac{X^2}{2N}.$$
+    \item Exponentiating both sides we immediately obtain
+          $$\Omega\approx \exp(N\ln(2)-\frac{X^2}{2N})=2^N\exp(-\frac{X^2}{2N}).$$
+          This is a Gaussian, as we'd expect.
   \end{enumerate}
 \end{soln}
 \end{document}
