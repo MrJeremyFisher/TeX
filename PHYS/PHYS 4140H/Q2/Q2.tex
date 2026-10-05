@@ -154,10 +154,10 @@ $$\int\frac{1}{1+\left(\frac{dz}{dx}\right)^2}d\frac{dz}{dx}=-\int kdx$$
 and obtain
 $$\int\frac{1}{1+\left(\frac{dz}{dx}\right)^2}d\frac{dz}{dx}=-kx+C.$$
 The integral of $1/(1+x^2)$ is doable by hand but we can get from a table that it comes out to $\arctan(x)$ so 
-$$\arctan(\frac{dz}{dx})=-kx+C\implies \tan(C-kx)dx=dz\implies z(x)=-\ln(\cos(C-kx))$$
+$$\arctan(\frac{dz}{dx})=-kx+C\implies \tan(C-kx)dx=dz\implies z(x)=-\frac{1}{k}\ln(\cos(C-kx))$$
 where I've used the fact that the integral of $\tan(x)$ is $\ln(\sec(x))=-\ln(\cos(x))$. Now we evaluate this between
 $(-a,0)$ and $(x,0)$ (where I've flipped the order because of the negative so we can get rid of it) to obtain, using $\ln(a)-\ln(b)=\ln(a/b)$,
-$$z(x)=\ln(\frac{\cos(C-kx)}{\cos(C+ka)}).$$
-The boundaries require that $z(\pm a)=\ln(\frac{\cos(C\pm ka)}{\cos(C+ka)})=0\implies C=0$ as $\ln(1)=0$.
+$$z(x)=\frac{1}{k}\ln(\frac{\cos(C-kx)}{\cos(C+ka)}).$$
+The boundaries require that $z(\pm a)=\frac{1}{k}\ln(\frac{\cos(C\pm ka)}{\cos(C+ka)})=0\implies C=0$ as $\ln(1)=0$.
 \end{soln}
 \end{document}

@@ -1,0 +1,262 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsmath,amsthm,amssymb,bm}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{changepage}
+\usepackage{circuitikz}
+\usepackage{pgfplots}
+\usepackage{minted}
+\usepackage{physics}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usepackage{hyperref}
+\usepackage{siunitx}
+\usepackage{fontspec}
+\usepackage{relsize}
+\usepackage{subfig}
+\usepackage{todonotes}
+\usepackage{contour}
+\usepackage{multicol, multirow, booktabs}
+\usepackage[breakable]{tcolorbox}
+\usepackage[inline]{enumitem}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{soln}{Solution}
+
+\pgfplotsset{compat=newest}
+\usetikzlibrary{lindenmayersystems}
+\usetikzlibrary{arrows}
+\usetikzlibrary{calc}
+\usetikzlibrary{positioning, fit}
+\usetikzlibrary{3d, perspective}
+\usetikzlibrary{math}
+\usetikzlibrary{fadings}
+\usetikzlibrary{angles,quotes} 
+\usetikzlibrary{decorations.markings}
+
+\definecolor{incolor}{HTML}{303F9F}
+\definecolor{outcolor}{HTML}{D84315}
+\definecolor{cellborder}{HTML}{CFCFCF}
+\definecolor{cellbackground}{HTML}{F7F7F7}
+\newcommand{\ui}{\hat{i}}
+\newcommand{\uj}{\hat{j}}
+\newcommand{\uk}{\hat{k}}
+\newcommand{\ux}{\hat{\mathbf{x}}}
+\newcommand{\uy}{\hat{\mathbf{y}}}
+\newcommand{\uz}{\hat{\mathbf{z}}}
+\newcommand{\uv}[1]{\hat{\bv{{#1}}}}
+\newcommand{\pr}[1]{{#1^\prime}}
+\newcommand{\pd}[2][]{{\frac{\partial^{#1}}{\partial {{#2}^{#1}}}}}
+\newcommand{\dif}[2][]{{\frac{d^{#1}}{d{{#2}^{#1}}}}}
+\newcommand{\grd}{\nabla}
+
+\pgfdeclarelayer{background}  
+\pgfsetlayers{background,main}
+\AtBeginDocument{\RenewCommandCopy\qty\SI}
+
+\makeatletter
+\newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+\makeatother
+\newcommand{\prompt}[4]{
+    \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+}
+
+\newcommand{\thevenin}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (2,0) to[battery1, l_=$V_{Th}\eq#1$] (2,2) 
+      to[resistor, l_=$R_{Th}\eq#2$] (0,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\norton}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (3,0) to[american current source, l_=$I_{N}\eq#1$] (3,2) -- (0,2) (2,0)
+      to[resistor, l=$R_{N}\eq#2$] (2,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\DeclareMathOperator{\Div}{div}
+\DeclareMathOperator{\Curl}{curl}
+\DeclareMathOperator{\sgn}{sgn}
+
+\newcommand{\highlight}[1]{\colorbox{yellow}{$\displaystyle #1$}}
+\newcommand{\ti}[1]{\widetilde{#1}}
+\renewcommand{\div}[1]{\bv{\nabla}\cdot #1}
+\renewcommand{\curl}[1]{\bv{\nabla}\times #1}
+
+\newfontface{\Kaufmann}{Kaufmann}
+\DeclareTextFontCommand{\kf}{\Kaufmann}
+\newcommand{\scriptr}{\fontsize{12pt}{12pt}\kf{r}\fontsize{10pt}{10pt}}
+
+\newfontface{\KaufmannB}{Kaufmann Bold}
+\DeclareTextFontCommand{\kfb}{\KaufmannB}
+\newcommand{\bscriptr}{\fontsize{12pt}{12pt}\kfb{r}\fontsize{10pt}{10pt}}
+\newcommand{\justif}[2]{&{#1}&\text{#2}}
+\newcommand{\bv}[1]{\bm{\mathrm{#1}}}
+
+\title{Math 3790H: Assignment I}
+\author{Jeremy Favro (0805980) \\ Trent University, Peterborough, ON, Canada}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+% PROBLEM 1
+\begin{problem}
+Let $A$ and $B$ be nonempty bounded subsets of $\mathbb{R}$, and let $A + B$ be the set
+of all sums $a + b$ where $a \in A$ and $b \in B$. Prove that $\sup(A + B) = \sup A + \sup B$.
+
+
+Hint: To show $\sup A + \sup B \leq \sup(A + B)$ show that for each $b \in B$,
+$\sup(A + B) - b$ is an upper bound for $A$, hence $\sup A \leq \sup(A + B) - b$.
+Then show $\sup(A + B) - \sup A$ is an upper bound for $B$.
+\end{problem}
+\begin{soln}
+  Evidently $\sup A + \sup B \geq \sup(A+B)$ as $\sup A \geq a \forall a \in A$ and $\sup B\geq b\forall b\in B$ and adding these inequalities gives
+  $\sup A + \sup B\geq a + b\forall a \in A, b \in B$ and all $a+b$ form the set $A+B$. Now we need only show the reverse inequality to force equality.
+
+
+  Following the hint, we know that, by definition of the supremum, $a+b\leq \sup(A+B)\forall a+b\in A+B$. Subtracting $b$ from both sides we see that
+  $a\leq \sup(A+B)-b$, hence $\sup(A+B)-b$ forms an upper bound for $A$ and $\sup A \leq \sup(A+B)-b$. Rearranging by adding $b$ and subtracting $\sup A$
+  we see that $b \leq \sup(A+B)-\sup A$ and hence $\sup(A+B)-\sup A$ forms an upper bound for $B$, i.e.
+  $\sup B \leq \sup(A+B)-\sup A$. Rearranging by adding $\sup A$ to both sides we obtain the desired inequality
+  $\sup B +\sup A\leq \sup(A+B)$, which forces
+  $$\sup(A + B) = \sup A + \sup B$$
+  as we already showed that $\sup A + \sup B\geq a + b$.
+\end{soln}
+
+% PROBLEM 2
+\begin{problem}
+Let $\mathbb{I}$ be the set of real numbers that are not rational; elements of $\mathbb{I}$ are
+called irrational numbers. Prove if $a < b$, then there exists $x\in \mathbb{I}$ such that
+$a < x < b$. Hint: First show $\{r + \sqrt{2} | r\in\mathbb{Q}\} \subseteq \mathbb{I}$.
+\end{problem}
+\begin{soln}
+  To get a number anywhere between $a$ and $b$
+  we take $a+n(b-a)$ for $n<1$. To use the hint, we take $n=1/\sqrt{2}=\sqrt{2}/2$, meaning
+  we only need to prove the hint and show we can build $a+(b-a)\sqrt{2}/2$ in the given set. Suppose, by way of contradiction,
+  that $r + \sqrt{2}$ is rational and therefore not in $\mathbb{I}$. This, by the definition of $\mathbb{Q}$, means that
+  $r+\sqrt{2}=m/n$ for integers $m,n$. Suppose also that $r=p/q$ for $p,q\in\mathbb{Z}$. Then
+  $$\frac{p}{q}+\sqrt{2}=\frac{m}{n}\implies \sqrt{2}=\frac{m}{n}-\frac{p}{q}\implies \sqrt{2}=\frac{mq-pn}{nq}$$
+  which would imply $\sqrt{2}\in\mathbb{Q}$, which we know is false, hence $r+\sqrt{2}\notin \mathbb{Q}$ and is then in $\mathbb{I}$ and
+  hence the set of all such things is also included in $\mathbb{I}$. Certainly then
+  $\{sr + s\sqrt{2} | s,r\in\mathbb{Q}\} \subseteq \mathbb{I}$ as multiplying an irrational by a rational still yields an irrational.
+  This allows us to build $a+\sqrt{2}(b-a)/2$ by taking $2a/(b-a)+\sqrt{2}$ and multiplying it by $(b-a)/2$.
+\end{soln}
+
+% PROBLEM 3
+\begin{problem}
+Prove that every positive real number has exactly 2 square roots, one positive ($\sqrt{x}$) and one negative ($-\sqrt{x}$).
+\end{problem}
+\begin{soln} Suppose there are two numbers $r_1,r_2\in\mathbb{R}$ which both square to $a\in\mathbb{R}$, $r_1^2=a$ and $r_2^2=a$ and take $r_1\neq r_2$.
+  Subtracting these two equations we obtain $r_1^2-r_2^2=0$ which we can factor as a difference of squares to obtain
+  $(r_1-r_2)(r_1+r_2)=0$. This implies that $r_1=r_2$ or $r_1=-r_2$. We created $r_1$ and $r_2$ with the condition that $r_1\neq r_2$
+  so then $r_1=-r_2$. Taking the square root of our original expressions, $r_1=\sqrt{a}$ and $r_2=-r_1=\sqrt{a}\implies r_1=-\sqrt{a}$, hence
+  real numbers have both positive and negative roots. To show there are only these two, suppose that there is a third $r_3\in\mathbb{R}$ with
+  $r_3\neq r_1$ and $r_3\neq r_2$ but $r_3^2=a$, then $r_3^2-a=0\implies (r_3-\sqrt{a})(r_3+\sqrt{a})=0$ which implies that $r_3=\sqrt{a}$ or
+  $r_3=-\sqrt{a}$, but this would imply that either $r_3=r_1$ or $r_3=r_2$, so no such third root may exist.
+\end{soln}
+
+% PROBLEM 4
+\begin{problem}
+Use the $\epsilon-N$ definition of the limit to prove the following
+\begin{enumerate}[label=(\alph*)]
+  \item $\lim \frac{3n+5}{4n-2}=3/4$.
+  \item $\lim\frac{2n^2+8}{n^5-7}=0$
+  \item Let $(s_n)$ be a sequence that converges to $2$. Show that $\lim(3s_n+1)=7$.
+  \item The sequence $(a_n)_{n\in\mathbb{N}}$ where $a_n=\sin(n\pi/2)$, diverges.
+\end{enumerate}
+\end{problem}
+\begin{soln}
+  \begin{enumerate}[label=(\alph*)]
+    \item We must show that for every $\epsilon >0$ there is an $N\in \mathbb{N}$ such that for $n>N$,
+          $$\abs{\frac{3n+5}{4n-2}-3/4}<\epsilon.$$
+          For the rough work part here we note that at lowest $n=1$, the expression in absolute value is positive, so we can remove the
+          absolute value,
+          \begin{align*}
+             & \implies \frac{3n+5}{4n-2}-3/4<\epsilon                           \\
+             & \Leftrightarrow  \frac{12n+20-12n+6}{4n-2}<\epsilon               \\
+             & \Leftrightarrow  \frac{13}{2n-1}<\epsilon                         \\
+             & \Leftrightarrow  \frac{1}{2}\left[\frac{13}{\epsilon}+1\right]<n.
+          \end{align*}
+          Now,
+          \begin{proof}
+            Consider
+            $$N=\frac{1}{2}\left[\frac{13}{\epsilon}+1\right].$$
+            Then $n> N$ implies
+            $$n>\frac{1}{2}\left[\frac{13}{\epsilon}+1\right]$$
+            or
+            $$2n-1>\frac{13}{\epsilon}$$
+            hence
+            $$\epsilon>\frac{13}{2n-1}$$
+            and so (with some foreknowledge from the informal discussion about how we could rewrite this fraction)
+            $$\epsilon>\frac{3n+5}{4n-2}-3/4$$
+            or since both sides are strictly positive
+            $$\epsilon>\abs{\frac{3n+5}{4n-2}-3/4}.$$
+            \qedhere
+          \end{proof}
+    \item We to find $n$ so that
+          $$\abs{\frac{2n^2+8}{n^5-7}-0}<\epsilon.$$
+          Here we restrict to $n>1$ so we can remove the absolute value as $n^5-7$ is only positive from there on.
+          To solve for $n$ here it will be easier if we can establish some other $S'_n$ like
+          $$\frac{2n^2+8}{n^5-7}<S'_n<\epsilon.$$
+          To do this we establish something that bounds the numerator above (and so is always greater than it, under the condition $n>1$)
+          and bounds the denominator below (and so is always less than it, making the fraction overall larger).
+          The numerator is bounded above by $5n^2$ for $n>1$ (to be careful, $n\geq 2$, as their intersection is between $1$ and $2$, but $n\in \mathbb{N}$)
+          and the denominator is bounded below by $n^3$ for $n>1$ hence
+          $$\frac{2n^2+8}{n^5-7}<\frac{5n^2}{n^3}<\epsilon.$$
+          Rearranging
+          $$\frac{5}{\epsilon}<n.$$
+          \begin{proof}
+            Consider $N=\max\{2, 5/\epsilon\}$ so that $n\geq 2$. $n>N$ implies that
+            $$n>5/\epsilon\implies \frac{5}{n}<\epsilon.$$
+            Certainly then
+            $$\frac{5n^2}{n^3}<\epsilon$$
+            and since we force $n>1$
+            $n^3<n^5<n^5-7$ and $5n^2>2n^2+8$, the first being evident from the degrees of $n$ and the second becoming clear when
+            considering the derivatives of both sides as $10n>4n$. Hence
+            $$\frac{2n^2+8}{n^5-7}<\frac{5n^2}{n^3}<\epsilon$$
+            and hence
+            $$\abs{\frac{2n^2+8}{n^5-7}}<\epsilon.$$
+            \qedhere
+          \end{proof}
+    \item We seek to show that for all $\epsilon >0$ we can find an $N$ such that for $n>N$
+          $$\abs{3s_n+1-7}=\abs{3s_n-6}=3\abs{s_n-2}<\epsilon.$$
+          Then dividing through by $3$, $\abs{s_n-2}<\epsilon/3$.
+          This is true since it is just the $\epsilon-N$ definition applied to $s_n$, which we know converges to $2$ for any
+    \item Suppose, by way of contradiction, that the limit exists and takes the value $L$. Then, by definition, there is an 
+    $N\in\mathbb{N}$ such that for all $n>N$ and $\epsilon>0$,
+    $$\abs{\sin(\frac{n\pi}{2})-L}< \epsilon.$$
+    $\sin(\frac{n\pi}{2})$ takes on three values, $1$, $0$, and $-1$. 
+    
+
+    Consider the case where we suppose it converges to zero ($L=0$),
+    Then $\abs{\sin(\frac{n\pi}{2})}<\epsilon$, however for arbitrarily small epsilon an $n$ can always be found so that 
+    $\sin(\frac{n\pi}{2})=\pm 1$, a contradiction, hence it cannot converge to $L=0$.
+    
+    
+    Consider now $L=1$, then $\abs{\sin(\frac{n\pi}{2})-1}<\epsilon$. However, as above, an $n$ can always be found so that 
+    the term in absolute value comes out to 2 ($\sin(\frac{n\pi}{2})=-1$), a contradiction for arbitrarily small $\epsilon$, hence 
+    $L\neq 1$. 
+    
+
+    Consider $L=-1$, then $\abs{\sin(\frac{n\pi}{2})+1}<\epsilon$. However, as above, an $n$ can always be found so that 
+    the term in absolute value comes out to 2 ($\sin(\frac{n\pi}{2})=1$), a contradiction for arbitrarily small $\epsilon$, hence 
+    $L\neq -1$. Since the sequence cannot converge to any value that its elements take on, it must diverge.
+  \end{enumerate}
+\end{soln}
+\end{document}
