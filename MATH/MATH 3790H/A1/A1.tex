@@ -136,7 +136,7 @@ Then show $\sup(A + B) - \sup A$ is an upper bound for $B$.
   $\sup B \leq \sup(A+B)-\sup A$. Rearranging by adding $\sup A$ to both sides we obtain the desired inequality
   $\sup B +\sup A\leq \sup(A+B)$, which forces
   $$\sup(A + B) = \sup A + \sup B$$
-  as we already showed that $\sup A + \sup B\geq a + b$.
+  as we already showed that $\sup A + \sup B\geq \sup(A+B)$.
 \end{soln}
 
 % PROBLEM 2
@@ -162,13 +162,55 @@ $a < x < b$. Hint: First show $\{r + \sqrt{2} | r\in\mathbb{Q}\} \subseteq \math
 \begin{problem}
 Prove that every positive real number has exactly 2 square roots, one positive ($\sqrt{x}$) and one negative ($-\sqrt{x}$).
 \end{problem}
-\begin{soln} Suppose there are two numbers $r_1,r_2\in\mathbb{R}$ which both square to $a\in\mathbb{R}$, $r_1^2=a$ and $r_2^2=a$ and take $r_1\neq r_2$.
+\begin{soln}My original attempt was as follows: Suppose there are two numbers $r_1,r_2\in\mathbb{R}$ which both square to $a\in\mathbb{R}$, $r_1^2=a$ and $r_2^2=a$ and take $r_1\neq r_2$.
   Subtracting these two equations we obtain $r_1^2-r_2^2=0$ which we can factor as a difference of squares to obtain
   $(r_1-r_2)(r_1+r_2)=0$. This implies that $r_1=r_2$ or $r_1=-r_2$. We created $r_1$ and $r_2$ with the condition that $r_1\neq r_2$
   so then $r_1=-r_2$. Taking the square root of our original expressions, $r_1=\sqrt{a}$ and $r_2=-r_1=\sqrt{a}\implies r_1=-\sqrt{a}$, hence
   real numbers have both positive and negative roots. To show there are only these two, suppose that there is a third $r_3\in\mathbb{R}$ with
   $r_3\neq r_1$ and $r_3\neq r_2$ but $r_3^2=a$, then $r_3^2-a=0\implies (r_3-\sqrt{a})(r_3+\sqrt{a})=0$ which implies that $r_3=\sqrt{a}$ or
   $r_3=-\sqrt{a}$, but this would imply that either $r_3=r_1$ or $r_3=r_2$, so no such third root may exist.
+
+
+  After, I was informed that the desired solution was to do with suprema of sets, so I will also attempt that.
+  Consider the set $S=\left\{r\in \mathbb{R}|r^2<a\right\}$. Since $S$ is nonempty (it contains at least $\min(a,1)$,
+  since something less than 1 squared is lesser than the number being squared, but the reverse is true for everything above 1 and $1^2=1$)
+  and must be bounded above else if $r>\max(a,1)$ then $r^2>r>a$ (again by the same shrinking square reasoning,
+  if $a<1$ then $r^2<1$ and hence $r<1$, but $r>\max(a,1)=1$ so contradiction. If $r>\max(a,1)=a>1$, then
+  $r>a$ and since $r^2>r$ for $a>1$, $r^2>r>a$, a contradiction, hence no such $r$ may exist) and $r^2$ cannot be both bigger
+  than and smaller than $a$. Hence $r$ is an upper bound for $S$. Since $S$ is both nonempty and bounded, it has a supremum by the completeness axiom
+  (or something under that heading in my notes). Now we want to show that $(\sup S)^2=a$, which I will do by contradiction. 
+  
+  Suppose first that
+  $(\sup S)^2<a$. Then by the Archimedean property there exists $n\in\mathbb{N}$ so that
+  $n(a-(\sup S)^2)>2\sup (S)+1$ or that 
+  $$a>\frac{2\sup(S)+1}{n}+(\sup S)^2.$$
+  Now consider
+  $$((\sup S) + \frac{1}{n})^2=(\sup S)^2+\frac{2\sup (S)}{n}+\frac{1}{n^2}$$
+  which is bounded above by
+  $$(\sup S)^2+\frac{2\sup (S)}{n}+\frac{1}{n}$$
+  which using the Archimedean property as above is less than $a$ (this was constructed in reverse).
+  Hence, since $$((\sup S) + \frac{1}{n})^2<a,$$
+  $\sup S + 1/n\in S$ and for all $n$, $\sup S + \frac{1}{n}>\sup S$, a contradiction, meaning our initial assumption that
+  $(\sup S)^2<a$ is false.
+
+
+  Now suppose that $(\sup S)^2>a$. We do the same trick by saying that, using the Archimedean principle,
+  $2(\sup S)<((\sup S)^2-a)n$ or equivalently 
+  $$a<(\sup S)^2-\frac{2(\sup S)}{n}.$$
+  Then consider the expansion of 
+  $$\left(\sup S-\frac{1}{n}\right)^2=(\sup S)^2-\frac{2\sup S}{n}+\frac{1}{n^2}> (\sup S)^2 -\frac{2\sup S}{n}$$
+  which is strictly greater than $a$ by the Archimedean property expression above. But there must be some 
+  $r\in S$ that lies between the supremum and the supremum minus a little bit, i.e. $1/n$, because there are no gaps in $\mathbb{R}$
+  so
+  $$\sup S-1/n<r<\sup S$$
+  and since $(\sup S-1/n)^2> a$, squaring gives 
+  $$a<(\sup S-1/n)^2<r^2$$
+  and hence $r$ cannot belong to $S$ as it does not obey the $r^2<a$ condition, so $(\sup S)^2>a$ must be false, and hence
+  $(\sup S)^2=a$ since it is neither greater nor lesser than. Hence there is a number in $\mathbb{R}$ which squares to $a$, and so $a$ 
+  has atleast one square root. The reversal to show negative roots I am not so sure about. I think if we reverse the ordering of $S$ by considering $-S$, then 
+  $-\sup(S)=\inf(-S)$ as the largest thing in $S$ becomes the smallest in $-S$, with a sign change. Then I \emph{think} that
+  everything we did above holds if you perform that change, with all the orderings reversed of course. That there are exactly these two roots
+  I have no idea how to show using sumprema.
 \end{soln}
 
 % PROBLEM 4
@@ -238,25 +280,25 @@ Use the $\epsilon-N$ definition of the limit to prove the following
           $$\abs{3s_n+1-7}=\abs{3s_n-6}=3\abs{s_n-2}<\epsilon.$$
           Then dividing through by $3$, $\abs{s_n-2}<\epsilon/3$.
           This is true since it is just the $\epsilon-N$ definition applied to $s_n$, which we know converges to $2$ for any
-    \item Suppose, by way of contradiction, that the limit exists and takes the value $L$. Then, by definition, there is an 
-    $N\in\mathbb{N}$ such that for all $n>N$ and $\epsilon>0$,
-    $$\abs{\sin(\frac{n\pi}{2})-L}< \epsilon.$$
-    $\sin(\frac{n\pi}{2})$ takes on three values, $1$, $0$, and $-1$. 
-    
+    \item Suppose, by way of contradiction, that the limit exists and takes the value $L$. Then, by definition, there is an
+          $N\in\mathbb{N}$ such that for all $n>N$ and $\epsilon>0$,
+          $$\abs{\sin(\frac{n\pi}{2})-L}< \epsilon.$$
+          $\sin(\frac{n\pi}{2})$ takes on three values, $1$, $0$, and $-1$.
 
-    Consider the case where we suppose it converges to zero ($L=0$),
-    Then $\abs{\sin(\frac{n\pi}{2})}<\epsilon$, however for arbitrarily small epsilon an $n$ can always be found so that 
-    $\sin(\frac{n\pi}{2})=\pm 1$, a contradiction, hence it cannot converge to $L=0$.
-    
-    
-    Consider now $L=1$, then $\abs{\sin(\frac{n\pi}{2})-1}<\epsilon$. However, as above, an $n$ can always be found so that 
-    the term in absolute value comes out to 2 ($\sin(\frac{n\pi}{2})=-1$), a contradiction for arbitrarily small $\epsilon$, hence 
-    $L\neq 1$. 
-    
 
-    Consider $L=-1$, then $\abs{\sin(\frac{n\pi}{2})+1}<\epsilon$. However, as above, an $n$ can always be found so that 
-    the term in absolute value comes out to 2 ($\sin(\frac{n\pi}{2})=1$), a contradiction for arbitrarily small $\epsilon$, hence 
-    $L\neq -1$. Since the sequence cannot converge to any value that its elements take on, it must diverge.
+          Consider the case where we suppose it converges to zero ($L=0$),
+          Then $\abs{\sin(\frac{n\pi}{2})}<\epsilon$, however for arbitrarily small epsilon an $n$ can always be found so that
+          $\sin(\frac{n\pi}{2})=\pm 1$, a contradiction, hence it cannot converge to $L=0$.
+
+
+          Consider now $L=1$, then $\abs{\sin(\frac{n\pi}{2})-1}<\epsilon$. However, as above, an $n$ can always be found so that
+          the term in absolute value comes out to 2 ($\sin(\frac{n\pi}{2})=-1$), a contradiction for arbitrarily small $\epsilon$, hence
+          $L\neq 1$.
+
+
+          Consider $L=-1$, then $\abs{\sin(\frac{n\pi}{2})+1}<\epsilon$. However, as above, an $n$ can always be found so that
+          the term in absolute value comes out to 2 ($\sin(\frac{n\pi}{2})=1$), a contradiction for arbitrarily small $\epsilon$, hence
+          $L\neq -1$. Since the sequence cannot converge to any value that its elements take on, it must diverge.
   \end{enumerate}
 \end{soln}
 \end{document}

@@ -255,21 +255,20 @@ Here $E_0$ is the same for all antennas, and the phase difference between waves 
 \end{enumerate}
 \end{problem}
 \begin{soln}~\begin{enumerate}[label=(\roman*)]
-    \item Summing over all waves $E_R(P,t)=\sum_{j=0}^{N-1}E_0e^{-i\omega t}e^{i\epsilon_j}=E_0e^{-i\omega t}e^{i\epsilon_0}\sum_{j=0}^{N-1}e^{ij\delta}$
-          which is a geometric series and can therefore be rewritten as
-          $$E_R(P,t)=E_0e^{-\omega t}e^{i\epsilon_0}\left[
-            \frac{1-e^{i\delta N}}{1-e^{i\delta}}
-            \right].$$
+    \item Summing over all waves $E_R(P,t)=\sum_{j=1}^{N}E_0e^{-i\omega t}e^{i\epsilon_j}=E_0e^{-i\omega t}e^{i\epsilon_0}\sum_{j=1}^{N}e^{ij\delta}$
+          which is a geometric series and, using the identity (where I've changed indices since the usual sum starts at 0)
+          $$\sum_{j=1}^{N}r^{j-1}=\frac{1-r^N}{1-r}$$
+          can be rewritten as
+          $$E_R(P,t)=E_0e^{-i\omega t}e^{i\epsilon_0}e^{-i\delta}\left[\frac{1-e^{iN\delta}}{1-e^{i\delta}}\right]$$
+          where the $e^{-i\delta}$ accounts for the missing $r^{-1}$ term.
           Looking at the possible answers, we then factor out a half (argument) exponential from top and bottom,
-          $$E_R(P,t)=E_0e^{-\omega t}e^{i\epsilon_0}\left[
-              \frac{e^{i\delta N/2}\left(e^{-i\delta N/2}-e^{i\delta N/2}\right)}{e^{i\delta/2}\left(e^{-i\delta/2}-e^{i\delta/2}\right)}
-              \right]$$
-          and recall that $2\Im(x)=x-\overline{x}$, which is what we see in both the denominator and numerator (albeit negative and without the two, but both cancel)
+          $$E_R(P,t)=E_0e^{-i\omega t}e^{i\epsilon_0}e^{-i\delta}e^{i(N-1)\delta/2}\left[\frac{e^{-iN\delta/2}-e^{iN\delta/2}}{e^{-i\delta/2}-e^{i\delta/2}}\right]$$
+          and recall that $2\Im(x)=x-\overline{x}$, which is what we see in both the denominator and numerator (albeit negative and without the $2i$, but both cancel)
           so we end up with
           $$E_R(P,t)=E_0e^{-\omega t}e^{i\epsilon_0}
-            e^{i\delta (N-1)/2}\frac{\sin(\delta N/2)}{\sin(\delta/2)}
+            e^{-i\delta}e^{i(N-1)\delta/2}\frac{\sin(\delta N/2)}{\sin(\delta/2)}
           $$
-          which is answer (B) \todo{book says it is (D), but I'm pretty sure that's wrong?}.
+          and $e^{-i\delta}e^{i(N-1)\delta/2}=e^{i(N+1)\delta/2}$ which gives answer (D).
     \item Just by looking at the prefactor in the previous question, (A), $E_0\sin(\delta N/2)/\sin(\delta/2)$.
     \item $E_0\sin(4\pi)/\sin(\pi/2)=0$, (B).
     \item $E_0\sin(2)/\sin(1/4)\approx 3.68E_0$, (D).
