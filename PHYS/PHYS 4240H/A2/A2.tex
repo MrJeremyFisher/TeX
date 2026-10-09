@@ -117,7 +117,7 @@
 \maketitle
 
 % PROBLEM 1
-\begin{problem}
+\begin{problem}[6.2]~
 \begin{enumerate}[label=(\alph*)]
   \item Depict using a phasor diagram the following two harmonic oscillations at point $P$:
         $$E_1(P,t)=2\cos\omega t\quad\text{and}\quad E_2(P,t)=7\cos(\frac{\pi}{3}-\omega t).$$
@@ -125,7 +125,7 @@
   \item Confirm that the same result stems from a purely algebraic approach.
 \end{enumerate}
 \end{problem}
-\begin{soln}
+\begin{soln}~
   \begin{enumerate}[label=(\alph*)]
     \item We begin by writing the fields in complex form,
           $$E_1(P,t)=\Re{2e^{-i\omega t}}\quad\text{and}\quad E_2(P,t)=\Re{7e^{i(\frac{\pi}{3}-\omega t)}}=\Re{7e^{i\pi/3}e^{-\omega t}}$$
@@ -161,12 +161,26 @@
           and magnitude $\sqrt{67}$
           which gives a resultant wave of
           $$E_R(P,t)\approx \Re{\sqrt{67}e^{0.83i}e^{-i\omega t}}=\sqrt{67}\cos(0.83-\omega t).$$
-    \item Purely algebraic?
+    \item \begin{align*}
+            E_R(P,t) & =2\cos(\omega t)+7\cos(\frac{\pi}{3}-\omega t) \\
+                     & =\Re{2e^{-i\omega t}+7e^{i(\frac{\pi}{3}-\omega t)}} \\
+                     & =\Re{\left[2+7e^{i\frac{\pi}{3}}\right]e^{-i\omega t}} \\
+                     & =\Re{\left[2+7\cos(\pi/3)+7i\sin(\pi/3)\right]\left[\cos(\omega t)-i\sin(\omega t)\right]} \\
+                     & =\Re{2\cos(\omega t)+7\cos(\pi/3)\cos(\omega t)+7i\sin(\pi/3)\cos(\omega t)-2i\sin(\omega t)-7i\cos(\pi/3)\sin(\omega t)+7\sin(\pi/3)\sin(\omega t)} \\
+                     & =2\cos(\omega t)+7\cos(\pi/3)\cos(\omega t)+7\sin(\pi/3)\sin(\omega t) \\
+                     & =\frac{1}{2}\left(11\cos(\omega t)+7\sqrt{3}\sin(\omega t)\right).
+          \end{align*}
+          Then we apply the identity 
+          $a\cos(x)+b\sin(x)=\sqrt{a^2+b^2}\cos(x+\arctan(-b/a))$, 
+          where for us $a=11$, $b=7\sqrt{3}$, and so $\arctan(-b/a)\approx -0.83$ and $\sqrt{a^2+b^2}=2\sqrt{67}$.
+          Noting that cosine is even,
+          $$E_R(P,t)=\frac{1}{2}\left(11\cos(\omega t)+7\sqrt{3}\sin(\omega t)\right)\approx \sqrt{67}\cos(-0.83+\omega t)=\sqrt{67}\cos(0.83-\omega t)$$
+          indeed the same expression as with the phasor approach but with, I would say, more work.
   \end{enumerate}
 \end{soln}
 
 % PROBLEM 2
-\begin{problem}
+\begin{problem}[6.5]
 Plot and write the equation for the superposition of the following harmonic oscillations at point $P$:
 $$E_1(P,t)=\sin(\frac{\pi}{18}-\omega t),\quad E_2(P,t)=3\cos(\frac{5\pi}{9}-\omega t),\quad E_3(P,t)=2\sin(\frac{\pi}{6}-\omega t)$$
 where the period of each oscillation is $\qty{2}{\second}$.
@@ -200,7 +214,7 @@ where the period of each oscillation is $\qty{2}{\second}$.
 \end{soln}
 
 % PROBLEM 3
-\begin{problem}
+\begin{problem}[6.9]
 Standing waves are produced by the superposition of the wave given below and its perfect reflection from a mirror. Here, the disturbance is an electric field given in units of
 $\unit{\kilo\volt\per\meter}$, while time $t$ is in seconds and distance $x$ is in $\unit{\centi\meter}$:
 $$E(x,t)=7\sin\left[2\pi\left(\frac{t}{T}-\frac{2x}{\pi}\right)\right].$$
@@ -226,7 +240,7 @@ For the resultant wave, find the amplitude, wavelength, distance between nodes, 
 \end{soln}
 
 % PROBLEM 4
-\begin{problem}
+\begin{problem}[6.14]
 The \emph{dispersive power} of glass is defined as the ratio $(n_F-n_C)/(n_D-1)$, where $C$, $D$, and $F$ refer to the
 Fraunhofer wavelengths $\lambda_{0,C}=\qty{6563}{\angstrom}$, $\lambda_{0,D}=\qty{5890}{\angstrom}$, and $\lambda_{0,F}=\qty{4861}{\angstrom}$.
 Find the approximate group velocity of a light pulse centered at the Fraunhofer $D$ line within glass whose dispersive power is $1/30$
@@ -234,15 +248,16 @@ and for which $n_D=1.5$.
 \end{problem}
 \begin{soln}
   Assuming Fraunhofer wavelengths are ordered sensibly (alphabetically), then we can apply
-  $$v_g=\eval{\frac{c}{n-\lambda\frac{dn}{d\lambda}}}_{\lambda_{\text{pk}}}.$$
-  Using the given information we can approximate the derivative by solving for $\Delta n=n_F-n_C$
+  $$v_g=\eval{\frac{c}{n-\lambda\frac{dn}{d\lambda}}}_{\lambda_{\text{pk}}}$$
+  by approximating $dn/d\lambda \approx \Delta n/ \Delta \lambda$. First $\Delta n=n_F-n_C$ which we find by rearranging $(n_F-n_C)/(n_D-1)=1/30$
   $$(n_F-n_C)/(1.5-1)=\frac{1}{30}\implies \Delta n = 1/60$$
   and we can find $\Delta\lambda$ to be $\qty{-167.5}{\nano\meter}$ by subtracting the F and C wavelengths. Plugging these into the expression
   $$v_g=\frac{c}{1.5-\qty{589}{\nano\meter}\frac{1/60}{\qty{-167.5}{\nano\meter}}}\approx 0.64 c.$$
 \end{soln}
+\newpage
 
 % PROBLEM 5
-\begin{problem} A source comprising $N$ antennas emits $N$ waves such that the wave from the $j$th antenna results
+\begin{problem}[IT6] A source comprising $N$ antennas emits $N$ waves such that the wave from the $j$th antenna results
 in an electric field at point $P$ given by
 $$E_j(P,t)=E_0\cos(\epsilon_j-\omega t).$$
 Here $E_0$ is the same for all antennas, and the phase difference between waves from adjacent antennas is a constant $\delta$ (so that $\epsilon_{j+1}-\epsilon_j=\delta$)
@@ -260,15 +275,15 @@ Here $E_0$ is the same for all antennas, and the phase difference between waves 
           $$\sum_{j=1}^{N}r^{j-1}=\frac{1-r^N}{1-r}$$
           can be rewritten as
           $$E_R(P,t)=E_0e^{-i\omega t}e^{i\epsilon_0}e^{-i\delta}\left[\frac{1-e^{iN\delta}}{1-e^{i\delta}}\right]$$
-          where the $e^{-i\delta}$ accounts for the missing $r^{-1}$ term.
+          where the $e^{i\delta}$ accounts for the missing $r^{-1}$ term.
           Looking at the possible answers, we then factor out a half (argument) exponential from top and bottom,
-          $$E_R(P,t)=E_0e^{-i\omega t}e^{i\epsilon_0}e^{-i\delta}e^{i(N-1)\delta/2}\left[\frac{e^{-iN\delta/2}-e^{iN\delta/2}}{e^{-i\delta/2}-e^{i\delta/2}}\right]$$
+          $$E_R(P,t)=E_0e^{-i\omega t}e^{i\epsilon_0}e^{i\delta}e^{i(N-1)\delta/2}\left[\frac{e^{-iN\delta/2}-e^{iN\delta/2}}{e^{-i\delta/2}-e^{i\delta/2}}\right]$$
           and recall that $2\Im(x)=x-\overline{x}$, which is what we see in both the denominator and numerator (albeit negative and without the $2i$, but both cancel)
           so we end up with
           $$E_R(P,t)=E_0e^{-\omega t}e^{i\epsilon_0}
-            e^{-i\delta}e^{i(N-1)\delta/2}\frac{\sin(\delta N/2)}{\sin(\delta/2)}
+            e^{i\delta}e^{i(N-1)\delta/2}\frac{\sin(\delta N/2)}{\sin(\delta/2)}
           $$
-          and $e^{-i\delta}e^{i(N-1)\delta/2}=e^{i(N+1)\delta/2}$ which gives answer (D).
+          and $e^{i\delta}e^{i(N-1)\delta/2}=e^{i(N+1)\delta/2}$ which gives answer (D).
     \item Just by looking at the prefactor in the previous question, (A), $E_0\sin(\delta N/2)/\sin(\delta/2)$.
     \item $E_0\sin(4\pi)/\sin(\pi/2)=0$, (B).
     \item $E_0\sin(2)/\sin(1/4)\approx 3.68E_0$, (D).
