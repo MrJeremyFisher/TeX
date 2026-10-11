@@ -182,8 +182,43 @@ What is the length of the path? (Hint: use cylindrical coordinates).
 \end{soln}
 
 % PROBLEM 3
-\begin{problem} Find the shortest path between $(x, y, z)$ points $(0,-1,0)$ and $(0,1,0)$ on the conical surface $z=1-\sqrt{x^2+y^2}$.
-What is the length of the path? (Hint: use cylindrical coordinates).
+\begin{problem}~
+\begin{enumerate}[label=(\alph*)]
+  \item Find the curve $y(x)$ that passes through the endpoints $(0,0)$ and $(1,1)$ and minimizes the
+        functional
+        $$I(y)=\int_0^1\left[\left(\frac{dy}{dx}\right)^2-y^2\right]dx$$
+  \item What is the minimum value of the integral?
+  \item Evaluate $I(y)$ for a straight line $y=x$ between points (0,0) and (1,1).
+\end{enumerate}
+\end{problem}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item We immediately apply the Euler-Lagrange equation with $f=\left(\frac{dy}{dx}\right)^2-y^2$,
+          $$\frac{\partial f}{\partial y}=-2y,\quad \frac{\partial f}{\partial y'}=2y',\quad
+            \frac{d}{dx}\left(\frac{\partial f}{\partial y'}\right)=2y''$$
+          and so
+          $$y+y''=0.$$
+          This has general solution $y=C_1\cos(x)+C_2\sin(x)$ to which we apply $y(0)=C_1=0$ and
+          $y(1)=C_2\sin(1)=1\implies C_2=1/\sin(1)$, hence
+          $$y(x)=\frac{1}{\sin(1)}\sin(x)$$
+    \item Evaluating it using the function we found above
+          \begin{align*}
+            I & =\frac{1}{\sin^2(1)}\int_0^1\cos^2(x)-\sin^2(x)dx \\
+              & =\frac{1}{\sin^2(1)}\int_0^11-2\sin^2(x)dx        \\
+              & =\frac{1}{\sin^2(1)}\int_0^1\cos(2x)dx            \\
+              & =\frac{\sin(2)}{2\sin^2(1)}\approx 0.64.
+          \end{align*}
+    \item \begin{align*}
+            I & =\int_0^11-x^2dx \\
+              & =2/3
+          \end{align*}
+          which, as we would hope, is greater than the minimum value we found in (b).
+  \end{enumerate}
+\end{soln}
+
+% PROBLEM 4
+\begin{problem} What curve on the surface $z=x^{3/2}$ joining the points $(0,0,0)$ and $(1,1,1)$ has the shortest arc
+length?
 \end{problem}
 \begin{soln}
 \end{soln}
