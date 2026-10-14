@@ -129,22 +129,49 @@ think carefully about the limits of the sum and the conversion to the integral, 
 clearly the approximations you are making.
 \end{problem}
 \begin{soln}
-Just to write it out, $$P (N, X) = \Omega(N, X)/2^N\approx \sqrt{\frac{2}{\pi N}}e^{-X^2/2N}.$$
-We want to show that
-$$1=\sqrt{\frac{2}{\pi N}}\sum_{X=-N}^{N}e^{-X^2/2N}.$$
-To convert this to an integral we need to have $N$ large enough that $dX=2$ is insignificant, i.e. that
-$P(N,X)=P_c(N,X)dX$ in the continuous case. This forces that, dividing through by $dX$, 
-$$\frac{1}{2}P(N,X)=P_c(N,X)=\frac{1}{\sqrt{2\pi N}}e^{-X^2/2N}.$$
-Integrating this
-$$\frac{1}{\sqrt{2\pi N}}\int_{-N}^{N}e^{-X^2/2N}dX$$
-we let $u=X/\sqrt{2N}\implies \sqrt{2N}du=dX$ which transforms the integral to
-$$\frac{\sqrt{2N}}{\sqrt{2N\pi }}\int_{-\sqrt{N/2}}^{\sqrt{N/2}}e^{-u^2}du=\frac{1}{\sqrt{\pi}}\int_{-\sqrt{N/2}}^{\sqrt{N/2}}e^{-u^2}du$$
-which is half of the error function, $\erf(x)$. So 
-$$\frac{1}{\sqrt{\pi}}\int_{-\sqrt{N/2}}^{\sqrt{N/2}}e^{-u^2}du=\frac{1}{2}\left[\erf(\sqrt{N/2})-\erf(-\sqrt{N/2})\right]$$
-and since the error function is odd,
-$$\frac{1}{\sqrt{\pi}}\int_{-\sqrt{N/2}}^{\sqrt{N/2}}e^{-u^2}du=\erf(\sqrt{N/2}).$$
-Now $\erf(x)$ asymptotes to 1 \emph{very} quickly. As an example, to 512(!) bits of precision, SageMath gives 
-$$\erf(12)\approx0.999999999999999999999999999999999999999999999999999999999999999864373883079409578721969384340958242733321776671189507008762046251464309514787536774406542$$
-(page cutoff for comedic effect). I'd call that normalized.
+  Just to write it out, $$P (N, X) = \Omega(N, X)/2^N\approx \sqrt{\frac{2}{\pi N}}e^{-X^2/2N}.$$
+  We want to show that
+  $$1=\sqrt{\frac{2}{\pi N}}\sum_{X=-N, -N+2, -N+4,\dots}^{N}e^{-X^2/2N}.$$
+  To work with this sum we want to convert it to an integral for which there exists an analytical solution.
+  After the discussion in office hours I recognize that you could look at the sum and, with the desire to turn it into an integral,
+  write it as
+  $$\sum_{X=-N}^{N} \frac{1}{\sqrt{2\pi N}}e^{-X^2/2N}2$$
+  (by pulling $2$ out from the root) which is in the general form of a Riemann sum with constant horizontal step,
+  $$\sum_{i} f(x_i)\Delta x.$$
+  Which can be converted to an integral by, usually, shrinking $\Delta x$ to be infinitesimal. Here instead we would make the approximation
+  that $\Delta x$ is small enough relative to $N$ that it is ``effectively'' infinitesimal. Instead of this I want to
+  convert the function inside the sum to a continuous probability density function, which is defined to be a function that spits out a probability per unit length.
+  This is because I think of continuous probability as being a function giving a probability at a point, call it $p(N,X)$ (note the little $p$) in our case, times
+  a little margin in length, $dX$. Again as discussed in office hour this is because of Rayf's example of you being unable to be exactly 5 feet tall,
+  instead that you can be 5 feet with plus or minus a bit, that bit being $dX$. To do this conversion it is intuitive to me to just, because I already have the discrete
+  function $P(N,X)$ which has ``units'' of probability (in the same sense that $\arcsin$ has ``units'' of radians),
+  divide by a unit length. In our case this is $2$ as that is the smallest step size we can take between sampled points on $P(X,N)$. Mathematically I am saying
+  $$p(N,X)=\frac{1}{2}P(N,X)$$
+  where $p(N,X)$ is now in a continuous variable and can be integrated. I recognize the awkwardness in keeping $X$ as that continuous variable,
+  but I also recognize that we're making the approximation already that the step size in $X$, 2, is so small relative to $N$ that it is effectively continuous.
+  To then extract a probability from this $p(N,X)$ we multiply it by a ``length''. To determine what the sum of all of these probability-length pairs is we take
+  the integral
+  $$I=\frac{1}{\sqrt{2\pi N}}\int_{-N}^{N}e^{-X^2/2N}dX$$
+  we let $u=X/\sqrt{2N}\implies \sqrt{2N}du=dX$ which transforms the integral to
+  $$I=\frac{\sqrt{2N}}{\sqrt{2N\pi }}\int_{-\sqrt{N/2}}^{\sqrt{N/2}}e^{-u^2}du=\frac{1}{\sqrt{\pi}}\int_{-\sqrt{N/2}}^{\sqrt{N/2}}e^{-u^2}du$$
+  which is half of the error function, $\erf(x)$
+  defined as
+  $$\erf(x)=\frac{2}{\sqrt{\pi}}\int_{0}^{x}e^{-t^2}dt.$$
+  So we can write
+  \begin{align*}
+    I & =\frac{1}{\sqrt{\pi}}\int_{-\sqrt{N/2}}^{\sqrt{N/2}}e^{-u^2}du                                            \\
+      & =\frac{1}{\sqrt{\pi}}\int_{-\sqrt{N/2}}^{0}e^{-u^2}du+\frac{1}{\sqrt{\pi}}\int_{0}^{\sqrt{N/2}}e^{-u^2}du \\
+      & =\frac{1}{\sqrt{\pi}}\int_{0}^{\sqrt{N/2}}e^{-u^2}du-\frac{1}{\sqrt{\pi}}\int_{0}^{-\sqrt{N/2}}e^{-u^2}du \\
+      & =\frac{1}{2}\left[\erf(\sqrt{N/2})-\erf(-\sqrt{N/2})\right]
+  \end{align*}
+  and since the error function is odd (which can be seen by taking the substitution $t=-t$),
+  $$I=\erf(\sqrt{N/2}).$$
+  Now $\erf(x)$ asymptotes to 1 \emph{very} quickly. As an example, to 512(!) bits of precision, SageMath, an arbitrary precision computer algebra system similar
+  to Maple, gives
+  $$\erf(12)\approx0.999999999999999999999999999999999999999999999999999999999999999864373883079409578721969384340958242733321776671189507008762046251464309514787536774406542$$
+  (page cutoff for comedic effect). Since we are considering large $N$ to be of order $10^{23}$ I think it is sufficient to say that this qualifies for normalization.
+  I realize I could have taken the Gaussian integral route and approximated $-N$ and $N$ as $\pm \infty$, but to me the asymptotic behaviour of the error function 
+  is more immediately visualizeable than the ``asymptotic'' behaviour of an integral, and comparing something that approaches $1$ to $1$ is easier 
+  than comparing something that approaches $\sqrt{\pi}$ to $\sqrt{\pi}$.
 \end{soln}
 \end{document}
