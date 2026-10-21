@@ -110,7 +110,7 @@
 \newcommand{\justif}[2]{&{#1}&\text{#2}}
 \newcommand{\bv}[1]{\bm{\mathrm{#1}}}
 
-\title{Physics 4140H: Assignment II}
+\title{Physics 4140H: Assignment IB}
 \author{Jeremy Favro (0805980) \\ Trent University, Peterborough, ON, Canada}
 \date{\today}
 
@@ -179,6 +179,27 @@ any two points on the surface of a sphere.
 What is the length of the path? (Hint: use cylindrical coordinates).
 \end{problem}
 \begin{soln}
+  In cylindrical coordinates $z=1-r$. The Euler-Lagrange equation in cylindrical coordinates is
+  $$\frac{\partial f}{\partial \phi}-\frac{d}{dr}\left(\frac{\partial f}{\partial \phi'}\right)$$
+  and the functional we want to minimize is the distance-measure in cylindrical coordinates,
+  $$f=\sqrt{(dr)^2+(dz)^2+r^2(d\phi)^2}=\sqrt{1+\left(\frac{dz}{dr}\right)^2+r^2\left(\frac{d\phi}{dr}\right)^2}=\sqrt{2+r^2\left(\phi'\right)^2}.$$
+  Then
+  $$\frac{\partial f}{\partial \phi}=0,\quad \frac{\partial f}{\partial \phi'}=\frac{r^2\phi'}{\sqrt{2+r^2\left(\phi'\right)^2}}$$
+  so
+  $$\frac{r^2\phi'}{\sqrt{2+r^2\left(\phi'\right)^2}}=C$$
+  or
+  $$\phi'=\sqrt{\frac{2}{C_1r^4-r^2}}$$
+  and so
+  $$\phi=\sqrt{2}\arctan(\sqrt{C_1r^2-1})+C_2.$$
+  Now to apply the boundary conditions we have to rewrite them in cylindrical. We require that $y(0)=-1$ and since 
+  $y=r\sin(\phi)$ this implies that $\phi=3\pi/2$ and $r=1$ so 
+  $$\tan^2(\frac{3\pi}{2\sqrt{2}}-C_2)+1=C_1$$
+  and we require that $y(0)=1$ so $\phi=\pi/2$ and $r=1$ tells us that 
+  $$\frac{\pi}{2}-\sqrt{2}\arctan(\sqrt{C_1-1})=C_2$$
+  and so 
+  $$C_2=-\frac{\pi}{\sqrt{2}-1}$$
+  and so finally 
+$$\phi=\sqrt{2}\arctan(\sqrt{\sec^2(\frac{\pi \left(7\sqrt{2}+4\right)}{4})r^2-1})-\frac{\pi}{\sqrt{2}-1}.$$
 \end{soln}
 
 % PROBLEM 3
@@ -221,5 +242,19 @@ What is the length of the path? (Hint: use cylindrical coordinates).
 length?
 \end{problem}
 \begin{soln}
+  As usual we apply the Euler-Lagrange equation to $f(x)=\sqrt{1+(y')^2+(z')^2}$, but we constrain $z=x^{3/2}$ and hence $$z'=\frac{3}{2}x^{1/2}.$$
+  Then
+  $$\frac{\partial f}{\partial y}=0,\quad \frac{\partial f}{\partial y'}=\frac{y'}{\sqrt{1+(y')^2+\frac{9}{4}x}}$$
+  and so
+  $$\frac{y'}{\sqrt{1+(y')^2+\frac{9}{4}x}}=C$$
+  for constant $C$. Rearranging
+  $$y'=C_1\sqrt{1+\frac{9}{4}x}$$
+  and integrating this by $u$-substitution for $1+ax$ we obtain
+  $$y=\frac{C_1}{27}(9x + 4)^{3/2}+C_2.$$
+  Applying boundary conditions we know that
+  $$y(0)=\frac{8C_1}{27}+C_2=0\implies C_2=-\frac{8C_1}{27}$$
+  and applying
+  $$y(1)=\frac{C_1}{27}(13)^{3/2}-\frac{8C_1}{27}=1\implies C_1=\left(\frac{(13)^{3/2}}{27}-\frac{8}{27}\right)^{-1}=\frac{27}{13\sqrt{13}-8}.$$
+  So we end up with the curve defined by $z=x^{3/2}$, $y=\frac{(9x + 4)^{3/2}-8}{13\sqrt{13}-8}$.
 \end{soln}
 \end{document}

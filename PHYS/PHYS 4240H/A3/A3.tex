@@ -1,0 +1,311 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsmath,amsthm,amssymb,bm}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{changepage}
+\usepackage{circuitikz}
+\usepackage{pgfplots}
+\usepackage{minted}
+\usepackage{physics}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{siunitx}
+\usepackage{fontspec}
+\usepackage{relsize}
+\usepackage{subfig}
+\usepackage{todonotes}
+\usepackage{contour}
+\usepackage{multicol, multirow, booktabs}
+\usepackage[breakable]{tcolorbox}
+\usepackage[inline]{enumitem}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{soln}{Solution}
+
+\pgfplotsset{compat=newest}
+\usetikzlibrary{lindenmayersystems}
+\usetikzlibrary{arrows}
+\usetikzlibrary{calc}
+\usetikzlibrary{positioning, fit}
+\usetikzlibrary{3d, perspective}
+\usetikzlibrary{math}
+\usetikzlibrary{fadings}
+\usetikzlibrary{angles,quotes} 
+\usetikzlibrary{decorations.markings}
+
+\definecolor{incolor}{HTML}{303F9F}
+\definecolor{outcolor}{HTML}{D84315}
+\definecolor{cellborder}{HTML}{CFCFCF}
+\definecolor{cellbackground}{HTML}{F7F7F7}
+\newcommand{\ui}{\hat{i}}
+\newcommand{\uj}{\hat{j}}
+\newcommand{\uk}{\hat{k}}
+\newcommand{\ux}{\hat{\mathbf{x}}}
+\newcommand{\uy}{\hat{\mathbf{y}}}
+\newcommand{\uz}{\hat{\mathbf{z}}}
+\newcommand{\uv}[1]{\hat{\bv{{#1}}}}
+\newcommand{\pr}[1]{{#1^\prime}}
+\newcommand{\pd}[2][]{{\frac{\partial^{#1}}{\partial {{#2}^{#1}}}}}
+\newcommand{\dif}[2][]{{\frac{d^{#1}}{d{{#2}^{#1}}}}}
+\newcommand{\grd}{\nabla}
+
+\pgfdeclarelayer{background}  
+\pgfsetlayers{background,main}
+\AtBeginDocument{\RenewCommandCopy\qty\SI}
+
+\makeatletter
+\newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+\makeatother
+\newcommand{\prompt}[4]{
+    \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+}
+
+\newcommand{\thevenin}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (2,0) to[battery1, l_=$V_{Th}\eq#1$] (2,2) 
+      to[resistor, l_=$R_{Th}\eq#2$] (0,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\newcommand{\norton}[2]{
+  \begin{center}
+    \begin{circuitikz} \draw
+      (0,0) -- (3,0) to[american current source, l_=$I_{N}\eq#1$] (3,2) -- (0,2) (2,0)
+      to[resistor, l=$R_{N}\eq#2$] (2,2)
+      ;
+      \draw [o-] (-.07,2.079);
+      \draw [o-] (-.07,0.079);
+    \end{circuitikz}
+  \end{center}
+}
+
+\DeclareMathOperator{\Div}{div}
+\DeclareMathOperator{\Curl}{curl}
+\DeclareMathOperator{\sgn}{sgn}
+
+\newcommand{\highlight}[1]{\colorbox{yellow}{$\displaystyle #1$}}
+\newcommand{\ti}[1]{\widetilde{#1}}
+\renewcommand{\div}[1]{\bv{\nabla}\cdot #1}
+\renewcommand{\curl}[1]{\bv{\nabla}\times #1}
+
+\newfontface{\Kaufmann}{Kaufmann}
+\DeclareTextFontCommand{\kf}{\Kaufmann}
+\newcommand{\scriptr}{\fontsize{12pt}{12pt}\kf{r}\fontsize{10pt}{10pt}}
+
+\newfontface{\KaufmannB}{Kaufmann Bold}
+\DeclareTextFontCommand{\kfb}{\KaufmannB}
+\newcommand{\bscriptr}{\fontsize{12pt}{12pt}\kfb{r}\fontsize{10pt}{10pt}}
+\newcommand{\justif}[2]{&{#1}&\text{#2}}
+\newcommand{\bv}[1]{\bm{\mathrm{#1}}}
+\newcommand{\dul}[1]{\underline{\underline{#1}}}
+
+\title{Physics 4240H: Assignment III}
+\author{Jeremy Favro (0805980) \\ Trent University, Peterborough, ON, Canada}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+% PROBLEM 1
+\begin{problem}[14.4]
+Two linearly polarized beams are given by
+$$\bv{E}_1=E_{01}(\ux-\uy)\cos(kz-\omega t)\quad\text{and}$$
+$$\bv{E}_2=E_{02}(\sqrt{3}\ux+\uy)\cos(kz-\omega t).$$
+Determine the angle between their directions of polarization by
+\begin{enumerate}[label=(\alph*)]
+  \item forming their Jones vectors and finding the orientation of each field
+  \item forming the dot product of their vector amplitudes.
+\end{enumerate}
+\end{problem}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item $\bv{E}_1$ has a $\pi$ phase difference between the $x$ and $y$ components, so has Jones vector
+          $$\bv{V}_1=E_{01}\begin{pmatrix}
+              1 \\e^{i\pi}
+            \end{pmatrix}=E_{01}\begin{pmatrix}
+              1 \\-1
+            \end{pmatrix}.$$
+          $\bv{E}_2$ has Jones vector
+          $$\bv{V}_2=E_{02}\begin{pmatrix}
+              \sqrt{3} \\1
+            \end{pmatrix}.$$
+          These respectively have angles to the positive $x$-axis given by
+          $$\theta_1=\arctan(-1)=-\frac{\pi}{4}$$
+          and
+          $$\theta_2=\arctan(\frac{1}{\sqrt{3}})=\frac{\pi}{6}.$$
+          The angle between these two is $5\pi/12$.
+    \item We know that $\bv{a}\cdot\bv{b}=a_xb_x+a_yb_y=\abs{\bv{a}}\abs{\bv{b}}\cos\theta$ where $\theta$ is the angle between $\bv{a}$ and $\bv{b}$.
+          For us this is
+          $$\sqrt{3}-1=\sqrt{8}\cos\theta\implies \theta=\arccos\left(\frac{\sqrt{3}-1}{\sqrt{8}}\right)=\frac{5\pi}{12},$$
+          $\text{W}^5$.
+  \end{enumerate}
+\end{soln}
+
+% PROBLEM 2
+\begin{problem}[14.9]
+Specify the polarization state and field amplitude(s) represented by each of the following Jones vectors.
+\begin{center}
+  \begin{enumerate*}[label=(\alph*)]
+    \item $\begin{pmatrix}
+              3i \\i
+            \end{pmatrix}$;
+    \item $\begin{pmatrix}
+              i \\ 1
+            \end{pmatrix}$;
+    \item $\begin{pmatrix}
+              4i \\ 5
+            \end{pmatrix}$;
+    \item $\begin{pmatrix}
+              5 \\ 0
+            \end{pmatrix}$;
+    \item $\begin{pmatrix}
+              2 \\ 2i
+            \end{pmatrix}$;
+    \item $\begin{pmatrix}
+              2 \\ 3
+            \end{pmatrix}$;
+    \item $\begin{pmatrix}
+              2 \\ 6+8i
+            \end{pmatrix}$.
+  \end{enumerate*}
+\end{center}
+\end{problem}
+\begin{soln}
+  \begin{enumerate}[label=(\alph*)]
+    \item Factoring out an $i$, the vector clearly represents linearly polarized light with an overall phase
+          and amplitude $\sqrt{10}$.
+    \item Here we can factor out an $i$ yields $i(1,-i)$, right-circular polarization with
+          an overall phase and amplitude $\sqrt{2}$.
+    \item Again we factor out an $i$ and obtain $i(4,-5i)$, right-elliptical polarization with an overall phase and
+          horizontal amplitude $4$ and vertical amplitude $5$, meaning the ellipse has a major axis lying along the vertical.
+    \item Regular linearly polarized light along the horizontal and amplitude $5$.
+    \item Left circular polarization, amplitude $2$.
+    \item Linear polarization with amplitude $\sqrt{13}$.
+    \item Left-elliptical polarization, amplitudes $2$ in the vertical and $40/3$ in the horizontal, found by
+          solving the system of equations from $6+8i=b(cos\theta+i\sin\theta)$.
+  \end{enumerate}
+\end{soln}
+
+% PROBLEM 3
+\begin{problem}[14.13]
+Linearly polarized light with a horizontal transmission axis is sent through a linear polarizer with its transmission axis
+at \qty{45}{\degree} and then through a $\lambda/4$-plate with its slow axis horizontal. Use the Jones matrix technique to determine
+and describe the transmitted light.
+\end{problem}
+\begin{soln}
+  Light initially incident with jones vector $$\bv{V}=\begin{pmatrix}
+      0 \\1
+    \end{pmatrix}$$
+  is subject to a linear polarizer at \qty{45}{\degree}, represented by
+  $$\dul{M}_{\qty{45}{\degree}}=\frac{1}{2}\begin{pmatrix}
+      1 & 1 \\
+      1 & 1
+    \end{pmatrix}$$
+    then to a $\lambda/4$ plate with SA horizontal,
+    $$\dul{M}_{\lambda/4}=e^{-i\pi/4}\begin{pmatrix}
+      1 & 0 \\
+      0 & -1
+    \end{pmatrix}.$$
+    Chaining these then the outgoing light looks like 
+    $$\bv{V}'=\dul{M}_{\lambda/4}\dul{M}_{\qty{45}{\degree}}\bv{V}=\frac{e^{-i\pi/4}}{2}\begin{pmatrix}
+      1 & 0 \\
+      0 & -1
+    \end{pmatrix}\begin{pmatrix}
+      1 & 1 \\
+      1 & 1
+    \end{pmatrix}\begin{pmatrix}
+      0 \\1
+    \end{pmatrix}=\frac{e^{-i\pi/4}}{2}\begin{pmatrix}
+      1 \\
+      -1
+    \end{pmatrix}$$
+    which has a global phase given by $e^{i\pi/4}$ but also a $\pi$ phase delay between the horizontal and vertical components due to the negative
+    vertical component. The light is linearly polarized, with (relative) amplitude $1/4\sqrt{2}$.
+\end{soln}
+
+% PROBLEM 4
+\begin{problem}[IT14]
+A beam of monochromatic left-circularly polarized light traveling along the $z$-axis is incident on an eighth-wave
+plate (that is, a $\lambda/8$-plate), which may be rotated so its slow axis lies at any desired angle to the horizontal (this being the $x$-axis of our coordinate system)/
+\begin{enumerate}[label=(\roman*)]
+  \item Which of the following expressions for the real, physical, electric field best describes the incident light?
+  \item If the $\lambda/8$-plate is oriented so that its slow axis is \emph{horizontal} then which Jones matrix best represents
+        the $\lambda/8$-plate with this orientation?
+  \item Which of the following expression then best represents the Jones vector, \emph{and} the description of the polarization,
+        of the light transmitted through the $\lambda/8$-plate when oriented as described in part (ii)?
+  \item If the $\lambda/8$-plate is rotated from the orientation of case (ii) by and angle $\theta$ clockwise when looking into the beam,
+        then which Jones matrix best represents the $\lambda/8$-plate with this orientation? (It may be useful here to refer to footnote 8).
+\end{enumerate}
+\end{problem}
+\begin{soln}
+
+\end{soln}
+
+% PROBLEM 5
+\begin{problem}[15.1]
+Initially unpolarized light passes in turn through three linear polarizers with transmission axes at \qty{0}{\degree},
+\qty{30}{\degree}, and \qty{60}{\degree} respectively, relative to the horizontal. What is the intensity of the emerging light, expressed
+as a percentage of the incident intensity?
+\end{problem}
+\begin{soln}
+We can directly apply Malus' law. The light sees an initial intensity decrease of $1/2$ due to being unpolarized and forced to adopt one 
+polarization state, then a decrease of $\cos^2(\qty{30}{\degree})=3/4$ then a decrease of $\cos^2(\qty{60}{\degree})=1/4$, a total decrease of 
+$3/2\cdot 4\cdot 4=3/32$, $9.375\%$ of the incident light.
+\end{soln}
+
+% PROBLEM 6
+\begin{problem}[15.4]
+How thick should a $\lambda/2$-plate made from cleaved mica be for an application where laser light of wavelength
+\qty{632.8}{\nano\meter} is being used? Consider refractive indices of $1.599$ and $1.594$.
+\end{problem}
+\begin{soln}
+We want to have one retarded by $\qty{316.4}{\nano\meter}$, meaning we need $\Delta \phi =\pi/2$ or 
+$$d=\frac{\Delta \phi \lambda_0}{2\pi\abs{n_\perp-n_\parallel}}.$$
+Taking $n_\perp=1.599$ and $n_\parallel=1.594$ we get
+$$d\approx \qty{30.2}{\micro\meter}.$$
+\end{soln}
+
+% PROBLEM 7
+\begin{problem}[15.12]
+Light strikes a water surface at an angle such that the reflected light is completely linearly polarized.
+\begin{enumerate}[label=(\alph*)]
+  \item What is the angle of incidence?
+  \item The light refracted into the water is then intercepted by the top smooth surface of a block of glass with an index of refraction of $1.50$.
+        The light reflected from the glass is completely linearly polarized. What is the angle between the glass and water surfaces?
+\end{enumerate}
+\end{problem}
+\begin{soln}
+
+\end{soln}
+
+% PROBLEM 8
+\begin{problem}[IT15]
+A beam of white light, traveling along the $z$-axis, illuminates a sample of dilute molecules, as indicated in Figure 15.7.
+We shall treat the dashed ray shown in this figure as forming an angle of $\gamma_2=\qty{30}{\degree}$ with the $xz$-plane, with its projection
+onto this plane lying midway between the $x$-axis and the $z$-axis (so that $\gamma_1=\qty{45}{\degree}$). We wish to
+explore the scattered light for particular polarizations of the incident light.
+\begin{enumerate}[label=(\roman*)]
+  \item Which of the following angles does the dashed-ray direction make with the $z$-axis?
+  \item With the sample illuminated by \emph{unpolarized} light, what is the \emph{degree of polarization} for light scattered along the dashed-ray direction
+        shown?
+  \item With the sample instead illuminated by \emph{linearly polarized light} oriented along the $y$-direction (thus vertically polarized), which of the
+        following statements is most accurate about the polarization of the light scattered along the $x$-axis and along the $y$-axis, respectively?
+  \item With the sample again illuminated by linearly polarized light oriented along the $y$-direction (thus vertically polarized), what is
+        the polarization of the light emitted along the dashed-ray direction shown?
+\end{enumerate}
+\end{problem}
+\begin{soln}
+
+\end{soln}
+\end{document}
