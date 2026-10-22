@@ -151,6 +151,7 @@ Determine the angle between their directions of polarization by
           $\text{W}^5$.
   \end{enumerate}
 \end{soln}
+\newpage
 
 % PROBLEM 2
 \begin{problem}[14.9]
@@ -181,19 +182,19 @@ Specify the polarization state and field amplitude(s) represented by each of the
   \end{enumerate*}
 \end{center}
 \end{problem}
-\begin{soln}
+\begin{soln}~
   \begin{enumerate}[label=(\alph*)]
     \item Factoring out an $i$, the vector clearly represents linearly polarized light with an overall phase
-          and amplitude $\sqrt{10}$.
-    \item Here we can factor out an $i$ yields $i(1,-i)$, right-circular polarization with
-          an overall phase and amplitude $\sqrt{2}$.
-    \item Again we factor out an $i$ and obtain $i(4,-5i)$, right-elliptical polarization with an overall phase and
+          and amplitude $\sqrt{10}$ at angle $\qty{18.4}{\degree}$ from the positive $x$-axis.
+    \item Here we can factor out an $i$ yielding $i(1,-i)$, right-circular polarization with
+          an overall phase and amplitude $1$.
+    \item Again we factor out an $i$ and obtain $i(4,-5i)$, right-elliptical polarization with an overall $\pi$ phase and
           horizontal amplitude $4$ and vertical amplitude $5$, meaning the ellipse has a major axis lying along the vertical.
-    \item Regular linearly polarized light along the horizontal and amplitude $5$.
+    \item Regular linearly polarized light along the horizontal with amplitude $5$.
     \item Left circular polarization, amplitude $2$.
-    \item Linear polarization with amplitude $\sqrt{13}$.
-    \item Left-elliptical polarization, amplitudes $2$ in the vertical and $40/3$ in the horizontal, found by
-          solving the system of equations from $6+8i=b(cos\theta+i\sin\theta)$.
+    \item Linear polarization with amplitude $\sqrt{13}$ at an angle of $\qty{56.3}{\degree}$.
+    \item Left-elliptical polarization, amplitudes $2$ in the horizontal and $10$ in the vertical, axis at an angle of
+          \qty{-7}{\degree}.
   \end{enumerate}
 \end{soln}
 
@@ -212,15 +213,15 @@ and describe the transmitted light.
       1 & 1 \\
       1 & 1
     \end{pmatrix}$$
-    then to a $\lambda/4$ plate with SA horizontal,
-    $$\dul{M}_{\lambda/4}=e^{-i\pi/4}\begin{pmatrix}
-      1 & 0 \\
-      0 & -1
+  then to a $\lambda/4$ plate with SA horizontal,
+  $$\dul{M}_{\lambda/4}=e^{-i\pi/4}\begin{pmatrix}
+      1 & 0  \\
+      0 & -i
     \end{pmatrix}.$$
-    Chaining these then the outgoing light looks like 
-    $$\bv{V}'=\dul{M}_{\lambda/4}\dul{M}_{\qty{45}{\degree}}\bv{V}=\frac{e^{-i\pi/4}}{2}\begin{pmatrix}
-      1 & 0 \\
-      0 & -1
+  Chaining these then the outgoing light looks like
+  $$\bv{V}'=\dul{M}_{\lambda/4}\dul{M}_{\qty{45}{\degree}}\bv{V}=\frac{e^{-i\pi/4}}{2}\begin{pmatrix}
+      1 & 0  \\
+      0 & -i
     \end{pmatrix}\begin{pmatrix}
       1 & 1 \\
       1 & 1
@@ -228,16 +229,17 @@ and describe the transmitted light.
       0 \\1
     \end{pmatrix}=\frac{e^{-i\pi/4}}{2}\begin{pmatrix}
       1 \\
-      -1
+      -i
     \end{pmatrix}$$
-    which has a global phase given by $e^{i\pi/4}$ but also a $\pi$ phase delay between the horizontal and vertical components due to the negative
-    vertical component. The light is linearly polarized, with (relative) amplitude $1/4\sqrt{2}$.
+  which has a global phase given by $e^{i\pi/4}$ but also a $\pi$ phase delay between the horizontal and vertical components due to the negative
+  vertical component. The light is right-circularly polarized, with amplitude $1/4\sqrt{2}$.
 \end{soln}
 
 % PROBLEM 4
 \begin{problem}[IT14]
 A beam of monochromatic left-circularly polarized light traveling along the $z$-axis is incident on an eighth-wave
-plate (that is, a $\lambda/8$-plate), which may be rotated so its slow axis lies at any desired angle to the horizontal (this being the $x$-axis of our coordinate system)/
+plate (that is, a $\lambda/8$-plate), which may be rotated so its slow axis lies at any desired angle to the horizontal
+(this being the $x$-axis of our coordinate system).
 \begin{enumerate}[label=(\roman*)]
   \item Which of the following expressions for the real, physical, electric field best describes the incident light?
   \item If the $\lambda/8$-plate is oriented so that its slow axis is \emph{horizontal} then which Jones matrix best represents
@@ -248,8 +250,42 @@ plate (that is, a $\lambda/8$-plate), which may be rotated so its slow axis lies
         then which Jones matrix best represents the $\lambda/8$-plate with this orientation? (It may be useful here to refer to footnote 8).
 \end{enumerate}
 \end{problem}
-\begin{soln}
-
+\begin{soln}~
+  \begin{enumerate}[label=(\roman*)]
+    \item For left-circular polarization there needs to be a $\pi/2$ phase difference between the horizontal and vertical components, leaving (D) and (B).
+          The answer must be (D) with phase $+\pi/2$ as left-circular polarization has Jones vector $(1,i)$ and $e^{i\pi/2}=i$.
+    \item We want to add a phase of $\pi/4$ to the horizontal axis, alternatively we retard the vertical component by $\pi/4$, meaning answer (A)
+          must be correct.
+    \item We can apply the matrix in (ii) $(1,i)$ which yields a new Jones vector,
+          $$\bv{V}_{out}=\begin{pmatrix}
+              1 \\
+              e^{i\pi/4}
+            \end{pmatrix}=\begin{pmatrix}
+              1 \\
+              \frac{1}{\sqrt{2}}\left(1+i\right)
+            \end{pmatrix},$$
+          answer (B).
+    \item We apply the change of basis (in linear algebra terms) from the $xy$ basis to the rotated one by
+          \begin{align*}
+            \dul{R}\dul{M}_{\lambda/8}\dul{R}^T & =\begin{pmatrix}
+                                                     \cos\theta  & \sin\theta \\
+                                                     -\sin\theta & \cos\theta
+                                                   \end{pmatrix}\begin{pmatrix}
+                                                                  1 & 0           \\
+                                                                  0 & e^{-i\pi/4}
+                                                                \end{pmatrix}\begin{pmatrix}
+                                                                               \cos\theta & -\sin\theta \\
+                                                                               \sin\theta & \cos\theta
+                                                                             \end{pmatrix} \\
+                                                & =\begin{pmatrix}
+                                                     \cos^2(\theta)+e^{-i\pi /4}\sin^2 (\theta) &
+                                                     (e^{-i\pi /4}-1)\cos (\theta)\sin (\theta)   \\
+                                                     (e^{-i\pi /4}-1)\sin (\theta)\cos (\theta) &
+                                                     \sin^2(\theta)+e^{-i\pi /4}\cos^2 (\theta)
+                                                   \end{pmatrix}
+          \end{align*}
+          after some looking, answer (C).
+  \end{enumerate}
 \end{soln}
 
 % PROBLEM 5
@@ -259,9 +295,10 @@ Initially unpolarized light passes in turn through three linear polarizers with 
 as a percentage of the incident intensity?
 \end{problem}
 \begin{soln}
-We can directly apply Malus' law. The light sees an initial intensity decrease of $1/2$ due to being unpolarized and forced to adopt one 
-polarization state, then a decrease of $\cos^2(\qty{30}{\degree})=3/4$ then a decrease of $\cos^2(\qty{60}{\degree})=1/4$, a total decrease of 
-$3/2\cdot 4\cdot 4=3/32$, $9.375\%$ of the incident light.
+  We can directly apply Malus' law. The light sees an initial intensity decrease of $1/2$ due to being unpolarized and forced to adopt one
+  polarization state, then a decrease of $\cos^2(\qty{30}{\degree})=3/4$ then another decrease of $\cos^2(\qty{30}{\degree})=1/4$ because
+  the light is now at an angle of \qty{30}{\degree} to the \qty{60}{\degree} polarizer. This gives a total decrease of
+  $9/2\cdot 4\cdot 4=9/32$, $28.125\%$ of the incident light.
 \end{soln}
 
 % PROBLEM 6
@@ -270,11 +307,12 @@ How thick should a $\lambda/2$-plate made from cleaved mica be for an applicatio
 \qty{632.8}{\nano\meter} is being used? Consider refractive indices of $1.599$ and $1.594$.
 \end{problem}
 \begin{soln}
-We want to have one retarded by $\qty{316.4}{\nano\meter}$, meaning we need $\Delta \phi =\pi/2$ or 
-$$d=\frac{\Delta \phi \lambda_0}{2\pi\abs{n_\perp-n_\parallel}}.$$
-Taking $n_\perp=1.599$ and $n_\parallel=1.594$ we get
-$$d\approx \qty{30.2}{\micro\meter}.$$
+  We want to have one retarded by $\qty{316.4}{\nano\meter}$, meaning we need $\Delta \phi =\pi$ or
+  $$d=\frac{\Delta \phi \lambda_0}{2\pi\abs{n_\perp-n_\parallel}}.$$
+  Taking $n_\perp=1.599$ and $n_\parallel=1.594$ we get
+  $$d\approx \qty{60.3}{\micro\meter}.$$
 \end{soln}
+\newpage
 
 % PROBLEM 7
 \begin{problem}[15.12]
@@ -285,8 +323,16 @@ Light strikes a water surface at an angle such that the reflected light is compl
         The light reflected from the glass is completely linearly polarized. What is the angle between the glass and water surfaces?
 \end{enumerate}
 \end{problem}
-\begin{soln}
-
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item For the reflection to be linearly polarized, the incident light arrived at Brewster's angle, $\theta_I=\arctan(1.33)\approx \qty{53}{\degree}$.
+    \item Brewster's angle for water to glass is $\theta_B=\arctan(1.5/1.33)\approx \qty{48}{\degree}$. Snell's law tells us that, because the beam entered
+          the water at $\theta_I=\arctan(1.33)$, $\theta_T$, the angle at which the light travels
+          through the water is $\arcsin(\sin(\arctan(1.33))/1.33)=\theta_T\approx \qty{37}{\degree}$
+          which is the angle at which the light strikes the glass, minus the angle at which the glass sits. We want $\theta_T+\theta_G$ to be
+          Brewster's angle for water to glass ($\theta_G$ is the glass-normal angle, relative to the water) so
+          $$\theta_B-\theta_T=\theta_G\approx \qty{11.5}{\degree}.$$
+  \end{enumerate}
 \end{soln}
 
 % PROBLEM 8
@@ -305,7 +351,19 @@ explore the scattered light for particular polarizations of the incident light.
         the polarization of the light emitted along the dashed-ray direction shown?
 \end{enumerate}
 \end{problem}
-\begin{soln}
-
+\begin{soln}~
+  \begin{enumerate}[label=(\roman*)]
+    \item If we say the incident ray has vector direction $\bv{a}$, then $\bv{a}\cdot\uz=\abs{\bv{a}}\cos\theta$ where $\theta$ is the angle
+          we want. As in the hint, we can project down onto the $xz$ plane, obtaining a vector with length $\abs{\bv{a}}\cos\gamma_2$
+          and then project that vector down along $z$ to obtain $\bv{a}\cdot\uz=\abs{\bv{a}}\cos\gamma_2\cos\gamma_1$ so
+          $$\theta=\arccos(\frac{\abs{\bv{a}}\cos\gamma_2\cos\gamma_1}{\abs{\bv{a}}})\approx \qty{52.2}{\degree},$$
+          answer (B).
+    \item $$P(\theta)=\frac{\sin^2\theta}{1+\cos^2\theta}=5/11\approx0.45,$$
+          answer (E).
+    \item The way I picture this is that the light excites a dipole oriented along $y$, which reemits vertically polarized light in the $xz$ plane along its
+          radiating toroid. This means that the emitted light is only along $x$ and is vertically polarized, which corresponds to answer (C).
+    \item This time we are on the surface of the radiating toroid, and we've walked up it to an angle of $\gamma_2$, so the light, whilst still
+          vertically polarized, is at an angle of \qty{30}{\degree} to the vertical (backwards, I want to say this is a negative angle), answer (A).
+  \end{enumerate}
 \end{soln}
 \end{document}
