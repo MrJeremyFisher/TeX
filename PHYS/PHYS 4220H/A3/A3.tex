@@ -172,14 +172,210 @@ bowl of soup in the microwave.
         transmitted from/into the spoon.
   \item Estimate the skin-depth over which the microwaves that enter the handle
         are absorbed
-  \item Imagine that the full power of a $\qty{1}{\kilo\watt}$ microwave is incident onto the
+  \item Imagine that the full power of a \qty{1}{\kilo\watt} microwave is incident onto the
         spoon's handle, after which any reflected power gets absorbed by the soup.
-        If the spoon weighs $\qty{30}{\gram}$ and the steel has a heat capacity of $\qty{450}{\joule\per\kilo\gram\per\kelvin}$,
+        If the spoon weighs \qty{30}{\gram} and the steel has a heat capacity of $\qty{450}{\joule\per\kilo\gram\per\kelvin}$,
         what temperature do you expect the spoon to be at the end of a 2-minute
         full-power heating cycle?
 \end{enumerate}
 \end{problem}
-\begin{soln}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item I have no idea how egregious I can be with my approximations, so I'm going to lean pretty heavy towards spherical cow.
+          Assuming the spoon is a flat surface (i.e. a rectangular block of steel) and the microwaves are normally incident on any given side of the spoon,
+          the reflection and transmission coefficients are
+          $$r=\frac{n_{air}-n_{steel}}{n_{air}+n_{steel}}\quad t=\frac{2n_{air}}{n_{air}+n_{steel}}.$$
+          We can ballpark $n_{air}\approx 1$ (I found it to be around $0.995$) and obtain $n_{steel}$ using our expression for
+          $\ti{k}$. The expressions for $\mathcal{k}$ and $\kappa$ are very similar since $\sigma\gg 1$. Approximating the two as equal and
+          plugging in numbers, noting that $\omega =2\pi\nu$ we obtain $\ti{k}\approx \qty{1.2e5}{\per\meter}$ and hence
+          $\ti{n}_{steel}=c\ti{k}/\omega\approx \num{2.25e3}(1+i)$. Plugging these into the field coefficients we get that
+          $r\approx -0.999$ and $t\approx \num{8.8e-4}$. This lines up at least a bit with what I would expect a metal to do with microwaves, mostly reflection.
+    \item Using the same numbers from above, $d=1/\kappa\approx \qty{8.3}{\micro\meter}$.
+    \item Neglecting any of the fancy stuff that microwaves do to heat food evenly, and assuming all of the transmitted power is absorbed
+          we apply $T=1-R=1-r^2=\num{1.77e-3}$. We assume that the spoon sees all of the $\qty{1}{\kilo\watt}$ and
+          so absorbs $\qty{1.77e-3}{\kilo\watt}=\qty{1.77}{\watt}$ \todo{Does this work? Intensity is $W/m^2$}.
+          Since the spoon weighs \qty{30}{\gram} it takes \qty{13.5}{\joule} to increase the temperature by one Kelvin.
+          Then since then spoon is absorbing \qty{1.77}{\joule\per\second} for \qty{120}{\second}, the total absorbed energy is
+          \qty{212.4}{\joule} and so the increase in temperature is \qty{15.73}{\kelvin}, which amounts to an end temperature of \qty{35.73}{\degreeCelsius},
+          which seems really low?
+  \end{enumerate}
+\end{soln}
 
+% PROBLEM 3
+\begin{problem}
+Consider an isolated resonance in a dielectric material for which the Lorentz
+Oscillator Model holds well. Using the dispersion expression for the complex
+index of refraction show that the anomalous dispersion regime (in $n$) is concurrent
+with the span of the full-width at half-maximum (FWHM) of the absorption
+profile ($\alpha$).
+\end{problem}
+\begin{soln}
+  The complex refractive index is
+  $$\ti{n}=\left[1+\frac{Nq^2}{2m\epsilon_0}\sum_j\frac{f_j(\omega_j^2-\omega^2)}{(\omega_j^2-\omega^2)^2+\gamma_j^2\omega^2}\right]
+    +i\frac{Nq^2}{m\epsilon_0c}\sum_j\frac{f_j\gamma_j\omega^2}{(\omega_j^2-\omega^2)^2+\gamma_j^2\omega^2}
+  $$
+  where we call the real part $n$ and the imaginary part $\alpha$. The anomalous dispersion regime is the region of $n(\omega)$ for which $dn/d\omega<0$.
+  So, to find the ``borders'' of this region, we consider $dn/d\omega=0$.
+  To simplify things, since we are working with an $\omega_j$ very far from other $\omega_j$s, we consider only the $j$th term of the sum, as the other
+  terms are very small. Then,
+  \begin{align*}
+    \frac{dn}{d\omega} & =\frac{Nq^2f_j}{2m\epsilon_0}\frac{d}{d\omega}\left[\frac{(\omega_j^2-\omega^2)}{(\omega_j^2-\omega^2)^2+\gamma_j^2\omega^2}\right] \\
+                       & =\frac{Nq^2f_j}{2m\epsilon_0}\frac{(-2\omega)((\omega_j^2-\omega^2)^2+\gamma_j^2\omega^2)
+      -(2(-2\omega)(\omega_j^2-\omega^2)+2\gamma_j^2\omega)(\omega_j^2-\omega^2)
+    }{\left[(\omega_j^2-\omega^2)^2+\gamma_j^2\omega^2\right]^2}
+  \end{align*}
+  we then set this to zero to find where the derivative changes sign
+  \begin{align*}
+    0 & =\cancel{\frac{Nq^2f_j}{2m\epsilon_0}}\frac{(-\cancel{2\omega})((\omega_j^2-\omega^2)^2+\gamma_j^2\omega^2)
+      -(2(-\cancel{2\omega})(\omega_j^2-\omega^2)+\cancel{2\omega}\gamma_j^2)(\omega_j^2-\omega^2)
+    }{\left[(\omega_j^2-\omega^2)^2+\gamma_j^2\omega^2\right]^2}\justif{\quad}{Disregarding the $\omega=0$ solution} \\
+      & =\frac{((\omega_j^2-\omega^2)^2+\gamma_j^2\omega^2)
+      +(\gamma_j^2-2(\omega_j^2-\omega^2))(\omega_j^2-\omega^2)
+    }{\left[(\omega_j^2-\omega^2)^2+\gamma_j^2\omega^2\right]^2}
+  \end{align*}
+  and we consider only the numerator since the denominator will never blow up
+  \begin{align*}
+    0        & =((\omega_j^2-\omega^2)^2+\gamma_j^2\omega^2)
+    +(\gamma_j^2-2(\omega_j^2-\omega^2))(\omega_j^2-\omega^2)                                                       \\
+             & =(\omega_j^2-\omega^2)^2-2(\omega_j^2-\omega^2)^2+\gamma_j^2\omega^2+\gamma_j^2(\omega_j^2-\omega^2) \\
+             & =-(\omega_j^2-\omega^2)^2+\cancel{\gamma_j^2\omega^2}+\gamma_j^2(\omega_j^2-\cancel{\omega^2})       \\
+    \implies & 0=(\omega_j^2-\omega^2)^2-\gamma_j^2\omega_j^2                                                       \\
+    \implies & \omega=\sqrt{\omega_j^2\pm\omega_j\gamma_j}
+  \end{align*}
+  where I've introduced a $\pm$ inside the square root to obtain two solutions (looking at a graph to justify it)
+  but I've chosen the principle square root outside. Why? I don't really know? If I had taken $\pm$ outside as well,
+  the negative frequency components are symmetric with the positive ones anyway, so maybe that's it. Things work out anyway.
+
+
+  Now, far from  other resonances, the maximum value of $\alpha$ occurs at the resonant frequency, $\omega=\omega_j$. This maximum value is then
+  $$\alpha_{max}=\frac{Nq^2f_j}{m\epsilon_0c}\frac{1}{\gamma_j}.$$
+  The half-max value then is $\alpha_{max}/2$. We then solve for $\omega$ when $\alpha=\alpha_{max}/2$,
+  \begin{align*}
+    \cancel{\frac{Nq^2f_j}{m\epsilon_0c}}\frac{1}{2\gamma_j} & =\cancel{\frac{Nq^2f_j}{m\epsilon_0c}}\frac{\gamma_j\omega^2}{(\omega_j^2-\omega^2)^2+\gamma_j^2\omega^2} \\
+    \implies 2\gamma_j^2\omega^2                             & =(\omega_j^2-\omega^2)^2+\gamma_j^2\omega^2                                                               \\
+    \implies 0                                               & =\omega^4-(2\omega_j^2+\gamma_j^2)\omega^2+\omega_j^4                                                     \\
+  \end{align*}
+  which is quadratic in $\omega^2$ so
+  $$\omega^2=\frac{(2\omega_j^2+\gamma_j^2)\pm\sqrt{(2\omega_j^2+\gamma_j^2)^2-4\omega_j^4}}{2}$$
+  and hence
+  $$\omega=\sqrt{\frac{(2\omega_j^2+\gamma_j^2)\pm\gamma_j\sqrt{4\omega_j^2+\gamma_j^2}}{2}}.$$
+  In the limit that $\omega_j\gg \gamma_j$, $2\omega_j^2+\gamma_j^2\approx 2\omega_j^2$ and we recover
+  $$\omega=\sqrt{\omega_j^2\pm\omega_j\gamma_j},$$
+  so the half-height points of the absorption peak indeed lie at the bounds of the anomalous dispersion region for
+  resonances far from other resonances when $\omega_j\gg\gamma_j$.
+\end{soln}
+\newpage
+
+% PROBLEM 4
+\begin{problem}
+Consider the following description of the longitudinal field components of TM
+modes of the rectangular conducting waveguide (cross section dimensions $a\times b$):
+$$
+  \begin{cases}
+    \bv{B}_z & =0                                   \\
+    \bv{E}_z & =E_0\sin(m\pi y/a)\sin(n\pi x/b)\uz.
+  \end{cases}
+$$
+\begin{enumerate}[label=(\alph*)]
+  \item What are the restrictions on mode index $(m,n)$? Are these different from
+        those of the TE modes?
+  \item For $f=\qty{40.1}{\giga\hertz}$ light, how many (TE + TM) modes can propagate in total
+        down a $\qty{3}{\centi\meter}\times\qty{1}{\centi\meter}$ pipe? (you might wish to note the difference between $f$
+        and $\omega$). I suggest that you make a table of cutoff frequencies by $m,n$ to
+        assist in counting.
+\end{enumerate}
+\end{problem}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item We've already shown that rectangular waveguides cannot support TEM modes, where $\bv{E}_z=\bv{B}_z=0\uz$. Here, if either
+          $m$ or $n$ are zero, we end up with a TEM mode, so the restriction is that neither $m$ nor $n$ may be zero. This is different from the
+          TE restriction where one of $m$ or $n$ may be zero, but not both.
+    \item Cutoff occurs when
+          $$f<\frac{c}{2}\sqrt{(m/a)^2+(n/b)^2}.$$
+          Then for $f=\qty{40.1}{\giga\hertz}$, $a=\qty{3}{\centi\meter}$, and $b=\qty{1}{\centi\meter}$
+          we enumerate all $(m,n)$ and check the expression above. I wrote a little python program to check these for me
+          \begin{minted}{python3}
+            import numpy as np
+            from scipy.constants import c
+
+            a = 0.03
+            b = 0.01
+            arr = np.ndarray(shape=(10, 10), dtype=int)
+            for m in range(10):
+                for n in range(10):
+                    arr[m, n] = 40.1 * 10**9 < c * np.sqrt((m / a)**2 + (n / b)**2) / 2
+            print(arr)
+          \end{minted}
+          and obtained output
+          $$          \begin{pmatrix}
+              0 & 0 & 0 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
+              0 & 0 & 0 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
+              0 & 0 & 0 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
+              0 & 0 & 0 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
+              0 & 0 & 0 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
+              0 & 0 & 0 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
+              0 & 0 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
+              0 & 0 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
+              0 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
+              1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1
+            \end{pmatrix}$$
+          where the horizontal (column) index is $n$ and the vertical (row) index is $n$.
+          In the TE mode case, the entry where both $m$ and $n$ are zero isn't valid and so is discarded. In the TM case,
+          all of the first row and column are discarded as neither $m$ nor $n$ may be zero. Since there are 23 total elements
+          where $f<c\sqrt{(m/a)^2+(n/b)^2}/2$, there are $22$ allowed TE modes ($23-1$) and $12$ ($23-11$) allowed TM modes, for a total of
+          $34$ modes which may propagate down the given waveguide.
+  \end{enumerate}
+\end{soln}
+\newpage
+
+% PROBLEM 5
+\begin{problem}
+Consider A hollow rectangular conducting waveguide of size $a \times b$ ($a > b$) which
+allows both TM and TE modes, with the propagation constant being given by:
+$$k_{mn}=\sqrt{\left(\frac{\omega}{c}\right)^2-\pi^2\left(\frac{m^2}{a^2}+\frac{n^2}{b^2}\right)}$$
+This dispersion relation is sketched in the figure, below, for three modes; two of
+which have been labeled TE$_{10}$ and TM$_{11}$.
+\begin{enumerate}[label=(\alph*)]
+  \item Use the figure to estimate [to a simple fraction (i.e. $3/2$, $4/1$, $6/5$\dots)] the
+        lowest possible aspect ratio of the waveguide (i.e. find $a/b$ where $a$ and $b$ are
+        integers below 10)
+  \item Label the mode currently designated as “??” on the plot. If this mode is
+        degenerate (either as TE and TM or in $mn$), make this clear.
+  \item Estimate the penetration depth of
+        $\omega=\qty{0.5}{\giga\hertz}$ light down this hollow channel.
+  \item At $\omega=\qty{2.1}{\giga\hertz}$, which mode propagates with a larger phase velocity, TE$_{10}$
+        or TM$_{11}$?
+  \item $\omega=\qty{2.1}{\giga\hertz}$, which mode propagates with a larger group velocity, TE$_{10}$
+        or TM$_{11}$?
+\end{enumerate}
+\end{problem}
+\begin{soln}~
+  \begin{enumerate}[label=(\alph*)]
+    \item The figure indicates that $k_{10}(\omega\approx\qty{1}{\giga\hertz})=0$ and $k_{11}(\omega\approx\qty{2}{\giga\hertz})=0$.
+          This is two equations in two unknowns,
+          \begin{equation*}
+            0=\sqrt{\left(\frac{10^9}{c}\right)^2-\pi^2\left(\frac{1}{a^2}\right)}
+          \end{equation*}
+          and
+          \begin{equation}
+            0=\sqrt{\left(\frac{2\cdot 10^9}{c}\right)^2-\pi^2\left(\frac{1}{a^2}+\frac{1}{b^2}\right)}.
+            \label{eqn:ab}
+          \end{equation}
+          Squaring both of these and setting them equal yields
+          $$\frac{c\pi}{\sqrt{3}\cdot 10^9}=b\approx 0.54$$
+          and plugging that into \cref{eqn:ab},
+          $$0=\sqrt{\left(\frac{2\cdot 10^9}{c}\right)^2-\pi^2\left(\frac{1}{a^2}+\left(\frac{10^9}{c\pi}\right)^2\right)}$$
+          which tells us that $a\approx0.94.$
+          The aspect ratio is then approximately $0.9/0.5$ WHICH IS WRONG :(
+
+    \item Label the mode currently designated as “??” on the plot. If this mode is
+          degenerate (either as TE and TM or in $mn$), make this clear.
+    \item Estimate the penetration depth of
+          $\omega=\qty{0.5}{\giga\hertz}$ light down this hollow channel.
+    \item At $\omega=\qty{2.1}{\giga\hertz}$, which mode propagates with a larger phase velocity, TE$_{10}$
+          or TM$_{11}$?
+    \item $\omega=\qty{2.1}{\giga\hertz}$, which mode propagates with a larger group velocity, TE$_{10}$
+          or TM$_{11}$?
+  \end{enumerate}
 \end{soln}
 \end{document}
