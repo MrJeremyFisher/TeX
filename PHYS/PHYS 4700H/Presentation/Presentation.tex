@@ -48,6 +48,7 @@
 \pgfdeclarelayer{background}  
 \pgfsetlayers{background,main}
 \AtBeginDocument{\RenewCommandCopy\qty\SI}
+\hypersetup{colorlinks=true,linkcolor=blue,urlcolor=blue}
 
 \makeatletter
 \newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
@@ -93,8 +94,10 @@
 \newcommand{\bscriptr}{\fontsize{12pt}{12pt}\kfb{r}}
 
 \newcommand{\bv}[1]{\bm{\mathrm{#1}}}
+\addbibresource{citations.bib}
 
-\title{Spontaneous RNA Formation and the First Life on Earth}
+
+\title{Spontaneous DNA Formation and the First Life on Earth}
 \author{Jeremy Favro (0805980) \\ Trent University, Peterborough, ON, Canada}
 
 \begin{document}
@@ -131,7 +134,7 @@
       \begin{figure}
         \centering
         \includegraphics[width=0.8\textwidth]{dna.png}
-        \caption{RNA/DNA structures.}
+        \caption{RNA/DNA structures. \url{wikipedia.org/wiki/Nucleic_acid}}
       \end{figure}
     \end{column}
   \end{columns}
@@ -149,7 +152,7 @@
       \begin{itemize}
         \item Spontaneous organization of \emph{nucleotides} is limited energetically and physically
         \item Want to bond phosphate-to-phosphate, but they may not be pointed at each other
-        \item Also \emph{endergonic}, releases water at every bond formation
+        \item Also \emph{endergonic}, $\Delta G>0$
         \item Also anti-entropic ($\Delta S < 0$), combining molecules increases order
       \end{itemize}
     \end{column}
@@ -225,17 +228,18 @@
       \begin{itemize}
         \item We pre-organize the molecules
         \item Force them onto the surface of a sphere
-        \item Decreases the Gibbs free energy
+        \item Increases the Gibbs free energy
               $$G=U+PV-TS$$
               by decreasing degrees of freedom
+        \item Our problem of $\Delta G>0$ is lessened
       \end{itemize}
     \end{column}
     % Column 2    
     \begin{column}{0.5\textwidth}
       \begin{figure}
         \centering
-        \includegraphics[width=0.8\textwidth]{levitator.png}
-        \caption{An ultrasonic levitator.}
+        \includegraphics[width=1\textwidth]{comic.png}
+        \caption{Cartoon regarding the Gibbs free energy by Daniel Schroeder}
       \end{figure}
     \end{column}
   \end{columns}
@@ -282,5 +286,7 @@
       \end{figure}
     \end{column}
   \end{columns}
+  \nocite{*}
+  \printbibliography[]
 \end{frame}
 \end{document}
