@@ -22,6 +22,8 @@
 \newcommand{\uy}{\uv{y}}
 \newcommand{\uz}{\uv{z}}
 \newcommand{\grad}{\bv{\nabla}}
+\renewcommand{\div}[1]{\grad\cdot #1}
+\newcommand{\curl}[1]{\grad\times #1}
 
 \title{Calculus Cheat Sheet}
 \author{Jeremy Favro}
@@ -184,82 +186,93 @@ $L = \int_{a}^{b} \sqrt{[f^{\prime}(t)]^2+[g^{\prime}(t)]^2+[h^{\prime}(t)]^2} \
 \subsection*{Cartesian}
 $d\bv{l}=dx\ux+dy\ux+dz\uz$, $d\tau=dxdydz$\\
 \subsubsection*{Gradient}
-\begin{align*}
+$
         \grad t =\partial_xt\ux+\partial_yt\uy+\partial_zt\uz
-\end{align*}
+$
 \subsubsection*{Divergence}
-\begin{align*}
+$
         \grad\cdot \bv{v}=\partial_x v_x\ux+\partial_yv_y\uy+\partial_zv_z\uz
-\end{align*}
+$
 \subsubsection*{Curl}
-\begin{flalign*}
-        \grad\times \bv{v} & =\left(\partial_y v_z-\partial_z v_y\right)\ux \\
-                           & +\left(\partial_zv_x-\partial_x v_z\right)\uy  \\
-                           & +\left(\partial_xv_y-\partial_yv_x\right)\uz
-\end{flalign*}
+$
+        \grad\times \bv{v} =\left(\partial_y v_z-\partial_z v_y\right)\ux 
+                            +\left(\partial_zv_x-\partial_x v_z\right)\uy  
+                            +\left(\partial_xv_y-\partial_yv_x\right)\uz
+$
 \subsubsection*{Laplacian}
-\begin{align*}
+$
         \grad^2t=\partial_{xx}t+\partial_{yy}t+\partial_{zz}t
-\end{align*}
-\newpage
+$
+
 % Spherical
 \subsection*{Spherical}
 $d\bv{l}=dr\uv{r}+rd\theta\uv{\theta}+r\sin\theta d\phi\uv{\phi}$, $d\tau=r^2\sin\theta drd\theta d\phi$
 \subsubsection*{Gradient}
-\begin{align*}
+$
         \grad t =\partial_rt\uv{r}+\frac{1}{r}\partial_\theta t\uv{\theta}+\frac{1}{r\sin\theta}\partial_\phi t\uv{\phi}
-\end{align*}
+$
 \subsubsection*{Divergence}
-\begin{align*}
-        \grad\cdot \bv{v} & =\frac{1}{r^2}\partial_r(r^2v_r)                           \\
-                          & +\frac{1}{r\sin\theta}\partial_\theta(\sin\theta v_\theta) \\
-                          & +\frac{1}{r\sin\theta}\partial_\phi v_\phi
-\end{align*}
+$
+        \grad\cdot \bv{v}  =\frac{1}{r^2}\partial_r(r^2v_r)                           
+                           +\frac{1}{r\sin\theta}\partial_\theta(\sin\theta v_\theta) 
+                           +\frac{1}{r\sin\theta}\partial_\phi v_\phi
+$
 \subsubsection*{Curl}
-\begin{flalign*}
-        \grad\times \bv{v} & =\frac{1}{r\sin\theta}\left[\partial_\theta(\sin\theta v_\phi) -\partial_\phi v_\theta\right]\uv{r} \\
-                           & +\frac{1}{r}\left[\frac{1}{\sin\theta}\partial_\phi v_r-\partial_r(rv_\phi)\right]\uv{\theta}       \\
-                           & +\frac{1}{r}\left[\partial_r(rv_\theta)-\partial_\theta v_r\right]\uv{\phi}
-\end{flalign*}
+$
+        \grad\times \bv{v}  =\frac{1}{r\sin\theta}\left[\partial_\theta(\sin\theta v_\phi) -\partial_\phi v_\theta\right]\uv{r} 
+                            +\frac{1}{r}\left[\frac{1}{\sin\theta}\partial_\phi v_r-\partial_r(rv_\phi)\right]\uv{\theta}       
+                            +\frac{1}{r}\left[\partial_r(rv_\theta)-\partial_\theta v_r\right]\uv{\phi}
+$
 \subsubsection*{Laplacian}
-\begin{align*}
-        \grad^2t & =\frac{1}{r^2}\partial_r(r^2\partial_r t)                            \\
-                 & +\frac{1}{r^2\sin\theta}\partial_\theta(\sin\theta\partial_\theta t) \\
-                 & +\frac{1}{r^2\sin^2\theta}\partial_{\phi\phi}t
-\end{align*}
+$
+        \grad^2t =\frac{1}{r^2}\partial_r(r^2\partial_r t)                            
+                  +\frac{1}{r^2\sin\theta}\partial_\theta(\sin\theta\partial_\theta t) 
+                  +\frac{1}{r^2\sin^2\theta}\partial_{\phi\phi}t
+$
 % Cylindrical
 \subsection*{Cylindrical}
 $d\bv{l}=ds\uv{s}+sd\phi\uv{\phi}+dz\uz$, $d\tau=sds d\phi dz$
 \subsubsection*{Gradient}
-\begin{align*}
+$
         \grad t =\partial_st\uv{s}+\frac{1}{s}\partial_\phi t\uv{\phi}+\partial_z t\uz
-\end{align*}
+$
 \subsubsection*{Divergence}
-\begin{align*}
-        \grad\cdot \bv{v} & =\frac{1}{s}\partial_s(sv_s)                      \\
-                          & +\frac{1}{s}\partial_\phi(v_\phi) +\partial_z v_z
-\end{align*}
+$
+        \grad\cdot \bv{v}  =\frac{1}{s}\partial_s(sv_s)                      
+                           +\frac{1}{s}\partial_\phi(v_\phi) +\partial_z v_z
+$
 \subsubsection*{Curl}
-\begin{flalign*}
-        \grad\times \bv{v} & =\left[\frac{1}{s}\partial_\phi v_z-\partial_z v_\phi\right]\uv{s} \\
-                           & +\left[\partial_zv_s-\partial_sv_z\right]\uv{\phi}                 \\
-                           & +\frac{1}{s}\left[\partial_s(sv_\phi)-\partial_\phi v_s\right]\uz
-\end{flalign*}
+$
+        \grad\times \bv{v}  =\left[\frac{1}{s}\partial_\phi v_z-\partial_z v_\phi\right]\uv{s} 
+                            +\left[\partial_zv_s-\partial_sv_z\right]\uv{\phi}                 
+                            +\frac{1}{s}\left[\partial_s(sv_\phi)-\partial_\phi v_s\right]\uz
+$
 \subsubsection*{Laplacian}
-\begin{align*}
-        \grad^2t & =\frac{1}{s}\partial_s(s\partial_s t)+\frac{1}{s^2}\partial_{\phi\phi}t+\partial_{zz}t
-\end{align*}
+$
+        \grad^2t  =\frac{1}{s}\partial_s(s\partial_s t)+\frac{1}{s^2}\partial_{\phi\phi}t+\partial_{zz}t
+$
 \subsection*{Vector Identities}
+\subsubsection*{Triple Products}
 $\bv{A}\cdot(\bv{B}\times \bv{C})=\bv{B}\cdot(\bv{C}\times \bv{A})=\bv{C}\cdot(\bv{A}\times \bv{B})$\\
-$\bv{A}\times(\bv{B}\times \bv{C})=\bv{B}(\bv{A}\cdot\bv{C})=\bv{C}(\bv{A}\cdot\bv{B})$\\
-etc.. will fill in later
+$\bv{A}\times(\bv{B}\times \bv{C})=\bv{B}(\bv{A}\cdot\bv{C})-\bv{C}(\bv{A}\cdot\bv{B})$\\
+\subsubsection*{Product Rules}
+$\grad(fg)=f\grad g+ g\grad f$\\
+$\grad(\bv{A}\cdot\bv{B})=\bv{A}\times(\curl{\bv{B}})+\bv{B}\times(\curl{\bv{A}})+(\bv{A}\cdot \grad)\bv{B}+(\bv{B}\cdot\grad)\bv{A}$\\
+$\div{(f\bv{A})}=f\div{\bv{A}}+\bv{A}\cdot(\grad f)$\\
+$\div{(\bv{A}\times\bv{B})}=\bv{B}\cdot(\curl{\bv{A}})-\bv{A}\cdot(\curl{\bv{B}})$\\
+$\curl{(f\bv{A})}=f\curl{\bv{A}}+\bv{A}\times(\grad f)$\\
+$\curl{(\bv{A}\times\bv{B})}=(\bv{B}\cdot \grad)\bv{A}-(\bv{A}\cdot\grad)\bv{B}+\bv{A}(\div{\bv{B}})+\bv{B}(\div{\bv{A}})$
+\subsubsection*{Second Derivatives}
+$\div{(\curl{A})}=0$\\
+$\curl{(\grad f)}=0$\\
+$\curl{(\curl{\bv{A}})}=\grad(\div{\bv{A}})-\grad^2\bv{A}$
 \subsection*{Theorems}
 \subsubsection*{Gradient Theorem}
-$$\int_{\bv{a}}^{\bv{b}}(\grad f)\cdot d\bv{l}=f(\bv{b})=f(\bv{a})$$
+$\int_{\bv{a}}^{\bv{b}}(\grad f)\cdot d\bv{l}=f(\bv{b})-f(\bv{a})$
 \subsubsection*{Divergence Theorem}
-$$\int_\mathcal{V}\grad\cdot \bv{A}d\tau=\oint_\mathcal{S}\bv{A}\cdot d\bv{a}$$
+$\int_\mathcal{V}\grad\cdot \bv{A}d\tau=\oint_\mathcal{S}\bv{A}\cdot d\bv{a}$
 \subsubsection*{Curl (Stokes') Theorem}
-$$\int_\mathcal{S}(\grad\times \bv{A})\cdot d\bv{a}=\oint_\mathcal{C}\bv{A}\cdot d\bv{l}$$
+$\int_\mathcal{S}(\grad\times \bv{A})\cdot d\bv{a}=\oint_\mathcal{C}\bv{A}\cdot d\bv{l}$
 \subsection*{Coordinate Transforms}
 \subsubsection*{Spherical}
 $
